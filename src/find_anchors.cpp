@@ -1,3 +1,16 @@
+//' Find the positions in reads vectors where the regions start
+//'
+//' @param regionStart - start(regions) from GRanges
+//' @param regionEnd - end(regions) from GRanges
+//' @param readStart - start(reads) from GRanges
+//' @param readEnd - end(reads) from GRanges
+//' @param strand - as.character(strand(reads)) form GRanges
+//' @param fraglen - Numeric value, fragment length
+//' @return position in reads vector
+
+/* Both the reads and regions GRanges object must be ordered
+   respect the start positions of ranges */
+
 #include <Rcpp.h>
 using namespace Rcpp;
 
@@ -8,20 +21,19 @@ IntegerVector find_anchors(IntegerVector regionStart,
                  IntegerVector readEnd,
                  CharacterVector strand,
                  int fraglen){
-  /* The peaks and the reads are sorted */
+  
+  /* The exceptions are in the outside R calling */
 
-  /* Need to add exception to check that all the peak and read vectors
-     have the same length respectively */
-  int n = regionStart.size(), m = readStart.size();
+  int n = regionStart.size(), m = readStart.size(); 
   int k =0,i=0;
   int extReadStart, extReadEnd;
-  //  Rcpp::List match(n);
   Rcpp::IntegerVector startIdx(n);
   bool cond;
+
   for(k=0;k<n;k++){
     cond = true;
     i=0;
-    while((i<m) & cond){
+    while((i<m) & cond){ 
       if(strand[i] == "+"){
         extReadStart = readStart[i];
         extReadEnd =  readStart[i] + fraglen -1;
