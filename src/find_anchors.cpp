@@ -4,7 +4,7 @@
 //' @param regionEnd - end(regions) from GRanges
 //' @param readStart - start(reads) from GRanges
 //' @param readEnd - end(reads) from GRanges
-//' @param strand - as.character(strand(reads)) form GRanges
+//' @param strand - as.character(strand(reads)) form GRanges, we are assuming that they are all the same
 //' @param fraglen - Numeric value, fragment length
 //' @return position in reads vector
 
@@ -27,7 +27,7 @@ IntegerVector find_anchors(IntegerVector regionStart,
   int n = regionStart.size(), m = readStart.size(); 
   int k =0,i=0;
   int extReadStart, extReadEnd;
-  Rcpp::IntegerVector startIdx(n);
+  Rcpp::IntegerVector startIdx = rep(-1,n);
   bool cond;
 
   for(k=0;k<n;k++){
@@ -41,9 +41,9 @@ IntegerVector find_anchors(IntegerVector regionStart,
         extReadStart = readEnd[i] - fraglen + 1;
         extReadEnd = readEnd[i];
       }
-      if(extReadStart > regionStart[k] && extReadEnd < regionEnd[k]){
+      if(extReadEnd > regionStart[k] && extReadEnd > regionEnd[k]){
         cond = false;
-        startIdx[k] = i;
+	startIdx[k] = i;
       }
       i++;
     }
