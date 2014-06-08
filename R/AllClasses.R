@@ -26,6 +26,15 @@ setClass("profile",
     readsList = list(),
     matchList = list()))
 
+setValidity("profile",
+  function(object){
+  # Checks that readsList, matchList and bedfile have same length
+  files.length = length(object@bedfiles)
+  match.length = length(object@matchList)
+  reads.length = length(object@readsList)
+  return(files.length == match.length && files.length == reads.length)
+})
+
 #' match class
 #'
 #' Contains the match of a set a reads of a ChIP - Seq experiment given a set
@@ -38,6 +47,10 @@ setClass("match",
   prototype = prototype(match1 = list(),
     match2 = list()))
 
+setValidity("match",
+  function(object) return(length(object@match1) == length(object@match2))
+)            
+
 #' reads class
 #'
 #' Contains the reads obtained in a ChIP - seq experiment separated by strand (for efficiency) and
@@ -47,3 +60,7 @@ setClass("match",
 setClass("reads",
   representation(reads1 = "GRangesList",reads2 = "GRangesList"),
   prototype = prototype(reads1 = GRangesList(),reads2 = GRangesList()))         
+setValidity("reads",
+  function(object)return(length(object@reads1) == length(object@reads2))
+)            
+          
