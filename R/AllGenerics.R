@@ -1,6 +1,17 @@
 
 # Generic methods for profile class
 
+#' name
+#'
+#' @param profile object
+#' @return chracter. The name of the profile object
+#' @export
+#' docType methods
+setGeneric("name",
+  function(object,...)
+  standardGeneric("name")
+)           
+
 #' regions
 #'
 #' @param profile object

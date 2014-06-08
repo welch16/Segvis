@@ -2,11 +2,21 @@
 
 # Generic methods for profile class
 
+#' name
+#'
+#' @param profile object
+#' @return character. The name of the object
+#' @docType methods
+#' @rdname profile-methods
+setMethods("name",
+  signature = signature(object = "profile"),
+  definition = function(object)object@name
+)           
+
 #' regions
 #'
 #' @param profile object
 #' @return GRangesList. The regions used to calculate the coverage plots, as a GRangesList separated by chromosome
-#' @export
 #' @docType methods
 #' @rdname profile-methods
 setMethods("regions",
@@ -18,7 +28,6 @@ setMethods("regions",
 #'
 #' @param profile object
 #' @return chracter. A chracter vector with the names of the bedfiles used to create the readsList object
-#' @export
 #' docType methods
 #' @rdname profile-methods
 setMethods("bedfiles",
@@ -30,7 +39,6 @@ setMethods("bedfiles",
 #'
 #' @param profile object
 #' @return numeric. A numeric value representing the width of the extended fragment reads
-#' @export
 #' docType methods
 #' @rdname profile-methods
 setMethods("fragLen",
@@ -43,7 +51,6 @@ setMethods("fragLen",
 #'
 #' @param profile object
 #' @return numeric. A numeric value representing the bandwidth used to smooth the average coverage plot
-#' @export
 #' docType methods
 #' @rdname profile-methods
 setMethods("bandwidth",
@@ -55,7 +62,6 @@ setMethods("bandwidth",
 #'
 #' @param profile object
 #' @return list. A list made off reads objects. One list for each replicate. Must coincide with size of bedfiles
-#' @export
 #' docType methods
 #' @rdname profile-methods
 setMethods("readsList",
@@ -67,10 +73,28 @@ setMethods("readsList",
 #'
 #' @param profile object
 #' @return list. A list made off match objects. One list for each replicate. Must coincide with size of bedfiles
-#' @export
 #' docType methods
 #' @rdname profile-methods
 setMethods("matchList",
   signature = signature(object = "profile"),
   definition = function(object)object@matchList
 )
+
+#' show
+#'
+#' @param profile object
+#' @docType methods
+#' @rdname profile-methods
+setMethods("show",
+  signature = signature(object = "profile"),
+  definition = function(object){
+    cat("---------------------------\n")
+    cat("Profile for ",name(object)," peaks\n")
+    cat("Fragment length: ",fragLen(object),"\n")
+    cat("Bandwidth: ",bandwidth(object),"\n")
+    cat("Using reads files:\n")
+    cat(bedfiles(object),sep = "\n")                   
+})
+
+
+           

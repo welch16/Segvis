@@ -1,7 +1,8 @@
 
 #' profile class
 #'
-#' Contains all the information necesary for the calculation of profile curves. 
+#' Contains all the information necesary for the calculation of profile curves.
+#' @slot name - Character with the name of the profiles
 #' @slot regions - List with the regions for which the coverage is going to be calculated
 #' @slot bedfiles - Character with the files which contains the reads
 #' @slot fragLen - Numeric fragment length to extend the reads
@@ -10,13 +11,15 @@
 #' @slot matchList - List of match objects
 #' @exportClass profile
 setClass("profile",
-  representation(regions = "GRangesList",
+  representation(name = "character",
+                 regions = "GRangesList",
                  bedfiles = "character",
                  fragLen = "numeric",
                  bandwidth = "numeric",
                  readsList = "list",
                  matchList = "list"),
-  prototype = prototype(regions = GRangesList(),
+  prototype = prototype(names = "",
+    regions = GRangesList(),
     bedfiles = "",
     fragLen = 0,
     bandwidth = 1,
