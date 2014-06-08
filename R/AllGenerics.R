@@ -92,7 +92,7 @@ setGeneric("matchList",
 #' @docType methods
 #' @rdname profile-methods
 setGeneric("setName",
-  function(object,...)
+  function(object,newName)
   standardGeneric("setName")           
 )
 
@@ -105,7 +105,7 @@ setGeneric("setName",
 #' @docType methods
 #' @rdname profile-methods
 setGeneric("setFragLen",
-  function(object,...)
+  function(object,newFragLen)
   standardGeneric("setFragLen")
 )           
                   
@@ -118,6 +118,6 @@ setGeneric("setFragLen",
 #' @docType methods
 #' @rdname profile-methods
 setGeneric("setBandwidth",
-  function(object,...)
-  standardGeneric("SetBandwidth")
+  function(object,newBandwidth)
+  standardGeneric("setBandwidth")
 )           
