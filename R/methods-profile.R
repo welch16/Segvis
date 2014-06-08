@@ -1,6 +1,7 @@
 
+# Methods for profile class
 
-# Generic methods for profile class
+## Get methods
 
 #' name
 #'
@@ -28,7 +29,7 @@ setMethods("regions",
 #'
 #' @param profile object
 #' @return chracter. A chracter vector with the names of the bedfiles used to create the readsList object
-#' docType methods
+#' @docType methods
 #' @rdname profile-methods
 setMethods("bedfiles",
   signature = signature(object ="profile"),
@@ -39,7 +40,7 @@ setMethods("bedfiles",
 #'
 #' @param profile object
 #' @return numeric. A numeric value representing the width of the extended fragment reads
-#' docType methods
+#' @docType methods
 #' @rdname profile-methods
 setMethods("fragLen",
   signature = signature(object = "profile"),
@@ -51,7 +52,7 @@ setMethods("fragLen",
 #'
 #' @param profile object
 #' @return numeric. A numeric value representing the bandwidth used to smooth the average coverage plot
-#' docType methods
+#' @docType methods
 #' @rdname profile-methods
 setMethods("bandwidth",
   signature = signature(object = "profile"),
@@ -73,12 +74,60 @@ setMethods("readsList",
 #'
 #' @param profile object
 #' @return list. A list made off match objects. One list for each replicate. Must coincide with size of bedfiles
-#' docType methods
+#' @docType methods
 #' @rdname profile-methods
 setMethods("matchList",
   signature = signature(object = "profile"),
   definition = function(object)object@matchList
 )
+
+## Set methods
+
+#' setName
+#'
+#' @param profile object
+#' @param newName character
+#' @return profile object
+#' @docType methods
+#' @rdname profile-methods
+setMethods("setName",
+  signature = signature(object = "profile",newName = "character"),
+  definition = function(object,newName){
+    object@name = newName
+    return(object)
+})
+
+#' setFragLen
+#'
+#' @param profile object
+#' @param newFragLen Numeric value, must be greater of equal to zero
+#' @return profile object
+#' @docType methods
+#' @rdname profile-methods
+setMethods("setFragLen",
+  signature = signature(object = "profile",newFragLen = "numeric"),
+  definition = function(object,newFragLen){
+    stopifnot(newFragLen >= 0)
+    stopifnot(newFragLen == floor(newFragLen))
+    object@fragLen = newFraLen
+    return(object)
+})    
+
+#' setBandwidth
+#'
+#' @param profile object
+#' @param newBandwidth Numeric value, must be greater of equal than 1
+#' @return profile object
+#' @docType methods
+#' @rdname profile-methods
+setMethods("setBandwidth",
+  signature = signature(object = "profile",newBandwidth = "numeric"),
+  definition = function(obejct,newBandwidth){
+    stopifnot(newBandwidth >=1)
+    stopifnot(newBandwidth == floor(newBandwidth))
+    object@bandwidth = newBandwidth
+    return(object)
+})       
 
 #' show
 #'

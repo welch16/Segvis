@@ -1,6 +1,8 @@
 
 # Generic methods for profile class
 
+##  Get methods
+
 #' name
 #'
 #' @param profile object
@@ -79,3 +81,43 @@ setGeneric("matchList",
   standardGeneric("matchList")           
 )
 
+## Set methods
+
+#' setName
+#'
+#' @param profile object
+#' @param newName character
+#' @return profile object
+#' @export
+#' @docType methods
+#' @rdname profile-methods
+setGeneric("setName",
+  function(object,...)
+  standardGeneric("setName")           
+)
+
+#' setFragLen
+#'
+#' @param profile object
+#' @param newFragLen Numeric value, must be greater of equal to zero
+#' @return profile object
+#' @export
+#' @docType methods
+#' @rdname profile-methods
+setGeneric("setFragLen",
+  function(object,...)
+  standardGeneric("setFragLen")
+)           
+                  
+#' setBandwidth
+#'
+#' @param profile object
+#' @param newBandwidth Numeric value, must be greater of equal than 1
+#' @return profile object
+#' @export
+#' @docType methods
+#' @rdname profile-methods
+setGeneric("setBandwidth",
+  function(object,...)
+  standardGeneric("SetBandwidth")
+)           
