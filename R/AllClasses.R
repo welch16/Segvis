@@ -17,9 +17,9 @@ setClass("profile",
                  readsList = "list",
                  matchList = "list"),
   prototype = prototype(regions = GRangesList(),
-    bedfiles = "bedfiles",
-    fragLen = 200,
-    bandwidth = 151,
+    bedfiles = "",
+    fragLen = 0,
+    bandwidth = 1,
     readsList = list(),
     matchList = list()))
 
