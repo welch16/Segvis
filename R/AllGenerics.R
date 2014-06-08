@@ -7,7 +7,6 @@
 #' @return GRangesList. The regions used to calculate the coverage plots, as a GRangesList separated by chromosome
 #' @export
 #' @docType methods
-#' @rdname profile-methods
 setGeneric("regions",
   function(object,...)
   standardGeneric("regions")
@@ -19,7 +18,6 @@ setGeneric("regions",
 #' @return chracter. A chracter vector with the names of the bedfiles used to create the readsList object
 #' @export
 #' docType methods
-#' @rdname profile-methods
 setGeneric("bedfiles",
   function(object,...)
   standardGeneric("bedfiles")           
@@ -31,7 +29,6 @@ setGeneric("bedfiles",
 #' @return numeric. A numeric value representing the width of the extended fragment reads
 #' @export
 #' docType methods
-#' @rdname profile-methods
 setGeneric("fragLen",
   function(object,...)
   standardGeneric("fragLen")           
@@ -43,7 +40,6 @@ setGeneric("fragLen",
 #' @return numeric. A numeric value representing the bandwidth used to smooth the average coverage plot
 #' @export
 #' docType methods
-#' @rdname profile-methods
 setGeneric("bandwidth",
   function(object,...)
   standardGeneric("bandwidth")           
@@ -55,7 +51,6 @@ setGeneric("bandwidth",
 #' @return list. A list made off reads objects. One list for each replicate. Must coincide with size of bedfiles
 #' @export
 #' docType methods
-#' @rdname profile-methods
 setGeneric("readsList",
   function(object,...)
   standardGeneric("readsList")           
