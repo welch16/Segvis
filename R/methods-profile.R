@@ -144,6 +144,4 @@ setMethods("show",
     cat("Using reads files:\n")
     cat(bedfiles(object),sep = "\n")                   
 })
-
-
-           
+          
