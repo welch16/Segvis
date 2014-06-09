@@ -14,7 +14,6 @@ Collate: AllClasses.R
          AllGenerics.R
          methods-profile.R
          create_profile.R
-         sort_by_start.R
          extend_to_strand.R
 Imports:
     Rcpp (>= 0.11.0)
