@@ -142,6 +142,7 @@ setMethods("show",
     cat("Fragment length:",fragLen(object),"\n")
     cat("Bandwidth:",bandwidth(object),"\n")
     cat("Using reads files:\n")
-    cat(bedfiles(object),sep = "\n")                   
+    cat(bedfiles(object),sep = "\n")
+    cat("---------------------------\n")
 })
           
