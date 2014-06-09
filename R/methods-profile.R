@@ -97,6 +97,21 @@ setMethods("setName",
     return(object)
 })
 
+#' setRegions
+#'
+#' @param profile object
+#' @param newRegions GRangesList
+#' @return profile object
+#' @docType methods
+#' @rdname profile-methods
+setMethods("setRegions",
+  signature = signature(object = "profile",newRegions = "GRangesList"),
+  definition = function(object,newRegions){
+    stopifnot(class(newRegions) == "GRangesList")
+    object@regions = newRegions
+    return(object)
+})
+
 #' setFragLen
 #'
 #' @param profile object

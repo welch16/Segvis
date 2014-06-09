@@ -96,6 +96,19 @@ setGeneric("setName",
   standardGeneric("setName")           
 )
 
+#' setRegions
+#'
+#' @param profile object
+#' @param newRegions GRangesList
+#' @return profile object
+#' @export
+#' docType methods
+#' @rdname profile-methods
+setGeneric("setRegions",
+  function(object,newRegions)
+  standardGeneric("setRegions")
+)
+
 #' setFragLen
 #'
 #' @param profile object
