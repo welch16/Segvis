@@ -28,7 +28,7 @@ setClass("profile",
 
 setValidity("profile",
   function(object){
-  # Checks that readsList, matchList and bedfile have same length
+  # Checks that readsList and matchList have same length
   match.length = length(object@matchList)
   reads.length = length(object@readsList)
   return(match.length == reads.length && object@fragLen >=0 && object@bandwidth >=1 )
