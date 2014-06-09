@@ -138,9 +138,9 @@ setMethods("show",
   signature = signature(object = "profile"),
   definition = function(object){
     cat("---------------------------\n")
-    cat("Profile for ",name(object)," peaks\n")
-    cat("Fragment length: ",fragLen(object),"\n")
-    cat("Bandwidth: ",bandwidth(object),"\n")
+    cat("Profile for",name(object),"peaks\n")
+    cat("Fragment length:",fragLen(object),"\n")
+    cat("Bandwidth:",bandwidth(object),"\n")
     cat("Using reads files:\n")
     cat(bedfiles(object),sep = "\n")                   
 })
