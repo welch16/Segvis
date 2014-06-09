@@ -156,6 +156,11 @@ setMethods("show",
     cat("Profile for",name(object),"peaks\n")
     cat("Fragment length:",fragLen(object),"\n")
     cat("Bandwidth:",bandwidth(object),"\n")
+    if(q <- length(regions(object)) > 0){
+      cat("Using regions for",length(regions(object)),"chromosomes\n")
+    }else{
+      cat("**Not regions loaded**\n")
+    }     
     cat("Using reads files:\n")
     cat(bedfiles(object),sep = "\n")
     cat("---------------------------\n")
