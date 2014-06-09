@@ -1,4 +1,5 @@
 useDynLib(profile)
 exportPattern("^[[:alpha:]]+")
 importFrom(Rcpp, evalCpp)
+importMethodsFrom(GenomicRanges)
 exportClasses(profile)

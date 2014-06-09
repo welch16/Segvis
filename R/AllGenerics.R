@@ -81,7 +81,7 @@ setGeneric("matchList",
   standardGeneric("matchList")           
 )
 
-## Set methods
+## ## Set methods
 
 #' setName
 #'
@@ -108,11 +108,11 @@ setGeneric("setFragLen",
   function(object,newFragLen)
   standardGeneric("setFragLen")
 )           
-                  
+
 #' setBandwidth
 #'
 #' @param profile object
-#' @param newBandwidth Numeric value, must be greater of equal than 1
+#' @param newBandwidth Numeric value, must be greater of equal to one
 #' @return profile object
 #' @export
 #' @docType methods
@@ -121,3 +121,4 @@ setGeneric("setBandwidth",
   function(object,newBandwidth)
   standardGeneric("setBandwidth")
 )           
+

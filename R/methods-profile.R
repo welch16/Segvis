@@ -116,18 +116,18 @@ setMethods("setFragLen",
 #' setBandwidth
 #'
 #' @param profile object
-#' @param newBandwidth Numeric value, must be greater of equal than 1
+#' @param newBandwidth Numeric value, must be greater of equal to one
 #' @return profile object
 #' @docType methods
 #' @rdname profile-methods
 setMethods("setBandwidth",
   signature = signature(object = "profile",newBandwidth = "numeric"),
-  definition = function(obejct,newBandwidth){
-    stopifnot(newBandwidth >=1)
+  definition = function(object,newBandwidth){
+    stopifnot(newBandwidth >= 1)
     stopifnot(newBandwidth == floor(newBandwidth))
     object@bandwidth = newBandwidth
     return(object)
-})       
+})    
 
 #' show
 #'
