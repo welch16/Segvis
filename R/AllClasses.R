@@ -59,6 +59,7 @@ setValidity("match",
 setClass("reads",
   representation(reads1 = "GRangesList",reads2 = "GRangesList"),
   prototype = prototype(reads1 = GRangesList(),reads2 = GRangesList()))         
+
 setValidity("reads",
   function(object)return(length(object@reads1) == length(object@reads2))
 )            
