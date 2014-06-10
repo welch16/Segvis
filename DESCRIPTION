@@ -17,6 +17,7 @@ Collate: AllClasses.R
          methods-match.R
          create_profile.R
          extend_to_strand.R
+         sort_by_strand.R
 Imports:
     Rcpp (>= 0.11.0)
 LinkingTo: Rcpp
