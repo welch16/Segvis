@@ -14,6 +14,7 @@ Collate: AllClasses.R
          AllGenerics.R
          methods-profile.R
          methods-reads.R
+         methods-match.R
          create_profile.R
          extend_to_strand.R
 Imports:

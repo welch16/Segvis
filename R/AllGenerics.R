@@ -140,6 +140,7 @@ setGeneric("setBandwidth",
 ## Get methods
 
 #' reads1
+#'
 #' @param reads object
 #' @return GRangesList The reads of the "+" strand
 #' @export
@@ -151,6 +152,7 @@ setGeneric("reads1",
 )           
 
 #' reads2
+#'
 #' @param reads object
 #' @return GRangesList The reads of the "-" strand
 #' @export
@@ -164,6 +166,7 @@ setGeneric("reads2",
 ## Set methods
 
 #' setReads1
+#'
 #' @param reads object
 #' @param r1 GRangesList object, the new reads to set on the reads object
 #' @return reads object
@@ -176,6 +179,7 @@ setGeneric("setReads1",
 )          
 
 #' setReads2
+#'
 #' @param reads object
 #' @param r2 GRangesList object, the new reads to set on the reads object
 #' @return reads object
@@ -186,3 +190,31 @@ setGeneric("setReads2",
   function(object,r2)
   standardGeneric("setReads2")
 )          
+
+# Generic Methods for match class
+
+## Get methods
+
+#' match1
+#'
+#' @param match object
+#' @return list The match of the reads with "+" strand
+#' @export
+#' @docType methods
+#' @rdname match-methods
+setGeneric("match1",
+  function(object,...)
+  standardGeneric("match1")
+)           
+
+#' match2
+#'
+#' @param match object
+#' @return list The match of the reads with "-" strand
+#' @export
+#' @docType methods
+#' @rdname match-methods
+setGeneric("match2",
+  function(object,...)
+  standardGeneric("match2")
+)           

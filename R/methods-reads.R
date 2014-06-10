@@ -4,6 +4,7 @@
 ## Get methods
 
 #' reads1
+#'
 #' @param reads object
 #' @return GRangesList The reads of the "+" strand
 #' @docType methods
@@ -14,6 +15,7 @@ setMethods("reads1",
 )           
 
 #' reads2
+#'
 #' @param reads object
 #' @return GRangesList The reads of the "-" strand
 #' @docType methods
@@ -26,6 +28,7 @@ setMethods("reads2",
 ## Set methods
 
 #' setReads1
+#'
 #' @param reads object
 #' @param r1 GRangesList object, the new reads to set on the reads object
 #' @return reads object
@@ -39,6 +42,7 @@ setMethods("setReads1",
 })    
 
 #' setReads2
+#'
 #' @param reads object
 #' @param r2 GRangesList object, the new reads to set on the reads object
 #' @return reads object
