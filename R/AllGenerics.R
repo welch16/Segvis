@@ -135,3 +135,54 @@ setGeneric("setBandwidth",
   standardGeneric("setBandwidth")
 )           
 
+# Generic Methods for reads class
+
+## Get methods
+
+#' reads1
+#' @param reads object
+#' @return GRangesList The reads of the "+" strand
+#' @export
+#' @docType methods
+#' @rdname reads-methods
+setGeneric("reads1",
+  function(object,...)
+  standardGeneric("reads1")
+)           
+
+#' reads2
+#' @param reads object
+#' @return GRangesList The reads of the "-" strand
+#' @export
+#' @docType methods
+#' @rdname reads-methods
+setGeneric("reads2",
+  function(object,...)
+  standardGeneric("reads2")           
+)
+
+## Set methods
+
+#' setReads1
+#' @param reads object
+#' @param r1 GRangesList object, the new reads to set on the reads object
+#' @return reads object
+#' @export
+#' @docType methods
+#' @rdname reads-methods
+setGeneric("setReads1",
+  function(object,r1)
+  standardGeneric("setReads1")
+)          
+
+#' setReads2
+#' @param reads object
+#' @param r2 GRangesList object, the new reads to set on the reads object
+#' @return reads object
+#' @export
+#' @docType methods
+#' @rdname reads-methods
+setGeneric("setReads2",
+  function(object,r2)
+  standardGeneric("setReads2")
+)          
