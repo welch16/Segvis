@@ -25,15 +25,26 @@ setMethods("regions",
   definition = function(object)object@regions
 )           
 
-#' bedfiles
+#' files
 #'
 #' @param profile object
 #' @return chracter. A chracter vector with the names of the bedfiles used to create the readsList object
 #' @docType methods
 #' @rdname profile-methods
-setMethods("bedfiles",
+setMethods("files",
   signature = signature(object ="profile"),
-  definition = function(object)object@bedfiles
+  definition = function(object)object@files
+)           
+
+#' fileFormat
+#'
+#' @param profile object
+#' @return character. A character with the file format used
+#' @docType methods
+#' @rdname profile-methods
+setMethods("fileFormat",
+  signature = signature(object = "profile"),
+  definition = function(object)object@fileFormat
 )           
 
 #' fragLen

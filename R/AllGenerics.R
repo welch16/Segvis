@@ -25,15 +25,25 @@ setGeneric("regions",
   standardGeneric("regions")
 )
 
-#' bedfiles
+#' files
 #'
 #' @param profile object
-#' @return chracter. A chracter vector with the names of the bedfiles used to create the readsList object
+#' @return character. A chracter vector with the names of the bedfiles used to create the readsList object
 #' @export
 #' docType methods
-setGeneric("bedfiles",
+setGeneric("files",
   function(object,...)
-  standardGeneric("bedfiles")           
+  standardGeneric("files")           
+)
+
+#' fileFormat
+#' @param profile object
+#' @return character. A character that contains the file format used
+#' @export
+#' docType methods
+setGeneric("fileFormat",
+  function(object,...)
+  standardGeneric("fileFormat")         
 )
 
 #' fragLen

@@ -4,7 +4,8 @@
 #' Contains all the information necesary for the calculation of profile curves.
 #' @slot name - Character with the name of the profiles
 #' @slot regions - List with the regions for which the coverage is going to be calculated
-#' @slot bedfiles - Character with the files which contains the reads
+#' @slot files - Character with the files which contains the reads
+#' @slot fileFormat - Character with the file format used for the reads
 #' @slot fragLen - Numeric fragment length to extend the reads
 #' @slot bandwidth - Numeric value used to smooth the individual coverages
 #' @slot readsList - List of reads objects
@@ -13,14 +14,16 @@
 setClass("profile",
   representation(name = "character",
                  regions = "GRangesList",
-                 bedfiles = "character",
+                 files = "character",
+                 fileFormat = "character",
                  fragLen = "numeric",
                  bandwidth = "numeric",
                  readsList = "list",
                  matchList = "list"),
   prototype = prototype(name = "",
     regions = GRangesList(),
-    bedfiles = "",
+    files = "",
+    fileFormat = "",
     fragLen = 0,
     bandwidth = 1,
     readsList = list(),
