@@ -1,7 +1,7 @@
 
 #' profile class
 #'
-#' Contains all the information necesary for the calculation of profile curves.
+#' Contains all the information necessary for the calculation of profile curves.
 #' @slot name - Character with the name of the profiles
 #' @slot regions - List with the regions for which the coverage is going to be calculated
 #' @slot files - Character with the files which contains the reads
