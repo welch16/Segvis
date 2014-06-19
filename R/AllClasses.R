@@ -20,7 +20,7 @@ setClass("profile",
                  fragLen = "numeric",
                  bandwidth = "numeric",
                  readsList = "list",
-                 matchList = "list"
+                 matchList = "list",
                  profileCurve = "RleList"),
   prototype = prototype(name = "",
     regions = GRangesList(),
