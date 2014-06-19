@@ -199,22 +199,24 @@ setMethods("loadReads",
   definition = function(object,mc = 8){
     if(fileFormat(object) == "bam"){
       chr = names(seqlengths(regions(object)))
-      greads = lapply(files(object),FUN = readGAlignmentsFromBam,param = NULL,use.names = FALSE)
-      greads = lapply(greads,FUN = as, "GRanges")
+      greads = lapply(files(object),FUN = readGAlignmentsFromBam,param = NULL,use.names = FALSE)     
+      greads = lapply(greads,FUN = as, "GRanges")     
       greads = lapply(greads,function(x,chr,mc){
-        z =mclapply(chr,function(i,x)subset(x, subset = seqnames(x) == i),x,mc.cores = mc);
+        z =mclapply(chr,function(i,x)subset(x, subset = as.character(seqnames(x)) == i),x,mc.cores = mc);
         names(z) = chr;
         return(z)
         },chr,mc)
       gr1 = lapply(greads,function(x,mc)
-        GRangesList(mclapply(x,function(y)sort_by_strand(subset(y,subset = strand(y) == "+"),"+"),
-               mc.cores = mc)),mc)
+          mclapply(x,function(y)subset(y,subset = as.character(strand(y)) == "+"),
+                 mc.cores = mc),mc)      
       gr2 = lapply(greads,function(x,mc)
-        GRangesList(mclapply(x,function(y)sort_by_strand(subset(y,subset = strand(y) == "-"),"-"),
-               mc.cores = mc)),mc)
-      object@readsList = lapply(1:length(gr1),
-        function(i,gr1,gr2)new("reads",reads1 = gr1[[i]],reads2 = gr2[[i]]),gr1,gr2)
-      return(object)      
+          mclapply(x,function(y)sort_by_strand(subset(y,subset = as.character(strand(y)) == "-"),"-"),
+                mc.cores = mc),mc)     
+      gr1 = lapply(gr1,FUN = GRangesList)
+      gr2 = lapply(gr2,FUN = GRangesList)
+      object@readsList = lapply(1:length(gr1),function(i,gr1,gr2)
+        new("reads",reads1 = gr1[[i]],reads2 = gr2[[i]]),gr1,gr2)
+       return(object)
     }else{
       warning("loadReads method only defined for bam file format")
     }
