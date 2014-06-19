@@ -100,7 +100,7 @@ setMethods("matchList",
 #' @rdname profile-methods
 setMethods("profileCurve",
   signature = signature(object = "profile"),
-  definition = function(objec)object@profileCurve
+  definition = function(object)object@profileCurve
 )  
 
 ## Set methods
@@ -184,7 +184,7 @@ setMethods("show",
       cat("**Not regions loaded**\n")
     }     
     cat("Using reads files:\n")
-    cat(bedfiles(object),sep = "\n")
+    cat(files(object),sep = "\n")
     cat("---------------------------\n")
 })
           

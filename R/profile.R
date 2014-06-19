@@ -8,7 +8,7 @@
 #' @export
 #' @return A profile object
 
-profile <- function(regionName,files,fileF,fl,bw)
+Profile <- function(regionName,files,fileF,fl,bw)
 {
   return(new("profile",name = regionName,files = files,fileFormat = fileF,
     fragLen = fl, bandwidth = bw))
