@@ -38,8 +38,9 @@ setValidity("profile",
   # Checks that readsList and matchList have same length
   match.length = length(object@matchList)
   reads.length = length(object@readsList)
-  return(match.length == reads.length && object@fragLen >=0 && object@bandwidth >=1 )
-})
+  return(match.length == reads.length & object@fragLen >=0 & object@bandwidth >=1 & tolower(object@fileFormat) == "bam")
+}
+)  
 
 #' match class
 #'
