@@ -67,6 +67,7 @@ setMethods("show",
     len1 = sapply(reads1(object),FUN = length)
     len2 = sapply(reads2(object),FUN = length)
     cat("chr","    Reads1","   Reads2 \n")
+    cat("---------------------------\n")
     for(c in chr){
       cat(c,ifelse(nchar(c)==4,"  "," "),len1[c]," ",len2[c],"\n")
     }
