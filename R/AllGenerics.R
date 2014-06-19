@@ -30,7 +30,7 @@ setGeneric("regions",
 #' @param profile object
 #' @return character. A chracter vector with the names of the bedfiles used to create the readsList object
 #' @export
-#' docType methods
+#' @docType methods
 setGeneric("files",
   function(object,...)
   standardGeneric("files")           
@@ -40,7 +40,7 @@ setGeneric("files",
 #' @param profile object
 #' @return character. A character that contains the file format used
 #' @export
-#' docType methods
+#' @docType methods
 setGeneric("fileFormat",
   function(object,...)
   standardGeneric("fileFormat")         
@@ -51,7 +51,7 @@ setGeneric("fileFormat",
 #' @param profile object
 #' @return numeric. A numeric value representing the width of the extended fragment reads
 #' @export
-#' docType methods
+#' @docType methods
 setGeneric("fragLen",
   function(object,...)
   standardGeneric("fragLen")           
@@ -62,7 +62,7 @@ setGeneric("fragLen",
 #' @param profile object
 #' @return numeric. A numeric value representing the bandwidth used to smooth the average coverage plot
 #' @export
-#' docType methods
+#' @docType methods
 setGeneric("bandwidth",
   function(object,...)
   standardGeneric("bandwidth")           
@@ -73,7 +73,7 @@ setGeneric("bandwidth",
 #' @param profile object
 #' @return list. A list made off reads objects. One list for each replicate. Must coincide with size of bedfiles
 #' @export
-#' docType methods
+#' @docType methods
 setGeneric("readsList",
   function(object,...)
   standardGeneric("readsList")           
@@ -84,14 +84,25 @@ setGeneric("readsList",
 #' @param profile object
 #' @return list. A list made off match objects. One list for each replicate. Must coincide with size of bedfiles
 #' @export
-#' docType methods
+#' @docType methods
 #' @rdname profile-methods
 setGeneric("matchList",
   function(object,...)
   standardGeneric("matchList")           
 )
 
-## ## Set methods
+#' profileCurve
+#' @param profile object
+#' @return RleList. A list made of an Rle object for each region
+#' @export
+#' @docType methods
+#' @rdname profile-methods
+setGeneric("profileCurve",
+  function(object,...)
+  standardGeneric("profileCurve")
+)  
+
+## Set methods
 
 #' setName
 #'

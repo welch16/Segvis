@@ -92,6 +92,17 @@ setMethods("matchList",
   definition = function(object)object@matchList
 )
 
+#' profileCurve
+#'
+#' @param profile object
+#' @return RleList. A list made of an Rle object for each region
+#' @docType methods
+#' @rdname profile-methods
+setMethods("profileCurve",
+  signature = signature(object = "profile"),
+  definition = function(objec)object@profileCurve
+)  
+
 ## Set methods
 
 #' setName

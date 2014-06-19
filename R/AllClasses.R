@@ -10,6 +10,7 @@
 #' @slot bandwidth - Numeric value used to smooth the individual coverages
 #' @slot readsList - List of reads objects
 #' @slot matchList - List of match objects
+#' @slot profileCuve - RleList - For each region, there is a Rle object
 #' @exportClass profile
 setClass("profile",
   representation(name = "character",
@@ -19,7 +20,8 @@ setClass("profile",
                  fragLen = "numeric",
                  bandwidth = "numeric",
                  readsList = "list",
-                 matchList = "list"),
+                 matchList = "list"
+                 profileCurve = "RleList"),
   prototype = prototype(name = "",
     regions = GRangesList(),
     files = "",
@@ -27,7 +29,9 @@ setClass("profile",
     fragLen = 0,
     bandwidth = 1,
     readsList = list(),
-    matchList = list()))
+    matchList = list(),
+    profileCurve = RleList())
+)    
 
 setValidity("profile",
   function(object){
@@ -66,4 +70,9 @@ setClass("reads",
 setValidity("reads",
   function(object)return(length(object@reads1) == length(object@reads2))
 )            
-          
+
+
+
+
+
+
