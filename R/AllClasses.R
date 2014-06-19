@@ -66,6 +66,7 @@ setValidity("match",
 #' @slot reads2 - GRangesList of the reads of the ChIP - Seq experiment that have - strand
 setClass("reads",
   representation(reads1 = "GRangesList",reads2 = "GRangesList"),
+  contains = "GRangesList",
   prototype = prototype(reads1 = GRangesList(),reads2 = GRangesList()))         
 
 setValidity("reads",

@@ -156,6 +156,19 @@ setGeneric("setBandwidth",
   standardGeneric("setBandwidth")
 )           
 
+#' loadReads
+#'
+#' @param profile object
+#' @param mc numeric, the number of cores used with parallel
+#' @return profile object
+#' @export
+#' @docType methods
+#' rdname profile-methods
+setGeneric("loadReads",
+  function(object,mc)
+  standardGeneric("loadReads")
+)           
+
 # Generic Methods for reads class
 
 ## Get methods
