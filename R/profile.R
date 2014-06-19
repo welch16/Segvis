@@ -10,6 +10,6 @@
 
 Profile <- function(regionName,files,fileF,fl,bw)
 {
-  return(new("profile",name = regionName,files = files,fileFormat = fileF,
+  return(new("profile",name = regionName,files = files,fileFormat = tolower(fileF),
     fragLen = fl, bandwidth = bw))
 }
