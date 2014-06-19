@@ -101,7 +101,7 @@ setGeneric("profileCurve",
   function(object,...)
   standardGeneric("profileCurve")
 )  
-
+    
 ## Set methods
 
 #' setName
