@@ -55,7 +55,22 @@ setMethods("setReads2",
     return(object)
 })
 
-
+#' show
+#'
+#' @param reads object
+#' @docType methods
+#' @rdname reads-methods
+setMethods("show",
+  signature = signature(object = "reads"),
+  definition = function(object){
+    chr = names(reads1(object))
+    len1 = sapply(reads1(object),FUN = length)
+    len2 = sapply(reads2(object),FUN = length)
+    cat("chr","    Reads1","   Reads2 \n")
+    for(c in chr){
+      cat(c,ifelse(nchar(c)==4,"  "," "),len1[c]," ",len2[c],"\n")
+    }
+})
 
 
 
