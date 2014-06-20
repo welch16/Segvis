@@ -11,6 +11,8 @@
 #' @slot readsList - List of reads objects
 #' @slot matchList - List of match objects
 #' @slot profileCuve - RleList - For each region, there is a Rle object
+#' @slot .haveRegions - logical - Indicates if the object have the regions loaded
+#' @slot .haveReads - logical - Indicates if the object have the reads loaded
 #' @exportClass profile
 setClass("profile",
   representation(name = "character",
@@ -21,7 +23,10 @@ setClass("profile",
                  bandwidth = "numeric",
                  readsList = "list",
                  matchList = "list",
-                 profileCurve = "RleList"),
+                 profileCurve = "RleList",
+                 .haveRegions = "logical",
+                 .haveReads = "logical"
+                 ),
   prototype = prototype(name = "",
     regions = GRangesList(),
     files = "",
@@ -30,7 +35,9 @@ setClass("profile",
     bandwidth = 1,
     readsList = list(),
     matchList = list(),
-    profileCurve = RleList())
+    profileCurve = RleList(),
+    .haveRegions = FALSE,
+    .haveReads = FALSE)
 )    
 
 setValidity("profile",

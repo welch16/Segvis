@@ -131,6 +131,7 @@ setMethods("setRegions",
   definition = function(object,newRegions){
     stopifnot(class(newRegions) == "GRangesList")
     object@regions = newRegions
+    object@.haveRegions = TRUE
     return(object)
 })
 
@@ -193,7 +194,7 @@ setMethods("show",
 #' @param profile object
 #' @param mc numeric, the number of cores used with parallel
 #' @docType methods
-#' rdname profile-methods
+#' @rdname profile-methods
 setMethods("loadReads",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object,mc = 8){
@@ -216,8 +217,11 @@ setMethods("loadReads",
       gr2 = lapply(gr2,FUN = GRangesList)
       object@readsList = lapply(1:length(gr1),function(i,gr1,gr2)
         new("reads",reads1 = gr1[[i]],reads2 = gr2[[i]]),gr1,gr2)
+      object@.haveReads = TRUE
        return(object)
     }else{
       warning("loadReads method only defined for bam file format")
     }
 })
+
+
