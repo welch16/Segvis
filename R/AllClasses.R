@@ -23,7 +23,7 @@ setClass("profile",
                  bandwidth = "numeric",
                  readsList = "list",
                  matchList = "list",
-                 profileCurve = "RleList",
+                 profileCurve = "list",
                  .haveRegions = "logical",
                  .haveReads = "logical"
                  ),
@@ -35,7 +35,7 @@ setClass("profile",
     bandwidth = 1,
     readsList = list(),
     matchList = list(),
-    profileCurve = RleList(),
+    profileCurve = list(),
     .haveRegions = FALSE,
     .haveReads = FALSE)
 )    
