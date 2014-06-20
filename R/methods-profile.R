@@ -208,7 +208,7 @@ setMethods("loadReads",
         return(z)
         },chr,mc)
       gr1 = lapply(greads,function(x,mc)
-          mclapply(x,function(y)subset(y,subset = as.character(strand(y)) == "+"),
+          mclapply(x,function(y)sort_by_strand(subset(y,subset = as.character(strand(y)) == "+"),"+"),
                  mc.cores = mc),mc)      
       gr2 = lapply(greads,function(x,mc)
           mclapply(x,function(y)sort_by_strand(subset(y,subset = as.character(strand(y)) == "-"),"-"),
