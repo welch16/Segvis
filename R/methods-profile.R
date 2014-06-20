@@ -224,4 +224,35 @@ setMethods("loadReads",
     }
 })
 
+#' matchReads
+#' 
+#' @param profile object
+#' @param mc numeric, the number of cores used with parallel
+#' @docType methods
+#' @rdname profile-methods
+setMethods("matchReads",
+  signature = signature(object = "profile",mc = "numeric"),
+  definition = function(object,mc = 8){
+    if(object@.haveReads & object@.haveRegions){
+      chr = names(seqlengths(regions(object)))      
+      m1 = lapply(readsList(object),function(x,chr,object,mc){
+        z = mclapply(chr,function(chrom,x,object)match_reads(start(regions(object)[[chrom]]),
+          end(regions(object)[[chrom]]),start(reads1(x)[[chrom]]),end(reads1(x)[[chrom]]),
+          as.character(strand(reads1(x)[[chrom]])),fragLen(object)),x,object, mc.cores=mc)
+        names(z) = chr
+        return(z)},chr,object,mc)
+      m2 = lapply(readsList(object),function(x,chr,object,mc){
+        z = mclapply(chr,function(chrom,x,object)match_reads(start(regions(object)[[chrom]]),
+          end(regions(object)[[chrom]]),start(reads2(x)[[chrom]]),end(reads2(x)[[chrom]]),
+          as.character(strand(reads2(x)[[chrom]])),fragLen(object)),x,object, mc.cores=mc)
+        names(z) = chr
+        return(z)},chr,object,mc)
+      object@matchList = lapply(1:length(m1),function(i,m1,m2)
+        new("match",match1 = m1[[i]],match2 = m2[[i]]),m1,m2)
+     return(object)      
+    }else{
+      warning("Check that both reads and regions are loaded")
+    }
+})
+
 

@@ -169,6 +169,19 @@ setGeneric("loadReads",
   standardGeneric("loadReads")
 )           
 
+#' matchReads
+#'
+#' @param profile object
+#' @param mc numeric, the number of cores used with parallel
+#' @return profile object
+#' @export
+#' @docType methods
+#' rdname profile-methods
+setGeneric("matchReads",
+  function(object,mc)
+  standardGeneric("matchReads")
+)           
+
 # Generic Methods for reads class
 
 ## Get methods
