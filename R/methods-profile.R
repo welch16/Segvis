@@ -272,6 +272,7 @@ setMethods("getCoverage",
          z = coverage(c(reads1(readsList(prof)[[1]])[[chrom]][ match1(matchList(prof)[[1]])[[chrom]] [[i]] ],
                         reads2(readsList(prof)[[1]])[[chrom]][ match2(matchList(prof)[[1]])[[chrom]] [[i]] ]))[[chrom]]
       return(z)},prof,chrom,mc.cores = mc)},prof,mc)
+      names(object@profileCurve) = chr
       return(object)     
     }else{
       warning("The reads haven't been matched yet")
