@@ -163,7 +163,7 @@ setGeneric("setBandwidth",
 #' @return profile object
 #' @export
 #' @docType methods
-#' rdname profile-methods
+#' @rdname profile-methods
 setGeneric("loadReads",
   function(object,mc)
   standardGeneric("loadReads")
@@ -176,12 +176,25 @@ setGeneric("loadReads",
 #' @return profile object
 #' @export
 #' @docType methods
-#' rdname profile-methods
+#' @rdname profile-methods
 setGeneric("matchReads",
   function(object,mc)
   standardGeneric("matchReads")
 )           
 
+#' getCoverage
+#'
+#' @param profile object
+#' @param mc numeric, the number of cores used with parallel
+#' @return profile object
+#' @export
+#' @docType methods
+#' @rdname profile-methods
+setGeneric("getCoverage",
+  function(object,mc)
+  standardGeneric("getCoverage")           
+)
+           
 # Generic Methods for reads class
 
 ## Get methods
@@ -265,3 +278,5 @@ setGeneric("match2",
   function(object,...)
   standardGeneric("match2")
 )           
+
+

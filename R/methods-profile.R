@@ -249,10 +249,31 @@ setMethods("matchReads",
         return(z)},chr,object,mc)
       object@matchList = lapply(1:length(m1),function(i,m1,m2)
         new("match",match1 = m1[[i]],match2 = m2[[i]]),m1,m2)
+      object@.readsMatched = TRUE
      return(object)      
     }else{
       warning("Check that both reads and regions are loaded")
     }
 })
 
-
+#' getCoverage
+#'
+#' @param profile object
+#' @param mc, the number of codes used with parallel
+#' @docType methods
+#' @rdname profile-methods
+setMethods("getCoverage",
+  signature = signature(object = "profile",mc = "numeric"),
+  definition = function(object, mc = 8){
+    if(object@.readsMatched == TRUE){
+      chr = names(seqlengths(regions(object)))
+      object@profileCurve = lapply(chr,function(chrom,prof,mc){
+         mclapply(1:length(regions(prof)[[chrom]]),function(i,prof,chrom){
+         z = coverage(c(reads1(readsList(prof)[[1]])[[chrom]][ match1(matchList(prof)[[1]])[[chrom]] [[i]] ],
+                        reads2(readsList(prof)[[1]])[[chrom]][ match2(matchList(prof)[[1]])[[chrom]] [[i]] ]))[[chrom]]
+      return(z)},prof,chrom,mc.cores = mc)},prof,mc)
+      return(object)     
+    }else{
+      warning("The reads haven't been matched yet")
+    }
+})    
