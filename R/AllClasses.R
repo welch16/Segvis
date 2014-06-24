@@ -83,8 +83,29 @@ setValidity("reads",
   function(object)return(length(object@reads1) == length(object@reads2))
 )            
 
-
-
-
-
+#' profileMatrix class
+#'
+#' Contains a matrix with the individual coverage for each region
+#' @slot name - Character with the name of the profiles
+#' @slot regions - GRanges with the regions
+#' @slot mat - Matrix - Actual profile matrix
+#' @slot maxBandwidth - Numeric - Odd number representing the max. possible bandwidith
+#' @slot normConst - Numeric Normalizing constant
+#' @slot .isScaled - Logical representing if the profile matrix is scaled
+#' @exportClass profileMatrix
+setClass("profileMatrix",
+  representation(name = "character",
+                 regions = "GRanges",
+                 mat = "matrix",
+                 maxBandwidth = "numeric",                 
+                 normConst = "numeric",
+                 .isScaled = "logical"),
+  contains = "GRanges",
+  prototype = prototype(name = "",
+                 regions = GRanges(),
+                 mat = matrix(nrow=0,ncol = 0),
+                 maxBandwidth = 1,
+                 normConst = 1,
+                 .isScaled = FALSE)
+)    
 
