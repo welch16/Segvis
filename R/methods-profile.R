@@ -266,15 +266,19 @@ setMethods("getCoverage",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object, mc = 8){
     if(object@.readsMatched == TRUE){
-      chr = names(seqlengths(regions(object)))
-      object@profileCurve = lapply(chr,function(chrom,prof,mc){
-         mclapply(1:length(regions(prof)[[chrom]]),function(i,prof,chrom){
-         z = coverage(c(reads1(readsList(prof)[[1]])[[chrom]][ match1(matchList(prof)[[1]])[[chrom]] [[i]] ],
-                        reads2(readsList(prof)[[1]])[[chrom]][ match2(matchList(prof)[[1]])[[chrom]] [[i]] ]))[[chrom]]
-      return(z)},prof,chrom,mc.cores = mc)},prof,mc)
+      chr = names(seqlengths(regions(object)))     
+      object@profileCurve = lapply(chr,function(chrom,prof,mc){       
+         ll = length(regions(prof)[[chrom]])
+         r1 = reads1(readsList(prof)[[1]])[[chrom]]
+         r2 = reads2(readsList(prof)[[1]])[[chrom]]
+         mclapply(1:ll,function(i,prof,chrom,r1,r2){
+         z = coverage(c(r1[ match1(matchList(prof)[[1]])[[chrom]] [[i]] ],
+                        r2[ match2(matchList(prof)[[1]])[[chrom]] [[i]] ]))[[chrom]]
+      return(z)},prof,chrom,r1,r2,mc.cores = mc)},prof,mc)
       names(object@profileCurve) = chr
       return(object)     
     }else{
       warning("The reads haven't been matched yet")
     }
 })    
+
