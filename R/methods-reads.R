@@ -80,8 +80,11 @@ setMethods("show",
 #' rdname reads-methods
 setMethods("length",
   signature = signature(object = "reads"),
-  definition = function(object)return(length(reads1(object))+length(reads2(object)))
-)           
+  definition = function(object){   
+    len1 = sapply(reads1(object),FUN = length)
+    len2 = sapply(reads2(object),FUN = length)
+    return(sum(len1)+sum(len2))
+})           
 
 
 
