@@ -73,7 +73,15 @@ setMethods("show",
     }
 })
 
-
+#' length
+#' 
+#' @param reads object
+#' @docType methods
+#' rdname reads-methods
+setMethods("length",
+  signature = signature(object = "reads"),
+  definition = function(object)return(length(reads1(object))+length(reads2(object)))
+)           
 
 
 
