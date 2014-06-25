@@ -194,7 +194,20 @@ setGeneric("getCoverage",
   function(object,mc)
   standardGeneric("getCoverage")           
 )
-           
+
+#' buildProfileMat
+#'
+#' @param profile object
+#' @param mc, the number of cores used with parallel
+#' @return list object
+#' @export
+#' @docType methods
+#' rdname methods-profile
+setGeneric("buildProfileMat",
+  function(object,mc)
+  standardGeneric("buildProfileMat")
+)
+
 # Generic Methods for reads class
 
 ## Get methods

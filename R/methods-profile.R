@@ -259,7 +259,7 @@ setMethods("matchReads",
 #' getCoverage
 #'
 #' @param profile object
-#' @param mc, the number of codes used with parallel
+#' @param mc, the number of cores used with parallel
 #' @docType methods
 #' @rdname profile-methods
 setMethods("getCoverage",
@@ -267,18 +267,58 @@ setMethods("getCoverage",
   definition = function(object, mc = 8){
     if(object@.readsMatched == TRUE){
       chr = names(seqlengths(regions(object)))     
-      object@profileCurve = lapply(chr,function(chrom,prof,mc){       
-         ll = length(regions(prof)[[chrom]])
-         r1 = reads1(readsList(prof)[[1]])[[chrom]]
-         r2 = reads2(readsList(prof)[[1]])[[chrom]]
-         mclapply(1:ll,function(i,prof,chrom,r1,r2){
-         z = coverage(c(r1[ match1(matchList(prof)[[1]])[[chrom]] [[i]] ],
-                        r2[ match2(matchList(prof)[[1]])[[chrom]] [[i]] ]))[[chrom]]
-      return(z)},prof,chrom,r1,r2,mc.cores = mc)},prof,mc)
+      object@profileCurve = lapply(chr,function(chrom,object,mc){       
+         ll = length(regions(object)[[chrom]])
+         r1 = reads1(readsList(object)[[1]])[[chrom]]
+         r2 = reads2(readsList(object)[[1]])[[chrom]]
+         mclapply(1:ll,function(i,object,chrom,r1,r2){
+         z = coverage(c(r1[ match1(matchList(object)[[1]])[[chrom]] [[i]] ],
+                        r2[ match2(matchList(object)[[1]])[[chrom]] [[i]] ]))[[chrom]]
+      return(z)},object,chrom,r1,r2,mc.cores = mc)},object,mc)
       names(object@profileCurve) = chr
+      object@.coverageCalculated = TRUE
       return(object)     
     }else{
       warning("The reads haven't been matched yet")
     }
 })    
+
+#' buildProfileMat
+#'
+#' @param profile object
+#' @param mc, the number of cores used with parallel
+#' @docType methods
+#' rdname methods-profile
+setMethods("buildProfileMat",
+  signature = signature(object = "profile",mc = "numeric"),
+  definition = function(object,mc=8){
+  if(object@.coverageCalculated){
+    ma <- function(x,n) filter(x,rep(1/n,n),sides = 2)
+    chr = names(seqlengths(regions(object)))
+    matList = lapply(chr,function(chrom,object,mc){
+    ll = length(regions(object)[[chrom]])
+    regionStart = start(regions(object)[[chrom]])
+    regionEnd = end(regions(object)[[chrom]])
+    stepList = profileCurve(object)[[chrom]]
+    bw = bandwidth(object)
+    mclapply(1:ll,function(i,regionStart,regionEnd,stepList,bw){
+      z = stepList[[i]]
+      xp = cumsum(runLength(z)[1:(nrun(z)-1)])
+      yp = runValue(z)
+      x = seq(regionStart[i],regionEnd[i],by=1)
+      y = stepfun(xp,yp)(x)
+      y =  ma(y,bw)
+      side = (bw-1)/2
+      y = y[-c(1:side)]
+      y = y[1:(length(y) - side)]                            
+    return(y)},regionStart,regionEnd,stepList,bw,mc.cores = mc)
+    },object,mc)
+    matList = lapply(matList,function(x)do.call(rbind,x))
+    matList = do.call(rbind,matList)   
+    return(matList)
+  }else{
+    warning("The coverage haven't been calculated yet")
+  }
+})    
+
 

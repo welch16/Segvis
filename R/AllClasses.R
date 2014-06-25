@@ -14,6 +14,7 @@
 #' @slot .haveRegions - logical - Indicates if the object have the regions loaded
 #' @slot .haveReads - logical - Indicates if the object have the reads loaded
 #' @slot .readsMatched - logical - Indicates if the read have been matched to the regions
+#' @slot .coverageCalculated - logical - Indicates if the coverage has been calculated
 #' @exportClass profile
 setClass("profile",
   representation(name = "character",
@@ -27,7 +28,8 @@ setClass("profile",
                  profileCurve = "list",
                  .haveRegions = "logical",
                  .haveReads = "logical",
-                 .readsMatched = "logical"
+                 .readsMatched = "logical",
+                 .coverageCalculated = "logical"
                  ),
   prototype = prototype(name = "",
     regions = GRangesList(),
@@ -40,7 +42,8 @@ setClass("profile",
     profileCurve = list(),
     .haveRegions = FALSE,
     .haveReads = FALSE,
-    .readsMatched = FALSE)
+    .readsMatched = FALSE,
+    .coverageCalculated = FALSE)
 )    
 
 setValidity("profile",
@@ -89,7 +92,7 @@ setValidity("reads",
 #' @slot name - Character with the name of the profiles
 #' @slot regions - GRanges with the regions
 #' @slot mat - Matrix - Actual profile matrix
-#' @slot maxBandwidth - Numeric - Odd number representing the max. possible bandwidith
+#' @slot bandwidth - Numeric value used to smooth the individual coverages
 #' @slot normConst - Numeric Normalizing constant
 #' @slot .isScaled - Logical representing if the profile matrix is scaled
 #' @exportClass profileMatrix
@@ -97,14 +100,14 @@ setClass("profileMatrix",
   representation(name = "character",
                  regions = "GRanges",
                  mat = "matrix",
-                 maxBandwidth = "numeric",                 
+                 bandwidth = "numeric",                 
                  normConst = "numeric",
                  .isScaled = "logical"),
   contains = "GRanges",
   prototype = prototype(name = "",
                  regions = GRanges(),
                  mat = matrix(nrow=0,ncol = 0),
-                 maxBandwidth = 1,
+                 bandwidth = 1,
                  normConst = 1,
                  .isScaled = FALSE)
 )    
