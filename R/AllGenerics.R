@@ -1,6 +1,8 @@
 
 # Generic methods for several classes
 
+## Get methods
+
 #' name
 #'
 #' @param profile object
@@ -21,6 +23,34 @@ setGeneric("name",
 setGeneric("regions",
   function(object,...)
   standardGeneric("regions")
+)
+
+## Set methods
+
+#' setName
+#'
+#' @param profile object
+#' @param newName character
+#' @return profile object
+#' @export
+#' @docType methods
+#' @rdname profile-methods
+setGeneric("setName",
+  function(object,newName)
+  standardGeneric("setName")           
+)
+
+#' setRegions
+#'
+#' @param profile object
+#' @param newRegions GRangesList
+#' @return profile object
+#' @export
+#' docType methods
+#' @rdname profile-methods
+setGeneric("setRegions",
+  function(object,newRegions)
+  standardGeneric("setRegions")
 )
 
 # Generic methods for profile class
@@ -108,32 +138,6 @@ setGeneric("profileCurve",
 )  
     
 ## Set methods
-
-#' setName
-#'
-#' @param profile object
-#' @param newName character
-#' @return profile object
-#' @export
-#' @docType methods
-#' @rdname profile-methods
-setGeneric("setName",
-  function(object,newName)
-  standardGeneric("setName")           
-)
-
-#' setRegions
-#'
-#' @param profile object
-#' @param newRegions GRangesList
-#' @return profile object
-#' @export
-#' docType methods
-#' @rdname profile-methods
-setGeneric("setRegions",
-  function(object,newRegions)
-  standardGeneric("setRegions")
-)
 
 #' setMaxBandwidth
 #'
@@ -300,6 +304,8 @@ setGeneric("match2",
 
 # Generic methods for profileMatrix class
 
+## Get methods
+
 #' profMat
 #'
 #' @param object. profileMatrix
@@ -336,9 +342,45 @@ setGeneric("normConst",
   standardGeneric("normConst")           
 )           
 
+## Set methods
 
+#' setProfMat
+#'
+#' @param object. profileMatrix
+#' @param newProfMat matrix object. A matrix with a the profile for each region
+#' @return profileMatrix object
+#' @export
+#' @docType methods
+#' @rdname profileMatrix-methods
+setGeneric("setProfMat",
+  function(object,newProfMatrix)
+  standardGeneric("setProfMat")
+)           
 
+#' setBandwidth
+#'
+#' @param object. profileMatrix
+#' @param newBandwidth. Numeric value with the bandwidth used to smooth the profile in profileMatrix object
+#' @return profileMatrix object
+#' @export
+#' @docType methods
+#' @rdname profileMatrix-methods
+setGeneric("setBandwidth",
+  function(object,newBandwidth)
+  standardGeneric("setBandwidth")
+)           
 
+#' setNormConst
+#'
+#' @param object. profileMatrix
+#' @param newNormConst Numeric value with the constant used to normalize the profile
+#' @return profileMatrix object
+#' @export
+#' @docType methods
+#' @rdname profileMatrix-methods
+setGeneric("setNormConst",
+  function(object,newNormConst)
+  standardGeneric("setNormConst")
+)           
 
-              
-
+            
