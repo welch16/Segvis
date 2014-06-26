@@ -46,6 +46,20 @@ setGeneric("fileFormat",
   standardGeneric("fileFormat")         
 )
 
+#' maxBandwidth
+#'
+#' @param profile object
+#' @return numeric. A number with the max bandwidth possible to smooth the profiles
+#' @export
+#' @docType methods
+#' @rdname profile-methods
+#' maxBandwidth
+#'
+setGeneric("maxBandwidth",
+  function(object,...)
+  standardGeneric("maxBandwidth")           
+)
+           
 #' fragLen
 #'
 #' @param profile object
@@ -55,17 +69,6 @@ setGeneric("fileFormat",
 setGeneric("fragLen",
   function(object,...)
   standardGeneric("fragLen")           
-)
-
-#' bandwidth
-#'
-#' @param profile object
-#' @return numeric. A numeric value representing the bandwidth used to smooth the average coverage plot
-#' @export
-#' @docType methods
-setGeneric("bandwidth",
-  function(object,...)
-  standardGeneric("bandwidth")           
 )
 
 #' readsList
@@ -130,6 +133,19 @@ setGeneric("setRegions",
   standardGeneric("setRegions")
 )
 
+#' setMaxBandwidth
+#'
+#' @param profile object
+#' @param newMaxBandwidth Numeric value, must be odd and greater or equal than one
+#' @return profile object
+#' @export
+#' @docType methods
+#' @rdname profile-methods
+setGeneric("setMaxBandwidth",
+  function(object,newMaxBandwidth)
+  standardGeneric("setMaxBandwidth")
+)           
+
 #' setFragLen
 #'
 #' @param profile object
@@ -141,19 +157,6 @@ setGeneric("setRegions",
 setGeneric("setFragLen",
   function(object,newFragLen)
   standardGeneric("setFragLen")
-)           
-
-#' setBandwidth
-#'
-#' @param profile object
-#' @param newBandwidth Numeric value, must be greater of equal to one
-#' @return profile object
-#' @export
-#' @docType methods
-#' @rdname profile-methods
-setGeneric("setBandwidth",
-  function(object,newBandwidth)
-  standardGeneric("setBandwidth")
 )           
 
 #' loadReads
@@ -198,13 +201,14 @@ setGeneric("getCoverage",
 #' buildProfileMat
 #'
 #' @param profile object
+#' @param bw, the bandwidth used to smooth the profiles
 #' @param mc, the number of cores used with parallel
 #' @return list object
 #' @export
 #' @docType methods
 #' rdname methods-profile
 setGeneric("buildProfileMat",
-  function(object,mc)
+  function(object,bw,mc)
   standardGeneric("buildProfileMat")
 )
 

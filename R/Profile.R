@@ -4,12 +4,12 @@
 #' @param files - Character vector with files that contain the reads
 #' @param fileFormat - Character vector with the file format used
 #' @param fl - Numeric value of the fragment length used to extend the reads
-#' @param bw - Numeric value of the bandwidth used to smooth the coverage
+#' @param maxBw - Numeric value of the maximum possible value to smooth the profile curve
 #' @export
 #' @return A profile object
 
-Profile <- function(regionName,files,fileF,fl,bw)
+Profile <- function(regionName,files,fileF,maxBw,fl)
 {
   return(new("profile",name = regionName,files = files,fileFormat = tolower(fileF),
-    fragLen = fl, bandwidth = bw))
+    maxBandwidth = maxBw, fragLen = fl))
 }

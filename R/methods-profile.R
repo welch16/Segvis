@@ -47,6 +47,17 @@ setMethods("fileFormat",
   definition = function(object)object@fileFormat
 )           
 
+#' maxBandwidth
+#'
+#' @param profile object
+#' @return numeric. A number with the max bandwidth possible to smooth the profiles
+#' @docType methods
+#' @rdname profile-methods
+setMethods("maxBandwidth",
+  signature = signature(object = "profile"),
+  definition = function(object)object@maxBandwidth
+)           
+
 #' fragLen
 #'
 #' @param profile object
@@ -56,18 +67,6 @@ setMethods("fileFormat",
 setMethods("fragLen",
   signature = signature(object = "profile"),
   definition = function(object)object@fragLen
-)           
-
-
-#' bandwidth
-#'
-#' @param profile object
-#' @return numeric. A numeric value representing the bandwidth used to smooth the average coverage plot
-#' @docType methods
-#' @rdname profile-methods
-setMethods("bandwidth",
-  signature = signature(object = "profile"),
-  definition = function(object)object@bandwidth
 )           
 
 #' readsList
@@ -135,10 +134,26 @@ setMethods("setRegions",
     return(object)
 })
 
+#' setMaxBandwidth
+#'
+#' @param profile object
+#' @param newMaxBandwidth Numeric value, must be odd and greater or equal than one
+#' @return profile object
+#' @docType methods
+#' @rdname profile-methods
+setMethods("setMaxBandwidth",
+  signature = signature(object = "profile", newMaxBandwidth = "numeric"),
+  definition = function(object,newMaxBandwidth){
+    stopifnot(newMaxBandwidth >= 1)
+    stopifnot(newMaxBandwidth %% 2 == 0)
+    object@maxBandwidth = newMaxBandwidth
+    return(object)
+})    
+
 #' setFragLen
 #'
 #' @param profile object
-#' @param newFragLen Numeric value, must be greater of equal to zero
+#' @param newFragLen Numeric value, must be greater or equal to zero
 #' @return profile object
 #' @docType methods
 #' @rdname profile-methods
@@ -148,22 +163,6 @@ setMethods("setFragLen",
     stopifnot(newFragLen >= 0)
     stopifnot(newFragLen == floor(newFragLen))
     object@fragLen = newFraLen
-    return(object)
-})    
-
-#' setBandwidth
-#'
-#' @param profile object
-#' @param newBandwidth Numeric value, must be greater of equal to one
-#' @return profile object
-#' @docType methods
-#' @rdname profile-methods
-setMethods("setBandwidth",
-  signature = signature(object = "profile",newBandwidth = "numeric"),
-  definition = function(object,newBandwidth){
-    stopifnot(newBandwidth >= 1)
-    stopifnot(newBandwidth == floor(newBandwidth))
-    object@bandwidth = newBandwidth
     return(object)
 })    
 
@@ -178,7 +177,7 @@ setMethods("show",
     cat("---------------------------\n")
     cat("Profile for",name(object),"peaks\n")
     cat("Fragment length:",fragLen(object),"\n")
-    cat("Bandwidth:",bandwidth(object),"\n")
+    cat("Max Bandwidth:", maxBandwidth(object),"\n")
     if(q <- length(regions(object)) > 0){
       cat("Using regions for",length(regions(object)),"chromosomes\n")
     }else{
@@ -287,11 +286,12 @@ setMethods("getCoverage",
 #'
 #' @param profile object
 #' @param mc, the number of cores used with parallel
+#' @param bw, the bandwidth used to smooth the profile
 #' @docType methods
 #' rdname methods-profile
 setMethods("buildProfileMat",
-  signature = signature(object = "profile",mc = "numeric"),
-  definition = function(object,mc=8){
+  signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
+  definition = function(object,bw,mc=8){
   if(object@.coverageCalculated){
     ma <- function(x,n) filter(x,rep(1/n,n),sides = 2)
     chr = names(seqlengths(regions(object)))
@@ -300,7 +300,6 @@ setMethods("buildProfileMat",
     regionStart = start(regions(object)[[chrom]])
     regionEnd = end(regions(object)[[chrom]])
     stepList = profileCurve(object)[[chrom]]
-    bw = bandwidth(object)
     mclapply(1:ll,function(i,regionStart,regionEnd,stepList,bw){
       z = stepList[[i]]
       xp = cumsum(runLength(z)[1:(nrun(z)-1)])
@@ -308,7 +307,7 @@ setMethods("buildProfileMat",
       x = seq(regionStart[i],regionEnd[i],by=1)
       y = stepfun(xp,yp)(x)
       y =  ma(y,bw)
-      side = (bw-1)/2
+      side = (bw-1)/2 ##
       y = y[-c(1:side)]
       y = y[1:(length(y) - side)]                            
     return(y)},regionStart,regionEnd,stepList,bw,mc.cores = mc)
@@ -320,5 +319,3 @@ setMethods("buildProfileMat",
     warning("The coverage haven't been calculated yet")
   }
 })    
-
-

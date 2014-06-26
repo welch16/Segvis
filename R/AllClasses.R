@@ -6,23 +6,23 @@
 #' @slot regions - List with the regions for which the coverage is going to be calculated
 #' @slot files - Character with the files which contains the reads
 #' @slot fileFormat - Character with the file format used for the reads
+#' @slot maxBandwidth - Numeric - maximum bandwidth accepted when smoothing profiles. Must be odd
 #' @slot fragLen - Numeric fragment length to extend the reads
-#' @slot bandwidth - Numeric value used to smooth the individual coverages
 #' @slot readsList - List of reads objects
 #' @slot matchList - List of match objects
 #' @slot profileCuve - RleList - For each region, there is a Rle object
 #' @slot .haveRegions - logical - Indicates if the object have the regions loaded
 #' @slot .haveReads - logical - Indicates if the object have the reads loaded
 #' @slot .readsMatched - logical - Indicates if the read have been matched to the regions
-#' @slot .coverageCalculated - logical - Indicates if the coverage has been calculated
+#' @slot .coverageCalculated - logical - Indicates if the coverage has been calculated]
 #' @exportClass profile
 setClass("profile",
   representation(name = "character",
                  regions = "GRangesList",
                  files = "character",
                  fileFormat = "character",
+                 maxBandwidth = "numeric",
                  fragLen = "numeric",
-                 bandwidth = "numeric",
                  readsList = "list",
                  matchList = "list",
                  profileCurve = "list",
@@ -35,8 +35,8 @@ setClass("profile",
     regions = GRangesList(),
     files = "",
     fileFormat = "",
+    maxBandwidth = 1,
     fragLen = 0,
-    bandwidth = 1,
     readsList = list(),
     matchList = list(),
     profileCurve = list(),
@@ -51,7 +51,7 @@ setValidity("profile",
   # Checks that readsList and matchList have same length
   match.length = length(object@matchList)
   reads.length = length(object@readsList)
-  return(match.length == reads.length & object@fragLen >=0 & object@bandwidth >=1 & tolower(object@fileFormat) == "bam")
+  return(match.length == reads.length & object@fragLen >=0&object@maxBandwidth >=1  & tolower(object@fileFormat) == "bam")
 }
 )  
 
