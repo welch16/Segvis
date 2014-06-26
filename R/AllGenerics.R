@@ -1,7 +1,5 @@
 
-# Generic methods for profile class
-
-##  Get methods
+# Generic methods for several classes
 
 #' name
 #'
@@ -24,6 +22,10 @@ setGeneric("regions",
   function(object,...)
   standardGeneric("regions")
 )
+
+# Generic methods for profile class
+
+##  Get methods
 
 #' files
 #'
@@ -296,4 +298,47 @@ setGeneric("match2",
   standardGeneric("match2")
 )           
 
+# Generic methods for profileMatrix class
+
+#' profMat
+#'
+#' @param object. profileMatrix
+#' @return matrix object. A matrix with a the profile for each region
+#' @export
+#' @docType methods
+#' @rdname profileMatrix-methods
+setGeneric("profMat",
+  function(object)
+  standardGeneric("profMat")           
+)        
+
+#' bandwidth
+#'
+#' @param object. profileMatrix
+#' @return numeric. The bandwidth used to smooth the profile in profileMatrix object
+#' @export
+#' @docType methods
+#' @rdname profileMatrix-methods
+setGeneric("bandwidth",
+  function(object)
+  standardGeneric("bandwidth")           
+)           
+
+#' normConst
+#'
+#' @param object. profileMatrix
+#' @return numeric. The constant used to normalize the profile
+#' @export
+#' @docType methods
+#' @rdname profileMatrix-methods
+setGeneric("normConst",
+  function(object)
+  standardGeneric("normConst")           
+)           
+
+
+
+
+
+              
 
