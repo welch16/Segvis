@@ -233,16 +233,17 @@ setMethods("matchReads",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object,mc = 8){
     if(object@.haveReads & object@.haveRegions){
+      side = (maxBandwidth(object)-1)/2
       chr = names(seqlengths(regions(object)))      
       m1 = lapply(readsList(object),function(x,chr,object,mc){
-        z = mclapply(chr,function(chrom,x,object)match_reads(start(regions(object)[[chrom]]),
-          end(regions(object)[[chrom]]),start(reads1(x)[[chrom]]),end(reads1(x)[[chrom]]),
+        z = mclapply(chr,function(chrom,x,object)match_reads(start(regions(object)[[chrom]])-side,
+          end(regions(object)[[chrom]])+side,start(reads1(x)[[chrom]]),end(reads1(x)[[chrom]]),
           as.character(strand(reads1(x)[[chrom]])),fragLen(object)),x,object, mc.cores=mc)
         names(z) = chr
         return(z)},chr,object,mc)
       m2 = lapply(readsList(object),function(x,chr,object,mc){
-        z = mclapply(chr,function(chrom,x,object)match_reads(start(regions(object)[[chrom]]),
-          end(regions(object)[[chrom]]),start(reads2(x)[[chrom]]),end(reads2(x)[[chrom]]),
+        z = mclapply(chr,function(chrom,x,object)match_reads(start(regions(object)[[chrom]])-side,
+          end(regions(object)[[chrom]])+side,start(reads2(x)[[chrom]]),end(reads2(x)[[chrom]]),
           as.character(strand(reads2(x)[[chrom]])),fragLen(object)),x,object, mc.cores=mc)
         names(z) = chr
         return(z)},chr,object,mc)
@@ -295,23 +296,27 @@ setMethods("buildProfileMat",
   if(object@.coverageCalculated){
     ma <- function(x,n) filter(x,rep(1/n,n),sides = 2)
     chr = names(seqlengths(regions(object)))
-    matList = lapply(chr,function(chrom,object,mc){
-    ll = length(regions(object)[[chrom]])
-    regionStart = start(regions(object)[[chrom]])
-    regionEnd = end(regions(object)[[chrom]])
-    stepList = profileCurve(object)[[chrom]]
-    mclapply(1:ll,function(i,regionStart,regionEnd,stepList,bw){
-      z = stepList[[i]]
-      xp = cumsum(runLength(z)[1:(nrun(z)-1)])
-      yp = runValue(z)
-      x = seq(regionStart[i],regionEnd[i],by=1)
-      y = stepfun(xp,yp)(x)
-      y =  ma(y,bw)
-      side = (bw-1)/2 ##
-      y = y[-c(1:side)]
-      y = y[1:(length(y) - side)]                            
-    return(y)},regionStart,regionEnd,stepList,bw,mc.cores = mc)
-    },object,mc)
+    side = (maxBandwidth(object)-1)/2
+    matList = lapply(chr,function(chrom,object,side,mc){
+      ll = length(regions(object)[[chrom]])
+      regionStart = start(regions(object)[[chrom]])-side
+      regionEnd = end(regions(object)[[chrom]])+side
+      stepList = profileCurve(object)[[chrom]]
+      mclapply(1:ll,function(i,regionStart,regionEnd,stepList,bw,side){        
+        z = stepList[[i]]
+        x = seq(regionStart[i],regionEnd[i],by=1)
+        if(nrun(z)==1){
+          y = rep(runValue(z),length(x))
+        }else{
+          xp = cumsum(runLength(z)[1:(nrun(z)-1)])       
+          yp = runValue(z)        
+          y = stepfun(xp,yp)(x)
+          y =  ma(y,bw)
+        }              
+        y = y[-c(1:side)]
+        y = y[1:(length(y) - side)]                            
+    return(y)},regionStart,regionEnd,stepList,bw,side,mc.cores = mc)
+      },object,side,mc)
     matList = lapply(matList,function(x)do.call(rbind,x))
     matList = do.call(rbind,matList)   
     return(matList)
