@@ -199,13 +199,17 @@ setMethods("loadReads",
   definition = function(object,mc = 8){
     if(fileFormat(object) == "bam"){
       chr = names(seqlengths(regions(object)))
-      greads = lapply(files(object),FUN = readGAlignmentsFromBam,param = NULL,use.names = FALSE)     
-      greads = lapply(greads,FUN = as, "GRanges")     
+      message("Starting to read bam files")
+      greads = lapply(files(object),FUN = readGAlignmentsFromBam,param = NULL,use.names = FALSE)      
+      greads = lapply(greads,FUN = as, "GRanges")
+      message("Bam files loaded")
+      message("Separating by chromosome")
       greads = lapply(greads,function(x,chr,mc){
         z =mclapply(chr,function(i,x)subset(x, subset = as.character(seqnames(x)) == i),x,mc.cores = mc);
         names(z) = chr;
         return(z)
         },chr,mc)
+      message("Separating reads by strand")
       gr1 = lapply(greads,function(x,mc)
           mclapply(x,function(y)sort_by_strand(subset(y,subset = as.character(strand(y)) == "+"),"+"),
                  mc.cores = mc),mc)      
@@ -217,7 +221,9 @@ setMethods("loadReads",
       object@readsList = lapply(1:length(gr1),function(i,gr1,gr2)
         new("reads",reads1 = gr1[[i]],reads2 = gr2[[i]]),gr1,gr2)
       object@.haveReads = TRUE
-       return(object)
+      message("Reading bam files... Done")
+      return(object)
+
     }else{
       warning("loadReads method only defined for bam file format")
     }
@@ -234,19 +240,28 @@ setMethods("matchReads",
   definition = function(object,mc = 8){
     if(object@.haveReads & object@.haveRegions){
       side = (maxBandwidth(object)-1)/2
-      chr = names(seqlengths(regions(object)))      
+      chr = names(seqlengths(regions(object)))
+      message("Matching reads for + strand")
       m1 = lapply(readsList(object),function(x,chr,object,mc){
-        z = mclapply(chr,function(chrom,x,object)match_reads(start(regions(object)[[chrom]])-side,
+        z = mclapply(chr,function(chrom,x,object){          
+          message(chrom," started");          
+          mm1 =match_reads(start(regions(object)[[chrom]])-side,
           end(regions(object)[[chrom]])+side,start(reads1(x)[[chrom]]),end(reads1(x)[[chrom]]),
-          as.character(strand(reads1(x)[[chrom]])),fragLen(object)),x,object, mc.cores=mc)
+          as.character(strand(reads1(x)[[chrom]])),fragLen(object));
+          message(chrom," done");return(mm1)},x,object, mc.cores=mc)
         names(z) = chr
         return(z)},chr,object,mc)
-      m2 = lapply(readsList(object),function(x,chr,object,mc){
-        z = mclapply(chr,function(chrom,x,object)match_reads(start(regions(object)[[chrom]])-side,
-          end(regions(object)[[chrom]])+side,start(reads2(x)[[chrom]]),end(reads2(x)[[chrom]]),
-          as.character(strand(reads2(x)[[chrom]])),fragLen(object)),x,object, mc.cores=mc)
+      message("+ strand done")
+      message("Matching reads for - strand")
+      m2 = lapply(readsList(object),function(x,chr,object,mc){        
+        z = mclapply(chr,function(chrom,x,object){message(chrom," started");
+          mm2=match_reads(start(regions(object)[[chrom]])-side,end(regions(object)[[chrom]])+side,
+            start(reads2(x)[[chrom]]),end(reads2(x)[[chrom]]),
+          as.character(strand(reads2(x)[[chrom]])),fragLen(object));
+          message(chrom," done");return(mm2)},x,object, mc.cores=mc)
         names(z) = chr
         return(z)},chr,object,mc)
+      message("- strand done")
       object@matchList = lapply(1:length(m1),function(i,m1,m2)
         new("match",match1 = m1[[i]],match2 = m2[[i]]),m1,m2)
       object@.readsMatched = TRUE
@@ -267,7 +282,7 @@ setMethods("getCoverage",
   definition = function(object, mc = 8){
     if(object@.readsMatched == TRUE){
       chr = names(seqlengths(regions(object)))     
-      object@profileCurve = lapply(chr,function(chrom,object,mc){       
+      object@profileCurve = lapply(chr,function(chrom,object,mc){message("Retrieving reads for ",chrom)
          ll = length(regions(object)[[chrom]])
          r1 = reads1(readsList(object)[[1]])[[chrom]]
          r2 = reads2(readsList(object)[[1]])[[chrom]]
