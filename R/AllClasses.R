@@ -8,6 +8,7 @@
 #' @slot fileFormat - Character with the file format used for the reads
 #' @slot maxBandwidth - Numeric - maximum bandwidth accepted when smoothing profiles. Must be odd
 #' @slot fragLen - Numeric fragment length to extend the reads
+#' @slot remChr - Character - Vector with the chromosomes to be ignored
 #' @slot readsList - List of reads objects
 #' @slot matchList - List of match objects
 #' @slot profileCuve - RleList - For each region, there is a Rle object
@@ -23,6 +24,7 @@ setClass("profile",
                  fileFormat = "character",
                  maxBandwidth = "numeric",
                  fragLen = "numeric",
+                 remChr = "character",
                  readsList = "list",
                  matchList = "list",
                  profileCurve = "list",
@@ -37,6 +39,7 @@ setClass("profile",
     fileFormat = "",
     maxBandwidth = 1,
     fragLen = 0,
+    remChr = "",
     readsList = list(),
     matchList = list(),
     profileCurve = list(),

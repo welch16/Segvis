@@ -97,11 +97,23 @@ setGeneric("maxBandwidth",
 #' @param profile object
 #' @return numeric. A numeric value representing the width of the extended fragment reads
 #' @export
-#' @docType methods
+#' @docType method
+#' @rdname profile-method
 setGeneric("fragLen",
   function(object,...)
   standardGeneric("fragLen")           
 )
+
+#' remChr
+#' @param profile object
+#' @return character. A character vector representing the chromosomes to be ignored
+#' @export
+#' @docType methods
+#' @rdname profile-method
+setGeneric("remChr",
+  function(object,...)
+  standardGeneric("remChr")
+)           
 
 #' readsList
 #'
@@ -109,6 +121,7 @@ setGeneric("fragLen",
 #' @return list. A list made off reads objects. One list for each replicate. Must coincide with size of bedfiles
 #' @export
 #' @docType methods
+#' @rdname profile-method
 setGeneric("readsList",
   function(object,...)
   standardGeneric("readsList")           
@@ -120,7 +133,7 @@ setGeneric("readsList",
 #' @return list. A list made off match objects. One list for each replicate. Must coincide with size of bedfiles
 #' @export
 #' @docType methods
-#' @rdname profile-methods
+#' @rdname profile-method
 setGeneric("matchList",
   function(object,...)
   standardGeneric("matchList")           
@@ -163,6 +176,19 @@ setGeneric("setMaxBandwidth",
 setGeneric("setFragLen",
   function(object,newFragLen)
   standardGeneric("setFragLen")
+)           
+
+#' setRemChr
+#'
+#' @param profile object
+#' @param newRemChr Character vector, with the chromosomes to be removed
+#' @return profile object
+#' @export
+#' @docType methods
+#' @rdname profile-methods
+setGeneric("setRemChr",
+  function(object,newRemChr)
+  standardGeneric("setRemChr")
 )           
 
 #' loadReads

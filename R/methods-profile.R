@@ -69,6 +69,17 @@ setMethods("fragLen",
   definition = function(object)object@fragLen
 )           
 
+#' remChr
+#'
+#' @param profile object
+#' @return character. A character vector with the list of chromosomes to be ignored
+#' @docType methods
+#' @rdname profile-methods
+setMethods("remChr",
+  signature = signature(object = "profile"),
+  definition = function(object)object@remChr
+)           
+
 #' readsList
 #'
 #' @param profile object
@@ -166,6 +177,21 @@ setMethods("setFragLen",
     return(object)
 })    
 
+#' setRemChr
+#'
+#' @param profile object
+#' @param newRemChr Character, list of chromosomes to be ignored
+#' @return profile object
+#' @docType methods
+#' @rdname profile-methods
+setMethods("setRemChr",
+  signature = signature(object = "profile",newRemChr = "character"),
+  definition = function(object,newRemChr){
+    stopifnot(is.character(newRemChr))
+    object@remChr = newRemChr
+    return(object)
+})
+              
 #' show
 #'
 #' @param profile object
@@ -199,6 +225,7 @@ setMethods("loadReads",
   definition = function(object,mc = 8){
     if(fileFormat(object) == "bam"){
       chr = names(seqlengths(regions(object)))
+      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
       message("Starting to read bam files")
       greads = lapply(files(object),FUN = readGAlignmentsFromBam,param = NULL,use.names = FALSE)      
       greads = lapply(greads,FUN = as, "GRanges")
@@ -223,7 +250,6 @@ setMethods("loadReads",
       object@.haveReads = TRUE
       message("Reading bam files... Done")
       return(object)
-
     }else{
       warning("loadReads method only defined for bam file format")
     }
@@ -241,6 +267,7 @@ setMethods("matchReads",
     if(object@.haveReads & object@.haveRegions){
       side = (maxBandwidth(object)-1)/2
       chr = names(seqlengths(regions(object)))
+      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
       message("Matching reads for + strand")
       m1 = lapply(readsList(object),function(x,chr,object,mc){
         z = mclapply(chr,function(chrom,x,object){          
@@ -281,7 +308,8 @@ setMethods("getCoverage",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object, mc = 8){
     if(object@.readsMatched == TRUE){
-      chr = names(seqlengths(regions(object)))     
+      chr = names(seqlengths(regions(object)))
+      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
       object@profileCurve = lapply(chr,function(chrom,object,mc){message("Retrieving reads for ",chrom)
          ll = length(regions(object)[[chrom]])
          r1 = reads1(readsList(object)[[1]])[[chrom]]
@@ -311,6 +339,7 @@ setMethods("buildProfileMat",
   if(object@.coverageCalculated){
     ma <- function(x,n) filter(x,rep(1/n,n),sides = 2)
     chr = names(seqlengths(regions(object)))
+    if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
     side = (maxBandwidth(object)-1)/2
     matList = lapply(chr,function(chrom,object,side,mc){
       ll = length(regions(object)[[chrom]])
