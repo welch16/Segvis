@@ -320,6 +320,7 @@ setMethods("getCoverage",
       return(z)},object,chrom,r1,r2,mc.cores = mc)},object,mc)
       names(object@profileCurve) = chr
       object@.coverageCalculated = TRUE
+      message("Coverage done")
       return(object)     
     }else{
       warning("The reads haven't been matched yet")
@@ -342,6 +343,7 @@ setMethods("buildProfileMat",
     if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
     side = (maxBandwidth(object)-1)/2
     matList = lapply(chr,function(chrom,object,side,mc){
+      message("Calculating profile for ",chrom)
       ll = length(regions(object)[[chrom]])
       regionStart = start(regions(object)[[chrom]])-side
       regionEnd = end(regions(object)[[chrom]])+side
@@ -362,7 +364,8 @@ setMethods("buildProfileMat",
     return(y)},regionStart,regionEnd,stepList,bw,side,mc.cores = mc)
       },object,side,mc)
     matList = lapply(matList,function(x)do.call(rbind,x))
-    matList = do.call(rbind,matList)   
+    matList = do.call(rbind,matList)
+    message("Profile matrix built")
     return(matList)
   }else{
     warning("The coverage haven't been calculated yet")
