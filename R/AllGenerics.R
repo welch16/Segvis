@@ -8,7 +8,8 @@
 #' @param profile object
 #' @return chracter. The name of the profile object
 #' @export
-#' docType methods
+#' @docType methods
+#' @rdname profile-methods
 setGeneric("name",
   function(object,...)
   standardGeneric("name")
@@ -20,6 +21,7 @@ setGeneric("name",
 #' @return GRangesList. The regions used to calculate the coverage plots, as a GRangesList separated by chromosome
 #' @export
 #' @docType methods
+#' @rdname profile-methods
 setGeneric("regions",
   function(object,...)
   standardGeneric("regions")
@@ -46,7 +48,7 @@ setGeneric("setName",
 #' @param newRegions GRangesList
 #' @return profile object
 #' @export
-#' docType methods
+#' @docType methods
 #' @rdname profile-methods
 setGeneric("setRegions",
   function(object,newRegions)
@@ -63,6 +65,7 @@ setGeneric("setRegions",
 #' @return character. A chracter vector with the names of the bedfiles used to create the readsList object
 #' @export
 #' @docType methods
+#' @rdname profile-methods
 setGeneric("files",
   function(object,...)
   standardGeneric("files")           
@@ -73,6 +76,7 @@ setGeneric("files",
 #' @return character. A character that contains the file format used
 #' @export
 #' @docType methods
+#' @rdname profile-methods
 setGeneric("fileFormat",
   function(object,...)
   standardGeneric("fileFormat")         
@@ -85,8 +89,6 @@ setGeneric("fileFormat",
 #' @export
 #' @docType methods
 #' @rdname profile-methods
-#' maxBandwidth
-#'
 setGeneric("maxBandwidth",
   function(object,...)
   standardGeneric("maxBandwidth")           
@@ -98,7 +100,7 @@ setGeneric("maxBandwidth",
 #' @return numeric. A numeric value representing the width of the extended fragment reads
 #' @export
 #' @docType method
-#' @rdname profile-method
+#' @rdname profile-methods
 setGeneric("fragLen",
   function(object,...)
   standardGeneric("fragLen")           
@@ -238,7 +240,7 @@ setGeneric("getCoverage",
 #' @return list object
 #' @export
 #' @docType methods
-#' rdname methods-profile
+#' @rdname profile-methods
 setGeneric("buildProfileMat",
   function(object,bw,mc)
   standardGeneric("buildProfileMat")
