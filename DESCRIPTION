@@ -15,9 +15,12 @@ Collate: AllClasses.R
          methods-profile.R
          methods-reads.R
          methods-match.R
-         Profile.R
          extend_to_strand.R
          sort_by_strand.R
+         Profile.R
+         ProfileMatrix.R
+         RcppExports.R
+         methods-profileMatrix.R
 Imports:
     Rcpp (>= 0.11.0)
 LinkingTo: Rcpp
