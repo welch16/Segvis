@@ -3,26 +3,18 @@
 
 ## Get methods
 
-#' match1
-#'
-#' @param match object
-#' @return list The match of the reads with "+" strand
-#' @docType methods
 #' @rdname match-methods
+#' @name match1
+#' @aliases match
 setMethods("match1",
   signature = signature(object = "match"),
   definition = function(object)object@match1
 )           
 
-#' match2
-#'
-#' @param match object
-#' @return list The match of the reads with "-" strand
-#' @docType methods
 #' @rdname match-methods
+#' @name match2
+#' @aliases match
 setMethods("match2",
   signature = signature(object = "match"),
   definition = function(object)object@match2
 )
-
-
