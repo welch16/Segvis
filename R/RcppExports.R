@@ -10,7 +10,6 @@
 #' @param strand - as.character(strand(reads)) form GRanges
 #' @param fraglen - Numeric value, fragment length
 #' @return position in reads vector
-NULL
 
 match_reads <- function(regionStart, regionEnd, readStart, readEnd, strand, fraglen) {
     .Call('profile_match_reads', PACKAGE = 'profile', regionStart, regionEnd, readStart, readEnd, strand, fraglen)
