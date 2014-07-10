@@ -3,23 +3,17 @@
 
 ## Get methods
 
-#' reads1
-#'
-#' @param reads object
-#' @return GRangesList The reads of the "+" strand
-#' @docType methods
 #' @rdname reads-methods
+#' @name reads1
+#' @aliases reads
 setMethods("reads1",
   signature = signature(object = "reads"),
   definition = function(object)object@reads1
 )           
 
-#' reads2
-#'
-#' @param reads object
-#' @return GRangesList The reads of the "-" strand
-#' @docType methods
 #' @rdname reads-methods
+#' @name reads2
+#' @aliases reads
 setMethods("reads2",
   signature = signature(object = "reads"),
   definition = function(object)object@reads2
@@ -27,13 +21,9 @@ setMethods("reads2",
 
 ## Set methods
 
-#' setReads1
-#'
-#' @param reads object
-#' @param r1 GRangesList object, the new reads to set on the reads object
-#' @return reads object
-#' @docType methods
 #' @rdname reads-methods
+#' @name setReads1
+#' @aliases reads
 setMethods("setReads1",
   signature = signature(object = "reads",r1 = "GRangesList"),
   definition = function(object,r1){
@@ -41,13 +31,9 @@ setMethods("setReads1",
     return(object)
 })    
 
-#' setReads2
-#'
-#' @param reads object
-#' @param r2 GRangesList object, the new reads to set on the reads object
-#' @return reads object
-#' @docType methods
 #' @rdname reads-methods
+#' @name setReads2
+#' @aliases reads
 setMethods("setReads2",
   signature = signature(object = "reads",r2 = "GRangesList"),
   definition = function(object,r2){
@@ -55,11 +41,9 @@ setMethods("setReads2",
     return(object)
 })
 
-#' show
-#'
-#' @param reads object
-#' @docType methods
 #' @rdname reads-methods
+#' @name show
+#' @aliases reads
 setMethods("show",
   signature = signature(object = "reads"),
   definition = function(object){
@@ -73,16 +57,14 @@ setMethods("show",
     }
 })
 
-#' length
-#' 
-#' @param reads object
-#' @docType methods
-#' rdname reads-methods
+#' @rdname reads-methods
+#' @name length
+#' @aliases reads
 setMethods("length",
-  signature = signature(object = "reads"),
-  definition = function(object){   
-    len1 = sapply(reads1(object),FUN = length)
-    len2 = sapply(reads2(object),FUN = length)
+  signature = signature(x = "reads"),
+  definition = function(x){   
+    len1 = sapply(reads1(x),FUN = length)
+    len2 = sapply(reads2(x),FUN = length)
     return(sum(len1)+sum(len2))
 })           
 
