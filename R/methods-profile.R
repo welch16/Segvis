@@ -3,111 +3,81 @@
 
 ## Get methods
 
-#' name
-#'
-#' @param profile object
-#' @return character. The name of the object
-#' @docType methods
 #' @rdname profile-methods
+#' @name name
+#' @aliases profile
 setMethods("name",
   signature = signature(object = "profile"),
   definition = function(object)object@name
 )           
 
-#' regions
-#'
-#' @param profile object
-#' @return GRangesList. The regions used to calculate the coverage plots, as a GRangesList separated by chromosome
-#' @docType methods
 #' @rdname profile-methods
+#' @name regions
+#' @aliases profile
 setMethods("regions",
   signature = signature(object = "profile"),
   definition = function(object)object@regions
 )           
 
-#' files
-#'
-#' @param profile object
-#' @return chracter. A chracter vector with the names of the bedfiles used to create the readsList object
-#' @docType methods
 #' @rdname profile-methods
+#' @name files
+#' @aliases profile
 setMethods("files",
   signature = signature(object ="profile"),
   definition = function(object)object@files
 )           
 
-#' fileFormat
-#'
-#' @param profile object
-#' @return character. A character with the file format used
-#' @docType methods
 #' @rdname profile-methods
+#' @name fileFormat
+#' @aliases profile
 setMethods("fileFormat",
   signature = signature(object = "profile"),
   definition = function(object)object@fileFormat
 )           
 
-#' maxBandwidth
-#'
-#' @param profile object
-#' @return numeric. A number with the max bandwidth possible to smooth the profiles
-#' @docType methods
 #' @rdname profile-methods
+#' @name maxBandwidth
+#' @aliases profile
 setMethods("maxBandwidth",
   signature = signature(object = "profile"),
   definition = function(object)object@maxBandwidth
 )           
 
-#' fragLen
-#'
-#' @param profile object
-#' @return numeric. A numeric value representing the width of the extended fragment reads
-#' @docType methods
 #' @rdname profile-methods
+#' @name fragLen
+#' @aliases profile
 setMethods("fragLen",
   signature = signature(object = "profile"),
   definition = function(object)object@fragLen
 )           
 
-#' remChr
-#'
-#' @param profile object
-#' @return character. A character vector with the list of chromosomes to be ignored
-#' @docType methods
 #' @rdname profile-methods
+#' @name remChr
+#' @aliases profile
 setMethods("remChr",
   signature = signature(object = "profile"),
   definition = function(object)object@remChr
 )           
 
-#' readsList
-#'
-#' @param profile object
-#' @return list. A list made off reads objects. One list for each replicate. Must coincide with size of bedfiles
-#' docType methods
 #' @rdname profile-methods
+#' @name readsList
+#' @aliases profile
 setMethods("readsList",
   signature = signature(object = "profile"),
   definition = function(object)object@readsList           
 )
            
-#' matchList
-#'
-#' @param profile object
-#' @return list. A list made off match objects. One list for each replicate. Must coincide with size of bedfiles
-#' @docType methods
 #' @rdname profile-methods
+#' @name matchList
+#' @aliases profile
 setMethods("matchList",
   signature = signature(object = "profile"),
   definition = function(object)object@matchList
 )
 
-#' profileCurve
-#'
-#' @param profile object
-#' @return RleList. A list made of an Rle object for each region
-#' @docType methods
 #' @rdname profile-methods
+#' @name profileCurve
+#' @aliases profile
 setMethods("profileCurve",
   signature = signature(object = "profile"),
   definition = function(object)object@profileCurve
@@ -115,13 +85,9 @@ setMethods("profileCurve",
 
 ## Set methods
 
-#' setName
-#'
-#' @param profile object
-#' @param newName character
-#' @return profile object
-#' @docType methods
 #' @rdname profile-methods
+#' @name setName
+#' @aliases profile
 setMethods("setName",
   signature = signature(object = "profile",newName = "character"),
   definition = function(object,newName){
@@ -129,13 +95,9 @@ setMethods("setName",
     return(object)
 })
 
-#' setRegions
-#'
-#' @param profile object
-#' @param newRegions GRangesList
-#' @return profile object
-#' @docType methods
 #' @rdname profile-methods
+#' @name setRegions
+#' @aliases profile
 setMethods("setRegions",
   signature = signature(object = "profile",newRegions = "GRangesList"),
   definition = function(object,newRegions){
@@ -145,13 +107,9 @@ setMethods("setRegions",
     return(object)
 })
 
-#' setMaxBandwidth
-#'
-#' @param profile object
-#' @param newMaxBandwidth Numeric value, must be odd and greater or equal than one
-#' @return profile object
-#' @docType methods
 #' @rdname profile-methods
+#' @name setMaxBandwidth
+#' @aliases profile
 setMethods("setMaxBandwidth",
   signature = signature(object = "profile", newMaxBandwidth = "numeric"),
   definition = function(object,newMaxBandwidth){
@@ -161,13 +119,9 @@ setMethods("setMaxBandwidth",
     return(object)
 })    
 
-#' setFragLen
-#'
-#' @param profile object
-#' @param newFragLen Numeric value, must be greater or equal to zero
-#' @return profile object
-#' @docType methods
 #' @rdname profile-methods
+#' @name setFragLen
+#' @aliases profile
 setMethods("setFragLen",
   signature = signature(object = "profile",newFragLen = "numeric"),
   definition = function(object,newFragLen){
@@ -177,13 +131,9 @@ setMethods("setFragLen",
     return(object)
 })    
 
-#' setRemChr
-#'
-#' @param profile object
-#' @param newRemChr Character, list of chromosomes to be ignored
-#' @return profile object
-#' @docType methods
 #' @rdname profile-methods
+#' @name setRemChr
+#' @aliases profile
 setMethods("setRemChr",
   signature = signature(object = "profile",newRemChr = "character"),
   definition = function(object,newRemChr){
@@ -192,11 +142,9 @@ setMethods("setRemChr",
     return(object)
 })
               
-#' show
-#'
-#' @param profile object
-#' @docType methods
 #' @rdname profile-methods
+#' @name show
+#' @aliases profile
 setMethods("show",
   signature = signature(object = "profile"),
   definition = function(object){
@@ -214,12 +162,9 @@ setMethods("show",
     cat("---------------------------\n")
 })
           
-#' loadReads
-#'
-#' @param profile object
-#' @param mc numeric, the number of cores used with parallel
-#' @docType methods
 #' @rdname profile-methods
+#' @name loadReads
+#' @aliases profile
 setMethods("loadReads",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object,mc = 8){
@@ -255,12 +200,9 @@ setMethods("loadReads",
     }
 })
 
-#' matchReads
-#' 
-#' @param profile object
-#' @param mc numeric, the number of cores used with parallel
-#' @docType methods
 #' @rdname profile-methods
+#' @name matchReads
+#' @aliases profile
 setMethods("matchReads",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object,mc = 8){
@@ -298,12 +240,9 @@ setMethods("matchReads",
     }
 })
 
-#' getCoverage
-#'
-#' @param profile object
-#' @param mc, the number of cores used with parallel
-#' @docType methods
 #' @rdname profile-methods
+#' @name getCoverage
+#' @aliases profile
 setMethods("getCoverage",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object, mc = 8){
@@ -327,13 +266,9 @@ setMethods("getCoverage",
     }
 })    
 
-#' buildProfileMat
-#'
-#' @param profile object
-#' @param mc, the number of cores used with parallel
-#' @param bw, the bandwidth used to smooth the profile
-#' @docType methods
-#' rdname methods-profile
+#' @rdname profile-methods
+#' @name buildProfileMat
+#' @aliases profile
 setMethods("buildProfileMat",
   signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc=8){
