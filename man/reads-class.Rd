@@ -4,8 +4,7 @@
 \alias{reads-class}
 \title{reads class}
 \description{
-Contains the reads obtained in a ChIP - seq experiment separated by strand (for efficiency) and
-then by chromosome.
+Contains the reads obtained in a ChIP - seq experiment separated by strand and then by chromosome.
 }
 \section{Slots}{
 

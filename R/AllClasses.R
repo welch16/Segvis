@@ -76,8 +76,7 @@ setValidity("match",
 
 #' reads class
 #'
-#' Contains the reads obtained in a ChIP - seq experiment separated by strand (for efficiency) and
-#' then by chromosome.
+#' Contains the reads obtained in a ChIP - seq experiment separated by strand and then by chromosome.
 #' @slot reads1 - GRangesList of the reads of the ChIP - Seq experiment that have + strand
 #' @slot reads2 - GRangesList of the reads of the ChIP - Seq experiment that have - strand
 setClass("reads",

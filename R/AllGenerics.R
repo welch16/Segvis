@@ -248,8 +248,6 @@ setGeneric("buildProfileMat",
 
 # reads generic methods
 
-## Get methods
-
 #' @title reads1
 # '@description Get methods for reads class with "+" strand
 #' @details  This method return a GRangesList with the reads corresponding to the "+" strand
@@ -309,29 +307,31 @@ setGeneric("setReads2",
   standardGeneric("setReads2")
 )          
 
-# Generic Methods for match class
+# match generic methods
 
-## Get methods
-
-#' match1
-#'
+#' @title match1
+#' @description Get method for match class with "+" strand
+#' @details This methods returns a list with the indexes in the "+" strand GRangesList
 #' @param match object
 #' @return list The match of the reads with "+" strand
 #' @export
 #' @docType methods
-#' @rdname match-methods
+#' @seealso \code{\link{match_reads}},\code{\link{reads1}} and \code{\link{match2}}
+#' @rdname match1
 setGeneric("match1",
-  function(object,...)
+  function(object)
   standardGeneric("match1")
 )           
 
-#' match2
-#'
+#' @title match2
+#' @description Get method for match class with "-" strand
+#' @details This methods returns a list with the indexes in the "-" strand GRangesList
 #' @param match object
 #' @return list The match of the reads with "-" strand
 #' @export
 #' @docType methods
-#' @rdname match-methods
+#' @seealso \code{\link{match_reads}},\code{\link{reads2}} and \code{\link{match1}}
+#' @rdname match2
 setGeneric("match2",
   function(object,...)
   standardGeneric("match2")
