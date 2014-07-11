@@ -3,17 +3,17 @@
 
 ## Get methods
 
-#' @rdname reads-methods
-#' @name reads1
-#' @aliases reads
+# @rdname reads-methods
+# @name reads1
+# @aliases reads
 setMethods("reads1",
   signature = signature(object = "reads"),
   definition = function(object)object@reads1
 )           
 
-#' @rdname reads-methods
-#' @name reads2
-#' @aliases reads
+# @rdname reads-methods
+# @name reads2
+# @aliases reads
 setMethods("reads2",
   signature = signature(object = "reads"),
   definition = function(object)object@reads2
@@ -21,9 +21,9 @@ setMethods("reads2",
 
 ## Set methods
 
-#' @rdname reads-methods
-#' @name setReads1
-#' @aliases reads
+# @rdname reads-methods
+# @name setReads1
+# @aliases reads
 setMethods("setReads1",
   signature = signature(object = "reads",r1 = "GRangesList"),
   definition = function(object,r1){
@@ -31,9 +31,9 @@ setMethods("setReads1",
     return(object)
 })    
 
-#' @rdname reads-methods
-#' @name setReads2
-#' @aliases reads
+# @rdname reads-methods
+# @name setReads2
+# @aliases reads
 setMethods("setReads2",
   signature = signature(object = "reads",r2 = "GRangesList"),
   definition = function(object,r2){
@@ -41,9 +41,9 @@ setMethods("setReads2",
     return(object)
 })
 
-#' @rdname reads-methods
-#' @name show
-#' @aliases reads
+# @rdname reads-methods
+# @name show
+# @aliases reads
 setMethods("show",
   signature = signature(object = "reads"),
   definition = function(object){
@@ -57,9 +57,9 @@ setMethods("show",
     }
 })
 
-#' @rdname reads-methods
-#' @name length
-#' @aliases reads
+# @rdname reads-methods
+# @name length
+# @aliases reads
 setMethods("length",
   signature = signature(x = "reads"),
   definition = function(x){   

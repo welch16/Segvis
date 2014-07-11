@@ -246,57 +246,64 @@ setGeneric("buildProfileMat",
   standardGeneric("buildProfileMat")
 )
 
-# Generic Methods for reads class
+# reads generic methods
 
 ## Get methods
 
-#' reads1
-#'
-#' @param reads object
+#' @title reads1
+# '@description Get methods for reads class with "+" strand
+#' @details  This method return a GRangesList with the reads corresponding to the "+" strand
+#' @param object reads object
 #' @return GRangesList The reads of the "+" strand
 #' @export
+#' @seealso \code{\link{reads2}}
 #' @docType methods
-#' @rdname reads-methods
+#' @rdname reads1
+#'
 setGeneric("reads1",
-  function(object,...)
+  function(object)
   standardGeneric("reads1")
 )           
 
-#' reads2
-#'
-#' @param reads object
+#' @title reads2
+#' @description Get methods for reads class with "-" strand
+#' @details This method return a GRangesList with the reads corresponding to the "-" strand
+#' @param object reads object
 #' @return GRangesList The reads of the "-" strand
 #' @export
+#' @seealso \code{\link{reads1}}
 #' @docType methods
-#' @rdname reads-methods
+#' @rdname reads2
 setGeneric("reads2",
-  function(object,...)
+  function(object)
   standardGeneric("reads2")           
 )
 
-## Set methods
-
-#' setReads1
-#'
-#' @param reads object
-#' @param r1 GRangesList object, the new reads to set on the reads object
+#' @title setReads1
+#' @description Set method of the reads class, for the reads with "+" strand
+#' @details This method return a reads object where the reads with "+" strand have been modified by the user
+#' @param object reads object
+#' @param r1 GRangesList object, this are the new reads to be set in the reads object
 #' @return reads object
 #' @export
+#' @seealso \code{\link{reads1}},\code{\link{reads2}} and \code{\link{setReads2}}
 #' @docType methods
-#' @rdname reads-methods
+#' @rdname setReads1
 setGeneric("setReads1",
   function(object,r1)
   standardGeneric("setReads1")
 )          
 
-#' setReads2
-#'
+#' @title setReads2
+#' @description Set method for the reads class, for the reads with "-" strand
+#' @details This method return a reads object where the reads with "-" strand have been modified by the user
 #' @param reads object
 #' @param r2 GRangesList object, the new reads to set on the reads object
 #' @return reads object
 #' @export
+#' @seealso \code{\link{reads1}},\code{\link{reads2}} and \code{\link{setReads1}}
 #' @docType methods
-#' @rdname reads-methods
+#' @rdname setReads2
 setGeneric("setReads2",
   function(object,r2)
   standardGeneric("setReads2")
