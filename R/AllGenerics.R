@@ -1,55 +1,60 @@
 
-# Generic methods for several classes
+# generic methods for various classes
 
-## Get methods
-
-#' name
-#'
-#' @param profile object
-#' @return chracter. The name of the profile object
+#' @title name
+#' @description Generic method for both profile and profileMatrix classes
+#' @details This method returns the name of the object
+#' @param object Either a profile or profileMatrix object
+#' @return character The name of the object
 #' @export
 #' @docType methods
-#' @rdname profile-methods
+#' @seealso \code{\link{setName}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}} 
+#' @rdname name
 setGeneric("name",
-  function(object,...)
+  function(object)
   standardGeneric("name")
 )           
 
-#' regions
-#'
-#' @param profile object
-#' @return GRangesList. The regions used to calculate the coverage plots, as a GRangesList separated by chromosome
+#' @title regions
+#' @description Generic method for both profile and profileMatrix classes
+#' @details This methods returns the regions for which the profile and profileMatrix are calculated as a
+#' GRangesList for profile or GRanges for profileMatrix
+#' @param object Either a profile or profileMatrix object
+#' @return GRangesList or GRanges depending on the call for profile or profileMatrix object
 #' @export
 #' @docType methods
-#' @rdname profile-methods
+#' @seealso \code{\link{setRegions}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}}
+#' @rdname regions
 setGeneric("regions",
-  function(object,...)
+  function(object)
   standardGeneric("regions")
 )
 
-## Set methods
-
-#' setName
-#'
-#' @param profile object
+#' @title setName
+#' @description Generic set name method for both profile and profileMatrix classes
+#' @details This methods returns either a profile or profileMatrix object
+#' @param object Either a profile or profileMatrix object
 #' @param newName character
-#' @return profile object
+#' @return profile or profileMatrix object
 #' @export
 #' @docType methods
-#' @rdname profile-methods
+#' @seealso \code{\link{name}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}} 
+#' @rdname setName
 setGeneric("setName",
   function(object,newName)
   standardGeneric("setName")           
 )
 
-#' setRegions
-#'
-#' @param profile object
-#' @param newRegions GRangesList
+#' @title setRegions
+#' @description Generic set regions method for both profile and profileMatrix classes
+#' @details This methods returns either a profile or profileMatrix object
+#' @param object Either a profile or profileMatrix object
+#' @param newRegions GRangesList for profile or GRanges for profileMatrix
 #' @return profile object
 #' @export
 #' @docType methods
-#' @rdname profile-methods
+#' @seealso \code{\link{regions}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}}
+#' @rdname setRegions
 setGeneric("setRegions",
   function(object,newRegions)
   standardGeneric("setRegions")

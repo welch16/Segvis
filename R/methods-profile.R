@@ -3,57 +3,57 @@
 
 ## Get methods
 
-#' @rdname profile-methods
-#' @name name
-#' @aliases profile
+# @rdname profile-methods
+# @name name
+# @aliases profile
 setMethods("name",
   signature = signature(object = "profile"),
   definition = function(object)object@name
 )           
 
-#' @rdname profile-methods
-#' @name regions
-#' @aliases profile
+# @rdname profile-methods
+# @name regions
+# @aliases profile
 setMethods("regions",
   signature = signature(object = "profile"),
   definition = function(object)object@regions
 )           
 
-#' @rdname profile-methods
-#' @name files
-#' @aliases profile
+# @rdname profile-methods
+# @name files
+# @aliases profile
 setMethods("files",
   signature = signature(object ="profile"),
   definition = function(object)object@files
 )           
 
-#' @rdname profile-methods
-#' @name fileFormat
-#' @aliases profile
+# @rdname profile-methods
+# @name fileFormat
+# @aliases profile
 setMethods("fileFormat",
   signature = signature(object = "profile"),
   definition = function(object)object@fileFormat
 )           
 
-#' @rdname profile-methods
-#' @name maxBandwidth
-#' @aliases profile
+# @rdname profile-methods
+# @name maxBandwidth
+# @aliases profile
 setMethods("maxBandwidth",
   signature = signature(object = "profile"),
   definition = function(object)object@maxBandwidth
 )           
 
-#' @rdname profile-methods
-#' @name fragLen
-#' @aliases profile
+# @rdname profile-methods
+# @name fragLen
+# @aliases profile
 setMethods("fragLen",
   signature = signature(object = "profile"),
   definition = function(object)object@fragLen
 )           
 
-#' @rdname profile-methods
-#' @name remChr
-#' @aliases profile
+# @rdname profile-methods
+# @name remChr
+# @aliases profile
 setMethods("remChr",
   signature = signature(object = "profile"),
   definition = function(object)object@remChr
@@ -67,9 +67,9 @@ setMethods("readsList",
   definition = function(object)object@readsList           
 )
            
-#' @rdname profile-methods
-#' @name matchList
-#' @aliases profile
+# @rdname profile-methods
+# @name matchList
+# @aliases profile
 setMethods("matchList",
   signature = signature(object = "profile"),
   definition = function(object)object@matchList
@@ -85,9 +85,9 @@ setMethods("profileCurve",
 
 ## Set methods
 
-#' @rdname profile-methods
-#' @name setName
-#' @aliases profile
+# @rdname profile-methods
+# @name setName
+# @aliases profile
 setMethods("setName",
   signature = signature(object = "profile",newName = "character"),
   definition = function(object,newName){
@@ -95,9 +95,9 @@ setMethods("setName",
     return(object)
 })
 
-#' @rdname profile-methods
-#' @name setRegions
-#' @aliases profile
+# @rdname profile-methods
+# @name setRegions
+# @aliases profile
 setMethods("setRegions",
   signature = signature(object = "profile",newRegions = "GRangesList"),
   definition = function(object,newRegions){
@@ -107,9 +107,9 @@ setMethods("setRegions",
     return(object)
 })
 
-#' @rdname profile-methods
-#' @name setMaxBandwidth
-#' @aliases profile
+# @rdname profile-methods
+# @name setMaxBandwidth
+# @aliases profile
 setMethods("setMaxBandwidth",
   signature = signature(object = "profile", newMaxBandwidth = "numeric"),
   definition = function(object,newMaxBandwidth){
@@ -119,9 +119,9 @@ setMethods("setMaxBandwidth",
     return(object)
 })    
 
-#' @rdname profile-methods
-#' @name setFragLen
-#' @aliases profile
+# @rdname profile-methods
+# @name setFragLen
+# @aliases profile
 setMethods("setFragLen",
   signature = signature(object = "profile",newFragLen = "numeric"),
   definition = function(object,newFragLen){
@@ -142,9 +142,9 @@ setMethods("setRemChr",
     return(object)
 })
               
-#' @rdname profile-methods
-#' @name show
-#' @aliases profile
+# @rdname profile-methods
+# @name show
+# @aliases profile
 setMethods("show",
   signature = signature(object = "profile"),
   definition = function(object){
@@ -162,9 +162,9 @@ setMethods("show",
     cat("---------------------------\n")
 })
           
-#' @rdname profile-methods
-#' @name loadReads
-#' @aliases profile
+# @rdname profile-methods
+# @name loadReads
+# @aliases profile
 setMethods("loadReads",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object,mc = 8){
@@ -200,9 +200,9 @@ setMethods("loadReads",
     }
 })
 
-#' @rdname profile-methods
-#' @name matchReads
-#' @aliases profile
+# @rdname profile-methods
+# @name matchReads
+# @aliases profile
 setMethods("matchReads",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object,mc = 8){
@@ -240,9 +240,9 @@ setMethods("matchReads",
     }
 })
 
-#' @rdname profile-methods
-#' @name getCoverage
-#' @aliases profile
+# @rdname profile-methods
+# @name getCoverage
+# @aliases profile
 setMethods("getCoverage",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object, mc = 8){
@@ -266,9 +266,9 @@ setMethods("getCoverage",
     }
 })    
 
-#' @rdname profile-methods
-#' @name buildProfileMat
-#' @aliases profile
+# @rdname profile-methods
+# @name buildProfileMat
+# @aliases profile
 setMethods("buildProfileMat",
   signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc=8){
