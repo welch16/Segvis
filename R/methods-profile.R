@@ -238,34 +238,35 @@ setMethods("loadReads",
 setMethods("matchReads",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object,mc = 8){
-    if(object@.haveReads & object@.haveRegions){
-      browser()
+    if(object@.haveReads & object@.haveRegions){    
       side = (maxBandwidth(object)-1)/2
       chr = names(seqlengths(regions(object)))
+      regions = GRangesList(lapply(chr,function(chrom,reg){
+        subset(reg,subset = as.character(seqnames(reg)) == chrom)
+      },regions(object)))
+      names(regions) = chr
       if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
       message("Matching reads for forward strand")
-      m1 = lapply(readsList(object),function(x,chr,object,mc){
-        z = mclapply(chr,function(chrom,x,object){          
-          message(chrom," started");          
-          mm1 =match_reads(start(regions(object)[[chrom]])-side,
-          end(regions(object)[[chrom]])+side,start(reads1(x)[[chrom]]),end(reads1(x)[[chrom]]),
-          as.character(strand(reads1(x)[[chrom]])),fragLen(object));
-          message(chrom," done");return(mm1)},x,object, mc.cores=mc)
-        names(z) = chr
-        return(z)},chr,object,mc)
-      message("+ strand done")
+      m1 = mclapply(chr,function(chrom,reads,object){
+        message("Matching forward reads for ",chrom)
+        mm = match_reads(start(regions[[chrom]])-side,end(regions[[chrom]])+side,
+          start(reads[[chrom]]),end(reads[[chrom]]),
+          as.character(strand(reads[[chrom]])),fragLen(object))
+        message("Forward strand matching for ",chrom," done");return(mm)},
+        reads1(object),object,mc.cores = mc)
+      names(m1) = chr            
+      message("Forward strand done")
       message("Matching reads for reverse strand")
-      m2 = lapply(readsList(object),function(x,chr,object,mc){        
-        z = mclapply(chr,function(chrom,x,object){message(chrom," started");
-          mm2=match_reads(start(regions(object)[[chrom]])-side,end(regions(object)[[chrom]])+side,
-            start(reads2(x)[[chrom]]),end(reads2(x)[[chrom]]),
-          as.character(strand(reads2(x)[[chrom]])),fragLen(object));
-          message(chrom," done");return(mm2)},x,object, mc.cores=mc)
-        names(z) = chr
-        return(z)},chr,object,mc)
-      message("- strand done")
-      object@matchList = lapply(1:length(m1),function(i,m1,m2)
-        new("match",match1 = m1[[i]],match2 = m2[[i]]),m1,m2)
+      m2 = mclapply(chr,function(chrom,reads,object){
+        message("Matching reverse reads for ",chrom)
+        mm = match_reads(start(regions[[chrom]])-side,end(regions[[chrom]])+side,
+          start(reads[[chrom]]),end(reads[[chrom]]),
+          as.character(strand(reads[[chrom]])),fragLen(object))
+        message("Reverse strand matching for ",chrom," done");return(mm)},
+        reads2(object),object,mc.cores = mc)
+      names(m2) = chr
+      message("Reverse strand done")
+      object@match = new("match",match1 = m1,match2 = m2)
       object@.readsMatched = TRUE
      return(object)      
     }else{
@@ -279,7 +280,7 @@ setMethods("matchReads",
 setMethods("getCoverage",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object, mc = 8){
-    if(object@.readsMatched == TRUE){
+    if(object@.readsMatched == TRUE){      
       chr = names(seqlengths(regions(object)))
       if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
       object@profileCurve = lapply(chr,function(chrom,object,mc){message("Retrieving reads for ",chrom)
