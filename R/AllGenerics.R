@@ -71,9 +71,9 @@ setGeneric("setRegions",
 #' @export
 #' @docType methods
 #' @rdname profile-methods
-setGeneric("files",
-  function(object,...)
-  standardGeneric("files")           
+setGeneric("file",
+  function(object)
+  standardGeneric("file")           
 )
 
 #' fileFormat
@@ -122,28 +122,28 @@ setGeneric("remChr",
   standardGeneric("remChr")
 )           
 
-#' readsList
+#' reads
 #'
 #' @param profile object
-#' @return list. A list made off reads objects. One list for each replicate. Must coincide with size of bedfiles
+#' @return reads. A reads object with the reads contained in file
 #' @export
 #' @docType methods
 #' @rdname profile-method
-setGeneric("readsList",
-  function(object,...)
-  standardGeneric("readsList")           
+setGeneric("reads",
+  function(object)
+  standardGeneric("reads")           
 )
 
-#' matchList
+#' match
 #'
 #' @param profile object
-#' @return list. A list made off match objects. One list for each replicate. Must coincide with size of bedfiles
+#' @return match object, with the index in reads of the matching reads for the regions
 #' @export
 #' @docType methods
 #' @rdname profile-method
-setGeneric("matchList",
+setGeneric("match",
   function(object,...)
-  standardGeneric("matchList")           
+  standardGeneric("match")           
 )
 
 #' profileCurve

@@ -1,64 +1,4 @@
 
-#' profile class
-#'
-#' Contains all the information necessary for the calculation of profile curves.
-#' @slot name - Character with the name of the profiles
-#' @slot regions - List with the regions for which the coverage is going to be calculated
-#' @slot file - Character with the name of the file that contains the reads
-#' @slot fileFormat - Character with the file format used for the reads
-#' @slot maxBandwidth - Numeric - maximum bandwidth accepted when smoothing profiles. Must be odd
-#' @slot fragLen - Numeric fragment length to extend the reads
-#' @slot remChr - Character - Vector with the chromosomes to be ignored
-#' @slot reads - Reads object, which contains the reads used to build the profile separated by strand
-#' @slot match - Match object, which contains the 
-#' @slot profileCuve - RleList - For each region, there is a Rle object
-#' @slot .haveRegions - logical - Indicates if the object have the regions loaded
-#' @slot .haveReads - logical - Indicates if the object have the reads loaded
-#' @slot .readsMatched - logical - Indicates if the read have been matched to the regions
-#' @slot .coverageCalculated - logical - Indicates if the coverage has been calculated]
-#' @exportClass profile
-setClass("profile",
-  representation(name = "character",
-                 regions = "GRangesList",
-                 file = "character",
-                 fileFormat = "character",
-                 maxBandwidth = "numeric",
-                 fragLen = "numeric",
-                 remChr = "character",
-                 readsList = "reads",
-                 matchList = "match",
-                 profileCurve = "list",
-                 .haveRegions = "logical",
-                 .haveReads = "logical",
-                 .readsMatched = "logical",
-                 .coverageCalculated = "logical"
-                 ),
-  contains = c("reads","match"),
-  prototype = prototype(name = "",
-    regions = GRangesList(),
-    file = "",
-    fileFormat = "",
-    maxBandwidth = 1,
-    fragLen = 0,
-    remChr = "",
-    readsList = new("reads"),
-    matchList = new("match"),
-    profileCurve = list(),
-    .haveRegions = FALSE,
-    .haveReads = FALSE,
-    .readsMatched = FALSE,
-    .coverageCalculated = FALSE)
-)    
-
-setValidity("profile",
-  function(object){
-  # Checks that readsList and matchList have same length
-  match.length = length(object@matchList)
-  reads.length = length(object@readsList)
-  return(match.length == reads.length & object@fragLen >=0&object@maxBandwidth >=1  & tolower(object@fileFormat) == "bam")
-}
-)  
-
 #' match class
 #'
 #' Contains the match of a set a reads of a ChIP - Seq experiment given a set
@@ -88,6 +28,64 @@ setClass("reads",
 setValidity("reads",
   function(object)return(length(object@reads1) == length(object@reads2))
 )            
+
+#' profile class
+#'
+#' Contains all the information necessary for the calculation of profile curves.
+#' @slot name - Character with the name of the profiles
+#' @slot regions - List with the regions for which the coverage is going to be calculated
+#' @slot file - Character with the name of the file that contains the reads
+#' @slot fileFormat - Character with the file format used for the reads
+#' @slot maxBandwidth - Numeric - maximum bandwidth accepted when smoothing profiles. Must be odd
+#' @slot fragLen - Numeric fragment length to extend the reads
+#' @slot remChr - Character - Vector with the chromosomes to be ignored
+#' @slot reads - Reads object, which contains the reads used to build the profile separated by strand
+#' @slot match - Match object, which contains the 
+#' @slot profileCuve - RleList - For each region, there is a Rle object
+#' @slot .haveRegions - logical - Indicates if the object have the regions loaded
+#' @slot .haveReads - logical - Indicates if the object have the reads loaded
+#' @slot .readsMatched - logical - Indicates if the read have been matched to the regions
+#' @slot .coverageCalculated - logical - Indicates if the coverage has been calculated]
+#' @exportClass profile
+setClass("profile",
+  representation(name = "character",
+                 regions = "GRangesList",
+                 file = "character",
+                 fileFormat = "character",
+                 maxBandwidth = "numeric",
+                 fragLen = "numeric",
+                 remChr = "character",
+                 reads = "reads",
+                 match = "match",
+                 profileCurve = "list",
+                 .haveRegions = "logical",
+                 .haveReads = "logical",
+                 .readsMatched = "logical",
+                 .coverageCalculated = "logical"
+                 ),
+  contains = c("reads","match"),
+  prototype = prototype(name = "",
+    regions = GRangesList(),
+    file = "",
+    fileFormat = "",
+    maxBandwidth = 1,
+    fragLen = 0,
+    remChr = "",
+    reads = new("reads"),
+    match = new("match"),
+    profileCurve = list(),
+    .haveRegions = FALSE,
+    .haveReads = FALSE,
+    .readsMatched = FALSE,
+    .coverageCalculated = FALSE)
+)    
+
+setValidity("profile",
+  function(object){
+  # Checks that readsList and matchList have same length  
+  return(object@fragLen >=0&object@maxBandwidth >=1  & tolower(object@fileFormat) == "bam")
+}
+)  
 
 #' profileMatrix class
 #'

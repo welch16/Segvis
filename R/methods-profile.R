@@ -20,11 +20,11 @@ setMethods("regions",
 )           
 
 # @rdname profile-methods
-# @name files
+# @name file
 # @aliases profile
-setMethods("files",
+setMethods("file",
   signature = signature(object ="profile"),
-  definition = function(object)object@files
+  definition = function(object)object@file
 )           
 
 # @rdname profile-methods
@@ -60,19 +60,19 @@ setMethods("remChr",
 )           
 
 #' @rdname profile-methods
-#' @name readsList
+#' @name reads
 #' @aliases profile
-setMethods("readsList",
+setMethods("reads",
   signature = signature(object = "profile"),
-  definition = function(object)object@readsList           
+  definition = function(object)object@reads
 )
            
 # @rdname profile-methods
-# @name matchList
+# @name match
 # @aliases profile
-setMethods("matchList",
+setMethods("match",
   signature = signature(object = "profile"),
-  definition = function(object)object@matchList
+  definition = function(object)object@match
 )
 
 #' @rdname profile-methods
@@ -158,7 +158,7 @@ setMethods("show",
       cat("**Not regions loaded**\n")
     }     
     cat("Using reads files:\n")
-    cat(files(object),sep = "\n")
+    cat(file(object),sep = "\n")
     cat("---------------------------\n")
 })
           
@@ -169,7 +169,7 @@ setMethods("loadReads",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object,mc = 8){
     if(fileFormat(object) == "bam"){
-      chr = names(seqlengths(regions(object)))
+      chr = names(seqlengths(regions(object)))      
       if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
       message("Starting to read bam files")
       greads = lapply(files(object),FUN = readGAlignmentsFromBam,param = NULL,use.names = FALSE)      
