@@ -9,8 +9,8 @@
 #' @slot maxBandwidth - Numeric - maximum bandwidth accepted when smoothing profiles. Must be odd
 #' @slot fragLen - Numeric fragment length to extend the reads
 #' @slot remChr - Character - Vector with the chromosomes to be ignored
-#' @slot readsList - List of reads objects
-#' @slot matchList - List of match objects
+#' @slot reads - Reads object, which contains the reads used to build the profile separated by strand
+#' @slot match - Match object, which contains the 
 #' @slot profileCuve - RleList - For each region, there is a Rle object
 #' @slot .haveRegions - logical - Indicates if the object have the regions loaded
 #' @slot .haveReads - logical - Indicates if the object have the reads loaded
@@ -25,14 +25,15 @@ setClass("profile",
                  maxBandwidth = "numeric",
                  fragLen = "numeric",
                  remChr = "character",
-                 readsList = "list",
-                 matchList = "list",
+                 readsList = "reads",
+                 matchList = "match",
                  profileCurve = "list",
                  .haveRegions = "logical",
                  .haveReads = "logical",
                  .readsMatched = "logical",
                  .coverageCalculated = "logical"
                  ),
+  contains = c("reads","match"),
   prototype = prototype(name = "",
     regions = GRangesList(),
     files = "",
@@ -40,8 +41,8 @@ setClass("profile",
     maxBandwidth = 1,
     fragLen = 0,
     remChr = "",
-    readsList = list(),
-    matchList = list(),
+    readsList = new("reads"),
+    matchList = new("match"),
     profileCurve = list(),
     .haveRegions = FALSE,
     .haveReads = FALSE,
