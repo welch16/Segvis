@@ -4,7 +4,7 @@
 #' Contains all the information necessary for the calculation of profile curves.
 #' @slot name - Character with the name of the profiles
 #' @slot regions - List with the regions for which the coverage is going to be calculated
-#' @slot files - Character with the files which contains the reads
+#' @slot file - Character with the name of the file that contains the reads
 #' @slot fileFormat - Character with the file format used for the reads
 #' @slot maxBandwidth - Numeric - maximum bandwidth accepted when smoothing profiles. Must be odd
 #' @slot fragLen - Numeric fragment length to extend the reads
@@ -20,7 +20,7 @@
 setClass("profile",
   representation(name = "character",
                  regions = "GRangesList",
-                 files = "character",
+                 file = "character",
                  fileFormat = "character",
                  maxBandwidth = "numeric",
                  fragLen = "numeric",
@@ -36,7 +36,7 @@ setClass("profile",
   contains = c("reads","match"),
   prototype = prototype(name = "",
     regions = GRangesList(),
-    files = "",
+    file = "",
     fileFormat = "",
     maxBandwidth = 1,
     fragLen = 0,
