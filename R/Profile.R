@@ -8,6 +8,11 @@
 #' @param remChr - Character Vector with the chromosomes to be ignored
 #' @export
 #' @return A profile object
+#' @examples
+#' rn = "sites"
+#' f = "somefile.bam";fileF = "bam"
+#' maxBw = 1;fl = 200
+#' Profile(regionName = rn,file =f,fileFormat=fileF,maxBandwidth = maxBw, fragLen = fl)
 
 Profile <- function(regionName,file,fileFormat,maxBandwidth,fragLen,remChr=NULL)
 {
