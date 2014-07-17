@@ -18,9 +18,9 @@ setGeneric("name",
 #' @title regions
 #' @description Generic method for both profile and profileMatrix classes
 #' @details This methods returns the regions for which the profile and profileMatrix are calculated as a
-#' GRangesList for profile or GRanges for profileMatrix
+#' GRanges object with the regions for which the profiles are calculated
 #' @param object Either a profile or profileMatrix object
-#' @return GRangesList or GRanges depending on the call for profile or profileMatrix object
+#' @return GRanges object with the regions for which the profiles are calculated
 #' @export
 #' @docType methods
 #' @seealso \code{\link{setRegions}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}}
@@ -49,7 +49,7 @@ setGeneric("setName",
 #' @description Generic set regions method for both profile and profileMatrix classes
 #' @details This methods returns either a profile or profileMatrix object
 #' @param object Either a profile or profileMatrix object
-#' @param newRegions GRangesList for profile or GRanges for profileMatrix
+#' @param newRegions GRanges object with the regions for which the profiles are calculated
 #' @return profile object
 #' @export
 #' @docType methods

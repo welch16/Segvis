@@ -23,7 +23,7 @@ setValidity("match",
 setClass("reads",
   representation(reads1 = "GRangesList",reads2 = "GRangesList"),
   contains = "GRangesList",
-  prototype = prototype(reads1 = GRangesList(),reads2 = GRangesList()))         
+  prototype = prototype(reads1 = GRangesList(),reads2 = GRangesList()))
 
 setValidity("reads",
   function(object)return(length(object@reads1) == length(object@reads2))
@@ -33,7 +33,7 @@ setValidity("reads",
 #'
 #' Contains all the information necessary for the calculation of profile curves.
 #' @slot name - Character with the name of the profiles
-#' @slot regions - List with the regions for which the coverage is going to be calculated
+#' @slot regions - GRanges object with the regions for which the profile want to be calcualted
 #' @slot file - Character with the name of the file that contains the reads
 #' @slot fileFormat - Character with the file format used for the reads
 #' @slot maxBandwidth - Numeric - maximum bandwidth accepted when smoothing profiles. Must be odd
@@ -49,7 +49,7 @@ setValidity("reads",
 #' @exportClass profile
 setClass("profile",
   representation(name = "character",
-                 regions = "GRangesList",
+                 regions = "GRanges",
                  file = "character",
                  fileFormat = "character",
                  maxBandwidth = "numeric",
@@ -65,7 +65,7 @@ setClass("profile",
                  ),
   contains = c("reads","match"),
   prototype = prototype(name = "",
-    regions = GRangesList(),
+    regions = GRanges(),
     file = "",
     fileFormat = "",
     maxBandwidth = 1,
