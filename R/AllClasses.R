@@ -8,6 +8,7 @@
 #' @slot match2 - List of positions of the reads in list that match with each region and have - strand
 setClass("match",
   representation(match1 = "list",match2 = "list"),
+  contains = "list",         
   prototype = prototype(match1 = list(),
     match2 = list()))
 
