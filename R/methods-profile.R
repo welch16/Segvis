@@ -99,9 +99,9 @@ setMethods("setName",
 # @name setRegions
 # @aliases profile
 setMethods("setRegions",
-  signature = signature(object = "profile",newRegions = "GRangesList"),
+  signature = signature(object = "profile",newRegions = "GRanges"),
   definition = function(object,newRegions){
-    stopifnot(class(newRegions) == "GRangesList")
+    stopifnot(class(newRegions) == "GRanges")
     object@regions = newRegions
     object@.haveRegions = TRUE
     return(object)
@@ -152,7 +152,7 @@ setMethods("show",
     cat("Profile for",name(object),"regions\n")
     cat("Fragment length:",fragLen(object),"\n")
     cat("Max Bandwidth:", maxBandwidth(object),"\n")
-    if(q <- length(regions(object)) > 0){
+    if( length(regions(object)) > 0){
       cat("Using regions for",length(regions(object)),"chromosomes\n")
     }else{
       cat("**Not regions loaded**\n")
@@ -167,31 +167,30 @@ setMethods("show",
 # @aliases profile
 setMethods("loadReads",
   signature = signature(object = "profile",mc = "numeric"),
-  definition = function(object,mc = 8){
+  definition = function(object,mc ){
     if(fileFormat(object) == "bam"){
-      chr = names(seqlengths(regions(object)))      
+      chr = names(seqlengths(regions(object)))     
       if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
-      message("Starting to read bam files")
-      greads = lapply(files(object),FUN = readGAlignmentsFromBam,param = NULL,use.names = FALSE)      
-      greads = lapply(greads,FUN = as, "GRanges")
-      message("Bam files loaded")
-      message("Separating by chromosome")
-      greads = lapply(greads,function(x,chr,mc){
-        z =mclapply(chr,function(i,x)subset(x, subset = as.character(seqnames(x)) == i),x,mc.cores = mc);
-        names(z) = chr;
-        return(z)
-        },chr,mc)
+      message("Reading ",file(object))
+      greads = readGAlignmentsFromBam(file(object),param = NULL,use.names = FALSE)
+      greads = as(greads, "GRanges")
+      seqlevels(greads) = seqlevelsInUse(greads)
+      seqlevels(greads) =seqlevels(regions(object))
+      message("Bam file loaded")
+      message("Separating by chromosome")      
+      greads = mclapply(chr,function(i,greads)
+        subset(greads, subset = as.character(seqnames(greads)) == i),greads,mc.cores = mc)
       message("Separating reads by strand")
-      gr1 = lapply(greads,function(x,mc)
-          mclapply(x,function(y)sort_by_strand(subset(y,subset = as.character(strand(y)) == "+"),"+"),
-                 mc.cores = mc),mc)      
-      gr2 = lapply(greads,function(x,mc)
-          mclapply(x,function(y)sort_by_strand(subset(y,subset = as.character(strand(y)) == "-"),"-"),
-                mc.cores = mc),mc)     
-      gr1 = lapply(gr1,FUN = GRangesList)
-      gr2 = lapply(gr2,FUN = GRangesList)
-      object@readsList = lapply(1:length(gr1),function(i,gr1,gr2)
-        new("reads",reads1 = gr1[[i]],reads2 = gr2[[i]]),gr1,gr2)
+      gr1 = mclapply(greads,function(x)sort_by_strand(subset(x,subset = as.character(strand(x))=="+"),"+"),
+        mc.cores = mc)
+      message("Forward strand reads extracted")
+      gr2 = mclapply(greads,function(x)sort_by_strand(subset(x,subset = as.character(strand(x))=="-"),"-"),
+        mc.cores = mc)
+      message("Reverse strand reads extracted")
+      message("Finished separating reads")
+      gr1 = GRangesList(gr1)
+      gr2 = GRangesList(gr2)
+      object@reads = new("reads",reads1 = gr1,reads2 = gr2)
       object@.haveReads = TRUE
       message("Reading bam files... Done")
       return(object)
