@@ -282,15 +282,23 @@ setMethods("getCoverage",
   definition = function(object, mc = 8){
     if(object@.readsMatched == TRUE){      
       chr = names(seqlengths(regions(object)))
-      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
-      object@profileCurve = lapply(chr,function(chrom,object,mc){message("Retrieving reads for ",chrom)
-         ll = length(regions(object)[[chrom]])
-         r1 = reads1(readsList(object)[[1]])[[chrom]]
-         r2 = reads2(readsList(object)[[1]])[[chrom]]
-         mclapply(1:ll,function(i,object,chrom,r1,r2){
-         z = coverage(c(r1[ match1(matchList(object)[[1]])[[chrom]] [[i]] ],
-                        r2[ match2(matchList(object)[[1]])[[chrom]] [[i]] ]))[[chrom]]
-      return(z)},object,chrom,r1,r2,mc.cores = mc)},object,mc)
+      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]      
+      regions = GRangesList(lapply(chr,function(chrom,reg){
+        subset(reg,subset = as.character(seqnames(reg)) == chrom)
+      },regions(object)))
+      names(regions) = chr      
+      object@profileCurve = lapply(chr,function(chrom,object,regions,mc){
+        message("Retrieving reads for ",chrom)        
+        ll = length(regions[[chrom]])
+        r1 = reads1(object)[[chrom]]
+        r2 = reads2(object)[[chrom]]
+        m1 = match1(object)[[chrom]]
+        m2 = match2(object)[[chrom]]
+        z = mclapply(1:ll,function(i,chrom,r1,r2,m1,m2)coverage(c(r1[m1[[i]]],r2[m2[[i]]])),
+                 ,r1,r2,m1,m2,mc.cores = mc)        
+        message("Coverage calculated for ",chrom)
+        return(z[[1]])},
+        object,regions,mc)     
       names(object@profileCurve) = chr
       object@.coverageCalculated = TRUE
       message("Coverage done")
