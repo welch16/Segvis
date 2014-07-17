@@ -94,7 +94,7 @@ setMethods("setName",
     object@name = newName
     return(object)
 })
-
+   
 # @rdname profile-methods
 # @name setRegions
 # @aliases profile
@@ -149,7 +149,7 @@ setMethods("show",
   signature = signature(object = "profile"),
   definition = function(object){
     cat("---------------------------\n")
-    cat("Profile for",name(object),"peaks\n")
+    cat("Profile for",name(object),"regions\n")
     cat("Fragment length:",fragLen(object),"\n")
     cat("Max Bandwidth:", maxBandwidth(object),"\n")
     if(q <- length(regions(object)) > 0){

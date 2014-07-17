@@ -11,9 +11,9 @@
 #' @seealso \code{\link{setName}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}} 
 #' @rdname name
 setGeneric("name",
-  function(object)
+  function(object,...)
   standardGeneric("name")
-)           
+)
 
 #' @title regions
 #' @description Generic method for both profile and profileMatrix classes
