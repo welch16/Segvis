@@ -59,14 +59,30 @@ setMethods("remChr",
   definition = function(object)object@remChr
 )           
 
-#' @rdname profile-methods
-#' @name reads
-#' @aliases profile
+# @rdname profile-methods
+# @name reads
+# @aliases profile
 setMethods("reads",
   signature = signature(object = "profile"),
   definition = function(object)object@reads
 )
-           
+
+# @rdname profile-methods
+# @name reads1
+# @aliases profile
+setMethods("reads1",
+  signature = signature(object = "profile"),
+  definition = function(object)reads1(reads(object))
+)           
+
+# @rdname profile-methods
+# @name reads2
+# @aliases profile
+setMethods("reads2",
+  signature = signature(object = "profile"),
+  definition = function(object)reads2(reads(object))
+)
+
 # @rdname profile-methods
 # @name match
 # @aliases profile
@@ -75,9 +91,25 @@ setMethods("match",
   definition = function(object)object@match
 )
 
-#' @rdname profile-methods
-#' @name profileCurve
-#' @aliases profile
+# @rdname profile-methods
+# @name match1
+# @aliases profile
+setMethods("match1",
+  signature = signature(object = "profile"),
+  definition = function(object)match1(match(object))
+)
+
+# @rdname profile-methods
+# @name match2
+# @aliases profile
+setMethods("match2",
+  signature = signature(object = "profile"),
+  definition = function(object)match2(match(object))
+)
+
+# @rdname profile-methods
+# @name profileCurve
+# @aliases profile
 setMethods("profileCurve",
   signature = signature(object = "profile"),
   definition = function(object)object@profileCurve
@@ -180,6 +212,7 @@ setMethods("loadReads",
       message("Separating by chromosome")      
       greads = mclapply(chr,function(i,greads)
         subset(greads, subset = as.character(seqnames(greads)) == i),greads,mc.cores = mc)
+      names(greads) = chr
       message("Separating reads by strand")
       gr1 = mclapply(greads,function(x)sort_by_strand(subset(x,subset = as.character(strand(x))=="+"),"+"),
         mc.cores = mc)
@@ -206,10 +239,11 @@ setMethods("matchReads",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object,mc = 8){
     if(object@.haveReads & object@.haveRegions){
+      browser()
       side = (maxBandwidth(object)-1)/2
       chr = names(seqlengths(regions(object)))
       if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
-      message("Matching reads for + strand")
+      message("Matching reads for forward strand")
       m1 = lapply(readsList(object),function(x,chr,object,mc){
         z = mclapply(chr,function(chrom,x,object){          
           message(chrom," started");          
@@ -220,7 +254,7 @@ setMethods("matchReads",
         names(z) = chr
         return(z)},chr,object,mc)
       message("+ strand done")
-      message("Matching reads for - strand")
+      message("Matching reads for reverse strand")
       m2 = lapply(readsList(object),function(x,chr,object,mc){        
         z = mclapply(chr,function(chrom,x,object){message(chrom," started");
           mm2=match_reads(start(regions(object)[[chrom]])-side,end(regions(object)[[chrom]])+side,
