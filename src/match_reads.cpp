@@ -44,9 +44,9 @@ List match_reads(IntegerVector regionStart,
         nextReadStart = readEnd[j+1] - fraglen +1;
         nextReadEnd = readEnd[j+1];
       }
-      if( regionStart[i] < extReadEnd && regionEnd[i] > extReadStart){
+      if( regionStart[i] <= extReadEnd && regionEnd[i] >= extReadStart){
         reads.push_back(j+1);        
-        if( regionStart[i] >= nextReadEnd || regionEnd[i] <= nextReadStart)cond = false;
+        if( regionStart[i] > nextReadEnd || regionEnd[i] < nextReadStart)cond = false;
       }
       extReadStart = nextReadStart;
       extReadEnd = nextReadEnd;
