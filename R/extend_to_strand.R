@@ -7,6 +7,8 @@
 
 extend_to_strand <- function(gr,fragLen)
 {
+  stopifnot(is(gr,"GRanges"))
+  stopifnot(fragLen >=0)
   start(gr) = ifelse(strand(gr) == "-",end(gr)-fragLen +1,start(gr))
   end(gr) = ifelse(strand(gr) == "+",start(gr)+fragLen -1,end(gr))
   return(gr)
