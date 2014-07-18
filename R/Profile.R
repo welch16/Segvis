@@ -1,11 +1,11 @@
 #' Create a profile object
 #'
-#' @param regionName - Name of the profile object
-#' @param file - Character vector with files that contain the reads
-#' @param fileFormat - Character vector with the file format used
-#' @param fragLen - Numeric value of the fragment length used to extend the reads
-#' @param maxBandwidth - Numeric value of the maximum possible value to smooth the profile curve
-#' @param remChr - Character Vector with the chromosomes to be ignored
+#' @param regionName Name of the profile object
+#' @param file Character vector with files that contain the reads
+#' @param fileFormat Character vector with the file format used
+#' @param fragLen Numeric value of the fragment length used to extend the reads
+#' @param maxBandwidth Numeric value of the maximum possible value to smooth the profile curve
+#' @param remChr Character Vector with the chromosomes to be ignored
 #' @export
 #' @return A profile object
 #' @examples
