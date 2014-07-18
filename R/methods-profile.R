@@ -163,9 +163,9 @@ setMethods("setFragLen",
     return(object)
 })    
 
-#' @rdname profile-methods
-#' @name setRemChr
-#' @aliases profile
+# @rdname profile-methods
+# @name setRemChr
+# @aliases profile
 setMethods("setRemChr",
   signature = signature(object = "profile",newRemChr = "character"),
   definition = function(object,newRemChr){
@@ -173,7 +173,9 @@ setMethods("setRemChr",
     object@remChr = newRemChr
     return(object)
 })
-              
+
+
+
 # @rdname profile-methods
 # @name show
 # @aliases profile
@@ -227,7 +229,7 @@ setMethods("loadReads",
       object@.haveReads = TRUE
       message("Reading bam files... Done")
       return(object)
-    }else{
+    }else{# Change warning
       warning("loadReads method only defined for bam file format")
     }
 })
@@ -282,24 +284,28 @@ setMethods("getCoverage",
   definition = function(object, mc = 8){
     if(object@.readsMatched == TRUE){      
       chr = names(seqlengths(regions(object)))
-      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]      
-      regions = GRangesList(lapply(chr,function(chrom,reg){
-        subset(reg,subset = as.character(seqnames(reg)) == chrom)
-      },regions(object)))
-      names(regions) = chr      
-      object@profileCurve = lapply(chr,function(chrom,object,regions,mc){
+      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]     
+      ll = lapply(chr,function(chrom,reg){
+        length(subset(reg,subset = as.character(seqnames(reg)) == chrom))
+      },regions(object))
+      names(ll) = chr           
+      curve = lapply(chr,function(chrom,object,ll,mc){
         message("Retrieving reads for ",chrom)        
-        ll = length(regions[[chrom]])
+        l = ll[[chrom]]
         r1 = reads1(object)[[chrom]]
         r2 = reads2(object)[[chrom]]
         m1 = match1(object)[[chrom]]
         m2 = match2(object)[[chrom]]
-        z = mclapply(1:ll,function(i,chrom,r1,r2,m1,m2)coverage(c(r1[m1[[i]]],r2[m2[[i]]])),
+        message("Calculating coverage for ",chrom)
+        z = mclapply(1:l,function(i,r1,r2,m1,m2){
+          coverage(c(extend_to_strand(r1[m1[[i]]],fragLen(object)),
+                     extend_to_strand(r2[m2[[i]]],fragLen(object))))[[1]]}
                  ,r1,r2,m1,m2,mc.cores = mc)        
         message("Coverage calculated for ",chrom)
-        return(z[[1]])},
-        object,regions,mc)     
-      names(object@profileCurve) = chr
+        return(z)},
+        object,ll,mc)     
+      names(curve) = chr
+      object@profileCurve = curve
       object@.coverageCalculated = TRUE
       message("Coverage done")
       return(object)     
