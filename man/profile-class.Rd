@@ -11,9 +11,9 @@ Contains all the information necessary for the calculation of profile curves.
 \describe{
 \item{\code{name}}{- Character with the name of the profiles}
 
-\item{\code{regions}}{- List with the regions for which the coverage is going to be calculated}
+\item{\code{regions}}{- GRanges object with the regions for which the profile want to be calcualted}
 
-\item{\code{files}}{- Character with the files which contains the reads}
+\item{\code{file}}{- Character with the name of the file that contains the reads}
 
 \item{\code{fileFormat}}{- Character with the file format used for the reads}
 
@@ -23,9 +23,9 @@ Contains all the information necessary for the calculation of profile curves.
 
 \item{\code{remChr}}{- Character - Vector with the chromosomes to be ignored}
 
-\item{\code{readsList}}{- List of reads objects}
+\item{\code{reads}}{- Reads object, which contains the reads used to build the profile separated by strand}
 
-\item{\code{matchList}}{- List of match objects}
+\item{\code{match}}{- Match object, which contains the}
 
 \item{\code{profileCuve}}{- RleList - For each region, there is a Rle object}
 

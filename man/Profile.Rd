@@ -3,25 +3,31 @@
 \alias{Profile}
 \title{Create a profile object}
 \usage{
-Profile(regionName, files, fileF, maxBw, fl, rem_Chr)
+Profile(regionName, file, fileFormat, maxBandwidth, fragLen, remChr = NULL)
 }
 \arguments{
 \item{regionName}{- Name of the profile object}
 
-\item{files}{- Character vector with files that contain the reads}
+\item{file}{- Character vector with files that contain the reads}
 
 \item{fileFormat}{- Character vector with the file format used}
 
-\item{fl}{- Numeric value of the fragment length used to extend the reads}
+\item{fragLen}{- Numeric value of the fragment length used to extend the reads}
 
-\item{maxBw}{- Numeric value of the maximum possible value to smooth the profile curve}
+\item{maxBandwidth}{- Numeric value of the maximum possible value to smooth the profile curve}
 
-\item{rem_Chr}{- Character Vector with the chromosomes to be ignored}
+\item{remChr}{- Character Vector with the chromosomes to be ignored}
 }
 \value{
 A profile object
 }
 \description{
 Create a profile object
+}
+\examples{
+rn = "sites"
+f = "somefile.bam";fileF = "bam"
+maxBw = 1;fl = 200
+Profile(regionName = rn,file =f,fileFormat=fileF,maxBandwidth = maxBw, fragLen = fl)
 }
 

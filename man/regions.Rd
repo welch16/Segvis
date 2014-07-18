@@ -10,14 +10,14 @@ regions(object)
 \item{object}{Either a profile or profileMatrix object}
 }
 \value{
-GRangesList or GRanges depending on the call for profile or profileMatrix object
+GRanges object with the regions for which the profiles are calculated
 }
 \description{
 Generic method for both profile and profileMatrix classes
 }
 \details{
 This methods returns the regions for which the profile and profileMatrix are calculated as a
-GRangesList for profile or GRanges for profileMatrix
+GRanges object with the regions for which the profiles are calculated
 }
 \seealso{
 \code{\link{setRegions}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}}

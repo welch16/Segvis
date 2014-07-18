@@ -9,7 +9,7 @@ setRegions(object, newRegions)
 \arguments{
 \item{object}{Either a profile or profileMatrix object}
 
-\item{newRegions}{GRangesList for profile or GRanges for profileMatrix}
+\item{newRegions}{GRanges object with the regions for which the profiles are calculated}
 }
 \value{
 profile object
