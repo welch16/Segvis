@@ -5,7 +5,6 @@ import(GenomicAlignments,
        GenomicRanges,
        Rsamtools)
 export(Profile)
-export(ProfileMatrix)
 export(bandwidth)
 export(buildProfileMat)
 export(extend_to_strand)
