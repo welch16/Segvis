@@ -241,31 +241,36 @@ setMethods("matchReads",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object,mc = 8){
     if(object@.haveReads & object@.haveRegions){    
-      side = (maxBandwidth(object)-1)/2
+      side = (maxBandwidth(object)-1)/2      
       chr = names(seqlengths(regions(object)))
-      regions = GRangesList(lapply(chr,function(chrom,reg){
+      regions = lapply(chr,function(chrom,reg){
         subset(reg,subset = as.character(seqnames(reg)) == chrom)
-      },regions(object)))
-      names(regions) = chr
-      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
+      },regions(object))
+      regions = GRangesList(lapply(regions,function(x)
+        trim(GRanges(seqnames = seqnames(x),ranges = IRanges(start = start(x) - side,
+          end = end(x) + side),strand = strand(x)))))
+      names(regions) = chr      
+      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]      
       message("Matching reads for forward strand")
-      m1 = mclapply(chr,function(chrom,reads,object){
+      m1 = mclapply(chr,function(chrom,reads,reg,object){
         message("Matching forward reads for ",chrom)
-        mm = match_reads(start(regions[[chrom]])-side,end(regions[[chrom]])+side,
-          start(reads[[chrom]]),end(reads[[chrom]]),
-          as.character(strand(reads[[chrom]])),fragLen(object))
+        overlaps = findOverlaps(reg[[chrom]],resize(reads[[chrom]],fragLen(object)))       
+        mm = lapply(1:length(reg[[chrom]]),
+          function(i,overlaps)subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),
+          overlaps)  
         message("Forward strand matching for ",chrom," done");return(mm)},
-        reads1(object),object,mc.cores = mc)
+        reads1(object),regions,object,mc.cores = mc)
       names(m1) = chr            
       message("Forward strand done")
       message("Matching reads for reverse strand")
-      m2 = mclapply(chr,function(chrom,reads,object){
+      m2 = mclapply(chr,function(chrom,reads,reg,object){
         message("Matching reverse reads for ",chrom)
-        mm = match_reads(start(regions[[chrom]])-side,end(regions[[chrom]])+side,
-          start(reads[[chrom]]),end(reads[[chrom]]),
-          as.character(strand(reads[[chrom]])),fragLen(object))
+        overlaps = findOverlaps(reg[[chrom]],resize(reads[[chrom]],fragLen(object)))
+        mm = lapply(1:length(reg[[chrom]]),
+          function(i,overlaps)subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),
+          overlaps)
         message("Reverse strand matching for ",chrom," done");return(mm)},
-        reads2(object),object,mc.cores = mc)
+        reads2(object),regions,object,mc.cores = mc)
       names(m2) = chr
       message("Reverse strand done")
       object@match = new("match",match1 = m1,match2 = m2)
