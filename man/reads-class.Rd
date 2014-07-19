@@ -13,4 +13,7 @@ Contains the reads obtained in a ChIP - seq experiment separated by strand and t
 
 \item{\code{reads2}}{- GRangesList of the reads of the ChIP - Seq experiment that have - strand}
 }}
+\seealso{
+\code{\link{reads1}}, \code{\link{reads2}} and loadReads
+}
 

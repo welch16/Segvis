@@ -37,4 +37,7 @@ Contains all the information necessary for the calculation of profile curves.
 
 \item{\code{.coverageCalculated}}{- logical - Indicates if the coverage has been calculated]}
 }}
+\seealso{
+\code{\link{Profile}}
+}
 

@@ -15,4 +15,7 @@ match_reads.cpp function
 
 \item{\code{match2}}{- List of positions of the reads in list that match with each region and have - strand}
 }}
+\seealso{
+\code{\link{match1}}, \code{\link{match2}} and matchReads
+}
 
