@@ -64,87 +64,75 @@ setGeneric("setRegions",
 
 ##  Get methods
 
-#' files
-#'
-#' @param profile object
-#' @return character. A chracter vector with the names of the bedfiles used to create the readsList object
+#' @title file
+#' @description Returns the name of the file where the reads are stored
+#' @details This method return the value of the file slot
+#' @param object A profile object
+#' @return character. A character with the name of the file used to create the reads object
 #' @export
 #' @docType methods
-#' @rdname profile-methods
+#' @seealso \code{\link{profile-class}}
+#' @rdname file
 setGeneric("file",
   function(object)
   standardGeneric("file")           
 )
 
-#' fileFormat
-#' @param profile object
-#' @return character. A character that contains the file format used
+#' @title fileFormat
+#' @description Returns the format of the file where the reads are stored
+#' @details This method return the value of the fileFormat slot
+#' @param object A profile object
+#' @return character. A character with the file format of the file where reads are stored
 #' @export
 #' @docType methods
-#' @rdname profile-methods
+#' @seealso \code{\link{profile-class}}
+#' @rdname fileFormat
 setGeneric("fileFormat",
   function(object,...)
   standardGeneric("fileFormat")         
 )
 
-#' maxBandwidth
-#'
-#' @param profile object
-#' @return numeric. A number with the max bandwidth possible to smooth the profiles
+#' @title maxBandwidth
+#' @description Returns the maximum bandwidth value
+#' @details Return the maxumum bandwidth value
+#' @param object A profile object
+#' @return numeric value. This indicated the maximum bandwidth available to later smooth the profiles
 #' @export
 #' @docType methods
-#' @rdname profile-methods
+#' @seealso \code{\link{profile-class}} and \code{\link{Profile}}
+#' @rdname maxBandwidth
 setGeneric("maxBandwidth",
   function(object,...)
   standardGeneric("maxBandwidth")           
 )
-           
-#' fragLen
-#'
-#' @param profile object
-#' @return numeric. A numeric value representing the width of the extended fragment reads
+
+#' @title fragLen
+#' @description Returns the fragment length value
+#' @details This value indicates the length used to extend the fragment when matching reads with regions
+#' @param object A profile object
+#' @return numeric value. This indicated the fragment length
 #' @export
-#' @docType method
-#' @rdname profile-methods
+#' @docType methods
+#' @seealso \code{\link{profile-class}} and \code{\link{Profile}}
+#' @rdname fragLen
 setGeneric("fragLen",
   function(object,...)
   standardGeneric("fragLen")           
 )
 
-#' remChr
-#' @param profile object
-#' @return character. A character vector representing the chromosomes to be ignored
+#' @title remChr
+#' @description Returns the chromosomes to be ignored 
+#' @details This value indicater the chromosomes that should be ignored
+#' @param object A profile object
+#' @return character value. Indicates the chromosomes to be ignored
 #' @export
 #' @docType methods
-#' @rdname profile-method
+#' @seealso \code{\link{profile-class}} and \code{\link{Profile}}
+#' @rdname remChr
 setGeneric("remChr",
   function(object,...)
   standardGeneric("remChr")
 )           
-
-#' reads
-#'
-#' @param profile object
-#' @return reads. A reads object with the reads contained in file
-#' @export
-#' @docType methods
-#' @rdname profile-method
-setGeneric("reads",
-  function(object)
-  standardGeneric("reads")           
-)
-
-#' match
-#'
-#' @param profile object
-#' @return match object, with the index in reads of the matching reads for the regions
-#' @export
-#' @docType methods
-#' @rdname profile-method
-setGeneric("match",
-  function(object,...)
-  standardGeneric("match")           
-)
 
 #' profileCurve
 #' @param profile object
@@ -262,7 +250,6 @@ setGeneric("buildProfileMat",
 #' @seealso \code{\link{reads2}}
 #' @docType methods
 #' @rdname reads1
-#'
 setGeneric("reads1",
   function(object)
   standardGeneric("reads1")

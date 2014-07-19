@@ -6,6 +6,7 @@
 #' match_reads.cpp function
 #' @slot match1 - List of positions of the reads in list that match with each region and have + strand
 #' @slot match2 - List of positions of the reads in list that match with each region and have - strand
+#' @seealso \code{\link{match1}}, \code{\link{match2}} and matchReads
 setClass("match",
   representation(match1 = "list",match2 = "list"),
   contains = "list",         
@@ -21,6 +22,7 @@ setValidity("match",
 #' Contains the reads obtained in a ChIP - seq experiment separated by strand and then by chromosome.
 #' @slot reads1 - GRangesList of the reads of the ChIP - Seq experiment that have + strand
 #' @slot reads2 - GRangesList of the reads of the ChIP - Seq experiment that have - strand
+#' @seealso \code{\link{reads1}}, \code{\link{reads2}} and loadReads
 setClass("reads",
   representation(reads1 = "GRangesList",reads2 = "GRangesList"),
   contains = "GRangesList",
@@ -47,6 +49,7 @@ setValidity("reads",
 #' @slot .haveReads - logical - Indicates if the object have the reads loaded
 #' @slot .readsMatched - logical - Indicates if the read have been matched to the regions
 #' @slot .coverageCalculated - logical - Indicates if the coverage has been calculated]
+#' @seealso \code{\link{Profile}}
 #' @exportClass profile
 setClass("profile",
   representation(name = "character",

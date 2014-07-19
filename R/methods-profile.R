@@ -60,19 +60,11 @@ setMethods("remChr",
 )           
 
 # @rdname profile-methods
-# @name reads
-# @aliases profile
-setMethods("reads",
-  signature = signature(object = "profile"),
-  definition = function(object)object@reads
-)
-
-# @rdname profile-methods
 # @name reads1
 # @aliases profile
 setMethods("reads1",
   signature = signature(object = "profile"),
-  definition = function(object)reads1(reads(object))
+  definition = function(object)reads1(object@reads)
 )           
 
 # @rdname profile-methods
@@ -80,15 +72,7 @@ setMethods("reads1",
 # @aliases profile
 setMethods("reads2",
   signature = signature(object = "profile"),
-  definition = function(object)reads2(reads(object))
-)
-
-# @rdname profile-methods
-# @name match
-# @aliases profile
-setMethods("match",
-  signature = signature(object = "profile"),
-  definition = function(object)object@match
+  definition = function(object)reads2(object@reads)
 )
 
 # @rdname profile-methods
@@ -96,7 +80,7 @@ setMethods("match",
 # @aliases profile
 setMethods("match1",
   signature = signature(object = "profile"),
-  definition = function(object)match1(match(object))
+  definition = function(object)match1(object@match)
 )
 
 # @rdname profile-methods
@@ -104,7 +88,7 @@ setMethods("match1",
 # @aliases profile
 setMethods("match2",
   signature = signature(object = "profile"),
-  definition = function(object)match2(match(object))
+  definition = function(object)match2(object@match)
 )
 
 # @rdname profile-methods
@@ -303,8 +287,8 @@ setMethods("getCoverage",
         m2 = match2(object)[[chrom]]
         message("Calculating coverage for ",chrom)
         z = mclapply(1:l,function(i,r1,r2,m1,m2){
-          coverage(c(extend_to_strand(r1[m1[[i]]],fragLen(object)),
-                     extend_to_strand(r2[m2[[i]]],fragLen(object))))[[1]]}
+          coverage(c(resize(r1[m1[[i]]],fragLen(object)),
+                     resize(r2[m2[[i]]],fragLen(object))))[[1]]}
                  ,r1,r2,m1,m2,mc.cores = mc)        
         message("Coverage calculated for ",chrom)
         return(z)},
