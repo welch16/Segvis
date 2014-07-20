@@ -7,7 +7,6 @@ import(GenomicAlignments,
 export(Profile)
 export(bandwidth)
 export(buildProfileMat)
-export(extend_to_strand)
 export(fileFormat)
 export(file)
 export(fragLen)
