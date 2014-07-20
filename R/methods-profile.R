@@ -309,16 +309,21 @@ setMethods("getCoverage",
 setMethods("buildProfileMat",
   signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc=8){
-  if(object@.coverageCalculated){
+  if(object@.coverageCalculated){    
     ma <- function(x,n) filter(x,rep(1/n,n),sides = 2)
     chr = names(seqlengths(regions(object)))
-    if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
+    if(remChr(object) != ""){
+      chr = chr[!chr %in% remChr(object)]
+    }
     side = (maxBandwidth(object)-1)/2
-    matList = lapply(chr,function(chrom,object,side,mc){
+    regions = GRangesList(lapply(chr,function(x,regions)
+      subset(regions,subset = seqnames(.(regions)) == .(x)),regions(object)))
+    names(regions) =chr
+    matList = lapply(chr,function(chrom,object,regions,side,mc){
       message("Calculating profile for ",chrom)
-      ll = length(regions(object)[[chrom]])
-      regionStart = start(regions(object)[[chrom]])-side
-      regionEnd = end(regions(object)[[chrom]])+side
+      ll = length(regions[[chrom]])
+      regionStart = start(regions[[chrom]])-side
+      regionEnd = end(regions[[chrom]])+side
       stepList = profileCurve(object)[[chrom]]
       mclapply(1:ll,function(i,regionStart,regionEnd,stepList,bw,side){        
         z = stepList[[i]]
@@ -334,7 +339,7 @@ setMethods("buildProfileMat",
         y = y[-c(1:side)]
         y = y[1:(length(y) - side)]                            
     return(y)},regionStart,regionEnd,stepList,bw,side,mc.cores = mc)
-      },object,side,mc)
+      },object,regions,side,mc)
     matList = lapply(matList,function(x)do.call(rbind,x))
     matList = do.call(rbind,matList)
     message("Profile matrix built")
