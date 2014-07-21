@@ -1,12 +1,12 @@
-//' Creates a list with the matched reads for each regions
-//'
-//' @param regionStart - start(regions) from GRanges
-//' @param regionEnd - end(regions) from GRanges
-//' @param readStart - start(reads) from GRanges
-//' @param readEnd - end(reads) from GRanges
-//' @param strand - as.character(strand(reads)) form GRanges
-//' @param fraglen - Numeric value, fragment length
-//' @return position in reads vector
+// Creates a list with the matched reads for each regions
+//
+// @param regionStart - start(regions) from GRanges
+// @param regionEnd - end(regions) from GRanges
+// @param readStart - start(reads) from GRanges
+// @param readEnd - end(reads) from GRanges
+// @param strand - as.character(strand(reads)) form GRanges
+// @param fraglen - Numeric value, fragment length
+// @return position in reads vector
 
 #include <Rcpp.h>
 
