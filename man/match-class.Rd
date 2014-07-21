@@ -4,9 +4,7 @@
 \alias{match-class}
 \title{match class}
 \description{
-Contains the match of a set a reads of a ChIP - Seq experiment given a set
-of regions in the genome. We are obtaining a match for each strand with the
-match_reads.cpp function
+Contains the match of a set a reads of a ChIP - Seq experiment given a set of regions in the genome.
 }
 \section{Slots}{
 
@@ -16,6 +14,6 @@ match_reads.cpp function
 \item{\code{match2}}{- List of positions of the reads in list that match with each region and have - strand}
 }}
 \seealso{
-\code{\link{match1}}, \code{\link{match2}} and matchReads
+\code{\link{match1}} and  \code{\link{match2}}
 }
 

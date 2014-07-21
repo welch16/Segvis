@@ -1,12 +1,10 @@
 
-#' match class
-#'
-#' Contains the match of a set a reads of a ChIP - Seq experiment given a set
-#' of regions in the genome. We are obtaining a match for each strand with the
-#' match_reads.cpp function
+#' @title match class
+#' 
+#' @description Contains the match of a set a reads of a ChIP - Seq experiment given a set of regions in the genome. 
 #' @slot match1 - List of positions of the reads in list that match with each region and have + strand
 #' @slot match2 - List of positions of the reads in list that match with each region and have - strand
-#' @seealso \code{\link{match1}}, \code{\link{match2}} and matchReads
+#' @seealso \code{\link{match1}} and  \code{\link{match2}}
 setClass("match",
   representation(match1 = "list",match2 = "list"),
   contains = "list",         
@@ -96,7 +94,7 @@ setValidity("profile",
 #' Contains a matrix with the individual coverage for each region
 #' @slot name - Character with the name of the profiles
 #' @slot regions - GRanges with the regions
-#' @slot profMat - Matrix - Actual profile matrix
+#' @slot profileMat - Matrix - Actual profile matrix
 #' @slot bandwidth - Numeric value used to smooth the individual coverages
 #' @slot normConst - Numeric Normalizing constant
 #' @slot .isScaled - Logical representing if the profile matrix is scaled
@@ -104,14 +102,14 @@ setValidity("profile",
 setClass("profileMatrix",
   representation(name = "character",
                  regions = "GRanges",
-                 profMat = "matrix",
+                 profileMat = "matrix",
                  bandwidth = "numeric",                 
                  normConst = "numeric",
                  .isScaled = "logical"),
   contains = "GRanges",
   prototype = prototype(name = "",
                  regions = GRanges(),
-                 profMat = matrix(nrow=0,ncol = 0),
+                 profileMat = matrix(nrow=0,ncol = 0),
                  bandwidth = 1,
                  normConst = 1,
                  .isScaled = FALSE)

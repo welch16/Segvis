@@ -13,7 +13,7 @@ Contains a matrix with the individual coverage for each region
 
 \item{\code{regions}}{- GRanges with the regions}
 
-\item{\code{profMat}}{- Matrix - Actual profile matrix}
+\item{\code{profileMat}}{- Matrix - Actual profile matrix}
 
 \item{\code{bandwidth}}{- Numeric value used to smooth the individual coverages}
 
