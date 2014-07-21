@@ -4,7 +4,7 @@
 \alias{fragLen}
 \title{fragLen}
 \usage{
-fragLen(object, ...)
+fragLen(object)
 }
 \arguments{
 \item{object}{A profile object}

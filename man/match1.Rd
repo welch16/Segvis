@@ -19,6 +19,6 @@ Get method for match class with "+" strand
 This methods returns a list with the indexes in the "+" strand GRangesList
 }
 \seealso{
-\code{\link{match_reads}},\code{\link{reads1}} and \code{\link{match2}}
+\code{\link{reads1}} and \code{\link{match2}}
 }
 

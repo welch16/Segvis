@@ -11,7 +11,7 @@
 #' @seealso \code{\link{setName}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}} 
 #' @rdname name
 setGeneric("name",
-  function(object,...)
+  function(object)
   standardGeneric("name")
 )
 
@@ -88,7 +88,7 @@ setGeneric("file",
 #' @seealso \code{\link{profile-class}}
 #' @rdname fileFormat
 setGeneric("fileFormat",
-  function(object,...)
+  function(object)
   standardGeneric("fileFormat")         
 )
 
@@ -102,7 +102,7 @@ setGeneric("fileFormat",
 #' @seealso \code{\link{profile-class}} and \code{\link{Profile}}
 #' @rdname maxBandwidth
 setGeneric("maxBandwidth",
-  function(object,...)
+  function(object)
   standardGeneric("maxBandwidth")           
 )
 
@@ -116,7 +116,7 @@ setGeneric("maxBandwidth",
 #' @seealso \code{\link{profile-class}} and \code{\link{Profile}}
 #' @rdname fragLen
 setGeneric("fragLen",
-  function(object,...)
+  function(object)
   standardGeneric("fragLen")           
 )
 
@@ -130,7 +130,7 @@ setGeneric("fragLen",
 #' @seealso \code{\link{profile-class}} and \code{\link{Profile}}
 #' @rdname remChr
 setGeneric("remChr",
-  function(object,...)
+  function(object)
   standardGeneric("remChr")
 )           
 
@@ -141,7 +141,7 @@ setGeneric("remChr",
 #' @docType methods
 #' @rdname profile-methods
 setGeneric("profileCurve",
-  function(object,...)
+  function(object)
   standardGeneric("profileCurve")
 )  
     
@@ -308,7 +308,7 @@ setGeneric("setReads2",
 #' @return list The match of the reads with "+" strand
 #' @export
 #' @docType methods
-#' @seealso \code{\link{match_reads}},\code{\link{reads1}} and \code{\link{match2}}
+#' @seealso \code{\link{reads1}} and \code{\link{match2}}
 #' @rdname match1
 setGeneric("match1",
   function(object)
@@ -322,10 +322,10 @@ setGeneric("match1",
 #' @return list The match of the reads with "-" strand
 #' @export
 #' @docType methods
-#' @seealso \code{\link{match_reads}},\code{\link{reads2}} and \code{\link{match1}}
+#' @seealso \code{\link{reads2}} and \code{\link{match1}}
 #' @rdname match2
 setGeneric("match2",
-  function(object,...)
+  function(object)
   standardGeneric("match2")
 )           
 

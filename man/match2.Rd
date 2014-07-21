@@ -4,7 +4,7 @@
 \alias{match2}
 \title{match2}
 \usage{
-match2(object, ...)
+match2(object)
 }
 \arguments{
 \item{match}{object}
@@ -19,6 +19,6 @@ Get method for match class with "-" strand
 This methods returns a list with the indexes in the "-" strand GRangesList
 }
 \seealso{
-\code{\link{match_reads}},\code{\link{reads2}} and \code{\link{match1}}
+\code{\link{reads2}} and \code{\link{match1}}
 }
 

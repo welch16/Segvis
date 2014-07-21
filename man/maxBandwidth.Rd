@@ -4,7 +4,7 @@
 \alias{maxBandwidth}
 \title{maxBandwidth}
 \usage{
-maxBandwidth(object, ...)
+maxBandwidth(object)
 }
 \arguments{
 \item{object}{A profile object}

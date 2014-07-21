@@ -4,7 +4,7 @@
 \alias{remChr}
 \title{remChr}
 \usage{
-remChr(object, ...)
+remChr(object)
 }
 \arguments{
 \item{object}{A profile object}

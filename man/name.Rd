@@ -4,7 +4,7 @@
 \alias{name}
 \title{name}
 \usage{
-name(object, ...)
+name(object)
 }
 \arguments{
 \item{object}{Either a profile or profileMatrix object}

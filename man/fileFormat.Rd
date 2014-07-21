@@ -4,7 +4,7 @@
 \alias{fileFormat}
 \title{fileFormat}
 \usage{
-fileFormat(object, ...)
+fileFormat(object)
 }
 \arguments{
 \item{object}{A profile object}

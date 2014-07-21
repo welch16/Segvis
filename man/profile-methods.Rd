@@ -11,7 +11,7 @@
 \alias{setRemChr}
 \title{profileCurve}
 \usage{
-profileCurve(object, ...)
+profileCurve(object)
 
 setMaxBandwidth(object, newMaxBandwidth)
 
