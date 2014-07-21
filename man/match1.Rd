@@ -2,7 +2,7 @@
 \docType{methods}
 \name{match1}
 \alias{match1}
-\title{match1}
+\title{match1 method for profile and match classes}
 \usage{
 match1(object)
 }
@@ -14,9 +14,6 @@ list The match of the reads with "+" strand
 }
 \description{
 Get method for match class with "+" strand
-}
-\details{
-This methods returns a list with the indexes in the "+" strand GRangesList
 }
 \seealso{
 \code{\link{reads1}} and \code{\link{match2}}

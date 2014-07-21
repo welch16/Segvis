@@ -2,7 +2,7 @@
 \docType{methods}
 \name{maxBandwidth}
 \alias{maxBandwidth}
-\title{maxBandwidth}
+\title{maxBandwidth method for profile class}
 \usage{
 maxBandwidth(object)
 }
@@ -13,12 +13,9 @@ maxBandwidth(object)
 numeric value. This indicated the maximum bandwidth available to later smooth the profiles
 }
 \description{
-Returns the maximum bandwidth value
-}
-\details{
-Return the maxumum bandwidth value
+Returns the maximum bandwidth valuee
 }
 \seealso{
-\code{\link{profile-class}} and \code{\link{Profile}}
+\code{\link{profile-class}}, \code{\link{Profile}} and \code{\link{setMaxBandwidth}}
 }
 

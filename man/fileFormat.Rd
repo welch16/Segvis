@@ -2,7 +2,7 @@
 \docType{methods}
 \name{fileFormat}
 \alias{fileFormat}
-\title{fileFormat}
+\title{fileFormat method for profile class}
 \usage{
 fileFormat(object)
 }
@@ -15,10 +15,7 @@ character. A character with the file format of the file where reads are stored
 \description{
 Returns the format of the file where the reads are stored
 }
-\details{
-This method return the value of the fileFormat slot
-}
 \seealso{
-\code{\link{profile-class}}
+\code{\link{profile-class}} and \code{link{Profile}}
 }
 

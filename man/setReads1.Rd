@@ -2,7 +2,7 @@
 \docType{methods}
 \name{setReads1}
 \alias{setReads1}
-\title{setReads1}
+\title{setReads1 method for reads class}
 \usage{
 setReads1(object, r1)
 }
@@ -15,10 +15,7 @@ setReads1(object, r1)
 reads object
 }
 \description{
-Set method of the reads class, for the reads with "+" strand
-}
-\details{
-This method return a reads object where the reads with "+" strand have been modified by the user
+Set method of the reads class, set the reads in the forward strand
 }
 \seealso{
 \code{\link{reads1}},\code{\link{reads2}} and \code{\link{setReads2}}

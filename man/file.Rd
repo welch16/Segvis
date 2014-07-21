@@ -2,7 +2,7 @@
 \docType{methods}
 \name{file}
 \alias{file}
-\title{file}
+\title{file method for profile class}
 \usage{
 file(object)
 }
@@ -15,10 +15,7 @@ character. A character with the name of the file used to create the reads object
 \description{
 Returns the name of the file where the reads are stored
 }
-\details{
-This method return the value of the file slot
-}
 \seealso{
-\code{\link{profile-class}}
+\code{\link{profile-class}} and \code{\link{Profile}}
 }
 

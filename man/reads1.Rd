@@ -2,7 +2,7 @@
 \docType{methods}
 \name{reads1}
 \alias{reads1}
-\title{reads1}
+\title{Generic method reads1 for profile and reads classes}
 \usage{
 reads1(object)
 }
@@ -13,10 +13,7 @@ reads1(object)
 GRangesList The reads of the "+" strand
 }
 \description{
-reads1
-}
-\details{
-This method return a GRangesList with the reads corresponding to the "+" strand
+Generic method reads1 for profile and reads classes
 }
 \seealso{
 \code{\link{reads2}}

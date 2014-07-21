@@ -2,7 +2,7 @@
 \docType{methods}
 \name{setRegions}
 \alias{setRegions}
-\title{setRegions}
+\title{setRegions methods for profile and profileMatrix classes}
 \usage{
 setRegions(object, newRegions)
 }
@@ -16,9 +16,6 @@ profile object
 }
 \description{
 Generic set regions method for both profile and profileMatrix classes
-}
-\details{
-This methods returns either a profile or profileMatrix object
 }
 \seealso{
 \code{\link{regions}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}}

@@ -2,7 +2,7 @@
 \docType{methods}
 \name{fragLen}
 \alias{fragLen}
-\title{fragLen}
+\title{fragLen method for profile class}
 \usage{
 fragLen(object)
 }
@@ -13,12 +13,9 @@ fragLen(object)
 numeric value. This indicated the fragment length
 }
 \description{
-Returns the fragment length value
-}
-\details{
-This value indicates the length used to extend the fragment when matching reads with regions
+Returns the fragment length value used to extend the reads when matching them with the regions
 }
 \seealso{
-\code{\link{profile-class}} and \code{\link{Profile}}
+\code{\link{profile-class}}, \code{\link{Profile}} and \code{\link{setFragLen}}
 }
 

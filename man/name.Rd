@@ -2,7 +2,7 @@
 \docType{methods}
 \name{name}
 \alias{name}
-\title{name}
+\title{name method for profile and profileMatrix}
 \usage{
 name(object)
 }
@@ -13,10 +13,7 @@ name(object)
 character The name of the object
 }
 \description{
-Generic method for both profile and profileMatrix classes
-}
-\details{
-This method returns the name of the object
+Generic method for both profile and profileMatrix classes that returns the name of the object
 }
 \seealso{
 \code{\link{setName}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}}

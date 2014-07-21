@@ -2,7 +2,7 @@
 \docType{methods}
 \name{setName}
 \alias{setName}
-\title{setName}
+\title{setName method for profile and profileMatrix classes}
 \usage{
 setName(object, newName)
 }
@@ -16,9 +16,6 @@ profile or profileMatrix object
 }
 \description{
 Generic set name method for both profile and profileMatrix classes
-}
-\details{
-This methods returns either a profile or profileMatrix object
 }
 \seealso{
 \code{\link{name}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}}

@@ -2,7 +2,7 @@
 \docType{methods}
 \name{remChr}
 \alias{remChr}
-\title{remChr}
+\title{remChr method for profile class}
 \usage{
 remChr(object)
 }
@@ -15,10 +15,7 @@ character value. Indicates the chromosomes to be ignored
 \description{
 Returns the chromosomes to be ignored
 }
-\details{
-This value indicater the chromosomes that should be ignored
-}
 \seealso{
-\code{\link{profile-class}} and \code{\link{Profile}}
+\code{\link{profile-class}}, \code{\link{Profile}} and \code{\link{setRemChr}}
 }
 

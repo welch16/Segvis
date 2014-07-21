@@ -2,12 +2,12 @@
 \docType{methods}
 \name{setReads2}
 \alias{setReads2}
-\title{setReads2}
+\title{setReads2 method for reads class}
 \usage{
 setReads2(object, r2)
 }
 \arguments{
-\item{reads}{object}
+\item{object}{reads object}
 
 \item{r2}{GRangesList object, the new reads to set on the reads object}
 }
@@ -15,10 +15,7 @@ setReads2(object, r2)
 reads object
 }
 \description{
-Set method for the reads class, for the reads with "-" strand
-}
-\details{
-This method return a reads object where the reads with "-" strand have been modified by the user
+Set method for the reads class, set the reads in the reverse strand
 }
 \seealso{
 \code{\link{reads1}},\code{\link{reads2}} and \code{\link{setReads1}}

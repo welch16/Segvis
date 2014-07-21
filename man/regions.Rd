@@ -2,7 +2,7 @@
 \docType{methods}
 \name{regions}
 \alias{regions}
-\title{regions}
+\title{regions methods for profile and profileMatrix}
 \usage{
 regions(object)
 }
@@ -13,11 +13,7 @@ regions(object)
 GRanges object with the regions for which the profiles are calculated
 }
 \description{
-Generic method for both profile and profileMatrix classes
-}
-\details{
-This methods returns the regions for which the profile and profileMatrix are calculated as a
-GRanges object with the regions for which the profiles are calculated
+Generic method for both profile and profileMatrix classes that returns the regions for which the profiles are calculated
 }
 \seealso{
 \code{\link{setRegions}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}}
