@@ -1,6 +1,5 @@
 
-#' @title match class
-#' 
+#' @title match class description
 #' @description Contains the match of a set a reads of a ChIP - Seq experiment given a set of regions in the genome. 
 #' @slot match1 - List of positions of the reads in list that match with each region and have + strand
 #' @slot match2 - List of positions of the reads in list that match with each region and have - strand
@@ -15,9 +14,8 @@ setValidity("match",
   function(object) return(length(object@match1) == length(object@match2))
 )            
 
-#' reads class
-#'
-#' Contains the reads obtained in a ChIP - seq experiment separated by strand and then by chromosome.
+#' @title reads class description
+#' @description Contains the reads obtained in a ChIP - seq experiment separated by strand and then by chromosome.
 #' @slot reads1 - GRangesList of the reads of the ChIP - Seq experiment that have + strand
 #' @slot reads2 - GRangesList of the reads of the ChIP - Seq experiment that have - strand
 #' @seealso \code{\link{reads1}}, \code{\link{reads2}} and loadReads
@@ -30,9 +28,8 @@ setValidity("reads",
   function(object)return(length(object@reads1) == length(object@reads2))
 )            
 
-#' profile class
-#'
-#' Contains all the information necessary for the calculation of profile curves.
+#' @title profile class description
+#' @description Contains all the information necessary for the calculation of profile curves.
 #' @slot name - Character with the name of the profiles
 #' @slot regions - GRanges object with the regions for which the profile want to be calcualted
 #' @slot file - Character with the name of the file that contains the reads
@@ -89,9 +86,8 @@ setValidity("profile",
 }
 )  
 
-#' profileMatrix class
-#'
-#' Contains a matrix with the individual coverage for each region
+#' @title profileMatrix class description
+#' @description Contains a matrix with the individual coverage for each region
 #' @slot name - Character with the name of the profiles
 #' @slot regions - GRanges with the regions
 #' @slot profileMat - Matrix - Actual profile matrix

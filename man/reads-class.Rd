@@ -2,7 +2,7 @@
 \docType{class}
 \name{reads-class}
 \alias{reads-class}
-\title{reads class}
+\title{reads class description}
 \description{
 Contains the reads obtained in a ChIP - seq experiment separated by strand and then by chromosome.
 }

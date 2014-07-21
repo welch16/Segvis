@@ -2,7 +2,7 @@
 \docType{class}
 \name{profileMatrix-class}
 \alias{profileMatrix-class}
-\title{profileMatrix class}
+\title{profileMatrix class description}
 \description{
 Contains a matrix with the individual coverage for each region
 }

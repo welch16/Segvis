@@ -2,7 +2,7 @@
 \docType{class}
 \name{profile-class}
 \alias{profile-class}
-\title{profile class}
+\title{profile class description}
 \description{
 Contains all the information necessary for the calculation of profile curves.
 }

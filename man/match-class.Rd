@@ -2,7 +2,7 @@
 \docType{class}
 \name{match-class}
 \alias{match-class}
-\title{match class}
+\title{match class description}
 \description{
 Contains the match of a set a reads of a ChIP - Seq experiment given a set of regions in the genome.
 }
