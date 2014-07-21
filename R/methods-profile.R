@@ -315,6 +315,8 @@ setMethods("buildProfileMat",
     if(remChr(object) != ""){
       chr = chr[!chr %in% remChr(object)]
     }
+    if(length(unique(width(regions(object))))>1){
+      stop("The width of the regions isn't unique, can't build profile matrix")}
     side = (maxBandwidth(object)-1)/2
     regions = GRangesList(lapply(chr,function(x,regions)
       subset(regions,subset = seqnames(.(regions)) == .(x)),regions(object)))
@@ -324,7 +326,7 @@ setMethods("buildProfileMat",
       ll = length(regions[[chrom]])
       regionStart = start(regions[[chrom]])-side
       regionEnd = end(regions[[chrom]])+side
-      stepList = profileCurve(object)[[chrom]]
+      stepList = profileCurve(object)[[chrom]]   
       mclapply(1:ll,function(i,regionStart,regionEnd,stepList,bw,side){        
         z = stepList[[i]]
         x = seq(regionStart[i],regionEnd[i],by=1)
