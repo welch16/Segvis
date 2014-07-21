@@ -197,13 +197,13 @@ setMethods("loadReads",
       message("Bam file loaded")
       message("Separating by chromosome")      
       greads = mclapply(chr,function(i,greads)
-        subset(greads, subset = as.character(seqnames(.(greads))) == .(i)),greads,mc.cores = mc)
+        subset(greads, subset = as.character(seqnames(greads)) == i),greads,mc.cores = mc)
       names(greads) = chr
       message("Separating reads by strand")
-      gr1 = mclapply(greads,function(x)sort_by_strand(subset(x,subset = as.character(strand(.(x)))=="+"),"+"),
+      gr1 = mclapply(greads,function(x)sort_by_strand(subset(x,subset = as.character(strand(x))=="+"),"+"),
         mc.cores = mc)
       message("Forward strand reads extracted")
-      gr2 = mclapply(greads,function(x)sort_by_strand(subset(x,subset = as.character(strand(.(x)))=="-"),"-"),
+      gr2 = mclapply(greads,function(x)sort_by_strand(subset(x,subset = as.character(strand(x))=="-"),"-"),
         mc.cores = mc)
       message("Reverse strand reads extracted")
       message("Finished separating reads")
@@ -228,7 +228,7 @@ setMethods("matchReads",
       side = (maxBandwidth(object)-1)/2      
       chr = names(seqlengths(regions(object)))
       regions = lapply(chr,function(chrom,reg){
-        subset(reg,subset = as.character(seqnames(.(reg))) == .(chrom))
+        subset(reg,subset = as.character(seqnames(reg)) == chrom)
       },regions(object))
       regions = GRangesList(lapply(regions,function(x)
         trim(GRanges(seqnames = seqnames(x),ranges = IRanges(start = start(x) - side,
@@ -240,7 +240,7 @@ setMethods("matchReads",
         message("Matching forward reads for ",chrom)
         overlaps = findOverlaps(reg[[chrom]],resize(reads[[chrom]],fragLen(object)))       
         mm = lapply(1:length(reg[[chrom]]),
-          function(i,overlaps)subjectHits(subset(overlaps,subset = queryHits(.(overlaps)) == .(i))),
+          function(i,overlaps)subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),
           overlaps)  
         message("Forward strand matching for ",chrom," done");return(mm)},
         reads1(object),regions,object,mc.cores = mc)
@@ -251,7 +251,7 @@ setMethods("matchReads",
         message("Matching reverse reads for ",chrom)
         overlaps = findOverlaps(reg[[chrom]],resize(reads[[chrom]],fragLen(object)))
         mm = lapply(1:length(reg[[chrom]]),
-          function(i,overlaps)subjectHits(subset(overlaps,subset = queryHits(.(overlaps)) == .(i))),
+          function(i,overlaps)subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),
           overlaps)
         message("Reverse strand matching for ",chrom," done");return(mm)},
         reads2(object),regions,object,mc.cores = mc)
@@ -275,7 +275,7 @@ setMethods("getCoverage",
       chr = names(seqlengths(regions(object)))
       if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]     
       ll = lapply(chr,function(chrom,reg){
-        length(subset(reg,subset = as.character(seqnames(.(reg))) == .(chrom)))
+        length(subset(reg,subset = as.character(seqnames(reg)) == chrom))
       },regions(object))
       names(ll) = chr           
       curve = lapply(chr,function(chrom,object,ll,mc){
@@ -306,7 +306,7 @@ setMethods("getCoverage",
 # @rdname profile-methods
 # @name buildProfileMat
 # @aliases profile
-setMethods("buildProfileMat",
+setMethods("buildProfileMatrix",
   signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc=8){
   if(object@.coverageCalculated){    
@@ -319,7 +319,7 @@ setMethods("buildProfileMat",
       stop("The width of the regions isn't unique, can't build profile matrix")}
     side = (maxBandwidth(object)-1)/2
     regions = GRangesList(lapply(chr,function(x,regions)
-      subset(regions,subset = seqnames(.(regions)) == .(x)),regions(object)))
+      subset(regions,subset = as.character(seqnames(regions)) == x),regions(object)))
     names(regions) =chr
     matList = lapply(chr,function(chrom,object,regions,side,mc){
       message("Calculating profile for ",chrom)
