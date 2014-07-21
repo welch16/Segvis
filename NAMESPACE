@@ -2,7 +2,7 @@
 
 export(Profile)
 export(bandwidth)
-export(buildProfileMat)
+export(buildProfileMatrix)
 export(file)
 export(fileFormat)
 export(fragLen)
