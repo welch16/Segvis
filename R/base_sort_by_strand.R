@@ -3,9 +3,8 @@
 #' @param gr - A GRanges object
 #' @param stra - Unique strand of the object
 #' @return A GRanges object
-#' @export
 
-sort_by_strand <- function(gr,stra)
+.sort_by_strand <- function(gr,stra)
 {
   if(stra == "-"){
     gr = gr[sort(end(gr),index.return = TRUE)$ix]
