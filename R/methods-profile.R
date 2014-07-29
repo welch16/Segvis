@@ -158,8 +158,6 @@ setMethods("setRemChr",
     return(object)
 })
 
-
-
 # @rdname profile-methods
 # @name show
 # @aliases profile
@@ -208,10 +206,10 @@ setMethods("loadReads",
         subset(greads, subset = as.character(seqnames(greads)) == i),greads,mc.cores = mc)
       names(greads) = chr
       message("Separating reads by strand")
-      gr1 = mclapply(greads,function(x)sort_by_strand(subset(x,subset = as.character(strand(x))=="+"),"+"),
+      gr1 = mclapply(greads,function(x).sort_by_strand(subset(x,subset = as.character(strand(x))=="+"),"+"),
         mc.cores = mc)
       message("Forward strand reads extracted")
-      gr2 = mclapply(greads,function(x)sort_by_strand(subset(x,subset = as.character(strand(x))=="-"),"-"),
+      gr2 = mclapply(greads,function(x).sort_by_strand(subset(x,subset = as.character(strand(x))=="-"),"-"),
         mc.cores = mc)
       message("Reverse strand reads extracted")
       message("Finished separating reads")
@@ -322,105 +320,19 @@ setMethods("getCoverage",
 })    
 
 # @rdname profile-methods
-# @name .calculateMAprofile
-# @aliases profile
-    
-setMethods(".calculateMAprofile",
-  signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
-  definition = function(object,bw,mc=8){
-  if(object@.coverageCalculated){
-    ma <- function(x,n) filter(x,rep(1/n,n),sides = 2)
-    chr = names(seqlengths(regions(object)))
-    if(length(remChr(object)>1))
-    {                
-      chr = chr[!chr %in% remChr(object)]       
-    }else{
-      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
-    }
-    side = (maxBandwidth(object)-1)/2
-    regions = GRangesList(lapply(chr,function(x,regions)
-      subset(regions,subset = as.character(seqnames(regions)) == x),regions(object)))
-    names(regions) =chr
-    matList = lapply(chr,function(chrom,object,regions,side,mc){
-      message("Calculating profile for ",chrom)     
-      ll = length(regions[[chrom]])
-      regionStart = start(regions[[chrom]])-side
-      regionEnd = end(regions[[chrom]])+side
-      stepList = profileCurve(object)[[chrom]]   
-      mclapply(1:ll,function(i,regionStart,regionEnd,stepList,bw,side){        
-        z = stepList[[i]]
-        x = seq(regionStart[i],regionEnd[i],by=1)
-        if(nrun(z)==1){
-          if(runValue(z) == 0){
-            y = rep(NA,length(x))
-          }else{
-            y = rep(runValue(z),length(x))
-          }
-        }else{
-          xp = cumsum(runLength(z)[1:(nrun(z)-1)])       
-          yp = runValue(z)        
-          y = stepfun(xp,yp,right = TRUE)(x)
-          y =  ma(y,bw)
-        }              
-        y = y[-c(1:side)]
-        y = y[1:(length(y) - side)]                            
-    return(y)},regionStart,regionEnd,stepList,bw,side,mc.cores = mc)
-      },object,regions,side,mc)
-    return(matList)
-  }else{
-    warning("The coverage haven't been calculated yet")
-  }
-})    
-
-
-
-# @rdname profile-methods
 # @name buildProfileMatrix
 # @aliases profile
 setMethods("buildProfileMatrix",
   signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc=8){
-  if(object@.coverageCalculated){    
-    ma <- function(x,n) filter(x,rep(1/n,n),sides = 2)
-    chr = names(seqlengths(regions(object)))
-    if(length(remChr(object)>1))
-    {                
-      chr = chr[!chr %in% remChr(object)]       
-    }else{
-      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
-    }
-    if(length(unique(width(regions(object))))>1){
-      stop("The width of the regions isn't unique, can't build profile matrix")}
-    side = (maxBandwidth(object)-1)/2
-    regions = GRangesList(lapply(chr,function(x,regions)
-      subset(regions,subset = as.character(seqnames(regions)) == x),regions(object)))
-    names(regions) =chr
-    matList = lapply(chr,function(chrom,object,regions,side,mc){
-      message("Calculating profile for ",chrom)
-      ll = length(regions[[chrom]])
-      regionStart = start(regions[[chrom]])-side
-      regionEnd = end(regions[[chrom]])+side
-      stepList = profileCurve(object)[[chrom]]   
-      mclapply(1:ll,function(i,regionStart,regionEnd,stepList,bw,side){        
-        z = stepList[[i]]
-        x = seq(regionStart[i],regionEnd[i],by=1)
-        if(nrun(z)==1){
-          y = rep(runValue(z),length(x))
-        }else{
-          xp = cumsum(runLength(z)[1:(nrun(z)-1)])       
-          yp = runValue(z)        
-          y = stepfun(xp,yp)(x)
-          y =  ma(y,bw)
-        }              
-        y = y[-c(1:side)]
-        y = y[1:(length(y) - side)]                            
-    return(y)},regionStart,regionEnd,stepList,bw,side,mc.cores = mc)
-      },object,regions,side,mc)
-    matList = lapply(matList,function(x)do.call(rbind,x))
-    matList = do.call(rbind,matList)
-    message("Profile matrix built")
-    return(matList)
-  }else{
-    warning("The coverage haven't been calculated yet")
+  if(length(unique(width(regions(object))))>1){
+      stop("The width of the regions isn't unique, can't build profile matrix")
   }
+  message("Calculating profile for chromosome")
+  matList = .calculateMAprofile(object,bw,mc)
+  message("Joining profiles into matrix")
+  matList = lapply(matList,function(x)do.call(rbind,x))
+  matList = do.call(rbind,matList)
+  message("Profile matrix built")
+  return(matList)
 })    
