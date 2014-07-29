@@ -3,33 +3,33 @@
 
 ## Get methods
 
-#' @rdname profileMatrix-methods
-#' @name name
-#' @aliases profileMatrix
+# @rdname profileMatrix-methods
+# @name name
+# @aliases profileMatrix
 setMethods("name",
   signature = signature(object = "profileMatrix"),
   definition = function(object)object@name
 )
 
-#' @rdname profileMatrix-methods
-#' @name regions
-#' @aliases profileMatrix
+# @rdname profileMatrix-methods
+# @name regions
+# @aliases profileMatrix
 setMethods("regions",
   signature = signature(object = "profileMatrix"),
   definition = function(object)object@regions
 )
 
-#' @rdname profileMatrix-methods
-#' @name profMat
-#' @aliases profileMatrix
-setMethods("profMat",
+# @rdname profileMatrix-methods
+# @name profMat
+# @aliases profileMatrix
+setMethods("profileMat",
   signature = signature(object = "profileMatrix"),
-  definition = function(object)object@profMat
+  definition = function(object)object@profileMat
 )           
 
-#' @rdname profileMatrix-methods
-#' @name bandwidth
-#' @aliases profileMatrix
+# @rdname profileMatrix-methods
+# @name bandwidth
+# @aliases profileMatrix
 setMethods("bandwidth",
   signature = signature(object = "profileMatrix"),
   definition = function(object)object@bandwidth
@@ -45,9 +45,9 @@ setMethods("normConst",
 
 ## Set methods
 
-#' @rdname profileMatrix-methods
-#' @name setName
-#' @aliases profileMatrix
+# @rdname profileMatrix-methods
+# @name setName
+# @aliases profileMatrix
 setMethods("setName",
   signature = signature(object = "profileMatrix",newName = "character"),
   definition = function(object,newName){
@@ -56,9 +56,9 @@ setMethods("setName",
     return(object)
 })
 
-#' @rdname profileMatrix-methods
-#' @name setRegions
-#' @aliases profileMatrix
+# @rdname profileMatrix-methods
+# @name setRegions
+# @aliases profileMatrix
 setMethods("setRegions",
   signature = signature(object = "profileMatrix",newRegions = "GRangesList"),
   definition = function(object,newRegions){
@@ -67,21 +67,21 @@ setMethods("setRegions",
     return(object)    
 })
 
-#' @rdname profileMatrix-methods
-#' @name setProfMat
-#' @aliases profileMatrix
-setMethods("setProfMat",
-  signature = signature(object = "profileMatrix",newProfMat = "matrix"),
-  definition = function(object,newProfMatrix){
-    stopifnot(class(newProfMatrix) == "matrix")
-    stopifnot(length(regions(object))==nrow(newProfMatrix))
-    object@profMat = newProfMat
+# @rdname profileMatrix-methods
+# @name setProfileMat
+# @aliases profileMatrix
+setMethods("setProfileMat",
+  signature = signature(object = "profileMatrix",newProfileMat = "matrix"),
+  definition = function(object,newProfileMat){
+    stopifnot(class(newProfileMat) == "matrix")
+    stopifnot(length(regions(object))==nrow(newProfileMat))
+    object@profileMat = newProfileMat
     return(object)    
 })           
 
-#' @rdname profileMatrix-methods
-#' @name setBandwidth
-#' @aliases profileMatrix
+# @rdname profileMatrix-methods
+# @name setBandwidth
+# @aliases profileMatrix
 setMethods("setBandwidth",
   signature = signature(object = "profileMatrix",newBandwidth = "numeric"),
   definition = function(object,newBandwidth){
@@ -91,9 +91,9 @@ setMethods("setBandwidth",
     return(object)
 })           
 
-#' @rdname profileMatrix-methods
-#' @name setNormConst
-#' @aliases profileMatrix
+# @rdname profileMatrix-methods
+# @name setNormConst
+# @aliases profileMatrix
 setMethods("setNormConst",
   signature = signature(object = "profileMatrix",newNormConst = "numeric"),
   definition = function(object,newNormConst){
