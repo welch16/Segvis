@@ -188,12 +188,20 @@ setMethods("loadReads",
   definition = function(object,mc ){
     if(fileFormat(object) == "bam"){
       chr = names(seqlengths(regions(object)))     
-      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
+      if(length(remChr(object)>1))
+      {                
+        chr = chr[!chr %in% remChr(object)]       
+      }else{
+        if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
+      }
       message("Reading ",file(object))
       greads = readGAlignmentsFromBam(file(object),param = NULL,use.names = FALSE)
       greads = as(greads, "GRanges")
-      seqlevels(greads) = seqlevelsInUse(greads)
-      seqlevels(greads) =seqlevels(regions(object))
+      seqlevels(greads) = seqlevelsInUse(greads)      
+      if(any(unique(seqnames(greads)) %in% remChr(object) )){
+        warning("There exists reads with seqnames in remChr(object)")
+      }
+      seqlevels(greads,force =TRUE) =seqlevels(regions(object))  
       message("Bam file loaded")
       message("Separating by chromosome")      
       greads = mclapply(chr,function(i,greads)
@@ -234,7 +242,12 @@ setMethods("matchReads",
         trim(GRanges(seqnames = seqnames(x),ranges = IRanges(start = start(x) - side,
           end = end(x) + side),strand = strand(x)))))
       names(regions) = chr      
-      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]     
+      if(length(remChr(object)>1))
+      {                
+        chr = chr[!chr %in% remChr(object)]       
+      }else{
+        if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
+      }
       message("Matching reads for forward strand")
       m1 = mclapply(chr,function(chrom,reads,reg,object){
         message("Matching forward reads for ",chrom)
@@ -273,7 +286,12 @@ setMethods("getCoverage",
   definition = function(object, mc = 8){
     if(object@.readsMatched == TRUE){      
       chr = names(seqlengths(regions(object)))
-      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]     
+      if(length(remChr(object)>1))
+      {                
+        chr = chr[!chr %in% remChr(object)]       
+      }else{
+        if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
+      }
       ll = lapply(chr,function(chrom,reg){
         length(subset(reg,subset = as.character(seqnames(reg)) == chrom))
       },regions(object))
@@ -312,8 +330,11 @@ setMethods("buildProfileMatrix",
   if(object@.coverageCalculated){    
     ma <- function(x,n) filter(x,rep(1/n,n),sides = 2)
     chr = names(seqlengths(regions(object)))
-    if(remChr(object) != ""){
-      chr = chr[!chr %in% remChr(object)]
+    if(length(remChr(object)>1))
+    {                
+      chr = chr[!chr %in% remChr(object)]       
+    }else{
+      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
     }
     if(length(unique(width(regions(object))))>1){
       stop("The width of the regions isn't unique, can't build profile matrix")}
