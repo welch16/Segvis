@@ -245,6 +245,22 @@ setGeneric("buildProfileMatrix",
   standardGeneric("buildProfileMatrix")
 )
 
+#' @title findSummit method for profile class
+#' @description This method finds the summit of each region whenever is possible, otherwise returns NA
+#' @param object profile object
+#' @param bw, the bandwidth used to smooth the profiles, must be and odd number less or equal than the maxBandwidth
+#' @param mc, the number of cores used with parallel
+#' @return Numeric vector
+#' @export
+#' @docType methods
+#' @rdname findSummit
+#' @examples
+#' \dontrun{ findSummit(profile_object,bw = 151,mc=8)}
+setGeneric("findSummit",
+  function(object,bw,mc)
+  standardGeneric("findSummit")
+)
+
 #' @title Generic method reads1 for profile and reads classes
 # '@description Get methods for reads class with "+" strand
 #' @param object reads object

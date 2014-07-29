@@ -328,7 +328,7 @@ setMethods("buildProfileMatrix",
   if(length(unique(width(regions(object))))>1){
       stop("The width of the regions isn't unique, can't build profile matrix")
   }
-  message("Calculating profile for chromosome")
+  message("Calculating profiles for each chromosome")
   matList = .calculateMAprofile(object,bw,mc)
   message("Joining profiles into matrix")
   matList = lapply(matList,function(x)do.call(rbind,x))
@@ -336,3 +336,44 @@ setMethods("buildProfileMatrix",
   message("Profile matrix built")
   return(matList)
 })    
+
+# @rdname profile-methods
+# @name findSummit
+# @aliases profile
+setMethods("findSummit",          
+  signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
+  definition = function(object,bw,mc=8){
+  message("Calculating profiles for each chromosome")
+  matList = .calculateMAprofile(object,bw,mc)
+  message("Finding summits for each chromosome")
+  chr = names(seqlengths(regions(object)))
+  if(length(remChr(object)>1))
+  {                
+    chr = chr[!chr %in% remChr(object)]       
+  }else{
+    if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
+  }
+  regions = lapply(chr,function(chrom,reg){
+        subset(reg,subset = as.character(seqnames(reg)) == chrom)
+      },regions(object))
+  names(regions) = chr
+  summits_chr = lapply(chr,function(chrom,regions,matList){
+    message("Finding summit for regions of ",chrom)    
+    reg = regions[[chrom]]
+    ll = length(reg)
+    rStart = start(reg)
+    rEnd = end(reg)
+    mat = matList[[chrom]]
+    z = mclapply(1:ll,function(i,mat,rStart,rEnd){
+      if(all(is.na(mat[[i]]))){
+        summit = NA
+      }else{
+        x = seq(rStart[i],rEnd[i],by = 1)
+        summit = x[which.max(mat[[i]])]
+      }
+      return(summit)
+    },mat,rStart,rEnd)
+    return(unlist(z))         
+  },regions,matList)
+  return(unlist(summits_chr))    
+})
