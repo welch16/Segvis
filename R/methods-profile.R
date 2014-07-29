@@ -306,7 +306,7 @@ setMethods("getCoverage",
         message("Calculating coverage for ",chrom)
         z = mclapply(1:l,function(i,r1,r2,m1,m2){
           coverage(c(resize(r1[m1[[i]]],fragLen(object)),
-                     resize(r2[m2[[i]]],fragLen(object))))[[1]]}
+                     resize(r2[m2[[i]]],fragLen(object))))[[chrom]]}
                  ,r1,r2,m1,m2,mc.cores = mc)        
         message("Coverage calculated for ",chrom)
         return(z)},
@@ -322,7 +322,60 @@ setMethods("getCoverage",
 })    
 
 # @rdname profile-methods
-# @name buildProfileMat
+# @name .calculateMAprofile
+# @aliases profile
+    
+setMethods(".calculateMAprofile",
+  signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
+  definition = function(object,bw,mc=8){
+  if(object@.coverageCalculated){
+    ma <- function(x,n) filter(x,rep(1/n,n),sides = 2)
+    chr = names(seqlengths(regions(object)))
+    if(length(remChr(object)>1))
+    {                
+      chr = chr[!chr %in% remChr(object)]       
+    }else{
+      if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
+    }
+    side = (maxBandwidth(object)-1)/2
+    regions = GRangesList(lapply(chr,function(x,regions)
+      subset(regions,subset = as.character(seqnames(regions)) == x),regions(object)))
+    names(regions) =chr
+    matList = lapply(chr,function(chrom,object,regions,side,mc){
+      message("Calculating profile for ",chrom)     
+      ll = length(regions[[chrom]])
+      regionStart = start(regions[[chrom]])-side
+      regionEnd = end(regions[[chrom]])+side
+      stepList = profileCurve(object)[[chrom]]   
+      mclapply(1:ll,function(i,regionStart,regionEnd,stepList,bw,side){        
+        z = stepList[[i]]
+        x = seq(regionStart[i],regionEnd[i],by=1)
+        if(nrun(z)==1){
+          if(runValue(z) == 0){
+            y = rep(NA,length(x))
+          }else{
+            y = rep(runValue(z),length(x))
+          }
+        }else{
+          xp = cumsum(runLength(z)[1:(nrun(z)-1)])       
+          yp = runValue(z)        
+          y = stepfun(xp,yp,right = TRUE)(x)
+          y =  ma(y,bw)
+        }              
+        y = y[-c(1:side)]
+        y = y[1:(length(y) - side)]                            
+    return(y)},regionStart,regionEnd,stepList,bw,side,mc.cores = mc)
+      },object,regions,side,mc)
+    return(matList)
+  }else{
+    warning("The coverage haven't been calculated yet")
+  }
+})    
+
+
+
+# @rdname profile-methods
+# @name buildProfileMatrix
 # @aliases profile
 setMethods("buildProfileMatrix",
   signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
