@@ -378,3 +378,28 @@ setMethods("findSummit",
   },regions,matList)
   return(unlist(summits_chr))    
 })
+
+# @rdname profile-methods
+# @name normConst
+# @aliases profile
+setMethods("normConst",
+  signature = signature(object = "profile"),
+  definition = function(object){
+    n1 = sum(sapply(reads1(object),FUN = length))
+    n2 = sum(sapply(reads2(object),FUN = length))
+    return(n1+n2)  
+})
+
+# @rdname profile-methods
+# @name ProfileMatrix
+# @aliases profile
+setMethods("ProfileMatrix",
+  signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
+  definition = function(object,bw,mc){
+    mat = buildProfileMatrix(object,bw,mc)
+    nc = normConst(object)
+    nm = name(object)
+    gr = regions(object)
+    pmatrix = new("profileMatrix",name = nm,regions = gr,profileMat = mat,bandwidth = bw,normConst = nc)
+    return(pmatrix)
+})    

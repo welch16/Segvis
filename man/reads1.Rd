@@ -13,7 +13,7 @@ reads1(object)
 GRangesList The reads of the "+" strand
 }
 \description{
-Generic method reads1 for profile and reads classes
+Get methods for reads class with "+" strand
 }
 \seealso{
 \code{\link{reads2}}

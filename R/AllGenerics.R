@@ -261,8 +261,24 @@ setGeneric("findSummit",
   standardGeneric("findSummit")
 )
 
+#' @title Create a profileMatrix object
+#' @description Constructor for profileMatrix class, it takes both name and region from \code{object}
+#' @param object profile object
+#' @param bw Numeric used to smooth the profile curves
+#' @param mc Numeric, the number of cores used with parallel
+#' @return a profileMatrix object
+#' @export
+#' @docType methods
+#' @rdname ProfileMatrix
+#' @examples
+#' \dontrun{ProfileMatrix(profile_object,bw = 151,mc=8)}
+setGeneric("ProfileMatrix",
+  function(object,bw,mc)
+  standardGeneric("ProfileMatrix")
+)           
+
 #' @title Generic method reads1 for profile and reads classes
-# '@description Get methods for reads class with "+" strand
+#' @description Get methods for reads class with "+" strand
 #' @param object reads object
 #' @return GRangesList The reads of the "+" strand
 #' @export
@@ -443,3 +459,7 @@ setGeneric("meanProfile",
   function(object,...)
   standardGeneric("meanProfile")
 )           
+
+
+
+
