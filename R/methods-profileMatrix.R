@@ -101,3 +101,19 @@ setMethods("setNormConst",
     object@normConst = newNormConst
     return(object)
 })                        
+
+# @rdname profileMatrix-methods
+# @name mean
+setMethods("meanProfile",
+  signature = signature(object = "profileMatrix",trim = "numeric"),
+  definition = function(object,trim){
+    if(missing(trim))trim=0
+    stopifnot(is.numeric(trim))
+    mat = profileMat(object)
+    return(sapply(1:ncol(mat),function(i,mat)
+      mean(mat[,i],trim = trim,na.rm = TRUE),mat))
+})
+    
+
+
+

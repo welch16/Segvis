@@ -430,4 +430,16 @@ setGeneric("setNormConst",
   standardGeneric("setNormConst")
 )           
 
-            
+#' @title meanProfile method for profile Matrix class
+#' @description This method calculates the "average" profile of the matrix respect to their rows. As in the mean function it is possible to set a trim parameter
+#' @param object profileMatrix object
+#' @param trim Numeric. By default is set to zero. If trim =0, it calculated the row-wise mean, if trim >= 0.5 then is calculates the row-wise median, otherwise it calculate a row-wise trimmed mean.
+#' @return Numeric vector
+#' @export
+#' @docType methods
+#' @seealso \code{\link{ProfileMatrix}}
+#' @rdname meanProfile
+setGeneric("meanProfile",
+  function(object,...)
+  standardGeneric("meanProfile")
+)           
