@@ -13,6 +13,7 @@
 .calculateMAprofile <- function(object,bw,mc)
 {  
   if(object@.coverageCalculated){
+  stopifnot(bw <= maxBandwidth(object))
   chr = names(seqlengths(regions(object)))
   if(length(remChr(object)>1))
   {                
