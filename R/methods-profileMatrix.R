@@ -35,9 +35,9 @@ setMethods("bandwidth",
   definition = function(object)object@bandwidth
 )           
 
-#' @rdname profileMatrix-methods
-#' @name normConst
-#' @aliases profileMatrix
+# @rdname profileMatrix-methods
+# @name normConst
+# @aliases profileMatrix
 setMethods("normConst",
   signature = signature(object = "profileMatrix"),
   definition = function(object)object@normConst
