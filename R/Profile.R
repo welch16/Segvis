@@ -1,7 +1,7 @@
-#' @title Create a profile object
+#' @title Create a profile objec
 #' @description Constructor for profile class
 #' @param regionName Name of the profile object
-#' @param file Character vector with files that contain the reads
+#' @param file Character string with the file name that contain the reads
 #' @param fileFormat Character vector with the file format used
 #' @param fragLen Numeric value of the fragment length used to extend the reads
 #' @param maxBandwidth Numeric value of the maximum possible value to smooth the profile curve
