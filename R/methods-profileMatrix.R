@@ -103,7 +103,7 @@ setMethods("setNormConst",
 })                        
 
 # @rdname profileMatrix-methods
-# @name mean
+# @name meanProfile
 setMethods("meanProfile",
   signature = signature(object = "profileMatrix",trim = "numeric"),
   definition = function(object,trim){
@@ -114,6 +114,16 @@ setMethods("meanProfile",
       mean(mat[,i],trim = trim,na.rm = TRUE),mat))
 })
     
+# @rdname profileMatrix-methods
+# @name show
+setMethods("show",
+  signature = signature(object = "profileMatrix"),
+  definition = function(object){
+    cat("Profile matrix for",name(object),"\n")
+    cat("Bandwidth:",bandwidth(object),"\n")
+    show(regions(object))
+})
+
 
 
 

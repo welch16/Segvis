@@ -164,18 +164,19 @@ setMethods("setRemChr",
 setMethods("show",
   signature = signature(object = "profile"),
   definition = function(object){
-    cat("---------------------------\n")
+#    cat("---------------------------\n")
     cat("Profile for",name(object),"regions\n")
     cat("Fragment length:",fragLen(object),"\n")
     cat("Max Bandwidth:", maxBandwidth(object),"\n")
+    cat("Using reads files:\n")
+    cat(file(object),sep = "\n")    
     if( length(regions(object)) > 0){
       cat("Using regions for",length(regions(object)),"chromosomes\n")
+      show(regions(object))      
     }else{
       cat("**Not regions loaded**\n")
-    }     
-    cat("Using reads files:\n")
-    cat(file(object),sep = "\n")
-    cat("---------------------------\n")
+    }
+#    cat("---------------------------\n")
 })
           
 # @rdname profile-methods
