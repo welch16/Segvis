@@ -1,5 +1,5 @@
-#' Create a profile object
-#'
+#' @title Create a profile object
+#' @description Constructor for profile class
 #' @param regionName Name of the profile object
 #' @param file Character vector with files that contain the reads
 #' @param fileFormat Character vector with the file format used
