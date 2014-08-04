@@ -4,17 +4,17 @@
 ## Get methods
 
 # @rdname match-methods
-# @name match1
+# @name matchF
 # @aliases match
-setMethods("match1",
+setMethod("matchF",
   signature = signature(object = "match"),
-  definition = function(object)object@match1
+  definition = function(object)object@matchF
 )           
 
 # @rdname match-methods
-# @name match2
+# @name matchR
 # @aliases match
-setMethods("match2",
+setMethod("matchR",
   signature = signature(object = "match"),
-  definition = function(object)object@match2
+  definition = function(object)object@matchR
 )

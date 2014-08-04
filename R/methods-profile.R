@@ -60,35 +60,35 @@ setMethods("remChr",
 )           
 
 # @rdname profile-methods
-# @name reads1
+# @name readsF
 # @aliases profile
-setMethods("reads1",
+setMethod("readsF",
   signature = signature(object = "profile"),
-  definition = function(object)reads1(object@reads)
+  definition = function(object)readsF(object@reads)
 )           
 
 # @rdname profile-methods
-# @name reads2
+# @name readsR
 # @aliases profile
-setMethods("reads2",
+setMethod("readsR",
   signature = signature(object = "profile"),
-  definition = function(object)reads2(object@reads)
+  definition = function(object)readsR(object@reads)
 )
 
 # @rdname profile-methods
-# @name match1
+# @name matchF
 # @aliases profile
-setMethods("match1",
+setMethod("matchF",
   signature = signature(object = "profile"),
-  definition = function(object)match1(object@match)
+  definition = function(object)matchF(object@match)
 )
 
 # @rdname profile-methods
-# @name match2
+# @name matchR
 # @aliases profile
-setMethods("match2",
+setMethod("matchR",
   signature = signature(object = "profile"),
-  definition = function(object)match2(object@match)
+  definition = function(object)matchR(object@match)
 )
 
 # @rdname profile-methods
@@ -216,7 +216,7 @@ setMethods("loadReads",
       message("Finished separating reads")
       gr1 = GRangesList(gr1)
       gr2 = GRangesList(gr2)
-      object@reads = new("reads",reads1 = gr1,reads2 = gr2)
+      object@reads = new("reads",readsF = gr1,readsR = gr2)
       object@.haveReads = TRUE
       message("Reading bam files... Done")
       return(object)
@@ -255,7 +255,7 @@ setMethods("matchReads",
           function(i,overlaps)subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),
           overlaps)  
         message("Forward strand matching for ",chrom," done");return(mm)},
-        reads1(object),regions,object,mc.cores = mc)
+        readsF(object),regions,object,mc.cores = mc)
       names(m1) = chr            
       message("Forward strand done")
       message("Matching reads for reverse strand")
@@ -266,10 +266,10 @@ setMethods("matchReads",
           function(i,overlaps)subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),
           overlaps)
         message("Reverse strand matching for ",chrom," done");return(mm)},
-        reads2(object),regions,object,mc.cores = mc)
+        readsR(object),regions,object,mc.cores = mc)
       names(m2) = chr
       message("Reverse strand done")
-      object@match = new("match",match1 = m1,match2 = m2)
+      object@match = new("match",matchF = m1,matchR = m2)
       object@.readsMatched = TRUE
      return(object)      
     }else{
@@ -298,10 +298,10 @@ setMethods("getCoverage",
       curve = lapply(chr,function(chrom,object,ll,mc){
         message("Retrieving reads for ",chrom)        
         l = ll[[chrom]]
-        r1 = reads1(object)[[chrom]]
-        r2 = reads2(object)[[chrom]]
-        m1 = match1(object)[[chrom]]
-        m2 = match2(object)[[chrom]]
+        r1 = readsF(object)[[chrom]]
+        r2 = readsR(object)[[chrom]]
+        m1 = matchF(object)[[chrom]]
+        m2 = matchR(object)[[chrom]]
         message("Calculating coverage for ",chrom)
         z = mclapply(1:l,function(i,r1,r2,m1,m2){
           coverage(c(resize(r1[m1[[i]]],fragLen(object)),
@@ -385,8 +385,8 @@ setMethods("findSummit",
 setMethods("normConst",
   signature = signature(object = "profile"),
   definition = function(object){
-    n1 = sum(sapply(reads1(object),FUN = length))
-    n2 = sum(sapply(reads2(object),FUN = length))
+    n1 = sum(sapply(readsF(object),FUN = length))
+    n2 = sum(sapply(readsR(object),FUN = length))
     return(n1+n2)  
 })
 

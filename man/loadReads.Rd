@@ -21,6 +21,6 @@ Load the fragment stored in the file slot of the profile object. The reads are d
 \dontrun{ loadReads(profile_object,mc=8)}
 }
 \seealso{
-\code{\link{reads1}}, \code{\link{reads2}} and \code{\link{reads-class}}
+\code{\link{readsF}}, \code{\link{readsR}} and \code{\link{reads-class}}
 }
 

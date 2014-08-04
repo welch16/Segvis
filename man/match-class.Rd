@@ -9,11 +9,11 @@ Contains the match of a set a reads of a ChIP - Seq experiment given a set of re
 \section{Slots}{
 
 \describe{
-\item{\code{match1}}{- List of positions of the reads in list that match with each region and have + strand}
+\item{\code{matchF}}{- List of positions of the reads in list that match with each region and have + strand}
 
-\item{\code{match2}}{- List of positions of the reads in list that match with each region and have - strand}
+\item{\code{matchR}}{- List of positions of the reads in list that match with each region and have - strand}
 }}
 \seealso{
-\code{\link{match1}} and  \code{\link{match2}}
+\code{\link{matchF}} and  \code{\link{matchR}}
 }
 

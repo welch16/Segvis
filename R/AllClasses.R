@@ -1,32 +1,33 @@
 
 #' @title match class description
 #' @description Contains the match of a set a reads of a ChIP - Seq experiment given a set of regions in the genome. 
-#' @slot match1 - List of positions of the reads in list that match with each region and have + strand
-#' @slot match2 - List of positions of the reads in list that match with each region and have - strand
-#' @seealso \code{\link{match1}} and  \code{\link{match2}}
+#' @slot matchF - List of positions of the reads in list that match with each region and have + strand
+#' @slot matchR - List of positions of the reads in list that match with each region and have - strand
+#' @seealso \code{\link{matchF}} and  \code{\link{matchR}}
 setClass("match",
-  representation(match1 = "list",match2 = "list"),
+  representation(matchF = "list",matchR = "list"),
   contains = "list",         
-  prototype = prototype(match1 = list(),
-    match2 = list()))
+  prototype = prototype(matchF = list(),matchR = list()))
 
 setValidity("match",
-  function(object) return(length(object@match1) == length(object@match2))
-)            
+  function(object){
+    return(length(object@matchF) == length(object@matchR))
+})            
 
 #' @title reads class description
 #' @description Contains the reads obtained in a ChIP - seq experiment separated by strand and then by chromosome.
-#' @slot reads1 - GRangesList of the reads of the ChIP - Seq experiment that have + strand
-#' @slot reads2 - GRangesList of the reads of the ChIP - Seq experiment that have - strand
-#' @seealso \code{\link{reads1}}, \code{\link{reads2}} and loadReads
+#' @slot readsF - GRangesList of the reads of the ChIP - Seq experiment that have + strand
+#' @slot readsR - GRangesList of the reads of the ChIP - Seq experiment that have - strand
+#' @seealso \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{loadReads}}
 setClass("reads",
-  representation(reads1 = "GRangesList",reads2 = "GRangesList"),
+  representation(readsF = "GRangesList",readsR = "GRangesList"),
   contains = "GRangesList",
-  prototype = prototype(reads1 = GRangesList(),reads2 = GRangesList()))
+  prototype = prototype(readsF = GRangesList(),readsR = GRangesList()))
 
 setValidity("reads",
-  function(object)return(length(object@reads1) == length(object@reads2))
-)            
+  function(object){
+    return(length(object@readsF) == length(object@readsR))
+})            
 
 #' @title profile class description
 #' @description Contains all the information necessary for the calculation of profile curves.

@@ -197,7 +197,7 @@ setGeneric("setRemChr",
 #' @return profile object
 #' @export
 #' @docType methods
-#' @seealso \code{\link{reads1}}, \code{\link{reads2}} and \code{\link{reads-class}}
+#' @seealso \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{reads-class}}
 #' @rdname loadReads
 #' @examples
 #' \dontrun{ loadReads(profile_object,mc=8)}
@@ -213,7 +213,7 @@ setGeneric("loadReads",
 #' @return profile object
 #' @export
 #' @docType methods
-#' @seealso \code{\link{match1}}, \code{\link{match2}} and \code{\link{match-class}}
+#' @seealso \code{\link{matchF}}, \code{\link{matchR}} and \code{\link{match-class}}
 #' @rdname matchReads
 #' @examples
 #' \dontrun{ matchReads(profile_object,mc=8)}
@@ -286,86 +286,86 @@ setGeneric("ProfileMatrix",
   standardGeneric("ProfileMatrix")
 )           
 
-#' @title Generic method reads1 for profile and reads classes
-#' @description Get methods for reads class with "+" strand
+#' @title Generic method readsF for profile and reads classes
+#' @description Get method for reads and profile classes that returns the reads from the forward strand
 #' @param object reads object
-#' @return GRangesList The reads of the "+" strand
+#' @return Returns a GRangesList with the reads of the forward strand
 #' @export
-#' @seealso \code{\link{reads2}}
+#' @seealso \code{\link{readsR}}
 #' @docType methods
-#' @rdname reads1
-setGeneric("reads1",
+#' @rdname readsF
+setGeneric("readsF",
   function(object)
-  standardGeneric("reads1")
+  standardGeneric("readsF")
 )           
 
-#' @title Generic method reads2 for profile and reads classes
-#' @description Get methods for reads class with "-" strand
+#' @title Generic method readsR for profile and reads classes
+#' @description Get method for reads and profile classes that returns the reads from the backward strand
 #' @param object reads object
-#' @return GRangesList The reads of the "-" strand
+#' @return Returns a GRangesList with the reads of the backward strand
 #' @export
-#' @seealso \code{\link{reads1}}
+#' @seealso \code{\link{readsF}}
 #' @docType methods
-#' @rdname reads2
-setGeneric("reads2",
+#' @rdname readsR
+setGeneric("readsR",
   function(object)
-  standardGeneric("reads2")           
+  standardGeneric("readsR")           
 )
 
-#' @title setReads1 method for reads class
-#' @description Set method of the reads class, set the reads in the forward strand
-#' @param object reads object
-#' @param r1 GRangesList object, this are the new reads to be set in the reads object
-#' @return reads object
-#' @export
-#' @seealso \code{\link{reads1}},\code{\link{reads2}} and \code{\link{setReads2}}
-#' @docType methods
-#' @rdname setReads1
-setGeneric("setReads1",
-  function(object,r1)
-  standardGeneric("setReads1")
-)          
+# @title setReads1 method for reads class
+# @description Set method of the reads class, set the reads in the forward strand
+# @param object reads object
+# @param r1 GRangesList object, this are the new reads to be set in the reads object
+# @return reads object
+# @export
+# @seealso \code{\link{reads1}},\code{\link{reads2}} and \code{\link{setReads2}}
+# @docType methods
+# @rdname setReads1
+#setGeneric("setReads1",
+#  function(object,r1)
+#  standardGeneric("setReads1")
+#)          
 
-#' @title setReads2 method for reads class
-#' @description Set method for the reads class, set the reads in the reverse strand
-#' @param object reads object
-#' @param r2 GRangesList object, the new reads to set on the reads object
-#' @return reads object
-#' @export
-#' @seealso \code{\link{reads1}},\code{\link{reads2}} and \code{\link{setReads1}}
-#' @docType methods
-#' @rdname setReads2
-setGeneric("setReads2",
-  function(object,r2)
-  standardGeneric("setReads2")
-)          
+# @title setReads2 method for reads class
+# @description Set method for the reads class, set the reads in the reverse strand
+# @param object reads object
+# @param r2 GRangesList object, the new reads to set on the reads object
+# @return reads object
+# @export
+# @seealso \code{\link{reads1}},\code{\link{reads2}} and \code{\link{setReads1}}
+# @docType methods
+# @rdname setReads2
+#setGeneric("setReads2",
+#  function(object,r2)
+#  standardGeneric("setReads2")
+#)          
 
 # match generic methods
 
-#' @title match1 method for profile and match classes
+#' @title matchF method for profile and match classes
 #' @description Get method for match class with "+" strand
 #' @param match object
-#' @return list The match of the reads with "+" strand
+#' @return In case of the get method returns the reads of the forward strand
 #' @export
 #' @docType methods
-#' @seealso \code{\link{reads1}} and \code{\link{match2}}
-#' @rdname match1
-setGeneric("match1",
+#' @seealso \code{\link{readsF}} and \code{\link{matchR}}
+#' @rdname matchF
+setGeneric("matchF",
   function(object)
-  standardGeneric("match1")
+  standardGeneric("matchF")
 )           
 
-#' @title match2 method for profile and match clases
+#' @title matchR method for profile and match clases
 #' @description Get method for match class with "-" strand
 #' @param match object
 #' @return list The match of the reads with "-" strand
 #' @export
 #' @docType methods
-#' @seealso \code{\link{reads2}} and \code{\link{match1}}
-#' @rdname match2
-setGeneric("match2",
+#' @seealso \code{\link{readsR}} and \code{\link{matchF}}
+#' @rdname matchR
+setGeneric("matchR",
   function(object)
-  standardGeneric("match2")
+  standardGeneric("matchR")
 )           
 
 # Generic methods for profileMatrix class
