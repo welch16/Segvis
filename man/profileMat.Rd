@@ -7,17 +7,17 @@
 \usage{
 profileMat(object)
 
-profileMat(object, newProfileMat) <- value
+profileMat(object) <- value
 }
 \arguments{
 \item{object}{profileMatrix object}
 
-\item{newProfileMat}{A matrix with a the profile for each region}
+\item{value}{A matrix with a the profile for each region}
 }
 \value{
 In case of the get method, it returns the profile matrix
 
-In case of the set method, it returns a profileMatrix object where the profile matrix has been replaced by newProfileMat
+In case of the set method, it returns a profileMatrix object where the profile matrix has been replaced by value
 }
 \description{
 Get and Set methods of the profile matrix for the profileMatrix class

@@ -49,9 +49,9 @@ setMethod("normConst",
 # @name name
 # @aliases profileMatrix
 setReplaceMethod("name",
-  signature = signature(object = "profileMatrix",newName = "character"),
-  definition = function(object,newName){
-    object@name <- newName
+  signature = signature(object = "profileMatrix",value = "character"),
+  definition = function(object,value){
+    object@name = value
     return(object)
 })    
 
@@ -59,10 +59,10 @@ setReplaceMethod("name",
 # @name setRegions
 # @aliases profileMatrix
 setReplaceMethod("regions",
-  signature = signature(object = "profileMatrix",newRegions = "GRanges"),
-  definition = function(object,newRegions){
-    stopifnot(class(object) == "GRanges")
-    object@regions = newRegions
+  signature = signature(object = "profileMatrix",value = "GRanges"),
+  definition = function(object,value){    
+    stopifnot(class(value) == "GRanges")
+    object@regions = value
     return(object)    
 })
 
@@ -70,11 +70,11 @@ setReplaceMethod("regions",
 # @name setProfileMat
 # @aliases profileMatrix
 setReplaceMethod("profileMat",
-  signature = signature(object = "profileMatrix",newProfileMat = "matrix"),
-  definition = function(object,newProfileMat){
-    stopifnot(class(newProfileMat) == "matrix")
-    stopifnot(length(regions(object))==nrow(newProfileMat))
-    object@profileMat = newProfileMat
+  signature = signature(object = "profileMatrix",value = "matrix"),
+  definition = function(object,value){    
+    stopifnot(class(value) == "matrix")
+    stopifnot(length(regions(object))==nrow(value))
+    object@profileMat = value
     return(object)    
 })           
 
@@ -82,11 +82,11 @@ setReplaceMethod("profileMat",
 # @name setBandwidth
 # @aliases profileMatrix
 setReplaceMethod("bandwidth",
-  signature = signature(object = "profileMatrix",newBandwidth = "numeric"),
-  definition = function(object,newBandwidth){
-    stopifnot(newBandwidth >=1)
-    stopifnot(newBandwidth %% 2 == 0)
-    object@bandwidth = newBandwidth
+  signature = signature(object = "profileMatrix",value = "numeric"),
+  definition = function(object,value){
+    stopifnot(value >=1)
+    stopifnot(value %% 2 == 1)
+    object@bandwidth = value
     return(object)
 })           
 
@@ -94,10 +94,10 @@ setReplaceMethod("bandwidth",
 # @name setNormConst
 # @aliases profileMatrix
 setReplaceMethod("normConst",
-  signature = signature(object = "profileMatrix",newNormConst = "numeric"),
-  definition = function(object,newNormConst){
-    stopifnot(newNormConst > 0)
-    object@normConst = newNormConst
+  signature = signature(object = "profileMatrix",value = "numeric"),
+  definition = function(object,value){
+    stopifnot(value > 0)
+    object@normConst = value
     return(object)
 })                        
 

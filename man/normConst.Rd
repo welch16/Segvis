@@ -7,17 +7,17 @@
 \usage{
 normConst(object)
 
-normConst(object, newNormConst) <- value
+normConst(object) <- value
 }
 \arguments{
 \item{object}{profileMatrix object}
 
-\item{newNormConst}{Numeric value with the constant used to normalize the profile}
+\item{value}{Numeric value with the constant used to normalize the profile}
 }
 \value{
 In case of the get method it returns the constant used to normalize the profile
 
-In case of the set method it returns the profileMatrix object with the normalizing constant replced by newNormConst
+In case of the set method it returns the profileMatrix object with the normalizing constant replced by value
 }
 \description{
 Get and Set methods for the normConst parameter for profileMatrix class

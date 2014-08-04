@@ -43,7 +43,7 @@ setGeneric("setName",
 )
 
 setGeneric("name<-",
-  function(object,newName)
+  function(object,value)
   standardGeneric("name<-")
 )           
 
@@ -62,7 +62,7 @@ setGeneric("setRegions",
 )
 
 setGeneric("regions<-",
-  function(object,newRegions)
+  function(object,value)
   standardGeneric("regions<-")
 )
 
@@ -148,8 +148,6 @@ setGeneric("profileCurve",
   standardGeneric("profileCurve")
 )  
     
-## Set methods
-
 #' @title setMaxBandwidth method for profile class
 #' @description Set method for the maxBandwidth parameter
 #' @param object profile object
@@ -387,12 +385,12 @@ setGeneric("profileMat",
   standardGeneric("profileMat")           
 )        
 
-#' @param newProfileMat A matrix with a the profile for each region
-#' @return In case of the set method, it returns a profileMatrix object where the profile matrix has been replaced by newProfileMat
+#' @param value A matrix with a the profile for each region
+#' @return In case of the set method, it returns a profileMatrix object where the profile matrix has been replaced by value
 #' @export
 #' @rdname profileMat
 setGeneric("profileMat<-",
-  function(object,newProfileMat)
+  function(object,value)
   standardGeneric("profileMat<-")
 )           
 
@@ -409,13 +407,13 @@ setGeneric("bandwidth",
   standardGeneric("bandwidth")           
 )           
 
-#' @param newBandwidth Numeric value with the bandwidth used to smooth the profile in profileMatrix object
-#' @return In case of the set method, it returns the profileMatrix object with the bandwidth value replaced by newBandwidth
+#' @param value Numeric value with the bandwidth used to smooth the profile in profileMatrix object
+#' @return In case of the set method, it returns the profileMatrix object with the bandwidth value replaced by value
 #' @export
 #' @docType methods
 #' @rdname bandwidth
 setGeneric("bandwidth<-",
-  function(object,newBandwidth)
+  function(object,value)
   standardGeneric("bandwidth<-")
 )           
 
@@ -432,13 +430,13 @@ setGeneric("normConst",
   standardGeneric("normConst")           
 )           
 
-#' @param newNormConst Numeric value with the constant used to normalize the profile
-#' @return In case of the set method it returns the profileMatrix object with the normalizing constant replced by newNormConst
+#' @param value Numeric value with the constant used to normalize the profile
+#' @return In case of the set method it returns the profileMatrix object with the normalizing constant replced by value
 #' @export
 #' @docType methods
 #' @rdname normConst
 setGeneric("normConst<-",
-  function(object,newNormConst)
+  function(object,value)
   standardGeneric("normConst<-")
 )           
 

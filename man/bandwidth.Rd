@@ -7,17 +7,17 @@
 \usage{
 bandwidth(object)
 
-bandwidth(object, newBandwidth) <- value
+bandwidth(object) <- value
 }
 \arguments{
 \item{object}{profileMatrix class}
 
-\item{newBandwidth}{Numeric value with the bandwidth used to smooth the profile in profileMatrix object}
+\item{value}{Numeric value with the bandwidth used to smooth the profile in profileMatrix object}
 }
 \value{
 In case of the get method, the value in the bandwidth slot of the object
 
-In case of the set method, it returns the profileMatrix object with the bandwidth value replaced by newBandwidth
+In case of the set method, it returns the profileMatrix object with the bandwidth value replaced by value
 }
 \description{
 Get and Set methods for the bandwidth parameter of the profileMatrix class
