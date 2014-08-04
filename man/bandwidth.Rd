@@ -2,20 +2,27 @@
 \docType{methods}
 \name{bandwidth}
 \alias{bandwidth}
+\alias{bandwidth<-}
 \title{bandwidth method for profileMatrix class}
 \usage{
 bandwidth(object)
+
+bandwidth(object, newBandwidth) <- value
 }
 \arguments{
 \item{object}{profileMatrix class}
+
+\item{newBandwidth}{Numeric value with the bandwidth used to smooth the profile in profileMatrix object}
 }
 \value{
-numeric. The bandwidth used to smooth the profile in profileMatrix object
+In case of the get method, the value in the bandwidth slot of the object
+
+In case of the set method, it returns the profileMatrix object with the bandwidth value replaced by newBandwidth
 }
 \description{
-Get method for the bandwidth parameter for profileMatrix class
+Get and Set methods for the bandwidth parameter of the profileMatrix class
 }
 \seealso{
-\code{\link{setBandwidth}}
+\code{\link{ProfileMatrix}}
 }
 

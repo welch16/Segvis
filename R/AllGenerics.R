@@ -14,6 +14,7 @@ setGeneric("name",
   standardGeneric("name")
 )
 
+
 #' @title regions methods for profile and profileMatrix
 #' @description Generic method for both profile and profileMatrix classes that returns the regions for which the profiles are calculated
 #' @param object Either a profile or profileMatrix object
@@ -41,6 +42,11 @@ setGeneric("setName",
   standardGeneric("setName")           
 )
 
+setGeneric("name<-",
+  function(object,newName)
+  standardGeneric("name<-")
+)           
+
 #' @title setRegions methods for profile and profileMatrix classes
 #' @description Generic set regions method for both profile and profileMatrix classes
 #' @param object Either a profile or profileMatrix object
@@ -53,6 +59,11 @@ setGeneric("setName",
 setGeneric("setRegions",
   function(object,newRegions)
   standardGeneric("setRegions")
+)
+
+setGeneric("regions<-",
+  function(object,newRegions)
+  standardGeneric("regions<-")
 )
 
 # Generic methods for profile class
@@ -364,86 +375,71 @@ setGeneric("match2",
 ## Get methods
 
 #' @title profileMat method for profileMatrix class
-#' @description Get method of the profile matrix for the class
+#' @description Get and Set methods of the profile matrix for the profileMatrix class 
 #' @param object profileMatrix object
-#' @return matrix object. A matrix with a the profile for each region
+#' @return In case of the get method, it returns the profile matrix
 #' @export
+#' @seealso \code{\link{ProfileMatrix}}
 #' @docType methods
-#' @seealso \code{\link{buildProfileMatrix}}, \code{\link{setProfileMat}} and ProfileMatrix
 #' @rdname profileMat
 setGeneric("profileMat",
   function(object)
   standardGeneric("profileMat")           
 )        
 
+#' @param newProfileMat A matrix with a the profile for each region
+#' @return In case of the set method, it returns a profileMatrix object where the profile matrix has been replaced by newProfileMat
+#' @export
+#' @rdname profileMat
+setGeneric("profileMat<-",
+  function(object,newProfileMat)
+  standardGeneric("profileMat<-")
+)           
+
 #' @title bandwidth method for profileMatrix class
-#' @description Get method for the bandwidth parameter for profileMatrix class
+#' @description Get and Set methods for the bandwidth parameter of the profileMatrix class
 #' @param object profileMatrix class
-#' @return numeric. The bandwidth used to smooth the profile in profileMatrix object
+#' @return In case of the get method, the value in the bandwidth slot of the object
 #' @export
 #' @docType methods
-#' @seealso \code{\link{setBandwidth}}
+#' @seealso \code{\link{ProfileMatrix}}
 #' @rdname bandwidth
 setGeneric("bandwidth",
   function(object)
   standardGeneric("bandwidth")           
 )           
 
-#' @title normConst method for profileMatrix class
-#' @description Get method for the normConst parameter for profileMatrix class
-#' @param object profileMatrix object
-#' @return numeric. The constant used to normalize the profile
+#' @param newBandwidth Numeric value with the bandwidth used to smooth the profile in profileMatrix object
+#' @return In case of the set method, it returns the profileMatrix object with the bandwidth value replaced by newBandwidth
 #' @export
 #' @docType methods
-#' @seealso \code{\link{setNormConst}}
+#' @rdname bandwidth
+setGeneric("bandwidth<-",
+  function(object,newBandwidth)
+  standardGeneric("bandwidth<-")
+)           
+
+#' @title normConst method for profileMatrix class
+#' @description Get and Set methods for the normConst parameter for profileMatrix class
+#' @param object profileMatrix object
+#' @return In case of the get method it returns the constant used to normalize the profile
+#' @export
+#' @docType methods
+#' @seealso \code{\link{ProfileMatrix}}
 #' @rdname normConst
 setGeneric("normConst",
   function(object)
   standardGeneric("normConst")           
 )           
 
-## Set methods
-
-#' @title setProfileMat method for profileMatrix class 
-#' @description Set method for the profileMat parameter of the profileMatrix class
-#' @param object profileMatrix object
-#' @param newProfileMat A matrix with a the profile for each region
-#' @return profileMatrix object
-#' @export
-#' @docType methods
-#' @seealso \code{\link{profileMat}}
-#' @rdname setProfileMat
-setGeneric("setProfileMat",
-  function(object,newProfileMat)
-  standardGeneric("setProfileMat")
-)           
-
-#' @title setBandwidth method for profileMatrix class
-#' @description Set method for bandwidth parameter in the profileMatrix class
-#' @param object profileMatrix object
-#' @param newBandwidth Numeric value with the bandwidth used to smooth the profile in profileMatrix object
-#' @return profileMatrix object
-#' @export
-#' @docType methods
-#' @seealso \code{\link{bandwidth}}
-#' @rdname setBandwidth
-setGeneric("setBandwidth",
-  function(object,newBandwidth)
-  standardGeneric("setBandwidth")
-)           
-
-#' @title setNormConst method for profileMatrix class
-#' @description Set method for a normalizing constant in the profileMatrix class
-#' @param object profileMatrix object
 #' @param newNormConst Numeric value with the constant used to normalize the profile
-#' @return profileMatrix object
+#' @return In case of the set method it returns the profileMatrix object with the normalizing constant replced by newNormConst
 #' @export
 #' @docType methods
-#' @seealso \code{\link{normConst}}
-#' @rdname setNormConst
-setGeneric("setNormConst",
+#' @rdname normConst
+setGeneric("normConst<-",
   function(object,newNormConst)
-  standardGeneric("setNormConst")
+  standardGeneric("normConst<-")
 )           
 
 #' @title meanProfile method for profile Matrix class

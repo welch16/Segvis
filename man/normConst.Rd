@@ -2,20 +2,27 @@
 \docType{methods}
 \name{normConst}
 \alias{normConst}
+\alias{normConst<-}
 \title{normConst method for profileMatrix class}
 \usage{
 normConst(object)
+
+normConst(object, newNormConst) <- value
 }
 \arguments{
 \item{object}{profileMatrix object}
+
+\item{newNormConst}{Numeric value with the constant used to normalize the profile}
 }
 \value{
-numeric. The constant used to normalize the profile
+In case of the get method it returns the constant used to normalize the profile
+
+In case of the set method it returns the profileMatrix object with the normalizing constant replced by newNormConst
 }
 \description{
-Get method for the normConst parameter for profileMatrix class
+Get and Set methods for the normConst parameter for profileMatrix class
 }
 \seealso{
-\code{\link{setNormConst}}
+\code{\link{ProfileMatrix}}
 }
 

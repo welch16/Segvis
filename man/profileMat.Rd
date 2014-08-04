@@ -2,20 +2,27 @@
 \docType{methods}
 \name{profileMat}
 \alias{profileMat}
+\alias{profileMat<-}
 \title{profileMat method for profileMatrix class}
 \usage{
 profileMat(object)
+
+profileMat(object, newProfileMat) <- value
 }
 \arguments{
 \item{object}{profileMatrix object}
+
+\item{newProfileMat}{A matrix with a the profile for each region}
 }
 \value{
-matrix object. A matrix with a the profile for each region
+In case of the get method, it returns the profile matrix
+
+In case of the set method, it returns a profileMatrix object where the profile matrix has been replaced by newProfileMat
 }
 \description{
-Get method of the profile matrix for the class
+Get and Set methods of the profile matrix for the profileMatrix class
 }
 \seealso{
-\code{\link{buildProfileMatrix}}, \code{\link{setProfileMat}} and ProfileMatrix
+\code{\link{ProfileMatrix}}
 }
 

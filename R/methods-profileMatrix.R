@@ -6,7 +6,7 @@
 # @rdname profileMatrix-methods
 # @name name
 # @aliases profileMatrix
-setMethods("name",
+setMethod("name",
   signature = signature(object = "profileMatrix"),
   definition = function(object)object@name
 )
@@ -14,7 +14,7 @@ setMethods("name",
 # @rdname profileMatrix-methods
 # @name regions
 # @aliases profileMatrix
-setMethods("regions",
+setMethod("regions",
   signature = signature(object = "profileMatrix"),
   definition = function(object)object@regions
 )
@@ -22,7 +22,7 @@ setMethods("regions",
 # @rdname profileMatrix-methods
 # @name profMat
 # @aliases profileMatrix
-setMethods("profileMat",
+setMethod("profileMat",
   signature = signature(object = "profileMatrix"),
   definition = function(object)object@profileMat
 )           
@@ -30,7 +30,7 @@ setMethods("profileMat",
 # @rdname profileMatrix-methods
 # @name bandwidth
 # @aliases profileMatrix
-setMethods("bandwidth",
+setMethod("bandwidth",
   signature = signature(object = "profileMatrix"),
   definition = function(object)object@bandwidth
 )           
@@ -38,7 +38,7 @@ setMethods("bandwidth",
 # @rdname profileMatrix-methods
 # @name normConst
 # @aliases profileMatrix
-setMethods("normConst",
+setMethod("normConst",
   signature = signature(object = "profileMatrix"),
   definition = function(object)object@normConst
 )
@@ -46,23 +46,22 @@ setMethods("normConst",
 ## Set methods
 
 # @rdname profileMatrix-methods
-# @name setName
+# @name name
 # @aliases profileMatrix
-setMethods("setName",
+setReplaceMethod("name",
   signature = signature(object = "profileMatrix",newName = "character"),
   definition = function(object,newName){
-    stopifnot(class(newName)=="character")
-    object@name = newName
+    object@name <- newName
     return(object)
-})
+})    
 
 # @rdname profileMatrix-methods
 # @name setRegions
 # @aliases profileMatrix
-setMethods("setRegions",
-  signature = signature(object = "profileMatrix",newRegions = "GRangesList"),
+setReplaceMethod("regions",
+  signature = signature(object = "profileMatrix",newRegions = "GRanges"),
   definition = function(object,newRegions){
-    stopifnot(class(object) == "GRangesList")
+    stopifnot(class(object) == "GRanges")
     object@regions = newRegions
     return(object)    
 })
@@ -70,7 +69,7 @@ setMethods("setRegions",
 # @rdname profileMatrix-methods
 # @name setProfileMat
 # @aliases profileMatrix
-setMethods("setProfileMat",
+setReplaceMethod("profileMat",
   signature = signature(object = "profileMatrix",newProfileMat = "matrix"),
   definition = function(object,newProfileMat){
     stopifnot(class(newProfileMat) == "matrix")
@@ -82,7 +81,7 @@ setMethods("setProfileMat",
 # @rdname profileMatrix-methods
 # @name setBandwidth
 # @aliases profileMatrix
-setMethods("setBandwidth",
+setReplaceMethod("bandwidth",
   signature = signature(object = "profileMatrix",newBandwidth = "numeric"),
   definition = function(object,newBandwidth){
     stopifnot(newBandwidth >=1)
@@ -94,7 +93,7 @@ setMethods("setBandwidth",
 # @rdname profileMatrix-methods
 # @name setNormConst
 # @aliases profileMatrix
-setMethods("setNormConst",
+setReplaceMethod("normConst",
   signature = signature(object = "profileMatrix",newNormConst = "numeric"),
   definition = function(object,newNormConst){
     stopifnot(newNormConst > 0)
@@ -116,7 +115,7 @@ setMethods("meanProfile",
     
 # @rdname profileMatrix-methods
 # @name show
-setMethods("show",
+setMethod("show",
   signature = signature(object = "profileMatrix"),
   definition = function(object){
     cat("Profile matrix for",name(object),"\n")
@@ -124,6 +123,8 @@ setMethods("show",
     show(regions(object))
 })
 
+# @rdname profileMatrix-methods
+# @name 
 
 
-
+                   
