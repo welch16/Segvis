@@ -16,6 +16,6 @@ character. A character with the name of the file used to create the reads object
 Returns the name of the file where the reads are stored
 }
 \seealso{
-\code{\link{profile-class}} and \code{\link{Profile}}
+\code{\link{profile-class}}
 }
 

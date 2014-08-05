@@ -6,7 +6,7 @@
 # @rdname profile-methods
 # @name name
 # @aliases profile
-setMethods("name",
+setMethod("name",
   signature = signature(object = "profile"),
   definition = function(object)object@name
 )           
@@ -14,7 +14,7 @@ setMethods("name",
 # @rdname profile-methods
 # @name regions
 # @aliases profile
-setMethods("regions",
+setMethod("regions",
   signature = signature(object = "profile"),
   definition = function(object)object@regions
 )           
@@ -22,7 +22,7 @@ setMethods("regions",
 # @rdname profile-methods
 # @name file
 # @aliases profile
-setMethods("file",
+setMethod("file",
   signature = signature(object ="profile"),
   definition = function(object)object@file
 )           
@@ -30,7 +30,7 @@ setMethods("file",
 # @rdname profile-methods
 # @name fileFormat
 # @aliases profile
-setMethods("fileFormat",
+setMethod("fileFormat",
   signature = signature(object = "profile"),
   definition = function(object)object@fileFormat
 )           
@@ -38,7 +38,7 @@ setMethods("fileFormat",
 # @rdname profile-methods
 # @name maxBandwidth
 # @aliases profile
-setMethods("maxBandwidth",
+setMethod("maxBandwidth",
   signature = signature(object = "profile"),
   definition = function(object)object@maxBandwidth
 )           
@@ -46,7 +46,7 @@ setMethods("maxBandwidth",
 # @rdname profile-methods
 # @name fragLen
 # @aliases profile
-setMethods("fragLen",
+setMethod("fragLen",
   signature = signature(object = "profile"),
   definition = function(object)object@fragLen
 )           
@@ -54,7 +54,7 @@ setMethods("fragLen",
 # @rdname profile-methods
 # @name remChr
 # @aliases profile
-setMethods("remChr",
+setMethod("remChr",
   signature = signature(object = "profile"),
   definition = function(object)object@remChr
 )           
@@ -94,7 +94,7 @@ setMethod("matchR",
 # @rdname profile-methods
 # @name profileCurve
 # @aliases profile
-setMethods("profileCurve",
+setMethod("profileCurve",
   signature = signature(object = "profile"),
   definition = function(object)object@profileCurve
 )  
@@ -102,59 +102,59 @@ setMethods("profileCurve",
 ## Set methods
 
 # @rdname profile-methods
-# @name setName
+# @name name
 # @aliases profile
-setMethods("setName",
-  signature = signature(object = "profile",newName = "character"),
-  definition = function(object,newName){
-    object@name = newName
+setReplaceMethod("name",
+  signature = signature(object = "profile",value = "character"),
+  definition = function(object,value){
+    object@name = value
     return(object)
 })
    
 # @rdname profile-methods
-# @name setRegions
+# @name regions
 # @aliases profile
-setMethods("setRegions",
-  signature = signature(object = "profile",newRegions = "GRanges"),
-  definition = function(object,newRegions){
-    stopifnot(class(newRegions) == "GRanges")
-    object@regions = newRegions
+setReplaceMethod("regions",
+  signature = signature(object = "profile",value = "GRanges"),
+  definition = function(object,value){
+    stopifnot(class(value) == "GRanges")
+    object@regions = value
     object@.haveRegions = TRUE
     return(object)
 })
 
 # @rdname profile-methods
-# @name setMaxBandwidth
+# @name maxBandwidth
 # @aliases profile
-setMethods("setMaxBandwidth",
-  signature = signature(object = "profile", newMaxBandwidth = "numeric"),
-  definition = function(object,newMaxBandwidth){
-    stopifnot(newMaxBandwidth >= 1)
-    stopifnot(newMaxBandwidth %% 2 == 0)
-    object@maxBandwidth = newMaxBandwidth
+setReplaceMethod("maxBandwidth",
+  signature = signature(object = "profile", value = "numeric"),
+  definition = function(object,value){
+    stopifnot(value >= 1)
+    stopifnot(value %% 2 == 1)
+    object@maxBandwidth = value
     return(object)
 })    
 
 # @rdname profile-methods
-# @name setFragLen
+# @name fragLen
 # @aliases profile
-setMethods("setFragLen",
-  signature = signature(object = "profile",newFragLen = "numeric"),
-  definition = function(object,newFragLen){
-    stopifnot(newFragLen >= 0)
-    stopifnot(newFragLen == floor(newFragLen))
-    object@fragLen = newFraLen
+setReplaceMethod("fragLen",
+  signature = signature(object = "profile",value = "numeric"),
+  definition = function(object,value){
+    stopifnot(value >= 0)
+    stopifnot(value == floor(value))
+    object@fragLen = value
     return(object)
 })    
 
 # @rdname profile-methods
-# @name setRemChr
+# @name remChr
 # @aliases profile
-setMethods("setRemChr",
-  signature = signature(object = "profile",newRemChr = "character"),
-  definition = function(object,newRemChr){
-    stopifnot(is.character(newRemChr))
-    object@remChr = newRemChr
+setReplaceMethod("remChr",
+  signature = signature(object = "profile",value = "character"),
+  definition = function(object,value){
+    stopifnot(is.character(value))
+    object@remChr = value
     return(object)
 })
 

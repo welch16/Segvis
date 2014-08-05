@@ -2,20 +2,27 @@
 \docType{methods}
 \name{regions}
 \alias{regions}
+\alias{regions<-}
 \title{regions methods for profile and profileMatrix}
 \usage{
 regions(object)
+
+regions(object) <- value
 }
 \arguments{
 \item{object}{Either a profile or profileMatrix object}
+
+\item{newRegions}{GRanges object with the regions for which the profiles are calculated}
 }
 \value{
 GRanges object with the regions for which the profiles are calculated
+
+profile object with the regions slot replaced by the GRanges object value
 }
 \description{
-Generic method for both profile and profileMatrix classes that returns the regions for which the profiles are calculated
+Generic set and get methods for both profile and profileMatrix classes that returns the regions for which the profiles are calculated
 }
 \seealso{
-\code{\link{setRegions}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}}
+\code{\link{profile-class}} and \code{\link{profileMatrix-class}}
 }
 

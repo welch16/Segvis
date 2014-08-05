@@ -2,20 +2,27 @@
 \docType{methods}
 \name{fragLen}
 \alias{fragLen}
-\title{fragLen method for profile class}
+\alias{fragLen<-}
+\title{fragLen get and set methods for profile class}
 \usage{
 fragLen(object)
+
+fragLen(object) <- value
 }
 \arguments{
 \item{object}{A profile object}
+
+\item{value}{Numeric, must be greater of equal to zero}
 }
 \value{
 numeric value. This indicated the fragment length
+
+profile object with the fragment length replaced by value
 }
 \description{
 Returns the fragment length value used to extend the reads when matching them with the regions
 }
 \seealso{
-\code{\link{profile-class}}, \code{\link{Profile}} and \code{\link{setFragLen}}
+\code{\link{profile-class}}
 }
 

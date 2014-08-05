@@ -1,66 +1,45 @@
 
 # generic methods for various classes
 
-#' @title name method for profile and profileMatrix
+#' @title name get and set methods for profile and profileMatrix
 #' @description Generic method for both profile and profileMatrix classes that returns the name of the object
 #' @param object Either a profile or profileMatrix object
-#' @return character The name of the object
+#' @return Returns the name of the object
 #' @export
 #' @docType methods
-#' @seealso \code{\link{setName}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}} 
+#' @seealso \code{\link{profile-class}} and \code{\link{profileMatrix-class}}
 #' @rdname name
 setGeneric("name",
   function(object)
   standardGeneric("name")
 )
 
+#' @param value character 
+#' @return Returns and profile (or profileMatrix) object with the name parameter replaced by value
+#' @rdname name
+setGeneric("name<-",
+  function(object,value)
+  standardGeneric("name<-")
+)           
 
 #' @title regions methods for profile and profileMatrix
-#' @description Generic method for both profile and profileMatrix classes that returns the regions for which the profiles are calculated
+#' @description Generic set and get methods for both profile and profileMatrix classes that returns the regions for which the profiles are calculated
 #' @param object Either a profile or profileMatrix object
 #' @return GRanges object with the regions for which the profiles are calculated
 #' @export
 #' @docType methods
-#' @seealso \code{\link{setRegions}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}}
+#' @seealso \code{\link{profile-class}} and \code{\link{profileMatrix-class}}
 #' @rdname regions
 setGeneric("regions",
   function(object)
   standardGeneric("regions")
 )
 
-#' @title setName method for profile and profileMatrix classes
-#' @description Generic set name method for both profile and profileMatrix classes
-#' @param object Either a profile or profileMatrix object
-#' @param newName character
-#' @return profile or profileMatrix object
-#' @export
-#' @docType methods
-#' @seealso \code{\link{name}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}} 
-#' @rdname setName
-setGeneric("setName",
-  function(object,newName)
-  standardGeneric("setName")           
-)
-
-setGeneric("name<-",
-  function(object,value)
-  standardGeneric("name<-")
-)           
-
-#' @title setRegions methods for profile and profileMatrix classes
-#' @description Generic set regions method for both profile and profileMatrix classes
-#' @param object Either a profile or profileMatrix object
 #' @param newRegions GRanges object with the regions for which the profiles are calculated
-#' @return profile object
+#' @return profile object with the regions slot replaced by the GRanges object value
 #' @export
 #' @docType methods
-#' @seealso \code{\link{regions}},\code{\link{profile-class}} and \code{\link{profileMatrix-class}}
-#' @rdname setRegions
-setGeneric("setRegions",
-  function(object,newRegions)
-  standardGeneric("setRegions")
-)
-
+#' @rdname regions
 setGeneric("regions<-",
   function(object,value)
   standardGeneric("regions<-")
@@ -76,7 +55,7 @@ setGeneric("regions<-",
 #' @return character. A character with the name of the file used to create the reads object
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profile-class}} and \code{\link{Profile}}
+#' @seealso \code{\link{profile-class}}
 #' @rdname file
 setGeneric("file",
   function(object)
@@ -89,7 +68,7 @@ setGeneric("file",
 #' @return character. A character with the file format of the file where reads are stored
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profile-class}} and \code{link{Profile}}
+#' @seealso \code{\link{profile-class}}
 #' @rdname fileFormat
 setGeneric("fileFormat",
   function(object)
@@ -97,42 +76,72 @@ setGeneric("fileFormat",
 )
 
 #' @title maxBandwidth method for profile class
-#' @description Returns the maximum bandwidth valuee
+#' @description Get and set methods for maxBandwidth parameter of the profile class
 #' @param object A profile object
 #' @return numeric value. This indicated the maximum bandwidth available to later smooth the profiles
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profile-class}}, \code{\link{Profile}} and \code{\link{setMaxBandwidth}}
+#' @seealso \code{\link{profile-class}}
 #' @rdname maxBandwidth
 setGeneric("maxBandwidth",
   function(object)
   standardGeneric("maxBandwidth")           
 )
 
-#' @title fragLen method for profile class
+#' @param newMaxBandwidth Numeric value, must be odd and greater or equal than one
+#' @return profile object with the maxBandwidth parameter replaced by value
+#' @export
+#' @docType methods
+#' @rdname maxBandwidth
+setGeneric("maxBandwidth<-",
+  function(object,value)
+  standardGeneric("maxBandwidth<-")
+)           
+
+#' @title fragLen get and set methods for profile class
 #' @description Returns the fragment length value used to extend the reads when matching them with the regions
 #' @param object A profile object
 #' @return numeric value. This indicated the fragment length
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profile-class}}, \code{\link{Profile}} and \code{\link{setFragLen}}
+#' @seealso \code{\link{profile-class}}
 #' @rdname fragLen
 setGeneric("fragLen",
   function(object)
   standardGeneric("fragLen")           
 )
 
-#' @title remChr method for profile class
+#' @param value Numeric, must be greater of equal to zero
+#' @return profile object with the fragment length replaced by value
+#' @export
+#' @docType methods
+#' @rdname fragLen
+setGeneric("fragLen<-",
+  function(object,value)
+  standardGeneric("fragLen<-")
+)           
+
+#' @title remChr get and set methods for profile class
 #' @description Returns the chromosomes to be ignored 
 #' @param object A profile object
 #' @return character value. Indicates the chromosomes to be ignored
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profile-class}}, \code{\link{Profile}} and \code{\link{setRemChr}}
+#' @seealso \code{\link{profile-class}}
 #' @rdname remChr
 setGeneric("remChr",
   function(object)
   standardGeneric("remChr")
+)           
+
+#' @param value Character vector, with the chromosomes to be removed
+#' @return profile object with the remChr parameter replaced by value
+#' @export
+#' @docType method
+#' @rdname remChr
+setGeneric("remChr<-",
+  function(object,value)
+  standardGeneric("remChr<-")
 )           
 
 #' @title profileCurve methods for profile class
@@ -148,48 +157,6 @@ setGeneric("profileCurve",
   standardGeneric("profileCurve")
 )  
     
-#' @title setMaxBandwidth method for profile class
-#' @description Set method for the maxBandwidth parameter
-#' @param object profile object
-#' @param newMaxBandwidth Numeric value, must be odd and greater or equal than one
-#' @return profile object
-#' @export
-#' @docType methods
-#' @seealso \code{\link{profile-class}}, \code{\link{Profile}} and \code{\link{maxBandwidth}}
-#' @rdname setMaxBandwidth
-setGeneric("setMaxBandwidth",
-  function(object,newMaxBandwidth)
-  standardGeneric("setMaxBandwidth")
-)           
-
-#' @title setFragLen method for profile class
-#' @description Set method for the fragLen parameter
-#' @param object profile object
-#' @param newFragLen Numeric value, must be greater of equal to zero
-#' @return profile object
-#' @export
-#' @docType methods
-#' @seealso \code{\link{profile-class}}, \code{\link{Profile}} and \code{\link{fragLen}}
-#' @rdname setFragLen
-setGeneric("setFragLen",
-  function(object,newFragLen)
-  standardGeneric("setFragLen")
-)           
-
-#' @title setRemChr method for profile class
-#' @description Set method for the remChr parameter
-#' @param object profile object
-#' @param newRemChr Character vector, with the chromosomes to be removed
-#' @return profile object
-#' @export
-#' @docType method
-#' @seealso \code{\link{profile-class}}, \code{\link{Profile}} and \code{\link{remChr}}
-#' @rdname setRemChr
-setGeneric("setRemChr",
-  function(object,newRemChr)
-  standardGeneric("setRemChr")
-)           
-
 #' @title loadReads method for profile class
 #' @description Load the fragment stored in the file slot of the profile object. The reads are divided by chromosome and by strand
 #' @param object profile object

@@ -2,20 +2,27 @@
 \docType{methods}
 \name{maxBandwidth}
 \alias{maxBandwidth}
+\alias{maxBandwidth<-}
 \title{maxBandwidth method for profile class}
 \usage{
 maxBandwidth(object)
+
+maxBandwidth(object) <- value
 }
 \arguments{
 \item{object}{A profile object}
+
+\item{newMaxBandwidth}{Numeric value, must be odd and greater or equal than one}
 }
 \value{
 numeric value. This indicated the maximum bandwidth available to later smooth the profiles
+
+profile object with the maxBandwidth parameter replaced by value
 }
 \description{
-Returns the maximum bandwidth valuee
+Get and set methods for maxBandwidth parameter of the profile class
 }
 \seealso{
-\code{\link{profile-class}}, \code{\link{Profile}} and \code{\link{setMaxBandwidth}}
+\code{\link{profile-class}}
 }
 

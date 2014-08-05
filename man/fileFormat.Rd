@@ -16,6 +16,6 @@ character. A character with the file format of the file where reads are stored
 Returns the format of the file where the reads are stored
 }
 \seealso{
-\code{\link{profile-class}} and \code{link{Profile}}
+\code{\link{profile-class}}
 }
 

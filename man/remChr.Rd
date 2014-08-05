@@ -2,20 +2,27 @@
 \docType{methods}
 \name{remChr}
 \alias{remChr}
-\title{remChr method for profile class}
+\alias{remChr<-}
+\title{remChr get and set methods for profile class}
 \usage{
 remChr(object)
+
+remChr(object) <- value
 }
 \arguments{
 \item{object}{A profile object}
+
+\item{value}{Character vector, with the chromosomes to be removed}
 }
 \value{
 character value. Indicates the chromosomes to be ignored
+
+profile object with the remChr parameter replaced by value
 }
 \description{
 Returns the chromosomes to be ignored
 }
 \seealso{
-\code{\link{profile-class}}, \code{\link{Profile}} and \code{\link{setRemChr}}
+\code{\link{profile-class}}
 }
 
