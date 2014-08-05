@@ -22,4 +22,7 @@ Constructor for profileMatrix class, it takes both name and region from \code{ob
 \examples{
 \dontrun{ProfileMatrix(profile_object,bw = 151,mc=8)}
 }
+\seealso{
+\code{\link{profileMatrix-class}}
+}
 

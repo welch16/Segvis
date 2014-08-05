@@ -185,7 +185,7 @@ setMethods("show",
 setMethods("loadReads",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object,mc ){
-    if(fileFormat(object) == "bam"){
+    if(fileFormat(object) == "bam"){    
       chr = names(seqlengths(regions(object)))     
       if(length(remChr(object)>1))
       {                

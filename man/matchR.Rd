@@ -16,6 +16,6 @@ list The match of the reads with "-" strand
 Get method for match class with "-" strand
 }
 \seealso{
-\code{\link{readsR}} and \code{\link{matchF}}
+\code{\link{match-class}}
 }
 

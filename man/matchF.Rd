@@ -16,6 +16,6 @@ In case of the get method returns the reads of the forward strand
 Get method for match class with "+" strand
 }
 \seealso{
-\code{\link{readsF}} and \code{\link{matchR}}
+\code{\link{match-class}}
 }
 

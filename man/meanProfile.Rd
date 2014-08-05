@@ -2,7 +2,7 @@
 \docType{methods}
 \name{meanProfile}
 \alias{meanProfile}
-\title{meanProfile method for profile Matrix class}
+\title{meanProfile method for profileMatrix class}
 \usage{
 meanProfile(object, ...)
 }
@@ -18,6 +18,6 @@ Numeric vector
 This method calculates the "average" profile of the matrix respect to their rows. As in the mean function it is possible to set a trim parameter
 }
 \seealso{
-\code{\link{ProfileMatrix}}
+\code{\link{profileMatrix-class}}
 }
 

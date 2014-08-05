@@ -124,7 +124,14 @@ setMethod("show",
 })
 
 # @rdname profileMatrix-methods
-# @name 
+# @name subset.pm
+setMethod("subset.pm",
+  signature = signature(object = "profileMatrix",subset = "ANY"),
+  definition = function(object, subset){
+    env = list2env(as(regions(object),"data.frame"),parent = parent.frame())
+    cond = as.logical(eval(substitute(subset),env))   
+    return(new("profileMatrix",name = name(object),regions = regions(object)[cond],
+      bandwidth = bandwidth(object),normConst = normConst(object),profileMat = profileMat(object)[cond,],
+               .isScaled = object@.isScaled))
+})
 
-
-                   

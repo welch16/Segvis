@@ -16,6 +16,6 @@ Returns a GRangesList with the reads of the forward strand
 Get method for reads and profile classes that returns the reads from the forward strand
 }
 \seealso{
-\code{\link{readsR}}
+\code{\link{reads-class}}
 }
 

@@ -23,6 +23,6 @@ In case of the set method, it returns a profileMatrix object where the profile m
 Get and Set methods of the profile matrix for the profileMatrix class
 }
 \seealso{
-\code{\link{ProfileMatrix}}
+\code{\link{profileMatrix-class}}
 }
 

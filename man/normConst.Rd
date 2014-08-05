@@ -23,6 +23,6 @@ In case of the set method it returns the profileMatrix object with the normalizi
 Get and Set methods for the normConst parameter for profileMatrix class
 }
 \seealso{
-\code{\link{ProfileMatrix}}
+\code{\link{profileMatrix-class}}
 }
 

@@ -23,6 +23,6 @@ In case of the set method, it returns the profileMatrix object with the bandwidt
 Get and Set methods for the bandwidth parameter of the profileMatrix class
 }
 \seealso{
-\code{\link{ProfileMatrix}}
+\code{\link{profileMatrix-class}}
 }
 

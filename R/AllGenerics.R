@@ -246,6 +246,7 @@ setGeneric("findSummit",
 #' @export
 #' @docType methods
 #' @rdname ProfileMatrix
+#' @seealso \code{\link{profileMatrix-class}}
 #' @examples
 #' \dontrun{ProfileMatrix(profile_object,bw = 151,mc=8)}
 setGeneric("ProfileMatrix",
@@ -258,7 +259,7 @@ setGeneric("ProfileMatrix",
 #' @param object reads object
 #' @return Returns a GRangesList with the reads of the forward strand
 #' @export
-#' @seealso \code{\link{readsR}}
+#' @seealso \code{\link{reads-class}}
 #' @docType methods
 #' @rdname readsF
 setGeneric("readsF",
@@ -271,41 +272,13 @@ setGeneric("readsF",
 #' @param object reads object
 #' @return Returns a GRangesList with the reads of the backward strand
 #' @export
-#' @seealso \code{\link{readsF}}
+#' @seealso \code{\link{reads-class}}
 #' @docType methods
 #' @rdname readsR
 setGeneric("readsR",
   function(object)
   standardGeneric("readsR")           
 )
-
-# @title setReads1 method for reads class
-# @description Set method of the reads class, set the reads in the forward strand
-# @param object reads object
-# @param r1 GRangesList object, this are the new reads to be set in the reads object
-# @return reads object
-# @export
-# @seealso \code{\link{reads1}},\code{\link{reads2}} and \code{\link{setReads2}}
-# @docType methods
-# @rdname setReads1
-#setGeneric("setReads1",
-#  function(object,r1)
-#  standardGeneric("setReads1")
-#)          
-
-# @title setReads2 method for reads class
-# @description Set method for the reads class, set the reads in the reverse strand
-# @param object reads object
-# @param r2 GRangesList object, the new reads to set on the reads object
-# @return reads object
-# @export
-# @seealso \code{\link{reads1}},\code{\link{reads2}} and \code{\link{setReads1}}
-# @docType methods
-# @rdname setReads2
-#setGeneric("setReads2",
-#  function(object,r2)
-#  standardGeneric("setReads2")
-#)          
 
 # match generic methods
 
@@ -315,7 +288,7 @@ setGeneric("readsR",
 #' @return In case of the get method returns the reads of the forward strand
 #' @export
 #' @docType methods
-#' @seealso \code{\link{readsF}} and \code{\link{matchR}}
+#' @seealso \code{\link{match-class}}
 #' @rdname matchF
 setGeneric("matchF",
   function(object)
@@ -328,7 +301,7 @@ setGeneric("matchF",
 #' @return list The match of the reads with "-" strand
 #' @export
 #' @docType methods
-#' @seealso \code{\link{readsR}} and \code{\link{matchF}}
+#' @seealso \code{\link{match-class}}
 #' @rdname matchR
 setGeneric("matchR",
   function(object)
@@ -344,7 +317,7 @@ setGeneric("matchR",
 #' @param object profileMatrix object
 #' @return In case of the get method, it returns the profile matrix
 #' @export
-#' @seealso \code{\link{ProfileMatrix}}
+#' @seealso \code{\link{profileMatrix-class}}
 #' @docType methods
 #' @rdname profileMat
 setGeneric("profileMat",
@@ -367,7 +340,7 @@ setGeneric("profileMat<-",
 #' @return In case of the get method, the value in the bandwidth slot of the object
 #' @export
 #' @docType methods
-#' @seealso \code{\link{ProfileMatrix}}
+#' @seealso \code{\link{profileMatrix-class}}
 #' @rdname bandwidth
 setGeneric("bandwidth",
   function(object)
@@ -390,7 +363,7 @@ setGeneric("bandwidth<-",
 #' @return In case of the get method it returns the constant used to normalize the profile
 #' @export
 #' @docType methods
-#' @seealso \code{\link{ProfileMatrix}}
+#' @seealso \code{\link{profileMatrix-class}}
 #' @rdname normConst
 setGeneric("normConst",
   function(object)
@@ -407,20 +380,31 @@ setGeneric("normConst<-",
   standardGeneric("normConst<-")
 )           
 
-#' @title meanProfile method for profile Matrix class
+#' @title meanProfile method for profileMatrix class
 #' @description This method calculates the "average" profile of the matrix respect to their rows. As in the mean function it is possible to set a trim parameter
 #' @param object profileMatrix object
 #' @param trim Numeric. By default is set to zero. If trim =0, it calculated the row-wise mean, if trim >= 0.5 then is calculates the row-wise median, otherwise it calculate a row-wise trimmed mean.
 #' @return Numeric vector
 #' @export
 #' @docType methods
-#' @seealso \code{\link{ProfileMatrix}}
+#' @seealso \code{\link{profileMatrix-class}}
 #' @rdname meanProfile
 setGeneric("meanProfile",
   function(object,...)
   standardGeneric("meanProfile")
 )           
 
-
+#' @title subset.pm method for profileMatrix class
+#' @description This method works similarly to the subset of IRanges, GenomicRanges, GenomicAlignments, etc. Althought it doesn't consider the select parameter.
+#' @param object profileMatrix object
+#' @param subset This is an expression considering the characteristics taht the subset need to satisfy
+#' @return a profileMatrix object with the same parameters as object except regions and profileMat which are filtered to satisfy the conditions on subset.
+#' @export
+#' @docType methods
+#' @seealso \code{\link{profileMatrix-class}}
+#' @rdname subset.pm
+setGeneric("subset.pm",
+  function(object,subset)
+  standardGeneric("subset.pm"))
 
 
