@@ -135,3 +135,12 @@ setMethod("subset.pm",
                .isScaled = object@.isScaled))
 })
 
+# @rdname profileMatrix-methods
+# @name addColumn
+setMethods("addColumn",
+  signature = signature(object = "profileMatrix",name = "character",col = "ANY"),
+  definition = function(object,name,col){
+    stopifnot(length(col) == length(regions(object)))
+    elementMetadata(regions(object))@listData[[name]] = col
+    return(object)
+})

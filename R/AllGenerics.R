@@ -398,7 +398,7 @@ setGeneric("meanProfile",
 #' @description This method works similarly to the subset of IRanges, GenomicRanges, GenomicAlignments, etc. Althought it doesn't consider the select parameter.
 #' @param object profileMatrix object
 #' @param subset This is an expression considering the characteristics taht the subset need to satisfy
-#' @return a profileMatrix object with the same parameters as object except regions and profileMat which are filtered to satisfy the conditions on subset.
+#' @return Returns a profileMatrix object with the same parameters as object except regions and profileMat which are filtered to satisfy the conditions on subset.
 #' @export
 #' @docType methods
 #' @seealso \code{\link{profileMatrix-class}}
@@ -406,5 +406,20 @@ setGeneric("meanProfile",
 setGeneric("subset.pm",
   function(object,subset)
   standardGeneric("subset.pm"))
+
+#' @title addColumn method for profileMatrix class
+#' @description This method helps to add a new column to the profile matrix object, is works similarly than using the $ operator over \code{regions(object)}
+#' @param object profileMatrix object
+#' @param name Character with the name of the column to be add
+#' @param col Vector of the same lengh as \code{regions(object)}
+#' @return Returns a profileMatrix object with the new column added to \code{regions(object)}
+#' @export
+#' @docType methods
+#' @seealso \code{\link{profileMatrix-class}}
+#' @rdname addColumn
+setGeneric("addColumn",
+  function(object,name,col)
+  standardGeneric("addColumn"))           
+
 
 

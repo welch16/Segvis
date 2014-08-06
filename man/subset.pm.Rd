@@ -12,7 +12,7 @@ subset.pm(object, subset)
 \item{subset}{This is an expression considering the characteristics taht the subset need to satisfy}
 }
 \value{
-a profileMatrix object with the same parameters as object except regions and profileMat which are filtered to satisfy the conditions on subset.
+Returns a profileMatrix object with the same parameters as object except regions and profileMat which are filtered to satisfy the conditions on subset.
 }
 \description{
 This method works similarly to the subset of IRanges, GenomicRanges, GenomicAlignments, etc. Althought it doesn't consider the select parameter.
