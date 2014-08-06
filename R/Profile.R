@@ -1,4 +1,4 @@
-#' @title Create a profile objec
+#' @title Creates a profile objec
 #' @description Constructor for profile class
 #' @param regionName Name of the profile object
 #' @param file Character string with the file name that contain the reads

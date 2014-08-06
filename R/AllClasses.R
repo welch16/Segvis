@@ -112,3 +112,11 @@ setClass("profileMatrix",
                  .isScaled = FALSE)
 )    
 
+#' @title profileMatrixList class description
+#' @description Contains a list of profileMatrix object
+#' @exportClass profileMatrixList
+setClass("profileMatrixList",
+  prototype = prototype(elementType = "profileMatrix"),
+  contains = "list"
+)         
+
