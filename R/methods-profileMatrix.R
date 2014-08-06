@@ -120,6 +120,11 @@ setMethod("show",
   definition = function(object){
     cat("Profile matrix for",name(object),"\n")
     cat("Bandwidth:",bandwidth(object),"\n")
+    if( object@.isScaled){
+      cat("The profile matrix IS scaled\n")
+    }else{
+      cat("The profile matrix IS NOT scaled\n")
+    }
     show(regions(object))
 })
 
