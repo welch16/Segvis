@@ -394,17 +394,31 @@ setGeneric("meanProfile",
   standardGeneric("meanProfile")
 )           
 
+#' @title normalize.matrix method for profileMatrix class
+#' @description This method normalizes the profile matrix by multiplying it times value
+#' @param object profileMatrix object
+#' @param value A positive number or a missing value. If is missing is going to normalize as if they were 1 million reads in the experiment
+#' @return A profileMatrix object where the profileMat slot has been normalized
+#' @export
+#' @docType methods
+#' @seealso \code{\link{profileMatrix-class}}
+#'@rdname normalize.matrix
+setGeneric("normalize.matrix",
+  function(object,...)
+  standardGeneric("normalize.matrix")
+)           
+
 #' @title subset.pm method for profileMatrix class
 #' @description This method works similarly to the subset of IRanges, GenomicRanges, GenomicAlignments, etc. Althought it doesn't consider the select parameter.
 #' @param object profileMatrix object
-#' @param subset This is an expression considering the characteristics taht the subset need to satisfy
-#' @return Returns a profileMatrix object with the same parameters as object except regions and profileMat which are filtered to satisfy the conditions on subset.
+#' @param condition This is an expression considering the characteristics taht the subset need to satisfy
+#' @return Returns a profileMatrix object with the same parameters as object except regions and profileMat which are filtered to satisfy the conditions on condition.
 #' @export
 #' @docType methods
 #' @seealso \code{\link{profileMatrix-class}}
 #' @rdname subset.pm
 setGeneric("subset.pm",
-  function(object,subset)
+  function(object,condition)
   standardGeneric("subset.pm"))
 
 #' @title addColumn method for profileMatrix class
@@ -421,5 +435,18 @@ setGeneric("addColumn",
   function(object,name,col)
   standardGeneric("addColumn"))           
 
-
+#' @title plot.profile method for profileMatrixList class
+#' @description This method returns the ggplot object used later to print the plot
+#' @param object profileMatrixList object
+#' @param condition The condition used to filter the profileMatrix objects, if there is no condition then it doesn't filter the objects
+#' @param coord Numeric vector representing the coordinates used in the x-axis of the plot, by default considers the natural index \code{1:ncol(profileMatrix)}
+#' @param trim Numeric. By default is set to zero. If trim =0, it calculated the row-wise mean, if trim >= 0.5 then is calculates the row-wise median, otherwise it calculate a row-wise trimmed mean.
+#' @return The ggplot object used to print the plot
+#' @export
+#' @docType methods
+#' @seealso \code{\link{profileMatrixList-class}}
+#' @rdname plot.profiles
+setGeneric("plot.profiles",
+  function(object,...)
+  standardGeneric("plot.profiles"))          
 

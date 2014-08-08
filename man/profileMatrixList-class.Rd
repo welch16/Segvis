@@ -4,6 +4,6 @@
 \alias{profileMatrixList-class}
 \title{profileMatrixList class description}
 \description{
-Contains a list of profileMatrix object
+Contains a list of profileMatrix objects
 }
 

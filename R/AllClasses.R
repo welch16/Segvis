@@ -113,7 +113,7 @@ setClass("profileMatrix",
 )    
 
 #' @title profileMatrixList class description
-#' @description Contains a list of profileMatrix object
+#' @description Contains a list of profileMatrix objects
 #' @exportClass profileMatrixList
 setClass("profileMatrixList",
   prototype = prototype(elementType = "profileMatrix"),

@@ -129,12 +129,27 @@ setMethod("show",
 })
 
 # @rdname profileMatrix-methods
+# @name normalize.matrix
+setMethods("normalize.matrix",
+  signature = signature(object = "profileMatrix",value = "numeric"),
+  definition = function(object, value){    
+    if(missing(value))value = 1000000/normConst(object)
+    stopifnot(value > 0)
+    profileMat(object) = value * profileMat(object)
+    object@.isScaled = TRUE
+    return(object) 
+})
+           
+
+# @rdname profileMatrix-methods
 # @name subset.pm
 setMethod("subset.pm",
-  signature = signature(object = "profileMatrix",subset = "ANY"),
-  definition = function(object, subset){
-    env = list2env(as(regions(object),"data.frame"),parent = parent.frame())
-    cond = as.logical(eval(substitute(subset),env))   
+  signature = signature(object = "profileMatrix",condition = "ANY"),
+  definition = function(object, condition){    
+    #cc = do.call(subset,list(as(regions(object),"data.frame"),substitute(condition)))    
+    env = new.env()
+    env = list2env(as(regions(object),"data.frame"),envir = environment())    
+    cond = as.logical(eval(substitute(condition),envir = env))
     return(new("profileMatrix",name = name(object),regions = regions(object)[cond],
       bandwidth = bandwidth(object),normConst = normConst(object),profileMat = profileMat(object)[cond,],
                .isScaled = object@.isScaled))
@@ -149,3 +164,5 @@ setMethods("addColumn",
     elementMetadata(regions(object))@listData[[name]] = col
     return(object)
 })
+
+

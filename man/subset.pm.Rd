@@ -4,15 +4,15 @@
 \alias{subset.pm}
 \title{subset.pm method for profileMatrix class}
 \usage{
-subset.pm(object, subset)
+subset.pm(object, condition)
 }
 \arguments{
 \item{object}{profileMatrix object}
 
-\item{subset}{This is an expression considering the characteristics taht the subset need to satisfy}
+\item{condition}{This is an expression considering the characteristics taht the subset need to satisfy}
 }
 \value{
-Returns a profileMatrix object with the same parameters as object except regions and profileMat which are filtered to satisfy the conditions on subset.
+Returns a profileMatrix object with the same parameters as object except regions and profileMat which are filtered to satisfy the conditions on condition.
 }
 \description{
 This method works similarly to the subset of IRanges, GenomicRanges, GenomicAlignments, etc. Althought it doesn't consider the select parameter.
