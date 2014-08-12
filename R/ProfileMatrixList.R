@@ -4,9 +4,15 @@
 #' @return A profileMatrixList object
 #' @export
 #' @seealso \code{\link{profileMatrixList-class}}
-ProfileMatrixList <- function(...){
-  l = list(...)
-  classes = lapply(l,FUN = class)
+ProfileMatrixList <- function(...){  
+  if(class(...) == "list"){
+    classes = lapply(...,FUN = class)
+    mat = new("profileMatrixList",...)
+  }else{
+    l = list(...)
+    classes = lapply(l,FUN = class)
+    mat = new("profileMatrix",l)
+  }
   stopifnot(all(classes == "profileMatrix"))
-  return(new("profileMatrixList",l))
+  return(mat)
 }

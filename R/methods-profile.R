@@ -328,7 +328,7 @@ setMethods("buildProfileMatrix",
   definition = function(object,bw,mc=8){
   if(length(unique(width(regions(object))))>1){
       stop("The width of the regions isn't unique, can't build profile matrix")
-  }
+  }  
   message("Calculating profiles for each chromosome")
   matList = .calculateMAprofile(object,bw,mc)
   message("Joining profiles into matrix")
@@ -395,7 +395,7 @@ setMethods("normConst",
 # @aliases profile
 setMethods("ProfileMatrix",
   signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
-  definition = function(object,bw,mc){
+  definition = function(object,bw,mc){    
     mat = buildProfileMatrix(object,bw,mc)
     nc = normConst(object)
     nm = name(object)

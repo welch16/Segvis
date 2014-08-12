@@ -24,7 +24,7 @@
   side = (maxBandwidth(object)-1)/2
   regions = GRangesList(lapply(chr,function(x,regions)
   subset(regions,subset = as.character(seqnames(regions)) == x),regions(object)))
-  names(regions) =chr
+  names(regions) =chr  
   matList = lapply(chr,function(chrom,object,regions,side,mc){
     message("Calculating profile for ",chrom)     
     ll = length(regions[[chrom]])
@@ -44,10 +44,12 @@
         yp = runValue(z)        
         y = stepfun(xp,yp,right = TRUE)(x)
         y =  .ma(y,bw)
-      }              
-      y = y[-c(1:side)]
-      y = y[1:(length(y) - side)]                            
-      return(y)},regionStart,regionEnd,stepList,bw,side,mc.cores = mc)
+      }
+      if(side > 0){                                                                            
+        y = y[-c(1:side)]
+        y = y[1:(length(y) - side)]
+      }
+      return(as.numeric(y))},regionStart,regionEnd,stepList,bw,side,mc.cores = mc)
     },object,regions,side,mc)
   names(matList) = chr
   return(matList)

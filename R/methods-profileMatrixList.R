@@ -1,25 +1,32 @@
-
+ 
 # @rdname profileMatrixList-methods
 # @name plot.profiles
 setMethods("plot.profiles",
   signature = signature(object = "profileMatrixList",condition = "ANY",coord = "numeric",trim = "numeric"),
   definition = function(object,condition,coord,trim){    
-    ncols = unique(sapply(object,function(x)ncol(profileMat(x))))
+    ncols = unique(sapply(object,function(x)ncol(profileMat(x))))    
     if(length(ncols)>1)stop("The profile matrices doesn't have the same number of columns")
     if(missing(coord))coord = 1:ncols    
-    if(missing(trim))trim = 0
+    if(missing(trim))trim = 0    
     stopifnot(length(coord) == ncols)   
     if(!missing(condition)){
       ll = list()
+      if(is.null(names(object))){
+        names(object) = 1:length(object)
+      }
       for(i in names(object)){
         x = object[[i]]
         env = list2env(as(regions(x),"data.frame"),envir = environment())
         cond = eval(substitute(condition),envir = env)
-        ll[[i]] = new("profileMatrix",name = name(x),regions = regions(x)[cond],bandwidth = bandwidth(x),normConst = normConst(x),profileMat = profileMat(x)[cond,],.isScaled = x@.isScaled)
+        mat = as.matrix(profileMat(x)[cond,])
+        if(ncol(mat) == 1){
+          mat = t(mat)
+        }
+        ll[[i]] = new("profileMatrix",name = name(x),regions = regions(x)[cond],bandwidth = bandwidth(x),normConst = normConst(x),profileMat = mat,.isScaled = x@.isScaled)
       }     
     }else{
       ll = as(object, "list")
-    }
+    }    
     pairs = lapply(ll,function(x,coord)data.frame(coord = coord,profile = meanProfile(x)),coord)
     pairs = lapply(names(pairs),function(x,pairs){
       pairs[[x]]$group = x
