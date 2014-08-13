@@ -146,12 +146,15 @@ setMethods("normalize.matrix",
 setMethod("subset.pm",
   signature = signature(object = "profileMatrix",condition = "ANY"),
   definition = function(object, condition){    
-    #cc = do.call(subset,list(as(regions(object),"data.frame"),substitute(condition)))    
-    env = new.env()
-    env = list2env(as(regions(object),"data.frame"),envir = environment())    
-    cond = as.logical(eval(substitute(condition),envir = env))
+    env = list2env(as(regions(object),"data.frame"),envir = loadNamespace("profile"))
+    cond = as.logical(eval(substitute(condition),envir = loadNamespace("profile")))
+    if(sum(cond)==1){
+      mat = t(as.matrix(profileMat(object)[cond,]))
+    }else{
+      mat = profileMat(object)[cond,]
+    }
     return(new("profileMatrix",name = name(object),regions = regions(object)[cond],
-      bandwidth = bandwidth(object),normConst = normConst(object),profileMat = profileMat(object)[cond,],
+      bandwidth = bandwidth(object),normConst = normConst(object),profileMat = mat,
                .isScaled = object@.isScaled))
 })
 
