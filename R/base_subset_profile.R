@@ -1,4 +1,5 @@
-#' Programming function to obtain a logical vector of the peaks in regions(object) such that satisfy condition_all
+#' @title Set of functions to subset profileMatrix objects
+#' @description \code{.subset_profileMat_logical} Function to obtain a logical vector of the peaks in regions(object) such that satisfy condition_all
 #' @param object profileMatrix object
 #' @param condition_call name object with the filtering condition
 #' @return A logical vector with the same length as the number of peaks
@@ -8,7 +9,7 @@
   return(cond)
 }
 
-#' Programming function to filter a profileMatrix object
+#' @description \code{.filter_profileMat} Filters the profileMatrix object using a logical vector as an input, the cond vector can be obtained by using \code{.subset_profileMat_logical}
 #' @param cond Logical Vector with the peaks that satisfy certain condition
 #' @return A profileMat object with the peaks that such that cond is TRUE
 #' @rdname filter_profileMat

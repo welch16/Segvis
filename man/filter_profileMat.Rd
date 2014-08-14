@@ -2,7 +2,7 @@
 \name{.subset_profileMat_logical}
 \alias{.filter_profileMat}
 \alias{.subset_profileMat_logical}
-\title{Programming function to obtain a logical vector of the peaks in regions(object) such that satisfy condition_all}
+\title{Set of functions to subset profileMatrix objects}
 \usage{
 .subset_profileMat_logical(object, condition_call)
 
@@ -21,8 +21,8 @@ A logical vector with the same length as the number of peaks
 A profileMat object with the peaks that such that cond is TRUE
 }
 \description{
-Programming function to obtain a logical vector of the peaks in regions(object) such that satisfy condition_all
+\code{.subset_profileMat_logical} Function to obtain a logical vector of the peaks in regions(object) such that satisfy condition_all
 
-Programming function to filter a profileMatrix object
+\code{.filter_profileMat} Filters the profileMatrix object using a logical vector as an input, the cond vector can be obtained by using \code{.subset_profileMat_logical}
 }
 
