@@ -13,16 +13,11 @@ setMethods("plot.profiles",
       ll = list()
       if(is.null(names(object))){
         names(object) = 1:length(object)
-      }
-      for(i in names(object)){
+      }    
+      for(i in names(object)){        
         x = object[[i]]
-        env = list2env(as(regions(x),"data.frame"),envir = environment())
-        cond = eval(substitute(condition),envir = env)
-        mat = as.matrix(profileMat(x)[cond,])
-        if(ncol(mat) == 1){
-          mat = t(mat)
-        }
-        ll[[i]] = new("profileMatrix",name = name(x),regions = regions(x)[cond],bandwidth = bandwidth(x),normConst = normConst(x),profileMat = mat,.isScaled = x@.isScaled)
+        cond = .subset_profileMat_logical(x,substitute(condition))
+        ll[[i]] = .filter_profileMat(x,cond)
       }     
     }else{
       ll = as(object, "list")
@@ -33,7 +28,7 @@ setMethods("plot.profiles",
       return(pairs[[x]])},pairs)
     data = do.call(rbind,pairs)
     data$group = factor(data$group)
-    out = ggplot(data,aes(coord,profile,colour = group))+geom_line(size = 1.2)
+    out = ggplot(data,aes(coord,profile,colour = group,linetype = group))+geom_line(size = 1)
     return(out)
 })    
 

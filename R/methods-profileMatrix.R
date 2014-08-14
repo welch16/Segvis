@@ -140,22 +140,13 @@ setMethods("normalize.matrix",
     return(object) 
 })
            
-
 # @rdname profileMatrix-methods
 # @name subset.pm
 setMethod("subset.pm",
   signature = signature(object = "profileMatrix",condition = "ANY"),
   definition = function(object, condition){    
-    env = list2env(as(regions(object),"data.frame"),envir = loadNamespace("profile"))
-    cond = as.logical(eval(substitute(condition),envir = loadNamespace("profile")))
-    if(sum(cond)==1){
-      mat = t(as.matrix(profileMat(object)[cond,]))
-    }else{
-      mat = profileMat(object)[cond,]
-    }
-    return(new("profileMatrix",name = name(object),regions = regions(object)[cond],
-      bandwidth = bandwidth(object),normConst = normConst(object),profileMat = mat,
-               .isScaled = object@.isScaled))
+    cond = .subset_profileMat_logical(object,substitute(condition))
+    return(.filter_profileMat(object,cond))
 })
 
 # @rdname profileMatrix-methods
