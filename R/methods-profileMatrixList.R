@@ -26,8 +26,8 @@ setMethods("plot.profiles",
     pairs = lapply(names(pairs),function(x,pairs){
       pairs[[x]]$group = x
       return(pairs[[x]])},pairs)
-    data = do.call(rbind,pairs)
-    data$group = factor(data$group)
+    data = do.call(rbind,pairs)  
+    data$group = factor(data$group,levels = names(object))
     out = ggplot(data,aes(coord,profile,colour = group,linetype = group))+geom_line(size = 1)
     return(out)
 })    
