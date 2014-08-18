@@ -124,6 +124,17 @@ setReplaceMethod("regions",
 })
 
 # @rdname profile-methods
+# @name file
+# @aliases profile
+setReplaceMethod("file",
+  signature = signature(object = "profile",value = "character"),
+  definition = function(object,value){
+    stopifnot(class(value) == "character")
+    object@file = value
+    return(object)
+})    
+
+# @rdname profile-methods
 # @name maxBandwidth
 # @aliases profile
 setReplaceMethod("maxBandwidth",

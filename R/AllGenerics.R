@@ -35,7 +35,7 @@ setGeneric("regions",
   standardGeneric("regions")
 )
 
-#' @param newRegions GRanges object with the regions for which the profiles are calculated
+#' @param value GRanges object with the regions for which the profiles are calculated
 #' @return profile object with the regions slot replaced by the GRanges object value
 #' @export
 #' @docType methods
@@ -60,6 +60,16 @@ setGeneric("regions<-",
 setGeneric("file",
   function(object)
   standardGeneric("file")           
+)
+
+#' @param value character with the new reads file
+#' @return profile object with the file slot replaced by value
+#' @export
+#' @docType methods
+#' @rdname file
+setGeneric("file<-",
+  function(object,value)
+  standardGeneric("file<-")
 )
 
 #' @title fileFormat method for profile class

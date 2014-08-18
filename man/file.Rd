@@ -2,15 +2,22 @@
 \docType{methods}
 \name{file}
 \alias{file}
+\alias{file<-}
 \title{file method for profile class}
 \usage{
 file(object)
+
+file(object) <- value
 }
 \arguments{
 \item{object}{A profile object}
+
+\item{value}{character with the new reads file}
 }
 \value{
 character. A character with the name of the file used to create the reads object
+
+profile object with the file slot replaced by value
 }
 \description{
 Returns the name of the file where the reads are stored

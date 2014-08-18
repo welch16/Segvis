@@ -15,3 +15,5 @@ Depends:
     GenomicAlignments (>= 1.0.1),
     Rsamtools (>= 1.16.1),
     ggplot2 (>= 1.0)
+Suggests:
+    BiocStyle

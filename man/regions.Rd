@@ -12,7 +12,7 @@ regions(object) <- value
 \arguments{
 \item{object}{Either a profile or profileMatrix object}
 
-\item{newRegions}{GRanges object with the regions for which the profiles are calculated}
+\item{value}{GRanges object with the regions for which the profiles are calculated}
 }
 \value{
 GRanges object with the regions for which the profiles are calculated
