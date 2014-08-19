@@ -393,7 +393,7 @@ setMethods("findSummit",
 # @rdname profile-methods
 # @name normConst
 # @aliases profile
-setMethods("normConst",
+setMethods("countReads",
   signature = signature(object = "profile"),
   definition = function(object){
     n1 = sum(sapply(readsF(object),FUN = length))
@@ -408,7 +408,7 @@ setMethods("ProfileMatrix",
   signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc){    
     mat = buildProfileMatrix(object,bw,mc)
-    nc = normConst(object)
+    nc = countReads(object)
     nm = name(object)
     gr = regions(object)
     pmatrix = new("profileMatrix",name = nm,regions = gr,profileMat = mat,bandwidth = bw,normConst = nc)

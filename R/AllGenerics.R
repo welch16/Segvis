@@ -390,6 +390,21 @@ setGeneric("normConst<-",
   standardGeneric("normConst<-")
 )           
 
+#' @title countReads method for profile class
+#' @description Counts the number of reads considered  in object
+#' @param object profile object
+#' @return In case of the get method it returns the constant used to normalize the profile
+#' @export
+#' @docType methods
+#' @seealso \code{\link{profile}}
+#' @rdname countReads
+setGeneric("countReads",
+  function(object)
+  standardGeneric("countReads")
+)           
+
+
+
 #' @title meanProfile method for profileMatrix class
 #' @description This method calculates the "average" profile of the matrix respect to their rows. As in the mean function it is possible to set a trim parameter
 #' @param object profileMatrix object

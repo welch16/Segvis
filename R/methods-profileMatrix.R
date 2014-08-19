@@ -131,9 +131,10 @@ setMethod("show",
 # @rdname profileMatrix-methods
 # @name normalize.matrix
 setMethods("normalize.matrix",
-  signature = signature(object = "profileMatrix",value = "numeric"),
-  definition = function(object, value){    
-    if(missing(value))value = 1000000/normConst(object)
+  signature = signature(object = "profileMatrix",value = "numeric",base = "numeric"),
+  definition = function(object, value,base){
+    if(missing(base))base = 1000000
+    if(missing(value))value = base/normConst(object)
     stopifnot(value > 0)
     profileMat(object) = value * profileMat(object)
     object@.isScaled = TRUE
