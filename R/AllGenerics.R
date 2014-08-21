@@ -475,3 +475,16 @@ setGeneric("plot.profiles",
   function(object,...)
   standardGeneric("plot.profiles"))          
 
+#' @title mergeList method for profileMatrixList class
+#' @description This methods returns a profileMatrix class object which contains the regions and coverage curves of the list merged
+#' @details In this case, we are going to merge by consider the priority implied by the order in list. Which means if there is an overlap between a region of object[[1]] with a region of object[[2]], the algorithm is going to choose the region of object[[1]] and so on.
+#' @param object profileMatrixList with the profile matrices to be merged
+#' @return A profileMatrix object with the regions and matrices merged
+#' @export
+#' @docType methods
+#' @seealso \code{\link{profileMatrixList-class}}
+#' @rdname mergeList
+setGeneric("mergeList",
+  function(object)
+  standardGeneric("mergeList")
+)           

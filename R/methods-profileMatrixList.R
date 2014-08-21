@@ -21,8 +21,9 @@ setMethods("plot.profiles",
       }     
     }else{
       ll = as(object, "list")
+      names(ll) = names(object)
     }    
-    pairs = lapply(ll,function(x,coord)data.frame(coord = coord,profile = meanProfile(x)),coord)
+    pairs = lapply(ll,function(x,coord,trim)data.frame(coord = coord,profile = meanProfile(x,trim)),coord,trim)    
     pairs = lapply(names(pairs),function(x,pairs){
       pairs[[x]]$group = x
       return(pairs[[x]])},pairs)
@@ -32,4 +33,22 @@ setMethods("plot.profiles",
     return(out)
 })    
 
-
+# @rdname profileMatrixList-methods
+# @name mergeList
+setMethod("mergeList",
+  signature = signature(object = "profileMatrixList"),
+  definition = function(object){
+    stopifnot(class(object) == "profileMatrixList")
+    N = length(object)
+    out = object[[1]]
+    if(N > 1){      
+      for(i in 2:N){
+        to_add = regions(object[[i]])
+        past_regions = regions(out)
+        cond = countOverlaps(to_add,past_regions)  == 0
+        regions(out) = c(past_regions,to_add[cond])
+        profileMat(out) = rbind(profileMat(out),profileMat(object[[i]])[cond,])        
+      }
+    }
+    return(out)
+})    
