@@ -4,7 +4,7 @@
 #' @param condition_call name object with the filtering condition
 #' @return A logical vector with the same length as the number of peaks
 #' @rdname filter_profileMat
-.subset_profileMat_logical<- function(object,condition_call){  
+.subset_profileMat_logical<- function(object,condition_call){ 
   cond = as.logical(eval(condition_call,as(regions(object),"data.frame"),parent.frame()))
   return(cond)
 }
@@ -14,7 +14,11 @@
 #' @return A profileMat object with the peaks that such that cond is TRUE
 #' @rdname filter_profileMat
 .filter_profileMat <- function(object,cond){
-  mat = profileMat(object)[cond,]
+  if(any(is.na(cond))){
+    warning("There are regions impossible to evaluate")
+    cond[is.na(cond)] = FALSE
+  }
+  mat = profileMat(object)[cond,]  
   if(sum(cond)==1){
     mat = t(as.matrix(mat))
   }
