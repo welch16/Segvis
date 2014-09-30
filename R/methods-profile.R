@@ -205,7 +205,8 @@ setMethods("loadReads",
         if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
       }
       message("Reading ",file(object))
-      greads = readGAlignmentsFromBam(file(object),param = NULL,use.names = FALSE)
+      param = ScanBamParam(which = regions(object))
+      greads = readGAlignmentsFromBam(file(object),param = param,use.names = FALSE)
       greads = as(greads, "GRanges")
       seqlevels(greads) = seqlevelsInUse(greads)      
       if(any(unique(seqnames(greads)) %in% remChr(object) )){
