@@ -180,9 +180,10 @@ setMethods("show",
     cat("Fragment length:",fragLen(object),"\n")
     cat("Max Bandwidth:", maxBandwidth(object),"\n")
     cat("Using reads files:\n")
-    cat(file(object),sep = "\n")    
-    if( length(regions(object)) > 0){
-      cat("Using regions for",length(regions(object)),"chromosomes\n")
+    cat(file(object),sep = "\n")
+    len = length(seqlengths(regions(object)))
+    if( len > 0){
+      cat("Using regions for",len,"chromosomes\n")
       show(regions(object))      
     }else{
       cat("**Not regions loaded**\n")
@@ -197,7 +198,8 @@ setMethods("loadReads",
   signature = signature(object = "profile",mc = "numeric"),
   definition = function(object,mc ){
     if(fileFormat(object) == "bam"){    
-      chr = names(seqlengths(regions(object)))     
+      chr = names(seqlengths(regions(object)))
+      browser()
       if(length(remChr(object)>1))
       {                
         chr = chr[!chr %in% remChr(object)]       
@@ -207,7 +209,7 @@ setMethods("loadReads",
       message("Reading ",file(object))
       param = ScanBamParam(which = regions(object))
       greads = readGAlignmentsFromBam(file(object),param = param,use.names = FALSE)
-      greads = as(greads, "GRanges")
+      greads = as(greads, "GRanges")      
       seqlevels(greads) = seqlevelsInUse(greads)      
       if(any(unique(seqnames(greads)) %in% remChr(object) )){
         warning("There exists reads with seqnames in remChr(object)")
