@@ -199,7 +199,6 @@ setMethods("loadReads",
   definition = function(object,mc ){
     if(fileFormat(object) == "bam"){    
       chr = names(seqlengths(regions(object)))
-      browser()
       if(length(remChr(object)>1))
       {                
         chr = chr[!chr %in% remChr(object)]       
@@ -209,6 +208,7 @@ setMethods("loadReads",
       message("Reading ",file(object))
       param = ScanBamParam(which = regions(object))
       greads = readGAlignmentsFromBam(file(object),param = param,use.names = FALSE)
+      u = gc()
       greads = as(greads, "GRanges")      
       seqlevels(greads) = seqlevelsInUse(greads)      
       if(any(unique(seqnames(greads)) %in% remChr(object) )){
@@ -398,10 +398,11 @@ setMethods("findSummit",
 # @aliases profile
 setMethods("countReads",
   signature = signature(object = "profile"),
-  definition = function(object){
-    n1 = sum(sapply(readsF(object),FUN = length))
-    n2 = sum(sapply(readsR(object),FUN = length))
-    return(n1+n2)  
+  definition = function(object){   
+    reader = bamReader(file(object),idx=TRUE)
+    readMatrix = bamCountAll(reader)
+    counts = sum(readMatrix$nAligns)
+    return(counts)  
 })
 
 # @rdname profile-methods
