@@ -9,5 +9,5 @@ clean:
 
 # knit the vignettes
 vignettes/%.pdf:vignettes/%.Rnw
-	cd vignettes;R CMD Sweave --engine=knitr::knitr --pdf vignette.Rnw;R CMD texi2dvi --pdf vignette.tex;R CMD pdflatex vignette.tex;cd ..
+	cd vignettes;R CMD Sweave --engine=knitr::knitr --pdf vignette.Rnw;cd ..
 
