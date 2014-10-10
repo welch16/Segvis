@@ -204,8 +204,21 @@ Finally there maybe outlier curves for some of the regions. Therefore we can use
 \caption{Averaged profile plots of multiple samples using the sample median (left) and a 75\% trimmed mean (right) \label{example31}}  
 \end{figure}
 
+
+\newpage
 \section{Modifying the appearance of the plots}
 
+By applying the \Rfunction{plot.profiles} method, the \Rpackage{Segvis} packages generates a \Robject{ggplot} object, thus the user can modify the output by using some their commands.
+
+For example we can change the colors of the curves, change the background, add a vertical line around the summit position or change the axis labels.
+
+\begin{figure}[h!]
+<<plot_format,include=TRUE,echo=TRUE,eval=TRUE,out.width='8 cm',fig.show ='hold',fig.align='center',tidy=TRUE>>=
+q2 +theme(legend.position = 'bottom')+scale_color_brewer(palette = 'Dark2')
+q2 +theme_bw()+theme(legend.position = 'bottom')+scale_color_brewer(palette = 'Accent')+geom_vline(xintercept=0,linetype = 'dashed')+scale_linetype_manual(values = rep('solid',3))+ylab('Nomalized signal')+xlab('Distance from summit')
+@ 
+\caption{Format modification of average coverage plots}
+\end{figure}
 
 \newpage
 \appendix
