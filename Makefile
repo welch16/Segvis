@@ -6,6 +6,7 @@ clean:
 	rm -f *~
 	rm -f */*~
 	rm -f .*~
+	rm -f inst/rscripts/*~
 
 # knit the vignettes
 vignettes/%.pdf:vignettes/%.Rnw
