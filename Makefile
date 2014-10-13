@@ -12,3 +12,7 @@ clean:
 vignettes/%.pdf:vignettes/%.Rnw
 	cd vignettes;R CMD Sweave --engine=knitr::knitr --pdf $(<F);cd ..
 
+# create the poster
+poster/%.pdf:poster/%.tex
+	cd poster; pdflatex $(<F);cd ..
+
