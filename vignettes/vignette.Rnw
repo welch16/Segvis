@@ -2,6 +2,7 @@
 \documentclass{article}
 
 \usepackage{tikz}
+\usepackage{float}
 
 <<<style-knitr, eval=TRUE, echo=FALSE, results="asis">>=
   BiocStyle::latex()
@@ -12,8 +13,8 @@
 
 \title{Segvis: A package for visualization of genomic segments}
 \author{Rene Welch (\href{mailto:welch@stat.wisc.edu}{welch@stat.wisc.edu}) and S\"{u}nd\"{u}z Kele\c{s} (\href{mailto:welch@stat.wisc.edu}{keles@stat.wisc.edu})   \\
-  Department of Statistics, University of Wisconsin - Madison \\ Madison, WI}
-\date{October 2014}
+  Department of Statistics, University of Wisconsin - Madison \\
+  Madison, WI} \date{October 2014}
 
 \maketitle
 
@@ -22,120 +23,147 @@
 
 \section{Overview}
 
-This vignette provides an introduction to the visualization of sequencing data by using the \Rpackage{Segvis} package. \Rpackage{Segvis} provides different tools to summarize and visualize sequencing data, including but not limited to the following tasks:
+This vignette provides an introduction to the visualization of
+sequencing data by using the \Rpackage{Segvis}
+package. \Rpackage{Segvis} provides different tools to summarize and
+visualize sequencing data, including but not limited to the following
+tasks:
 
 \begin{itemize}
-\item Plot peaks of different conditions accross the same set of regions
+\item Plot peaks of different conditions accross the same set of
+  regions
 \item Plot central measures for a set of regions with the same width
 \item Subset this curves according to user defined annotations
-\item Plot the heatmap of signal curves accross regions separated by annotation
+\item Plot the heatmap of signal curves accross regions separated by
+  annotation
 \end{itemize}
 
-For this document it is pretended to show how \Rpackage{Segvis} interacts with some \Bioconductor{} and \R{} packages to represent the data.
+For this document it is pretended to show how \Rpackage{Segvis}
+interacts with some \Bioconductor{} and \R{} packages to represent the
+data.
 
 \section{The basics}
 
-The package can be loaded with the command:
+The package can be loaded with the command: 
+
 <<load,eval=FALSE>>=
-  library(profile)
-@ 
+  library(profile) 
+@
 
 <<real_load,include=FALSE,echo=FALSE,eval=TRUE>>=
-  library(profile)   
+  library(profile)
   rdatadir = "../inst/auxRData"
+@
 
-@ 
 
-
-Different visualization of the data is done by the use of three following classes \Robject{profile}, \Robject{profileMatrix} and \Robject{profileMatrixList}. The first one is used to store the reads for a given bam file, the second is the one used to interact with the data and the third one is simply a list where all their elements are made from \Robject{profileMatrix} objects.
+Different visualization of the data is done by the use of three
+following classes \Robject{profile}, \Robject{profileMatrix} and
+\Robject{profileMatrixList}. The first one is used to store the reads
+for a given bam file, the second is the one used to interact with the
+data and the third one is simply a list where all their elements are
+made from \Robject{profileMatrix} objects.
 
 \subsection{Creating a \Robject{profile} object}
 
-To create an \Robject{profile} object, there are needed two sources of data, the regions that are need to explore and a set of aligned reads. To define a \Robject{profile}, it is necessary to define some additional parameters:
+To create an \Robject{profile} object, there are needed two sources of
+data, the regions that are need to explore and a set of aligned
+reads. To define a \Robject{profile}, it is necessary to define some
+additional parameters:
 
 <<create_prof,include=TRUE,echo=TRUE,eval=TRUE>>=
-
   name = "H3k27ac"
-  file = "../inst/extdata/encode_K562_H3k27ac_first3chr.sort.bam"
+  file ="../inst/extdata/encode_K562_H3k27ac_first3chr.sort.bam"
   maxBw = 501
   fl = 200
-  ourProfile = Profile(regionName = name,file = file,fileFormat = "bam",maxBandwidth = maxBw,fragLen = fl,remChr = "")
+  ourProfile = Profile(regionName = name,file = file,fileFormat= "bam",maxBandwidth = maxBw,fragLen = fl,remChr = "")
   ourProfile
+@
 
-@ 
-
-\Rpackage{Segvis} is going to warn the user if there aren't any regions loaded. To load the regions a \Robject{GRanges} is necessary, to build one there are some instructions in \ref{gr1}. 
+\Rpackage{Segvis} is going to warn the user if there aren't any
+regions loaded. To load the regions a \Robject{GRanges} is necessary,
+to build one there are some instructions in \ref{gr1}.
 
 <<regions_prof,cache=TRUE,include=TRUE,echo=TRUE,eval=TRUE,tidy=TRUE>>=
-
   load(file = "../data/peaks_ctcf.RData")
   windowExt = 1000
   start(peaks_ctcf) = peaks_ctcf$summit - windowExt
   end(peaks_ctcf) = peaks_ctcf$summit + windowExt
   regions(ourProfile) = peaks_ctcf
   ourProfile
-
-@ 
+@
 
 \subsection{Creating the coverage curves}
 
-To create a the coverage curves it is necessary to follow three steps \Rcode{loadReads}, \Rcode{matchReads} and \Rcode{getCoverage}:
+To create a the coverage curves it is necessary to follow three steps
+\Rcode{loadReads}, \Rcode{matchReads} and \Rcode{getCoverage}:
 
 <<load_reads,cache=TRUE,include=TRUE,echo=TRUE,eval=FALSE,tidy=TRUE>>=
-
   mc =8
   ourProfile = loadReads(ourProfile,mc)
   ourProfile = matchReads(ourProfile,mc)
   ourProfile = getCoverage(ourProfile,mc)
-
-@ 
+@
 
 \label{cover}
 
 \section{Some examples}
 
-\subsection{Calculating the average coverage for a set of same width regions}
+\subsection{Calculating the average coverage for a set of same width
+  regions}
 
-Now it is possible to create the \Robject{profileMatrix}. When calculating the \Robject{profileMatrix}, the user should add a \Robject{bandwidth} parameter, which is used to smooth the coverage curves for each peak. To avoid innecessary repetitions of the previous 3 steps for different bandwidths, a parameter called \Robject{maxBandwidth} was added, thus it is possible to compare the coverage curve for different bandwidths:
+Now it is possible to create the \Robject{profileMatrix}. When
+calculating the \Robject{profileMatrix}, the user should add a
+\Robject{bandwidth} parameter, which is used to smooth the coverage
+curves for each peak. To avoid innecessary repetitions of the previous
+3 steps for different bandwidths, a parameter called
+\Robject{maxBandwidth} was added, thus it is possible to compare the
+coverage curve for different bandwidths:
 
 << prof_mat,include=TRUE,echo=TRUE,eval=FALSE,tidy=TRUE>>=
-
   ourProfileMatrix1 = ProfileMatrix(ourProfile,1,mc)
   ourProfileMatrix2 = ProfileMatrix(ourProfile,51,mc)
   ourProfileMatrix3 = ProfileMatrix(ourProfile,301,mc)
   ourProfileList = ProfileMatrixList(ourProfileMatrix1,ourProfileMatrix2,ourProfileMatrix3)
-  names(ourProfileList) = c("1","51","301")  
+  names(ourProfileList) = c("1","51","301")
+@
 
-@ 
-
-To compare the different averaged profile curves we do, in the second case we are using a parameter coord to set the genomic coordinates used:
+To compare the different averaged profile curves we do, in the second
+case we are using a parameter coord to set the genomic coordinates
+used:
 
 <<plot1,include=TRUE,echo=TRUE,eval=FALSE,tidy=TRUE>>=
   p1 = plot.profiles(ourProfileList)
-  p2 = plot.profiles(ourProfileList,coord= -windowExt:windowExt)
-@ 
+  p2 = plot.profiles(ourProfileList,coord=-windowExt:windowExt)
+@
 
 <<plot1_load,include=FALSE,echo =FALSE,eval=TRUE>>=
   load(file = file.path(rdatadir,"bw_figs.RData"))
-@ 
+@
 
 \begin{figure}[h!]
-<<plot1_both,include=TRUE,echo=FALSE,eval=TRUE,out.width='8 cm',fig.show = 'hold',fig.align='center'>>=
+  <<plot1_both,include=TRUE,echo=FALSE,eval=TRUE,out.width='8 cm',fig.show = 'hold',fig.align='center'>>=
   print(p1)
-  print(p2)  
-@ 
+  print(p2)
+@
 \caption{Profile plots smoothed using several bandwidths \label{example1}}
 \end{figure}
 
-Lets notice that we changed the coordinates from the left to the right plot in figure \ref{example1}. In the first case, we used the columns number in the matrix, while in the second we are using a relative distance to the middle of the regions.
+Lets notice that we changed the coordinates from the left to the right
+plot in figure \ref{example1}. In the first case, we used the columns
+number in the matrix, while in the second we are using a relative
+distance to the middle of the regions.
 
 \subsection{Changing the \Rcode{trim} parameter}
 
 <<plot2_load,include = FALSE,echo = FALSE,eval=TRUE>>=
-  load(file =file.path(rdatadir,"trim_figs.RData"))
-@ 
+  load(file=file.path(rdatadir,"trim_figs.RData"))
+@
 
-However, this is a simple example. A lot of times it's necessary to compare the curves generated under different conditions. For this example, we are going to calculate the coverage curves using different read samples but the same set of regions. The reads corresponds in this case to the following histones:
+However, this is a simple example. A lot of times it's necessary to
+compare the curves generated under different conditions. For this
+example, we are going to calculate the coverage curves using different
+read samples but the same set of regions. The reads corresponds in
+this case to the following histones:
 
 \begin{itemize}
 \item H3k27ac
@@ -143,118 +171,194 @@ However, this is a simple example. A lot of times it's necessary to compare the 
 \item H3k4me3
 \end{itemize}
 
-Just as in subsection \ref{cover} we apply the same methods to build our \Robject{profile} objects:
+Just as in subsection \ref{cover} we apply the same methods to build
+our \Robject{profile} objects:
 
 <<load_reads2,cache=TRUE,include=TRUE,echo=TRUE,eval=FALSE,tidy=TRUE>>=
-
-  ourProfiles = mapply(Profile,names,files,MoreArgs = list("bam",maxBw,fl,""),SIMPLIFY=FALSE )
+  ourProfiles = mapply(Profile,names,files,MoreArgs =list("bam",maxBw,fl,""),SIMPLIFY=FALSE )
   names(ourProfiles) = names
   ourProfiles = lapply(ourProfiles,function(x,peaks_ctcf){
-  regions(x) = peaks_ctcf
-  return(x)},peaks_ctcf)
+    regions(x) = peaks_ctcf
+    return(x)},peaks_ctcf)
   ourProfiles = lapply(ourProfiles,loadReads,mc)
   ourProfiles = lapply(ourProfiles,matchReads,mc)
   ourProfiles = lapply(ourProfiles,getCoverage,mc)
+@
 
-@ 
-
-Then, for each sample we build the \Robject{profileMatrix}, and we gather in a \Robject{profileMatrixList}:
+Then, for each sample we build the \Robject{profileMatrix}, and we
+gather in a \Robject{profileMatrixList}:
 
 <<buildmatrix, include=TRUE,echo=TRUE,eval=FALSE,tidy = TRUE>>=
   ourMatrices = lapply(ourProfiles,ProfileMatrix,251,mc)
   names(ourMatrices) = names
   ourList_notScaled = ProfileMatrixList(ourMatrices)
-@ 
+@
 
-For the case when the depth of our samples may be very different among them we can also normalize our curves as if they were generated by sample with a million reads:
+For the case when the depth of our samples may be very different among
+them we can also normalize our curves as if they were generated by
+sample with a million reads:
 
 <<normalize,include=TRUE,echo=TRUE,eval=FALSE,tidy=TRUE>>=
   ourMatrices = lapply(ourMatrices,normalize.matrix)
   ourList = ProfileMatrixList(ourMatrices)
-@ 
+@
+
+\label{matrices}
 
 And we plot them:
 
 <<include=TRUE,echo=TRUE,eval=FALSE,tidy=TRUE>>=
   q1 = plot.profiles(ourList_notScaled,coord= -windowExt:windowExt)
   q2 = plot.profiles(ourList,coord= -windowExt:windowExt)
-@ 
+@
 
 \begin{figure}[h!]
 <<plot2_both,include=TRUE,echo=FALSE,eval=TRUE,out.width='8 cm',fig.show = 'hold',fig.align='center'>>=
-  print(q1)
-  print(q2)
-@ 
-\caption{Profile plots of multiple samples with (right) and without (left) normalizing the curves \label{example21}} 
+    print(q1)
+    print(q2)
+@
+  \caption{Profile plots of multiple samples with (right) and without
+    (left) normalizing the curves \label{example21}}
 \end{figure}
 
-Finally there maybe outlier curves for some of the regions. Therefore we can use the \Robject{trim} parameter:
+Finally there maybe outlier curves for some of the regions. Therefore
+we can use the \Robject{trim} parameter:
 
 <<include=TRUE,echo=TRUE,eval=FALSE>>=
-  q3 = plot.profiles(ourList,coord= -windowExt:windowExt,trim = 1)
-  q4 = plot.profiles(ourList,coord= -windowExt:windowExt,trim = .25)
-@ 
+q3 = plot.profiles(ourList,coord= -windowExt:windowExt,trim = 1)
+q4 = plot.profiles(ourList,coord= -windowExt:windowExt,trim = .25)
+@
 
 
 \begin{figure}[h!]
 <<plot3_both,include=TRUE,echo=FALSE,eval=TRUE,out.width='8 cm',fig.show = 'hold',fig.align='center'>>=
   print(q3)
   print(q4)
-@ 
-\caption{Averaged profile plots of multiple samples using the sample median (left) and a 75\% trimmed mean (right) \label{example31}}  
+@
+\caption{Averaged profile plots of multiple samples using the sample
+    median (left) and a 75\% trimmed mean (right) \label{example31}}
 \end{figure}
 
 
 \newpage
 \section{Modifying the appearance of the plots}
 
-By applying the \Rfunction{plot.profiles} method, the \Rpackage{Segvis} packages generates a \Robject{ggplot} object, thus the user can modify the output by using some their commands.
+By applying the \Rfunction{plot.profiles} method, the
+\Rpackage{Segvis} packages generates a \Robject{ggplot} object, thus
+the user can modify the output by using some their commands.
 
-For example we can change the colors of the curves, change the background, add a vertical line around the summit position or change the axis labels.
+For example we can change the colors of the curves, change the
+background, add a vertical line around the summit position or change
+the axis labels.
 
 \begin{figure}[h!]
 <<plot_format,include=TRUE,echo=TRUE,eval=TRUE,out.width='8 cm',fig.show ='hold',fig.align='center',tidy=TRUE>>=
-q2 +theme(legend.position = 'bottom')+scale_color_brewer(palette = 'Dark2')
-q2 +theme_bw()+theme(legend.position = 'bottom')+scale_color_brewer(palette = 'Accent')+geom_vline(xintercept=0,linetype = 'dashed')+scale_linetype_manual(values = rep('solid',3))+ylab('Nomalized signal')+xlab('Distance from summit')
-@ 
-\caption{Format modification of average coverage plots}
+  q2 +theme(legend.position = 'bottom')+scale_color_brewer(palette = 'Dark2')
+  q2 +theme_bw()+theme(legend.position = 'bottom')+scale_color_brewer(palette = 'Accent')+
+    geom_vline(xintercept=0,linetype = 'dashed')+scale_linetype_manual(values = rep('solid',3))+
+    ylab('Nomalized signal')+xlab('Distance from summit')
+@
+ \caption{Format modification of average coverage plots}
 \end{figure}
+
+\section{Adding columns to matrix and subsetting}
+
+In the previous examples, we explore the plotting possibilities of
+\Rpackage{Segvis}. However, \Rpackage{Segvis} have also methods
+designed to explore the data. Consider a normalized
+\Robject{profileMatrixList} generated as in \ref{matrices}, then for
+each \Robject{profileMatrix} we can add a column as follows:
+
+<<include=TRUE,echo=TRUE,eval=FALSE>>=
+  ourList = lapply(ourList,function(x,dnase_regions){
+    regions(x)$dnase = countOverlaps(regions(x),dnase_regions)
+    return(x)},dnase_regions)
+@
+
+where \Rcode{countOverlaps} is a method from
+\Biocpkg{GenomicRanges}. In this case, we are obtaining the number of
+overlaps of each peak in \Rcode{regions(ourList[[i]])} with a
+\Robject{GRanges} object containing dnase sensitive regions in the
+first 3 chromosomes of the human genome. For this example, we added
+another annotation element as the number of overlaps between our peaks
+and Pol2b peaks. We can subset a \Robject{profileMatrix} using the method
+\Rcode{subset.pm} or directly plot the average coverage curves as:
+
+<<include=TRUE,echo=TRUE,eval = FALSE,tidy=TRUE>>=
+  p = plot.profiles(ourMatrices,coord = -windowExt:windowExt)
+  p1 = plot.profiles(ourMatrices,coord = -windowExt:windowExt,condition = dnase > 0 & pol2b > 0)
+  p2 = plot.profiles(ourMatrices,coord = -windowExt:windowExt,condition = dnase > 0 & pol2b == 0)
+  p3 = plot.profiles(ourMatrices,coord = -windowExt:windowExt,condition = dnase == 0 & pol2b > 0)
+@
+
+<<include=FALSE,echo=FALSE,eval=TRUE>>=
+  load(file = file.path(rdatadir,"subset_figs.RData"))
+@
+
+
+\begin{figure}[H]
+  \centering
+  <<plot_subset1,include=TRUE,echo=FALSE,eval=TRUE,out.width='8 cm',fig.show ='hold',fig.align='center',tidy=TRUE>>=
+  p +theme_bw()+theme(legend.position = 'bottom')+scale_color_brewer(palette = 'Dark2')+
+    geom_vline(xintercept=0,linetype = 'dashed')+scale_linetype_manual(values = rep('solid',4))+
+    ylab('Nomalized signal')+xlab('Distance from summit')+ggtitle('Without subsetting')
+  p1 +theme_bw()+theme(legend.position = 'bottom')+scale_color_brewer(palette = 'Dark2')+
+    geom_vline(xintercept=0,linetype = 'dashed')+scale_linetype_manual(values = rep('solid',4))+
+    ylab('Nomalized signal')+xlab('Distance from summit')+ggtitle('Overlaps with Dnase sensitive regions and Pol2b peaks')
+  p2 +theme_bw()+theme(legend.position = 'bottom')+scale_color_brewer(palette = 'Dark2')+
+    geom_vline(xintercept=0,linetype = 'dashed')+scale_linetype_manual(values = rep('solid',4))+
+    ylab('Nomalized signal')+xlab('Distance from summit')+ggtitle('Only overlaps with Dnase sensitive regions')
+  p3 +theme_bw()+theme(legend.position = 'bottom')+scale_color_brewer(palette = 'Dark2')+
+    geom_vline(xintercept=0,linetype = 'dashed')+scale_linetype_manual(values = rep('solid',4))+
+    ylab('Nomalized signal')+xlab('Distance from summit')+ggtitle('Only overlaps with Pol2b peaks')
+  @
+\caption{Coverage mean plot for several subsets}
+\end{figure}
+
 
 \newpage
 \appendix
 
 
 
-\section{Converting from extended bed format to a \Robject{GRanges} object}
+\section{Converting from extended bed format to a \Robject{GRanges}
+  object}
 
 \label{gr1}
 
-For this example we are going to read from a {\bf bed} file, convert it to \Robject{GRanges} and save it as \file{data/peaks.RData}. 
+For this example we are going to read from a {\bf bed} file, convert
+it to \Robject{GRanges} and save it as \file{data/peaks.RData}.
 
 <<convert,include=TRUE,echo=TRUE,cache=TRUE,eval=TRUE,tidy=TRUE>>=
-  bed_content = read.table(file = "../inst/extdata/encode_K562_Ctcf_peaks_first3chr.narrowPeak",stringsAsFactors=FALSE)
-  head(bed_content)
-@ 
+bed_content = read.table(file = "../inst/extdata/encode_K562_Ctcf_peaks_first3chr.narrowPeak",stringsAsFactors=FALSE)
+head(bed_content)
+@
 
-The {\bf bed} files are going to be loaded as a table with 10 columns, where the first column is the chromosome, the second the start and the third column the end of the region. It may be of interest that in the case of {\bf narrowPeak} format, the 10th column is the number of bp to the right of the start position where the summit of the peak is located.
+The {\bf bed} files are going to be loaded as a table with 10 columns,
+where the first column is the chromosome, the second the start and the
+third column the end of the region. It may be of interest that in the
+case of {\bf narrowPeak} format, the 10th column is the number of bp
+to the right of the start position where the summit of the peak is
+located.
 
-<<convert2,include=TRUE,echo=TRUE,cache=TRUE,eval=TRUE,tidy=TRUE>>=  
-  peaks_ctcf = GRanges(seqnames = bed_content[,1],ranges =IRanges(start =bed_content[,2],end =bed_content[,3]),strand = '*')
+<<convert2,include=TRUE,echo=TRUE,cache=TRUE,eval=TRUE,tidy=TRUE>>=
+  peaks_ctcf = GRanges(seqnames = bed_content[,1],
+    ranges =IRanges(start=bed_content[,2],end =bed_content[,3]),strand = '*')
   peaks_ctcf$summit = start(peaks_ctcf) + bed_content[,10]
   save(list = "peaks_ctcf",file = "../data/peaks_ctcf.RData")
   peaks_ctcf
-@ 
+@
 
 \section{SessionInfo}
 
 <<sessionInfo,include=TRUE,echo =TRUE,eval=TRUE,results="asis">>=
   toLatex(sessionInfo())
-@ 
+@
 
 
 
 
-%\section{Bibliography}
+% \section{Bibliography}
 
 
 
