@@ -14,7 +14,8 @@
 \title{Segvis: A package for visualization of genomic segments}
 \author{Rene Welch (\href{mailto:welch@stat.wisc.edu}{welch@stat.wisc.edu}) and S\"{u}nd\"{u}z Kele\c{s} (\href{mailto:welch@stat.wisc.edu}{keles@stat.wisc.edu})   \\
   Department of Statistics, University of Wisconsin - Madison \\
-  Madison, WI} \date{October 2014}
+  Madison, WI} 
+\date{October 2014}
 
 \maketitle
 
