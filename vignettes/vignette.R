@@ -55,8 +55,8 @@ print(p2)
     print(q2)
 
 ## ----include=TRUE,echo=TRUE,eval=FALSE--------------------------------------------------
-#    q3 = plot.profiles(ourList,coord= -windowExt:windowExt,trim = 1)
-#    q4 = plot.profiles(ourList,coord= -windowExt:windowExt,trim = .25)
+#  q3 = plot.profiles(ourList,coord= -windowExt:windowExt,trim = 1)
+#  q4 = plot.profiles(ourList,coord= -windowExt:windowExt,trim = .25)
 
 ## ----plot3_both,include=TRUE,echo=FALSE,eval=TRUE,out.width='8 cm',fig.show = 'hold',fig.align='center'----
   print(q3)
