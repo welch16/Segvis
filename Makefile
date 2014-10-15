@@ -14,5 +14,5 @@ vignettes/%.pdf:vignettes/%.Rnw
 
 # create the poster
 poster/%.pdf:poster/%.tex
-	cd poster; pdflatex $(<F);cd ..
+	cd poster; pdflatex $(<F);pdflatex $(<F);pdflatex $(<F);cd ..
 
