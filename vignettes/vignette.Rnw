@@ -11,10 +11,11 @@
 
 \begin{document}
 
-\title{Segvis: A package for visualization of genomic segments}
+\title{Segvis: A package for visualization of high throughout sequencing data along genomic segments}
 \author{Rene Welch (\href{mailto:welch@stat.wisc.edu}{welch@stat.wisc.edu}) and S\"{u}nd\"{u}z Kele\c{s} (\href{mailto:welch@stat.wisc.edu}{keles@stat.wisc.edu})   \\
   Department of Statistics, University of Wisconsin - Madison \\
-  Madison, WI} \date{October 2014}
+  Madison, WI} 
+\date{October 2014}
 
 \maketitle
 
@@ -25,22 +26,25 @@
 
 This vignette provides an introduction to the visualization of
 sequencing data by using the \Rpackage{Segvis}
-package. \Rpackage{Segvis} provides different tools to summarize and
-visualize sequencing data, including but not limited to the following
-tasks:
+package. The minimum input to the package includes:
+\begin{enumerate}
+\item One or more bam files of aligned read data (e.g. from ChIP-seq experiments)
+
+\item Coordinates for regions of interest
+
+\end{enumerate}
+
+ \Rpackage{Segvis} provides different tools to summarize and
+visualize these data, including but not limited to the following tasks:
 
 \begin{itemize}
-\item Plot peaks of different conditions accross the same set of
-  regions
+\item Extract read data of specified input regions
+\item Plot data from different files (conditions) accross the same set of regions, e.g. peak plots for ChIP-seq
 \item Plot central measures for a set of regions with the same width
-\item Subset this curves according to user defined annotations
+\item Subset this regions according to user defined annotations
 \item Plot the heatmap of signal curves accross regions separated by
   annotation
 \end{itemize}
-
-For this document it is pretended to show how \Rpackage{Segvis}
-interacts with some \Bioconductor{} and \R{} packages to represent the
-data.
 
 \section{The basics}
 
@@ -107,6 +111,11 @@ To create a the coverage curves it is necessary to follow three steps
 \label{cover}
 
 \section{Some examples}
+
+\subsection{Visualizing simple peak plots}
+
+
+...
 
 \subsection{Calculating the average coverage for a set of same width
   regions}
