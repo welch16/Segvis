@@ -38,30 +38,28 @@ ourProfiles = lapply(ourProfiles,matchReads,mc)
 
 ourProfiles = lapply(ourProfiles,getCoverage,mc)
 
+
 ourMatrices = lapply(ourProfiles,ProfileMatrix,1,mc)
 names(ourMatrices) = names
+
+
 
 ourMatrices = lapply(ourMatrices,normalize.matrix)
 ourList = ProfileMatrixList(ourMatrices)
 
-bed_content = read.table(file = file.path(filedir,"encode_K562_dnase_Uw_1_first3chr.narrowPeak"),stringsAsFactors=FALSE)
-dnase_regions = GRanges(seqnames = bed_content[,1],ranges =IRanges(start =bed_content[,2],end =bed_content[,3]),strand = '*')
 
-bed_content = read.table(file = file.path(filedir,"encode_K562_Pol2b_first3chr.narrowPeak"),stringsAsFactors=FALSE)
-pol2b = GRanges(seqnames = bed_content[,1],ranges =IRanges(start =bed_content[,2],end =bed_content[,3]),strand = '*')
 
-ourMatrices = lapply(ourMatrices,function(x,dnase_regions,pol2b){
-  regions(x)$dnase = countOverlaps(regions(x),dnase_regions)
-  regions(x)$pol2b = countOverlaps(regions(x),pol2b)
-  return(x)},dnase_regions,pol2b)
+save(file=file.path(rdatadir,"example0.RData"),list = "ourList")
+  
 
-## save(list = "ourMatrices",file = "mm.RData")
-## load("mm.RData")
+starts = start(regions(ourList[[1]]))
+ends = end(regions(ourList[[1]]))
+seqs =as.character( seqnames(regions(ourList[[1]])))
 
-p = plot.profiles(ourMatrices,coord = -windowExt:windowExt)
-p1 = plot.profiles(ourMatrices,coord = -windowExt:windowExt,condition = dnase > 0 & pol2b > 0)
-p2 = plot.profiles(ourMatrices,coord = -windowExt:windowExt,condition = dnase > 0 & pol2b == 0)
-p3 = plot.profiles(ourMatrices,coord = -windowExt:windowExt,condition = dnase == 0 & pol2b > 0)
-p4 = plot.profiles(ourMatrices,coord = -windowExt:windowExt,condition = dnase == 0 & pol2b == 0)
+i=10
+p1 = plot.profiles(ourList,condition = seqnames == "chr1" & start == starts[i],coord = seq(starts[i],ends[i]))
+p1
+
+
 
 save(list  = c("p","p1","p2","p3","p4"),file = file.path(rdatadir,"subset_figs.RData"))
