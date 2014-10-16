@@ -1,0 +1,370 @@
+
+% CIBM poster, based on design by Nathaniel Johnston, August 2009
+% http://www.nathanieljohnston.com/2009/08/latex-poster-template/
+
+\documentclass[final]{beamer}
+
+\usepackage[scale=1.24]{beamerposter}
+\usepackage{graphicx}			% allows us to import images
+\usepackage{tikz}
+
+%-----------------------------------------------------------
+% Custom commands that I use frequently
+%-----------------------------------------------------------
+
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\cl}[1]{\mathcal{#1}}
+\newcommand{\fA}{\mathfrak{A}}
+\newcommand{\fB}{\mathfrak{B}}
+\newcommand{\Tr}{{\rm Tr}}
+\newtheorem{thm}{Theorem}
+
+%-----------------------------------------------------------
+% Define the column width and poster size
+% To set effective sepwid, onecolwid and twocolwid values, first choose how many columns you want and how much separation you want between columns
+% The separation I chose is 0.024 and I want 4 columns
+% Then set onecolwid to be (1-(4+1)*0.024)/4 = 0.22
+% Set twocolwid to be 2*onecolwid + sepwid = 0.464
+%-----------------------------------------------------------
+
+
+
+\definecolor{Sinput}{rgb}{0.75,0.19,0.19}
+\definecolor{Soutput}{rgb}{0,0,0}
+\definecolor{Scode}{rgb}{0.75,0.19,0.19}
+
+
+\setbeamertemplate{sections/subsections in toc}[square] % This is to remove the symbols of the slides
+\setbeamertemplate{navigation symbols}{} % This is to convert the "3d" spheres to squares on toc
+\setbeamertemplate{itemize item}[square] % This is to convert the "3d" spheres to squares on enumerate
+
+
+
+
+
+\newlength{\sepwid}
+\newlength{\onecolwid}
+\newlength{\twocolwid}
+\setlength{\paperwidth}{72in}
+\setlength{\paperheight}{48in}
+\setlength{\sepwid}{0.024\paperwidth}
+\setlength{\onecolwid}{0.22\paperwidth}
+\setlength{\twocolwid}{0.464\paperwidth}
+\setlength{\topmargin}{-0.5in}
+\usetheme{confposter}
+\usepackage{exscale}
+
+
+
+
+%-----------------------------------------------------------
+% The next part fixes a problem with figure numbering. Thanks Nishan!
+% When including a figure in your poster, be sure that the commands are typed in the following order:
+% \begin{figure}
+% \includegraphics[...]{...}
+% \caption{...}
+% \end{figure}
+% That is, put the \caption after the \includegraphics
+%-----------------------------------------------------------
+
+\usecaptiontemplate{
+\small
+\structure{\insertcaptionname~\insertcaptionnumber:}
+\insertcaption}
+
+%-----------------------------------------------------------
+% Define colours (see beamerthemeconfposter.sty to change these colour definitions)
+%-----------------------------------------------------------
+
+\setbeamercolor{block title}{fg=NavyBlue,bg=white}
+\setbeamercolor{block body}{fg=black,bg=white}
+\setbeamercolor{block alerted title}{fg=white,bg=dblue!70}
+\setbeamercolor{block alerted body}{fg=black,bg=dblue!10}
+
+%-----------------------------------------------------------
+% Name and authors of poster/paper/research
+%-----------------------------------------------------------
+
+
+\title{Segvis: A package for visualization of high throughout sequencing data along genomic segments}
+\author{Rene Welch and S\"{u}nd\"{u}z Kele\c{s}}
+\institute{Department of Statistics, University of Wisconsin - Madison \hspace{2in} 
+  Department of Biostatistics and Medical Informatics, University of Wisconsin - Madison}
+\date{October 2014}
+
+
+\usepackage{tikz}
+
+\tikzstyle{sqq} = [rectangle, draw ,fill = MidnightBlue!25,
+    text width=6.7em, text centered, rounded corners, minimum height=10em,line width = 1pt,draw = black!60!blue!95]
+\tikzstyle{sqq2} = [rectangle, draw ,fill = SeaGreen!25,
+    text width=6.7em, text centered, rounded corners, minimum height=10em,line width = 1pt,draw = black!60!green!95]
+
+
+
+\tikzstyle{line} = [draw,line width = 2pt, -latex',fill =black!60!blue!95,draw = black!60!blue!95]
+\tikzstyle{fancytitle} =[fill=black!60!blue!95, text=white,rounded corners,text width = 55 pt,text centered]
+
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{mindmap,trees}
+
+\usepackage{listings}  
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\normalsize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{NavyBlue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+%-----------------------------------------------------------
+% Start the poster itself
+%-----------------------------------------------------------
+% The \rmfamily command is used frequently throughout the poster to force a serif font to be used for the body text
+% Serif font is better for small text, sans-serif font is better for headers (for readability reasons)
+%-----------------------------------------------------------
+
+
+\begin{document}
+\begin{frame}[fragile,t]
+  \begin{columns}[t] % the [t] option aligns the column's content at the top
+
+    \begin{column}{\sepwid}\end{column}			% empty spacer column
+    \begin{column}{\onecolwid}
+
+
+\begin{alertblock}{What is Segvis?}
+  
+  {\color{NavyBlue} \textbf{Segvis}} is a tool for visualization of
+  high throughout sequencing raw data. The minimum input to the
+  package includes:
+
+\begin{enumerate}
+\item One or more bam files of aligned read data (e.g. from ChIP-seq
+  experiments)
+
+\item Coordinates for regions of interest
+
+\end{enumerate}
+
+{\color{NavyBlue}\textbf{Segvis}} provides different tools to
+summarize and visualize these data, including but not limited to the
+following tasks:
+
+\begin{itemize}
+\item Extract read data of specified input regions
+\item Plot data from different files (conditions) accross the same set
+  of regions, e.g. peak plots for ChIP-seq
+\item Plot central measures for a set of regions with the same width
+\item Subset this regions according to user defined annotations
+%\item Plot the heatmap of signal curves accross regions separated by
+ % annotation
+\end{itemize}
+
+\end{alertblock}
+\vskip2ex
+\begin{block}{Basic input}
+
+\begin{enumerate}
+
+
+\item A set of regions
+
+\begin{table}[H]
+\begin{tabular}{c | c|  c| c | c}
+chr1& 114889057 & 114889538 & ... & 240 \\ 
+chr1& 225662556 & 225663044 & ... & 249 \\
+chr1& 150951878 & 150952345 & ... & 259 \\
+chr1& 17036198  & 17036690  & ... & 255 \\
+chr1& 35318207  & 35318710  & ... & 262 \\
+chr1& 204776085 & 204776784 & ... & 376 \\
+chr1& 33177715  & 33178175  & ... & 239 \\
+chr1& 19239498  & 19239983  & ... & 230 \\
+chr1& 38455665  & 38456081  & ... & 185 \\
+chr1& 154989953 & 154990397 & ... & 221 
+\end{tabular}
+\caption{First 10 peaks in ENCODE generated narrowPeak file (content table)}
+\label{tab1}
+\end{table}
+
+\item And a set of at least 1 {\bf bam} file
+
+\end{enumerate}
+
+\end{block}
+      \vskip2ex
+\begin{block}{Creating input regions}
+        
+\begin{lstlisting}[language =R]
+  content = read.table(file = "file.narrowPeak",
+stringsAsFactors=FALSE)
+  peaks_ctcf = GRanges(seqnames = content[,1],
+    ranges =IRanges(start=content[,2],
+    end =content[,3]),strand   = '*')
+  peaks_ctcf$summit = start(peaks_ctcf) + content[,10]
+\end{lstlisting}%$
+
+\end{block}
+
+      \vskip2ex
+\begin{block}{The {\color{orange} profile} object}
+      
+  \begin{lstlisting}[language=R]
+    
+  name = "H3k27ac"; file ="reads_H3k27ac_first3chr.sort.bam"
+  maxBw = 501;  windowExt = 1000 ;  multi.core = 8
+  fl = 200; # only for SET
+  ourProfile = Profile(regionName = name,file = file,fileFormat= "bam",maxBandwidth = maxBw,fragLen = fl,remChr = "")
+
+  start(peaks_ctcf) = peaks_ctcf$summit - windowExt
+  end(peaks_ctcf) = peaks_ctcf$summit + windowExt
+  regions(ourProfile) = peaks_ctcf
+
+  ourProfile = loadReads(ourProfile,multi.core)
+  ourProfile = matchReads(ourProfile,multi.core)
+  ourProfile = getCoverage(ourProfile,multi.core)
+  \end{lstlisting}
+\end{block}
+
+      \vskip2ex
+\end{column}
+
+%%% col #1
+
+    \begin{column}{\sepwid}\end{column}			% empty spacer column
+    \begin{column}{\twocolwid}							% create a two-column-wide column and then we will split it up later
+      \begin{columns}[t,totalwidth=\twocolwid]	% split up that two-column-wide column
+        \begin{column}{\onecolwid}\vspace{-.69in}
+          \begin{block}{Unitarily-Correctable Codes}
+            \rmfamily{A correctable subsystem $\cl{B}$ is said to be a \emph{unitarily-correctable code} (UCC) for $\cl{E}$ if the recovery operation is simply a conjugation-by-unitary channel $\cl{U}(\cdot) := U(\cdot)U^*$.
+            \vspace{0.1in}
+            \begin{itemize}\justifying	% the \justifying command forces the items in the list to have full justification (they don't by default)
+              \item Since finding correctable subsystems in full generality is an extremely difficult problem, restricting our attention to unitarily-correctable codes seems potentially wise.
+              \item These codes are of physical interest; they are codes in which the two-step process of recovery only involves the conjugation-by-unitary step (and not the projective measurement step).
+              \item It has been shown \cite{KS06} that if a quantum channel $\cl{E}$ is unital, then we can unambiguously define \emph{the unitarily-correctable code algebra} of $\cl{E}$, denoted $UCC(\cl{E})$, to be the albebra composed of the direct sum of all of the unitarily-correctable codes.
+              \item In terms of Figure~1, unitarily-correctable codes are those for which $p_1 = 1$ and $p_2 = p_3 = 0$ (i.e., there is just one block on the right).
+            \end{itemize}}
+          \end{block}
+        \end{column}
+        \begin{column}{\onecolwid}\vspace{-.69in}
+          \begin{block}{The Multiplicative Domain}
+            \rmfamily{The \emph{multiplicative domain} of $\cl{E}$ \cite{Cho74}, denoted $MD(\cl{E})$, is defined to be the following set:
+            \begin{align*}
+              \big\{ a \in \cl{L}(\cl{H}) : & \, \cl{E}(a)\cl{E}(b) = \cl{E}(ab)\text{ and } \\
+              & \, \cl{E}(b)\cl{E}(a) = \cl{E}(ba) \ \forall \, b \in \cl{L}(\cl{H}) \big\}.
+            \end{align*}
+
+            \begin{itemize}
+              \item $\cl{E}$ behaves particularly nicely when restricted to $MD(\cl{E})$ (as a $*$-homomorphishm, in fact).
+              \item $MD(\cl{E})$ was first studied by operator theorists over thirty years ago.
+              \item $MD(\cl{E})$ is an algebra, and hence \cite{Dav96} is unitarily equivalent to a direct sum of tensor blocks:
+              \begin{equation}\label{opalgform}
+                MD(\cl{E}) \cong \oplus_k \big(I_{\mathcal{A}_k} \otimes \mathcal{L}(\mathcal{B}_k)\big) \, \oplus \, 0_\mathcal{K}.
+              \end{equation}
+            \end{itemize}
+            \vspace{0.25in}
+            \begin{figure}
+              \begin{center}
+                \includegraphics[width=10in]{MD.png}
+                \caption{The action of a quantum channel on its multiplicative domain.}
+                \label{fig:multDom}
+              \end{center}
+            \end{figure}}
+          \end{block}
+        \end{column}
+      \end{columns}
+      \vskip2.5ex
+      \begin{alertblock}{The Great Connection}		% an ACTUAL two-column-wide column
+        \rmfamily{By looking at Figures 1 and 2, we expect that there might be some connection between correctable subsystems for a channel $\cl{E}$ and its multiplicative domain. Indeed, one of our main results is that the two situations coincide when $\cl{E}$ is unital and the subsystem is unitarily-correctable.}
+      \end{alertblock}
+      \begin{columns}[t,totalwidth=\twocolwid]
+        \begin{column}{\onecolwid}
+        \begin{block}{Main Result}
+          \rmfamily{\textbf{Theorem.} \emph{Let $\cl{E}$ be a unital quantum channel. Then $MD(\cl{E}) = UCC(\cl{E})$.}
+          \begin{itemize}\justifying
+            \item This theorem says that when we write $MD(\cl{E})$ in the form of Equation~\eqref{opalgform}, the $\cl{B}_k$'s are exactly the unitarily-correctable codes for $\cl{E}$.
+            \item When $\cl{E}$ is not unital, $MD(\cl{E})$ in general only captures a subclass of the unitarily-correctable codes for $\cl{E}$.
+            \item Because $MD(\cl{E})$ is easy to compute, this provides a concrete method of finding some UCCs.
+          \end{itemize}}
+        \end{block}
+      \end{column}
+      \begin{column}{\onecolwid}
+        \begin{block}{Generalization}
+          \rmfamily{In the same spirit as the multiplicative domain, we can define ``generalized multiplicative domains'' for channels by requiring not that the channel be multiplicative with itself, but rather that it be multiplicative with some $*$-homomorphism.
+          \begin{itemize}\justifying
+            \item Generalized multiplicative domains capture \emph{all} correctable codes for \emph{arbitrary} channels.
+            \item Unlike the multiplicative domain, these algebras in general are very difficult to compute.
+          \end{itemize}}
+        \end{block}
+      \end{column}
+    \end{columns}
+  \end{column}
+  \begin{column}{\sepwid}\end{column} % empty spacer column
+  \begin{column}{\onecolwid}
+    \begin{block}{Conclusions and Outlook}
+      \rmfamily{This characterization provides a simple way to find all unitarily-correctable codes for unital channels and even some codes for non-unital channels. General correctable subsystems can be characterized in terms of algebras that are analogous to the multiplicative domain, though in general it is not clear how to calculate them -- further research in this area would be of great interest.}
+    \end{block}
+    \vskip2ex
+    \begin{block}{For Further Information}
+      \small{\rmfamily{For the details of our work:
+      \begin{itemize}
+        \item Choi, M.-D., Johnston, N., and Kribs, D. W.. Journal of Physics A: Mathematical and Theoretical \textbf{42}, 245303 (2009).
+        \item Johnston, N., and Kribs, D. W., \emph{Generalized Multiplicative Domains and Quantum Error Correction} (2009, preprint).
+      \end{itemize}
+      \vspace{0.1in}\noindent Preprints and this poster can be downloaded from:
+      \begin{itemize}
+        \item www.arxiv.org
+        \item www.nathanieljohnston.co
+      \end{itemize}}}
+    \end{block}
+    \vskip2ex
+    \begin{block}{References}
+      \small{\rmfamily{\begin{thebibliography}{99}
+      \bibitem{KLPL06} D.~W. Kribs, R. Laflamme, D. Poulin, M. Lesosky, Quantum Inf. \& Comp. \textbf{6} (2006), 383-399.
+      \bibitem{zanardi97} P. Zanardi, M. Rasetti, Phys. Rev. Lett. \textbf{79},  3306 (1997).
+      \bibitem{KS06} D.~W. Kribs, R.~W. Spekkens, Phys. Rev. A \textbf{74}, 042329 (2006).
+      \bibitem{Cho74} M.-D. Choi, Illinois J. Math., \textbf{18} (1974), 565-574.
+      \bibitem{Dav96} K.~R. Davidson, \emph{$C^*$-algebras by example}, Fields Institute Monographs, 6. American Mathematical Society, Providence, RI, 1996.
+      \end{thebibliography}}}
+    \end{block}
+    \vskip2ex
+    \begin{block}{Acknowledgements}
+      \small{\rmfamily{M.-D.C. was supported by an NSERC Discovery Grant. N.J. was supported by an NSERC Canada Graduate Scholarship and the University of Guelph Brock Scholarship. D.W.K. was supported by an NSERC Discovery Grant and Discovery Accelerator Supplement, an Ontario Early Researcher Award, and CIF, OIT.}} \\
+      \vspace{0.5in}
+      \begin{center}
+        \begin{tabular}{ccc}
+          \includegraphics[width=3in]{TO.png} & \hspace{1.5in} & \includegraphics[width=3in]{guelph.png}
+        \end{tabular}
+      \end{center}
+    \end{block}
+  \end{column}
+  \begin{column}{\sepwid}\end{column}			% empty spacer column
+ \end{columns}
+\end{frame}
+\end{document}
