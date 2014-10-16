@@ -1,3 +1,4 @@
 .git/
 Makefile
 .git/*
+poster/*

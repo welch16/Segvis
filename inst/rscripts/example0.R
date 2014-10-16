@@ -1,7 +1,6 @@
 
 rm(list = ls())
 library(profile)
-
 filedir = "../inst/extdata"
 datadir = "../data"
 rdatadir = "../inst/auxRData"
@@ -41,25 +40,39 @@ ourProfiles = lapply(ourProfiles,getCoverage,mc)
 
 ourMatrices = lapply(ourProfiles,ProfileMatrix,1,mc)
 names(ourMatrices) = names
-
-
-
 ourMatrices = lapply(ourMatrices,normalize.matrix)
 ourList = ProfileMatrixList(ourMatrices)
 
 
 
 save(file=file.path(rdatadir,"example0.RData"),list = "ourList")
-  
+
+load(file=file.path(rdatadir,"example0.RData"))
+
+ourList2 = ourList
+ourList =ourList[2:4]
 
 starts = start(regions(ourList[[1]]))
 ends = end(regions(ourList[[1]]))
 seqs =as.character( seqnames(regions(ourList[[1]])))
 
 i=10
-p1 = plot.profiles(ourList,condition = seqnames == "chr1" & start == starts[i],coord = seq(starts[i],ends[i]))
-p1
+st =starts[i]
+p1 =plot.profiles(ourList,condition = seqnames == "chr1" & start == st,coord = seq(starts[i],ends[i]))
 
 
+i=24
+st =starts[i]
+p2 = plot.profiles(ourList,condition = seqnames == "chr1" & start == st,coord = seq(starts[i],ends[i]))
 
-save(list  = c("p","p1","p2","p3","p4"),file = file.path(rdatadir,"subset_figs.RData"))
+i = 180
+st =starts[i]
+p3 = plot.profiles(ourList,condition = seqnames == "chr1" & start == st,coord = seq(starts[i],ends[i]))
+
+
+i = 308
+st =starts[i]
+p4 = plot.profiles(ourList,condition = seqnames == "chr1" & start == st,coord = seq(starts[i],ends[i]))
+
+
+save(list  = c("p1","p2","p3","p4"),file = file.path(rdatadir,"subset_figs.RData"))
