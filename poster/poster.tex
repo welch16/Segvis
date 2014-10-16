@@ -7,6 +7,7 @@
 \usepackage[scale=1.24]{beamerposter}
 \usepackage{graphicx}			% allows us to import images
 \usepackage{tikz}
+\usepackage{url}
 
 %-----------------------------------------------------------
 % Custom commands that I use frequently
@@ -88,7 +89,8 @@
 
 \title{Segvis: A package for visualization of high throughout sequencing data along genomic segments}
 \author{Rene Welch and S\"{u}nd\"{u}z Kele\c{s}}
-\institute{Department of Statistics, University of Wisconsin - Madison \hspace{2in} 
+\institute{Department of Statistics, University of Wisconsin - Madison
+\hspace{1 cm} 
   Department of Biostatistics and Medical Informatics, University of Wisconsin - Madison}
 \date{October 2014}
 
@@ -233,7 +235,7 @@ stringsAsFactors=FALSE)
 \end{block}
 
       \vskip2ex
-\begin{block}{The {\color{orange} profile} object}
+\begin{block}{The {\color{orange} profile} and {\color{orange}profileMatrix} objects}
       
   \begin{lstlisting}[language=R]
     
@@ -249,6 +251,7 @@ stringsAsFactors=FALSE)
   ourProfile = loadReads(ourProfile,multi.core)
   ourProfile = matchReads(ourProfile,multi.core)
   ourProfile = getCoverage(ourProfile,multi.core)
+
   \end{lstlisting}
 \end{block}
 
@@ -257,111 +260,173 @@ stringsAsFactors=FALSE)
 
 %%% col #1
 
-    \begin{column}{\sepwid}\end{column}			% empty spacer column
-    \begin{column}{\twocolwid}							% create a two-column-wide column and then we will split it up later
-      \begin{columns}[t,totalwidth=\twocolwid]	% split up that two-column-wide column
-        \begin{column}{\onecolwid}\vspace{-.69in}
-          \begin{block}{Unitarily-Correctable Codes}
-            \rmfamily{A correctable subsystem $\cl{B}$ is said to be a \emph{unitarily-correctable code} (UCC) for $\cl{E}$ if the recovery operation is simply a conjugation-by-unitary channel $\cl{U}(\cdot) := U(\cdot)U^*$.
-            \vspace{0.1in}
-            \begin{itemize}\justifying	% the \justifying command forces the items in the list to have full justification (they don't by default)
-              \item Since finding correctable subsystems in full generality is an extremely difficult problem, restricting our attention to unitarily-correctable codes seems potentially wise.
-              \item These codes are of physical interest; they are codes in which the two-step process of recovery only involves the conjugation-by-unitary step (and not the projective measurement step).
-              \item It has been shown \cite{KS06} that if a quantum channel $\cl{E}$ is unital, then we can unambiguously define \emph{the unitarily-correctable code algebra} of $\cl{E}$, denoted $UCC(\cl{E})$, to be the albebra composed of the direct sum of all of the unitarily-correctable codes.
-              \item In terms of Figure~1, unitarily-correctable codes are those for which $p_1 = 1$ and $p_2 = p_3 = 0$ (i.e., there is just one block on the right).
-            \end{itemize}}
-          \end{block}
-        \end{column}
-        \begin{column}{\onecolwid}\vspace{-.69in}
-          \begin{block}{The Multiplicative Domain}
-            \rmfamily{The \emph{multiplicative domain} of $\cl{E}$ \cite{Cho74}, denoted $MD(\cl{E})$, is defined to be the following set:
-            \begin{align*}
-              \big\{ a \in \cl{L}(\cl{H}) : & \, \cl{E}(a)\cl{E}(b) = \cl{E}(ab)\text{ and } \\
-              & \, \cl{E}(b)\cl{E}(a) = \cl{E}(ba) \ \forall \, b \in \cl{L}(\cl{H}) \big\}.
-            \end{align*}
+\begin{column}{\sepwid}\end{column}			
+% empty spacer column
+\begin{column}{\twocolwid}					
+% create a two-column-wide column and then we will split it up later
+\begin{columns}[t,totalwidth=\twocolwid]	% split up that two-column-wide column
+\begin{column}{\onecolwid}\vspace{-.69in}
+\begin{block}{The {\color{orange} profileMatrixList} object}
 
-            \begin{itemize}
-              \item $\cl{E}$ behaves particularly nicely when restricted to $MD(\cl{E})$ (as a $*$-homomorphishm, in fact).
-              \item $MD(\cl{E})$ was first studied by operator theorists over thirty years ago.
-              \item $MD(\cl{E})$ is an algebra, and hence \cite{Dav96} is unitarily equivalent to a direct sum of tensor blocks:
-              \begin{equation}\label{opalgform}
-                MD(\cl{E}) \cong \oplus_k \big(I_{\mathcal{A}_k} \otimes \mathcal{L}(\mathcal{B}_k)\big) \, \oplus \, 0_\mathcal{K}.
-              \end{equation}
-            \end{itemize}
-            \vspace{0.25in}
-            \begin{figure}
-              \begin{center}
-                \includegraphics[width=10in]{MD.png}
-                \caption{The action of a quantum channel on its multiplicative domain.}
-                \label{fig:multDom}
-              \end{center}
-            \end{figure}}
-          \end{block}
-        \end{column}
-      \end{columns}
-      \vskip2.5ex
-      \begin{alertblock}{The Great Connection}		% an ACTUAL two-column-wide column
-        \rmfamily{By looking at Figures 1 and 2, we expect that there might be some connection between correctable subsystems for a channel $\cl{E}$ and its multiplicative domain. Indeed, one of our main results is that the two situations coincide when $\cl{E}$ is unital and the subsystem is unitarily-correctable.}
+\vskip2ex
+
+We repeat the procedure in the {\color{NavyBlue}\bf  profile} box for all read files, and create the {\color{NavyBlue}\bf  profileMatrices} by:
+\vskip2ex
+  \begin{lstlisting}[language = R]
+  bandwidth = 1
+  ourMatrices = 
+lapply(ourProfiles, ProfileMatrix,bandwidth,multi.core)   
+  \end{lstlisting}
+
+  We normalize them and create a {\color{NavyBlue} \bf profileMatrixList}:
+
+\vskip2ex
+  \begin{lstlisting}[language = R]
+  ourMatrices = lapply(ourMatrices,normalize.matrix)
+  ourList = ProfileMatrixList(ourMatrices)
+  \end{lstlisting}
+
+We plot a single peak by using:
+
+  \vskip2ex
+  \begin{lstlisting}[language = R]
+i=10
+st =starts[i]
+plot.profiles(ourList,condition = seqnames == "chr1" & start == st,coord = seq(starts[i],ends[i]))
+
+  \end{lstlisting}
+
+\end{block}
+\end{column}
+\begin{column}{\onecolwid}\vspace{-.69in}
+\begin{block}{Figure 1}
+\vskip3ex
+   \begin{figure}[H]
+    \centering
+    \includegraphics[width = .45\textwidth,page = 1]{figs/fig0.pdf}
+    \includegraphics[width = .45\textwidth,page = 2]{figs/fig0.pdf}
+  \end{figure}
+  \begin{figure}[H]
+  \centering
+    \includegraphics[width = .45\textwidth,page = 3]{figs/fig0.pdf}
+    \includegraphics[width = .45\textwidth,page = 4]{figs/fig0.pdf}
+  \end{figure}
+
+\end{block}
+\end{column}
+\end{columns}
+
+\vskip2.5ex
+\begin{alertblock}{Some thoughts on {\bf plot.profiles}}
+
+\begin{itemize}
+
+\item The output of {\bf \color{NavyBlue} plot.profiles} is a {\bf \color{NavyBlue} ggplot} object. Thus is very easy to interact with it
+
+\item It has 3 arguments besides the {\color{NavyBlue}\bf  profileMatrixList}: {\color{NavyBlue} coord} (the genomic coordinates),{\color{NavyBlue} trim} (a value to calculate the trimmed mean for a collectio of coverage) and {\color{NavyBlue} condition} (to subset the whole list of regions)
+
+\end{itemize}
+
       \end{alertblock}
       \begin{columns}[t,totalwidth=\twocolwid]
         \begin{column}{\onecolwid}
-        \begin{block}{Main Result}
-          \rmfamily{\textbf{Theorem.} \emph{Let $\cl{E}$ be a unital quantum channel. Then $MD(\cl{E}) = UCC(\cl{E})$.}
-          \begin{itemize}\justifying
-            \item This theorem says that when we write $MD(\cl{E})$ in the form of Equation~\eqref{opalgform}, the $\cl{B}_k$'s are exactly the unitarily-correctable codes for $\cl{E}$.
-            \item When $\cl{E}$ is not unital, $MD(\cl{E})$ in general only captures a subclass of the unitarily-correctable codes for $\cl{E}$.
-            \item Because $MD(\cl{E})$ is easy to compute, this provides a concrete method of finding some UCCs.
-          \end{itemize}}
-        \end{block}
-      \end{column}
-      \begin{column}{\onecolwid}
-        \begin{block}{Generalization}
-          \rmfamily{In the same spirit as the multiplicative domain, we can define ``generalized multiplicative domains'' for channels by requiring not that the channel be multiplicative with itself, but rather that it be multiplicative with some $*$-homomorphism.
-          \begin{itemize}\justifying
-            \item Generalized multiplicative domains capture \emph{all} correctable codes for \emph{arbitrary} channels.
-            \item Unlike the multiplicative domain, these algebras in general are very difficult to compute.
-          \end{itemize}}
-        \end{block}
-      \end{column}
-    \end{columns}
-  \end{column}
+\begin{block}{Adding annotations}
+\vskip2ex
+
+The regions of interest are an element of the {\color{NavyBlue} \bf profileMatrix}. Thus, we can add an annotation as part of the regions by:
+
+\vskip2ex
+\begin{lstlisting}[language =R]
+content = read.table(file = "dnase.narrowPeak"),stringsAsFactors=FALSE)
+dnase_regions = GRanges(seqnames = content[,1],ranges =IRanges(start =content[,2],end =content[,3]),strand = '*')
+
+content = read.table(file = "Pol2b.narrowPeak"),stringsAsFactors=FALSE)
+pol2b = GRanges(seqnames = content[,1],ranges =IRanges(start =content[,2],end =content[,3]),strand = '*')
+
+regions(ourMatrix)$dnase = countOverlaps(regions(ourMatrix),dnase_regions)
+regions(ourMatrix)$pol2b = countOverlaps(regions(ourMatrix),pol2b)
+\end{lstlisting}
+
+And subset by:
+\vskip2ex
+
+\begin{lstlisting}[language =R]
+  plot.profiles(ourList,coord = -windowExt:windowExt) # no subset
+  plot.profiles(ourList,coord = -windowExt:windowExt,condition = dnase > 0 & pol2b > 0)
+\end{lstlisting}
+
+\end{block}
+\end{column}
+\begin{column}{\onecolwid}
+\begin{block}{Figure 2}
+ \vskip3ex
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width = .45\textwidth,page = 2]{figs/fig3.pdf}
+    \includegraphics[width = .45\textwidth,page = 3]{figs/fig3.pdf}
+  \end{figure}
+  \begin{figure}[H]
+  \centering
+    \includegraphics[width = .45\textwidth,page = 4]{figs/fig3.pdf}
+    \includegraphics[width = .45\textwidth,page = 5]{figs/fig3.pdf}
+  \end{figure}
+
+\end{block}
+\end{column}
+\end{columns}
+\end{column}
+
   \begin{column}{\sepwid}\end{column} % empty spacer column
   \begin{column}{\onecolwid}
-    \begin{block}{Conclusions and Outlook}
-      \rmfamily{This characterization provides a simple way to find all unitarily-correctable codes for unital channels and even some codes for non-unital channels. General correctable subsystems can be characterized in terms of algebras that are analogous to the multiplicative domain, though in general it is not clear how to calculate them -- further research in this area would be of great interest.}
+    \begin{block}{Formatting the plots}
+
+We can modify the format of the plots by adding element to them:
+
+\vskip2ex
+\begin{lstlisting}
+# Base plot
+q2 = plot.profiles(ourList,coord= -windowExt:windowExt)
+
+# Adding a dashed line in the middle
+q2 + geom_vline(xintercept = 0,linetype = "dashed")
+  
+# Changing colors
+q2 + scale_color_brewer(palette = "Dark2")
+
+# Black and white theme
+q2 + theme_bw()
+
+\end{lstlisting}
+
     \end{block}
     \vskip2ex
+
+    \begin{block}{Figure 3}
+       \vskip3ex
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width = .45\textwidth,page = 1]{figs/fig2.pdf}
+    \includegraphics[width = .45\textwidth,page = 2]{figs/fig2.pdf}
+  \end{figure}
+  \begin{figure}[H]
+  \centering
+    \includegraphics[width = .45\textwidth,page = 3]{figs/fig2.pdf}
+    \includegraphics[width = .45\textwidth,page = 4]{figs/fig2.pdf}
+  \end{figure}
+
+
+    \end{block}
+
     \begin{block}{For Further Information}
-      \small{\rmfamily{For the details of our work:
-      \begin{itemize}
-        \item Choi, M.-D., Johnston, N., and Kribs, D. W.. Journal of Physics A: Mathematical and Theoretical \textbf{42}, 245303 (2009).
-        \item Johnston, N., and Kribs, D. W., \emph{Generalized Multiplicative Domains and Quantum Error Correction} (2009, preprint).
-      \end{itemize}
-      \vspace{0.1in}\noindent Preprints and this poster can be downloaded from:
-      \begin{itemize}
-        \item www.arxiv.org
-        \item www.nathanieljohnston.co
-      \end{itemize}}}
-    \end{block}
-    \vskip2ex
-    \begin{block}{References}
-      \small{\rmfamily{\begin{thebibliography}{99}
-      \bibitem{KLPL06} D.~W. Kribs, R. Laflamme, D. Poulin, M. Lesosky, Quantum Inf. \& Comp. \textbf{6} (2006), 383-399.
-      \bibitem{zanardi97} P. Zanardi, M. Rasetti, Phys. Rev. Lett. \textbf{79},  3306 (1997).
-      \bibitem{KS06} D.~W. Kribs, R.~W. Spekkens, Phys. Rev. A \textbf{74}, 042329 (2006).
-      \bibitem{Cho74} M.-D. Choi, Illinois J. Math., \textbf{18} (1974), 565-574.
-      \bibitem{Dav96} K.~R. Davidson, \emph{$C^*$-algebras by example}, Fields Institute Monographs, 6. American Mathematical Society, Providence, RI, 1996.
-      \end{thebibliography}}}
+The package is in {\color{RoyalBlue} \url{https://github.com/welch16/profile}}
     \end{block}
     \vskip2ex
     \begin{block}{Acknowledgements}
-      \small{\rmfamily{M.-D.C. was supported by an NSERC Discovery Grant. N.J. was supported by an NSERC Canada Graduate Scholarship and the University of Guelph Brock Scholarship. D.W.K. was supported by an NSERC Discovery Grant and Discovery Accelerator Supplement, an Ontario Early Researcher Award, and CIF, OIT.}} \\
-      \vspace{0.5in}
-      \begin{center}
-        \begin{tabular}{ccc}
-          \includegraphics[width=3in]{TO.png} & \hspace{1.5in} & \includegraphics[width=3in]{guelph.png}
-        \end{tabular}
-      \end{center}
+
+Acknowledgement of Support: R.W. is supported by CONACYT (Mexico's National Council for Science and Technology) by the graduate studies grant 215196
+
+
+
     \end{block}
   \end{column}
   \begin{column}{\sepwid}\end{column}			% empty spacer column

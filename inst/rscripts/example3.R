@@ -56,7 +56,7 @@ ourMatrices = lapply(ourMatrices,function(x,dnase_regions,pol2b){
   return(x)},dnase_regions,pol2b)
 
 ## save(list = "ourMatrices",file = "mm.RData")
-## load("mm.RData")
+load("mm.RData")
 
 p = plot.profiles(ourMatrices,coord = -windowExt:windowExt)
 p1 = plot.profiles(ourMatrices,coord = -windowExt:windowExt,condition = dnase > 0 & pol2b > 0)
@@ -64,4 +64,4 @@ p2 = plot.profiles(ourMatrices,coord = -windowExt:windowExt,condition = dnase > 
 p3 = plot.profiles(ourMatrices,coord = -windowExt:windowExt,condition = dnase == 0 & pol2b > 0)
 p4 = plot.profiles(ourMatrices,coord = -windowExt:windowExt,condition = dnase == 0 & pol2b == 0)
 
-save(list  = c("p","p1","p2","p3","p4"),file = file.path(rdatadir,"subset_figs.RData"))
+save(list  = c("p","p1","p2","p3","p4"),file = file.path(rdatadir,"subset_figs_all.RData"))

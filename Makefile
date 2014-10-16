@@ -13,7 +13,7 @@ vignettes/%.pdf:vignettes/%.Rnw
 	cd vignettes;R CMD Sweave --engine=knitr::knitr --pdf $(<F);cd ..
 
 # create the poster
-poster/%.pdf:poster/%.tex poster/figs/fig0.pdf
+poster/%.pdf:poster/%.tex poster/figs/fig0.pdf poster/figs/fig3.pdf poster/figs/fig2.pdf
 	cd poster; pdflatex $(<F);pdflatex $(<F);pdflatex $(<F);cd ..
 
 # figs poster
