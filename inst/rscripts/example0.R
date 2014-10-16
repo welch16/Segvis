@@ -50,14 +50,18 @@ ourList = ProfileMatrixList(ourMatrices)
 
 
 save(file=file.path(rdatadir,"example0.RData"),list = "ourList")
-  
+
+
+load(file=file.path(rdatadir,"example0.RData"))
+
 
 starts = start(regions(ourList[[1]]))
 ends = end(regions(ourList[[1]]))
 seqs =as.character( seqnames(regions(ourList[[1]])))
 
 i=10
-p1 = plot.profiles(ourList,condition = seqnames == "chr1" & start == starts[i],coord = seq(starts[i],ends[i]))
+st =starts[i]
+p1 = plot.profiles(ourList,condition = seqnames == "chr1" & start == st,coord = seq(starts[i],ends[i]))
 p1
 
 
