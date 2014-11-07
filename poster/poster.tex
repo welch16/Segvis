@@ -163,8 +163,8 @@
 
 \begin{alertblock}{What is Segvis?}
   
-  {\color{NavyBlue} \textbf{Segvis}} is a tool for visualization of
-  high throughout sequencing raw data. The minimum input to the
+  {\color{NavyBlue} \textbf{Segvis}} is an R package for visualization of raw
+  high throughout sequencing data. The minimum input to the
   package includes:
 
 \begin{enumerate}
@@ -183,8 +183,8 @@ following tasks:
 \item Extract read data of specified input regions
 \item Plot data from different files (conditions) accross the same set
   of regions, e.g. peak plots for ChIP-seq
-\item Plot central measures for a set of regions with the same width
-\item Subset this regions according to user defined annotations
+\item Plot summary statistics for a set of regions with the same width
+\item Subset these regions according to user defined annotations
 %\item Plot the heatmap of signal curves accross regions separated by
  % annotation
 \end{itemize}
@@ -286,7 +286,7 @@ lapply(ourProfiles, ProfileMatrix,bandwidth,multi.core)
   ourList = ProfileMatrixList(ourMatrices)
   \end{lstlisting}
 
-We plot a single peak by using:
+We plot a single peak by using ({\color{NavyBlue} figure 1}):
 
   \vskip2ex
   \begin{lstlisting}[language = R]
@@ -317,23 +317,23 @@ plot.profiles(ourList,condition = seqnames == "chr1" & start == st,coord = seq(s
 \end{columns}
 
 \vskip2.5ex
-\begin{alertblock}{Some thoughts on {\bf plot.profiles}}
+\begin{alertblock}{Some cool features on {\bf plot.profiles}}
 
 \begin{itemize}
 
 \item The output of {\bf \color{NavyBlue} plot.profiles} is a {\bf \color{NavyBlue} ggplot} object. Thus is very easy to interact with it
 
-\item It has 3 arguments besides the {\color{NavyBlue}\bf  profileMatrixList}: {\color{NavyBlue} coord} (the genomic coordinates),{\color{NavyBlue} trim} (a value to calculate the trimmed mean for a collectio of coverage) and {\color{NavyBlue} condition} (to subset the whole list of regions)
+\item It has 3 arguments besides the {\color{NavyBlue}\bf  profileMatrixList}: {\color{NavyBlue} coord} (the genomic coordinates), {\color{NavyBlue} trim} (a value to calculate the trimmed mean for a collection of coverage) and {\color{NavyBlue} condition} (to subset the whole list of regions)
 
 \end{itemize}
 
       \end{alertblock}
       \begin{columns}[t,totalwidth=\twocolwid]
         \begin{column}{\onecolwid}
-\begin{block}{Adding annotations}
+\begin{block}{Example: Using categorical features}
 \vskip2ex
 
-The regions of interest are an element of the {\color{NavyBlue} \bf profileMatrix}. Thus, we can add an annotation as part of the regions by:
+The regions of interest are an element of the {\color{NavyBlue} \bf profileMatrix}. Thus, we can add a categorical feature (such as genomic annotations) as part of the regions (in this case the nr. of overlaps with Ctcf peaks):
 
 \vskip2ex
 \begin{lstlisting}[language =R]
@@ -347,7 +347,7 @@ regions(ourMatrix)$dnase = countOverlaps(regions(ourMatrix),dnase_regions)
 regions(ourMatrix)$pol2b = countOverlaps(regions(ourMatrix),pol2b)
 \end{lstlisting}
 
-And subset by:
+And subset by ({\color{NavyBlue} figure 2}):
 \vskip2ex
 
 \begin{lstlisting}[language =R]
@@ -380,7 +380,7 @@ And subset by:
   \begin{column}{\onecolwid}
     \begin{block}{Formatting the plots}
 
-We can modify the format of the plots by adding element to them:
+We can modify the format of the plots by adding element to them ({\color{NavyBlue} figure 3}):
 
 \vskip2ex
 \begin{lstlisting}
@@ -423,8 +423,7 @@ The package is in {\color{RoyalBlue} \url{https://github.com/welch16/profile}}
     \vskip2ex
     \begin{block}{Acknowledgements}
 
-Acknowledgement of Support: R.W. is supported by CONACYT (Mexico's National Council for Science and Technology) by the graduate studies grant 215196
-
+This work is partially supported by a U01 NIH grant HG0007019 to S.K. and by a graduate studies CONACYT grant 215196 to R.W.
 
 
     \end{block}
