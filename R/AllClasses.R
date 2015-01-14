@@ -29,8 +29,8 @@ setValidity("reads",
     return(length(object@readsF) == length(object@readsR))
 })            
 
-#' @title profile class description
-#' @description Contains all the information necessary for the calculation of profile curves.
+#' @title segvis class description
+#' @description Contains all the information necessary for the calculation of coverage curves.
 #' @slot name - Character with the name of the profiles
 #' @slot regions - GRanges object with the regions for which the profile want to be calcualted
 #' @slot file - Character with the name of the file that contains the reads
@@ -45,9 +45,9 @@ setValidity("reads",
 #' @slot .haveReads - logical - Indicates if the object have the reads loaded
 #' @slot .readsMatched - logical - Indicates if the read have been matched to the regions
 #' @slot .coverageCalculated - logical - Indicates if the coverage has been calculated]
-#' @seealso \code{\link{Profile}}
-#' @exportClass profile
-setClass("profile",
+#' @seealso \code{\link{Segvis}}
+#' @exportClass segvis
+setClass("segvis",
   representation(name = "character",
                  regions = "GRanges",
                  file = "character",
@@ -80,7 +80,7 @@ setClass("profile",
     .coverageCalculated = FALSE)
 )    
 
-setValidity("profile",
+setValidity("segvis",
   function(object){
   # Checks that readsList and matchList have same length  
   return(object@fragLen >=0&object@maxBandwidth >=1  & tolower(object@fileFormat) == "bam")
