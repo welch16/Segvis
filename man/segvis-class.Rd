@@ -5,38 +5,34 @@
 \alias{segvis-class}
 \title{segvis class description}
 \description{
-Contains all the information necessary for the calculation of coverage curves.
+This object is the base class of the segvis package. It contains all the information necessary for the calculation of coverage curves
 }
 \section{Slots}{
 
 \describe{
-\item{\code{name}}{- Character with the name of the profiles}
+\item{\code{name}}{Character with the name of the profiles}
 
-\item{\code{regions}}{- GRanges object with the regions for which the profile want to be calcualted}
+\item{\code{regions}}{GRanges object with the regions for which the profile want to be calcualted}
 
-\item{\code{file}}{- Character with the name of the file that contains the reads}
+\item{\code{file}}{Character with the name of the file that contains the reads}
 
-\item{\code{fileFormat}}{- Character with the file format used for the reads}
+\item{\code{maxBandwidth}}{Numeric value with the maximum bandwidth accepted when smoothing profiles. Must be odd}
 
-\item{\code{maxBandwidth}}{- Numeric - maximum bandwidth accepted when smoothing profiles. Must be odd}
+\item{\code{fragLen}}{Numeric value with the fragment length to resize the reads (if it is zero then it doesn't resize the reads)}
 
-\item{\code{fragLen}}{- Numeric fragment length to extend the reads}
+\item{\code{reads}}{Reads object, which contains the reads used to build the profile separated by strand}
 
-\item{\code{remChr}}{- Character - Vector with the chromosomes to be ignored}
+\item{\code{match}}{Match object, which contains the}
 
-\item{\code{reads}}{- Reads object, which contains the reads used to build the profile separated by strand}
+\item{\code{profileCuve}}{RleList - For each region, there is a Rle object}
 
-\item{\code{match}}{- Match object, which contains the}
+\item{\code{.haveRegions}}{logical - Indicates if the object have the regions loaded}
 
-\item{\code{profileCuve}}{- RleList - For each region, there is a Rle object}
+\item{\code{.haveReads}}{logical - Indicates if the object have the reads loaded}
 
-\item{\code{.haveRegions}}{- logical - Indicates if the object have the regions loaded}
+\item{\code{.readsMatched}}{logical - Indicates if the read have been matched to the regions}
 
-\item{\code{.haveReads}}{- logical - Indicates if the object have the reads loaded}
-
-\item{\code{.readsMatched}}{- logical - Indicates if the read have been matched to the regions}
-
-\item{\code{.coverageCalculated}}{- logical - Indicates if the coverage has been calculated]}
+\item{\code{.coverageCalculated}}{logical - Indicates if the coverage has been calculated]}
 }}
 \seealso{
 \code{\link{Segvis}}

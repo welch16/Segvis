@@ -28,14 +28,6 @@ setMethod("file",
 )           
 
 # @rdname profile-methods
-# @name fileFormat
-# @aliases profile
-setMethod("fileFormat",
-  signature = signature(object = "profile"),
-  definition = function(object)object@fileFormat
-)           
-
-# @rdname profile-methods
 # @name maxBandwidth
 # @aliases profile
 setMethod("maxBandwidth",
@@ -49,14 +41,6 @@ setMethod("maxBandwidth",
 setMethod("fragLen",
   signature = signature(object = "profile"),
   definition = function(object)object@fragLen
-)           
-
-# @rdname profile-methods
-# @name remChr
-# @aliases profile
-setMethod("remChr",
-  signature = signature(object = "profile"),
-  definition = function(object)object@remChr
 )           
 
 # @rdname profile-methods
@@ -157,17 +141,6 @@ setReplaceMethod("fragLen",
     object@fragLen = value
     return(object)
 })    
-
-# @rdname profile-methods
-# @name remChr
-# @aliases profile
-setReplaceMethod("remChr",
-  signature = signature(object = "profile",value = "character"),
-  definition = function(object,value){
-    stopifnot(is.character(value))
-    object@remChr = value
-    return(object)
-})
 
 # @rdname profile-methods
 # @name show

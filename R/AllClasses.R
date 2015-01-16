@@ -30,31 +30,42 @@ setValidity("reads",
 })            
 
 #' @title segvis class description
-#' @description Contains all the information necessary for the calculation of coverage curves.
-#' @slot name - Character with the name of the profiles
-#' @slot regions - GRanges object with the regions for which the profile want to be calcualted
-#' @slot file - Character with the name of the file that contains the reads
-#' @slot fileFormat - Character with the file format used for the reads
-#' @slot maxBandwidth - Numeric - maximum bandwidth accepted when smoothing profiles. Must be odd
-#' @slot fragLen - Numeric fragment length to extend the reads
-#' @slot remChr - Character - Vector with the chromosomes to be ignored
-#' @slot reads - Reads object, which contains the reads used to build the profile separated by strand
-#' @slot match - Match object, which contains the 
-#' @slot profileCuve - RleList - For each region, there is a Rle object
-#' @slot .haveRegions - logical - Indicates if the object have the regions loaded
-#' @slot .haveReads - logical - Indicates if the object have the reads loaded
-#' @slot .readsMatched - logical - Indicates if the read have been matched to the regions
-#' @slot .coverageCalculated - logical - Indicates if the coverage has been calculated]
+#'
+#' @description This object is the base class of the segvis package. It contains all the information necessary for the calculation of coverage curves
+#' 
+#' @slot name Character with the name of the profiles
+#'
+#' @slot regions GRanges object with the regions for which the profile want to be calcualted
+#'
+#' @slot file Character with the name of the file that contains the reads
+#'
+#' @slot maxBandwidth Numeric value with the maximum bandwidth accepted when smoothing profiles. Must be odd
+#' 
+#' @slot fragLen Numeric value with the fragment length to resize the reads (if it is zero then it doesn't resize the reads)
+#'  
+#' @slot reads Reads object, which contains the reads used to build the profile separated by strand
+#'
+#' @slot match Match object, which contains the
+#'
+#' @slot profileCuve RleList - For each region, there is a Rle object
+#'
+#' @slot .haveRegions logical - Indicates if the object have the regions loaded
+#'
+#' @slot .haveReads logical - Indicates if the object have the reads loaded
+#'
+#' @slot .readsMatched logical - Indicates if the read have been matched to the regions
+#'
+#' @slot .coverageCalculated logical - Indicates if the coverage has been calculated]
+#'
 #' @seealso \code{\link{Segvis}}
+#'
 #' @exportClass segvis
 setClass("segvis",
   representation(name = "character",
                  regions = "GRanges",
                  file = "character",
-                 fileFormat = "character",
                  maxBandwidth = "numeric",
                  fragLen = "numeric",
-                 remChr = "character",
                  reads = "reads",
                  match = "match",
                  profileCurve = "list",
@@ -63,29 +74,29 @@ setClass("segvis",
                  .readsMatched = "logical",
                  .coverageCalculated = "logical"
                  ),
-#  contains = c("reads","match"),
   prototype = prototype(name = "",
-    regions = GRanges(),
-    file = "",
-    fileFormat = "",
-    maxBandwidth = 1,
-    fragLen = 0,
-    remChr = "",
-    reads = new("reads"),
-    match = new("match"),
-    profileCurve = list(),
-    .haveRegions = FALSE,
-    .haveReads = FALSE,
-    .readsMatched = FALSE,
-    .coverageCalculated = FALSE)
-)    
+                 regions = GRanges(),
+                 file = "",
+                 maxBandwidth = 1,
+                 fragLen = 0,     
+                 reads = new("reads"),
+                 match = new("match"),
+                 profileCurve = list(),
+                 .haveRegions = FALSE,
+                 .haveReads = FALSE,
+                 .readsMatched = FALSE,
+                 .coverageCalculated = FALSE)
+)
+     # Slots removed:
+     # @slot fileFormat - Character with the file format used for the reads
+     # @slot remChr - Character - Vector with the chromosomes to be ignored
+
 
 setValidity("segvis",
   function(object){
   # Checks that readsList and matchList have same length  
-  return(object@fragLen >=0&object@maxBandwidth >=1  & tolower(object@fileFormat) == "bam")
-}
-)  
+  return(object@fragLen >=0 & object@maxBandwidth >=1)
+})  
 
 #' @title profileMatrix class description
 #' @description Contains a matrix with the individual coverage for each region

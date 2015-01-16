@@ -4,20 +4,16 @@
 \alias{Segvis}
 \title{Creates a segvis objec}
 \usage{
-Segvis(regionName, file, fileFormat, maxBandwidth, fragLen, remChr = NULL)
+Segvis(regionName, file, fileFormat, maxBandwidth, fragLen)
 }
 \arguments{
 \item{regionName}{Name of the segvis object}
 
 \item{file}{Character string with the file name that contain the reads}
 
-\item{fileFormat}{Character vector with the file format used}
-
 \item{maxBandwidth}{Numeric value of the maximum possible value to smooth the profile curve}
 
 \item{fragLen}{Numeric value of the fragment length used to extend the reads}
-
-\item{remChr}{Character Vector with the chromosomes to be ignored}
 }
 \value{
 A segvis object
@@ -27,8 +23,8 @@ Constructor for segvis class
 }
 \examples{
 rn = "sites"
-f = "somefile.bam";fileF = "bam"
+f = "somefile.bam"
 maxBw = 1;fl = 200
-Segvis(regionName = rn,file =f,fileFormat=fileF,maxBandwidth = maxBw, fragLen = fl)
+Segvis(regionName = rn,file =f,maxBandwidth = maxBw, fragLen = fl)
 }
 

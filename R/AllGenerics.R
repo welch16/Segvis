@@ -72,19 +72,6 @@ setGeneric("file<-",
   standardGeneric("file<-")
 )
 
-#' @title fileFormat method for profile class
-#' @description Returns the format of the file where the reads are stored
-#' @param object A profile object
-#' @return character. A character with the file format of the file where reads are stored
-#' @export
-#' @docType methods
-#' @seealso \code{\link{profile-class}}
-#' @rdname fileFormat
-setGeneric("fileFormat",
-  function(object)
-  standardGeneric("fileFormat")         
-)
-
 #' @title maxBandwidth method for profile class
 #' @description Get and set methods for maxBandwidth parameter of the profile class
 #' @param object A profile object
@@ -129,29 +116,6 @@ setGeneric("fragLen",
 setGeneric("fragLen<-",
   function(object,value)
   standardGeneric("fragLen<-")
-)           
-
-#' @title remChr get and set methods for profile class
-#' @description Returns the chromosomes to be ignored 
-#' @param object A profile object
-#' @return character value. Indicates the chromosomes to be ignored
-#' @export
-#' @docType methods
-#' @seealso \code{\link{profile-class}}
-#' @rdname remChr
-setGeneric("remChr",
-  function(object)
-  standardGeneric("remChr")
-)           
-
-#' @param value Character vector, with the chromosomes to be removed
-#' @return profile object with the remChr parameter replaced by value
-#' @export
-#' @docType method
-#' @rdname remChr
-setGeneric("remChr<-",
-  function(object,value)
-  standardGeneric("remChr<-")
 )           
 
 #' @title profileCurve methods for profile class
