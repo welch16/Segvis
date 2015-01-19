@@ -60,6 +60,8 @@ setValidity("reads",
 #' @seealso \code{\link{Segvis}}
 #'
 #' @exportClass segvis
+#'
+#' @rdname segvis-class
 setClass("segvis",
   representation(name = "character",
                  regions = "GRanges",

@@ -3,103 +3,91 @@
 
 ## Get methods
 
-# @rdname profile-methods
-# @name name
-# @aliases profile
+#' @rdname methods-segvis-gs
+#' @name name 
 setMethod("name",
-  signature = signature(object = "profile"),
+  signature = signature(object = "segvis"),
   definition = function(object)object@name
 )           
 
-# @rdname profile-methods
-# @name regions
-# @aliases profile
+#' @rdname methods-segvis-gs
+#' @name regions
 setMethod("regions",
-  signature = signature(object = "profile"),
+  signature = signature(object = "segvis"),
   definition = function(object)object@regions
 )           
 
-# @rdname profile-methods
-# @name file
-# @aliases profile
+#' @rdname methods-segvis-gs
+#' @name file
 setMethod("file",
-  signature = signature(object ="profile"),
+  signature = signature(object = "segvis"),
   definition = function(object)object@file
 )           
 
-# @rdname profile-methods
-# @name maxBandwidth
-# @aliases profile
+#' @rdname methods-segvis-gs
+#' @name maxBandwidth
 setMethod("maxBandwidth",
-  signature = signature(object = "profile"),
-  definition = function(object)object@maxBandwidth
+  signature = signature(object = "segvis"),
+  definition  = function(object)object@maxBandwidth
 )           
 
-# @rdname profile-methods
-# @name fragLen
-# @aliases profile
+#' @rdname methods-segvis-gs
+#' @name fragLen
 setMethod("fragLen",
-  signature = signature(object = "profile"),
+  signature = signature(object = "segvis"),
   definition = function(object)object@fragLen
 )           
 
-# @rdname profile-methods
-# @name readsF
-# @aliases profile
+#' @rdname methods-segvis-gs
+#' @name readsF
 setMethod("readsF",
-  signature = signature(object = "profile"),
+  signature = signature(object = "segvis"),
   definition = function(object)readsF(object@reads)
 )           
 
-# @rdname profile-methods
-# @name readsR
-# @aliases profile
+#' @rdname methods-segvis-gs
+#' @name readsR
 setMethod("readsR",
-  signature = signature(object = "profile"),
+  signature = signature(object = "segvis"),
   definition = function(object)readsR(object@reads)
 )
 
-# @rdname profile-methods
-# @name matchF
-# @aliases profile
+#' @rdname methods-segvis-gs
+#' @name matchF
 setMethod("matchF",
-  signature = signature(object = "profile"),
+  signature = signature(object = "segvis"),
   definition = function(object)matchF(object@match)
 )
 
-# @rdname profile-methods
-# @name matchR
-# @aliases profile
+#' @rdname methods-segvis-gs
+#' @name matchR
 setMethod("matchR",
-  signature = signature(object = "profile"),
+  signature = signature(object = "segvis"),
   definition = function(object)matchR(object@match)
 )
 
-# @rdname profile-methods
-# @name profileCurve
-# @aliases profile
+#' @rdname methods-segvis-gs
+#' @name profileCurve
 setMethod("profileCurve",
-  signature = signature(object = "profile"),
+  signature = signature(object = "segvis"),
   definition = function(object)object@profileCurve
 )  
 
 ## Set methods
 
-# @rdname profile-methods
-# @name name
-# @aliases profile
+#' @rdname methods-segvis-gs
+#' @name name<-
 setReplaceMethod("name",
-  signature = signature(object = "profile",value = "character"),
+  signature = signature(object = "segvis",value = "character"),
   definition = function(object,value){
     object@name = value
     return(object)
 })
    
-# @rdname profile-methods
-# @name regions
-# @aliases profile
+#' @rdname methods-segvis-gs
+#' @name regions<-
 setReplaceMethod("regions",
-  signature = signature(object = "profile",value = "GRanges"),
+  signature = signature(object = "segvis",value = "GRanges"),
   definition = function(object,value){
     stopifnot(class(value) == "GRanges")
     object@regions = value
@@ -107,22 +95,20 @@ setReplaceMethod("regions",
     return(object)
 })
 
-# @rdname profile-methods
-# @name file
-# @aliases profile
+#' @rdname methods-segvis-gs
+#' @name file<-
 setReplaceMethod("file",
-  signature = signature(object = "profile",value = "character"),
+  signature = signature(object = "segvis",value = "character"),
   definition = function(object,value){
     stopifnot(class(value) == "character")
     object@file = value
     return(object)
 })    
 
-# @rdname profile-methods
-# @name maxBandwidth
-# @aliases profile
+#' @rdname methods-segvis-gs
+#' @name maxBandwidth<-
 setReplaceMethod("maxBandwidth",
-  signature = signature(object = "profile", value = "numeric"),
+  signature = signature(object = "segvis", value = "numeric"),
   definition = function(object,value){
     stopifnot(value >= 1)
     stopifnot(value %% 2 == 1)
@@ -130,11 +116,10 @@ setReplaceMethod("maxBandwidth",
     return(object)
 })    
 
-# @rdname profile-methods
-# @name fragLen
-# @aliases profile
+#' @rdname methods-segvis-gs
+#' @name fragLen<-
 setReplaceMethod("fragLen",
-  signature = signature(object = "profile",value = "numeric"),
+  signature = signature(object = "segvis", value = "numeric"),
   definition = function(object,value){
     stopifnot(value >= 0)
     stopifnot(value == floor(value))
@@ -142,11 +127,10 @@ setReplaceMethod("fragLen",
     return(object)
 })    
 
-# @rdname profile-methods
-# @name show
-# @aliases profile
+#' @rdname methods-segvis-show
+#' @name show
 setMethods("show",
-  signature = signature(object = "profile"),
+  signature = signature(object = "segvis"),
   definition = function(object){
 #    cat("---------------------------\n")
     cat("Profile for",name(object),"regions\n")

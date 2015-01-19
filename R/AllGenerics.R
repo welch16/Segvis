@@ -1,22 +1,31 @@
 
 # generic methods for various classes
 
-#' @title name get and set methods for profile and profileMatrix
-#' @description Generic method for both profile and profileMatrix classes that returns the name of the object
-#' @param object Either a profile or profileMatrix object
-#' @return Returns the name of the object
+#' @title Get and set methods for segvis class
+#'
+#' @description This methods determine how to get and set attributes dor the segvis class. The structure is similar to the one use by bioconductor objects
+#'
+#' @param object An object of class segvis
+#'
+#' @return Returns the value with the same name as the function
+#'
 #' @export
+#'
 #' @docType methods
-#' @seealso \code{\link{profile-class}} and \code{\link{profileMatrix-class}}
-#' @rdname name
+#'
+#' @seealso \code{\link{segvis-class}}
+#'
+#' @rdname methods-segvis-gs
 setGeneric("name",
   function(object)
   standardGeneric("name")
 )
 
-#' @param value character 
-#' @return Returns and profile (or profileMatrix) object with the name parameter replaced by value
-#' @rdname name
+#' @param value The class of this parameter depends on the function, for \code{file<-} and \code{name<-} is a string; for \code{fragLen<-} and  \code{maxBandwidth} is a numeric value and for \code{regions<-} is a GRanges object
+#'
+#' @return Returns a segvis object with the value indicated by the functions being updated with value
+#'
+#' @rdname methods-segvis-gs
 setGeneric("name<-",
   function(object,value)
   standardGeneric("name<-")
