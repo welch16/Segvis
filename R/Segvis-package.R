@@ -8,6 +8,6 @@
 #' @author Rene Welch
 #'
 #' @examples
-#' ## see the package vignette: ---
+#' ## see the package vignette: --- in creation
 NULL
 

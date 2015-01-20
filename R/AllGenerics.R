@@ -21,7 +21,7 @@ setGeneric("name",
   standardGeneric("name")
 )
 
-#' @param value The class of this parameter depends on the function, for \code{file<-} and \code{name<-} is a string; for \code{fragLen<-} and  \code{maxBandwidth} is a numeric value and for \code{regions<-} is a GRanges object
+#' @param value The class of this parameter depends on the function, for \code{file<-}, \code{name<-} and \code{chr<-} is a string; for \code{fragLen<-} and  \code{maxBandwidth} is a numeric value; for \code{regions<-} is a GRanges object and for \code{isPET<-} is a logical value
 #'
 #' @return Returns a segvis object with the value indicated by the functions being updated with value
 #'
@@ -31,24 +31,17 @@ setGeneric("name<-",
   standardGeneric("name<-")
 )           
 
-#' @title regions methods for profile and profileMatrix
-#' @description Generic set and get methods for both profile and profileMatrix classes that returns the regions for which the profiles are calculated
-#' @param object Either a profile or profileMatrix object
-#' @return GRanges object with the regions for which the profiles are calculated
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profile-class}} and \code{\link{profileMatrix-class}}
-#' @rdname regions
+#' @rdname methods-segvis-gs
 setGeneric("regions",
   function(object)
   standardGeneric("regions")
 )
 
-#' @param value GRanges object with the regions for which the profiles are calculated
-#' @return profile object with the regions slot replaced by the GRanges object value
 #' @export
 #' @docType methods
-#' @rdname regions
+#' @rdname methods-segvis-gs
 setGeneric("regions<-",
   function(object,value)
   standardGeneric("regions<-")
@@ -58,73 +51,84 @@ setGeneric("regions<-",
 
 ##  Get methods
 
-#' @title file method for profile class
-#' @description Returns the name of the file where the reads are stored
-#' @param object A profile object
-#' @return character. A character with the name of the file used to create the reads object
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profile-class}}
-#' @rdname file
-setGeneric("file",
+#' @rdname methods-segvis-gs
+setGeneric("file",           
   function(object)
   standardGeneric("file")           
 )
 
-#' @param value character with the new reads file
-#' @return profile object with the file slot replaced by value
 #' @export
 #' @docType methods
-#' @rdname file
+#' @rdname methods-segvis-gs
 setGeneric("file<-",
   function(object,value)
   standardGeneric("file<-")
 )
 
-#' @title maxBandwidth method for profile class
-#' @description Get and set methods for maxBandwidth parameter of the profile class
-#' @param object A profile object
-#' @return numeric value. This indicated the maximum bandwidth available to later smooth the profiles
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profile-class}}
-#' @rdname maxBandwidth
+#' @rdname methods-segvis-gs
 setGeneric("maxBandwidth",
   function(object)
   standardGeneric("maxBandwidth")           
 )
 
-#' @param newMaxBandwidth Numeric value, must be odd and greater or equal than one
-#' @return profile object with the maxBandwidth parameter replaced by value
 #' @export
 #' @docType methods
-#' @rdname maxBandwidth
+#' @rdname methods-segvis-gs
 setGeneric("maxBandwidth<-",
   function(object,value)
   standardGeneric("maxBandwidth<-")
 )           
 
-#' @title fragLen get and set methods for profile class
-#' @description Returns the fragment length value used to extend the reads when matching them with the regions
-#' @param object A profile object
-#' @return numeric value. This indicated the fragment length
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profile-class}}
-#' @rdname fragLen
+#' @rdname methods-segvis-gs
 setGeneric("fragLen",
   function(object)
   standardGeneric("fragLen")           
 )
 
-#' @param value Numeric, must be greater of equal to zero
-#' @return profile object with the fragment length replaced by value
 #' @export
 #' @docType methods
-#' @rdname fragLen
+#' @rdname methods-segvis-gs
 setGeneric("fragLen<-",
   function(object,value)
   standardGeneric("fragLen<-")
+)           
+
+#' @export
+#' @docType methods
+#' @rdname methods-segvis-gs
+setGeneric("chr",
+  function(object)
+  standardGeneric("chr")
+)
+
+#' @export
+#' @docType methods
+#' @rdname methods-segvis-gs
+setGeneric("chr<-",
+  function(object,value)
+  standardGeneric("chr<-")           
+)
+
+#' @export
+#' @docType methods
+#' @rdname methods-segvis-gs
+setGeneric("isPET",
+  function(object)
+  standardGeneric("isPET")           
+)
+           
+#' @export
+#' @docType methods
+#' @rdname methods-segvis-gs
+setGeneric("isPET<-",
+  function(object,value)
+  standardGeneric("isPET<-")           
 )           
 
 #' @title profileCurve methods for profile class

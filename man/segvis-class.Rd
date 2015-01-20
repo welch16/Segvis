@@ -20,6 +20,10 @@ This object is the base class of the segvis package. It contains all the informa
 
 \item{\code{fragLen}}{Numeric value with the fragment length to resize the reads (if it is zero then it doesn't resize the reads)}
 
+\item{\code{chr}}{character vector, with the chromosomes to be considered}
+
+\item{\code{isPET}}{logical, Indicates is the reads come from a PET experiments or a SET experiment}
+
 \item{\code{reads}}{Reads object, which contains the reads used to build the profile separated by strand}
 
 \item{\code{match}}{Match object, which contains the}

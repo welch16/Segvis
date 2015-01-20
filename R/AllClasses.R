@@ -42,7 +42,11 @@ setValidity("reads",
 #' @slot maxBandwidth Numeric value with the maximum bandwidth accepted when smoothing profiles. Must be odd
 #' 
 #' @slot fragLen Numeric value with the fragment length to resize the reads (if it is zero then it doesn't resize the reads)
-#'  
+#'
+#' @slot chr character vector, with the chromosomes to be considered
+#'
+#' @slot isPET logical, Indicates is the reads come from a PET experiments or a SET experiment
+#'
 #' @slot reads Reads object, which contains the reads used to build the profile separated by strand
 #'
 #' @slot match Match object, which contains the
@@ -68,6 +72,8 @@ setClass("segvis",
                  file = "character",
                  maxBandwidth = "numeric",
                  fragLen = "numeric",
+                 chr = "character",
+                 isPET = "logical",                 
                  reads = "reads",
                  match = "match",
                  profileCurve = "list",
@@ -80,7 +86,9 @@ setClass("segvis",
                  regions = GRanges(),
                  file = "",
                  maxBandwidth = 1,
-                 fragLen = 0,     
+                 fragLen = 0,
+                 chr = "",
+                 isPET = FALSE,
                  reads = new("reads"),
                  match = new("match"),
                  profileCurve = list(),
@@ -89,9 +97,10 @@ setClass("segvis",
                  .readsMatched = FALSE,
                  .coverageCalculated = FALSE)
 )
-     # Slots removed:
-     # @slot fileFormat - Character with the file format used for the reads
-     # @slot remChr - Character - Vector with the chromosomes to be ignored
+
+# Slots removed:
+# @slot fileFormat - Character with the file format used for the reads
+# @slot remChr - Character - Vector with the chromosomes to be ignored
 
 
 setValidity("segvis",

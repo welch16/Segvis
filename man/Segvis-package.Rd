@@ -8,7 +8,7 @@
 This package has an objective
 }
 \examples{
-## see the package vignette: ---
+## see the package vignette: --- in creation
 }
 \author{
 Rene Welch

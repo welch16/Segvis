@@ -2,10 +2,14 @@
 % Please edit documentation in R/AllGenerics.R, R/methods-segvis.R
 \docType{methods}
 \name{name}
+\alias{chr}
+\alias{chr<-}
 \alias{file}
 \alias{file<-}
 \alias{fragLen}
 \alias{fragLen<-}
+\alias{isPET}
+\alias{isPET<-}
 \alias{matchF}
 \alias{matchR}
 \alias{maxBandwidth}
@@ -23,6 +27,30 @@ name(object)
 
 name(object) <- value
 
+regions(object)
+
+regions(object) <- value
+
+file(object)
+
+file(object) <- value
+
+maxBandwidth(object)
+
+maxBandwidth(object) <- value
+
+fragLen(object)
+
+fragLen(object) <- value
+
+chr(object)
+
+chr(object) <- value
+
+isPET(object)
+
+isPET(object) <- value
+
 \S4method{name}{segvis}(object)
 
 \S4method{regions}{segvis}(object)
@@ -32,6 +60,10 @@ name(object) <- value
 \S4method{maxBandwidth}{segvis}(object)
 
 \S4method{fragLen}{segvis}(object)
+
+\S4method{chr}{segvis}(object)
+
+\S4method{isPET}{segvis}(object)
 
 \S4method{readsF}{segvis}(object)
 
@@ -52,11 +84,15 @@ name(object) <- value
 \S4method{maxBandwidth}{segvis,numeric}(object) <- value
 
 \S4method{fragLen}{segvis,numeric}(object) <- value
+
+\S4method{chr}{segvis,numeric}(object) <- value
+
+\S4method{isPET}{segvis,logical}(object) <- value
 }
 \arguments{
 \item{object}{An object of class segvis}
 
-\item{value}{The class of this parameter depends on the function, for \code{file<-} and \code{name<-} is a string; for \code{fragLen<-} and  \code{maxBandwidth} is a numeric value and for \code{regions<-} is a GRanges object}
+\item{value}{The class of this parameter depends on the function, for \code{file<-}, \code{name<-} and \code{chr<-} is a string; for \code{fragLen<-} and  \code{maxBandwidth} is a numeric value; for \code{regions<-} is a GRanges object and for \code{isPET<-} is a logical value}
 }
 \value{
 Returns the value with the same name as the function

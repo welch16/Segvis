@@ -4,7 +4,7 @@
 \alias{Segvis}
 \title{Creates a segvis objec}
 \usage{
-Segvis(regionName, file, fileFormat, maxBandwidth, fragLen)
+Segvis(regionName, file, maxBandwidth, chr, fragLen = 0, isPET = FALSE)
 }
 \arguments{
 \item{regionName}{Name of the segvis object}
@@ -21,6 +21,11 @@ A segvis object
 \description{
 Constructor for segvis class
 }
+\section{Slots}{
+
+\describe{
+\item{\code{isPET}}{logical, Indicates is the reads come from a PET experiments or a SET experiment}
+}}
 \examples{
 rn = "sites"
 f = "somefile.bam"

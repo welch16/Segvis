@@ -39,6 +39,20 @@ setMethod("fragLen",
 )           
 
 #' @rdname methods-segvis-gs
+#' @name chr
+setMethod("chr",
+  signature = signature(object = "segvis"),
+  definition = function(object)object@chr
+)          
+
+#' @rdname methods-segvis-gs
+#' @name isPET
+setMethod("isPET",
+  signature = signature(object = "segvis"),
+  definition = function(object)object@isPET
+)          
+
+#' @rdname methods-segvis-gs
 #' @name readsF
 setMethod("readsF",
   signature = signature(object = "segvis"),
@@ -72,6 +86,8 @@ setMethod("profileCurve",
   signature = signature(object = "segvis"),
   definition = function(object)object@profileCurve
 )  
+
+
 
 ## Set methods
 
@@ -127,6 +143,26 @@ setReplaceMethod("fragLen",
     return(object)
 })    
 
+#' @rdname methods-segvis-gs
+#' @name chr<-
+setReplaceMethod("chr",
+  signature = signature(object = "segvis",value = "numeric"),
+  definition = function(object,value){
+    stopifnot(is.character(value))
+    object@chr = value
+    return(object)
+})
+
+#' @rdname methods-segvis-gs
+#' @name isPET<-
+setReplaceMethod("isPET",
+  signature = signature(object = "segvis",value = "logical"),
+  definition = function(object,value){
+    stopifnot(is.logical(value))
+    object@isPET = value
+    return(object)
+})    
+
 #' @rdname methods-segvis-show
 #' @name show
 setMethods("show",
@@ -134,6 +170,7 @@ setMethods("show",
   definition = function(object){
 #    cat("---------------------------\n")
     cat("Profile for",name(object),"regions\n")
+    cat("Paired-end Tags: ",isPET(object),"\n")
     cat("Fragment length:",fragLen(object),"\n")
     cat("Max Bandwidth:", maxBandwidth(object),"\n")
     cat("Using reads files:\n")
