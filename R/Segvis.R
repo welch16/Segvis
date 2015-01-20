@@ -32,14 +32,17 @@ Segvis <- function(regionName,file,maxBandwidth,chr,fragLen=0,isPET=FALSE)
     warning("The reads are PET, fragLen is set to zero ")
     fragLen =0
   }
-  if(chr == "human"){
-    chr = paste0("chr",c(1:22,"X","Y"))
-  }else if(chr == "mouse"){
-    chr = paste0("chr",c(1:19,"X","Y"))
+  if(length(chr) == 1){
+    if(chr == "human"){
+      chr = paste0("chr",c(1:22,"X","Y"))
+    }else if(chr == "mouse"){
+      chr = paste0("chr",c(1:19,"X","Y"))
+    }else{
+      warning("Chromosome supplied by user")
+    }    
   }else{
-    warning("Chromosome",ifelse(length(chr)==1,"",
-                                "s")," supplied by user")
-  }  
+    warning("Chromosomes supplied by user")
+  }
   return(new("segvis",name = regionName,file=file,
     maxBandwidth = maxBandwidth, fragLen = fragLen,isPET=isPET,chr =chr))
 }
