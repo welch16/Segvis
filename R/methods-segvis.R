@@ -106,6 +106,16 @@ setReplaceMethod("regions",
   signature = signature(object = "segvis",value = "GRanges"),
   definition = function(object,value){
     stopifnot(class(value) == "GRanges")
+    if(all(chr(object) != "")){
+      chr_regions = unique(as.character(seqnames(value)))
+      chr_in =sapply(chr_regions,function(x)x%in%chr(object))
+      if(!all(chr_in)){
+        warning("Removing reads that aren't in user's defined chr")
+      }
+      value_dt = .data.table.GRanges(value)
+      setkey(value_dt,seqnames)
+      value = .GRanges.data.table(value_dt[chr(object)])             
+    }
     object@regions = value
     object@.haveRegions = TRUE
     return(object)
