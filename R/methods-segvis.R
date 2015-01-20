@@ -185,52 +185,47 @@ setMethods("show",
 #    cat("---------------------------\n")
 })
           
-# @rdname profile-methods
-# @name loadReads
-# @aliases profile
+#' @rdname segvis-loadReads
+#' @name loadReads
 setMethods("loadReads",
-  signature = signature(object = "profile",mc = "numeric"),
+  signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object,mc ){
-    if(fileFormat(object) == "bam"){    
-      chr = names(seqlengths(regions(object)))
-      if(length(remChr(object)>1))
-      {                
-        chr = chr[!chr %in% remChr(object)]       
-      }else{
-        if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
-      }
-      message("Reading ",file(object))
+    message("Reading ",file(object))
+    if(isPET(object)){
+      message("Setting PET flag")
+      pet_flag = scanBamFlag(isPaired = TRUE)
+      param = ScanBamParam(which = regions(object),flag = pet_flag)
+    }else{
       param = ScanBamParam(which = regions(object))
-      greads = readGAlignmentsFromBam(file(object),param = param,use.names = FALSE)
-      u = gc()
-      greads = as(greads, "GRanges")      
-      seqlevels(greads) = seqlevelsInUse(greads)      
-      if(any(unique(seqnames(greads)) %in% remChr(object) )){
-        warning("There exists reads with seqnames in remChr(object)")
-      }
-      seqlevels(greads,force =TRUE) =seqlevels(regions(object))  
-      message("Bam file loaded")
-      message("Separating by chromosome")      
-      greads = mclapply(chr,function(i,greads)
-        subset(greads, subset = as.character(seqnames(greads)) == i),greads,mc.cores = mc)
-      names(greads) = chr
-      message("Separating reads by strand")
-      gr1 = mclapply(greads,function(x).sort_by_strand(subset(x,subset = as.character(strand(x))=="+"),"+"),
-        mc.cores = mc)
-      message("Forward strand reads extracted")
-      gr2 = mclapply(greads,function(x).sort_by_strand(subset(x,subset = as.character(strand(x))=="-"),"-"),
-        mc.cores = mc)
-      message("Reverse strand reads extracted")
-      message("Finished separating reads")
-      gr1 = GRangesList(gr1)
-      gr2 = GRangesList(gr2)
-      object@reads = new("reads",readsF = gr1,readsR = gr2)
-      object@.haveReads = TRUE
-      message("Reading bam files... Done")
-      return(object)
-    }else{# Change warning
-      warning("loadReads method only defined for bam file format")
+    }    
+    greads = readGAlignmentsFromBam(file(object),
+      param = param,use.names = FALSE)
+    greads = .data.table.GRanges(as(greads, "GRanges"))
+    setkey(greads,seqnames,strand)
+    message("Bam file loaded")
+    message("Separating by chromosome")
+    chr_reads = unique(greads$seqnames)
+    chr_in =sapply(chr_reads,function(x)x%in%chr(object))
+    if(!all(chr_in)){
+      warning("Removing reads that aren't in ",chr(object))
     }
+    greads = greads[chr(object)]
+    message("Separating reads by strand")
+    message("Forward strand reads extracted")
+    greads1 = .separate.reads(greads,chr(object),"+",mc)
+    names(greads1) = chr(object)
+    message("Reverse strand reads extracted")
+    greads2 = .separate.reads(greads,chr(object),"-",mc)
+    names(greads2) = chr(object)        
+    message("Finished separating reads")
+    gr1 = GRangesList(
+      mclapply(greads1,.GRanges.data.table,mc.cores = mc))
+    gr2 = GRangesList(
+      mclapply(greads2,.GRanges.data.table,mc.cores = mc))   
+    object@reads = new("reads",readsF = gr1,readsR = gr2)
+    object@.haveReads = TRUE
+    message("Reading bam files... Done")
+    return(object)
 })
 
 # @rdname profile-methods

@@ -144,15 +144,15 @@ setGeneric("profileCurve",
   standardGeneric("profileCurve")
 )  
     
-#' @title loadReads method for profile class
-#' @description Load the fragment stored in the file slot of the profile object. The reads are divided by chromosome and by strand
-#' @param object profile object
+#' @title loadReads method for segvis class
+#' @description Load the fragment stored in the file slot of the segvis object. The reads are divided by chromosome and by strand
+#' @param object segvis object
 #' @param mc numeric, the number of cores used with parallel
 #' @return profile object
 #' @export
 #' @docType methods
 #' @seealso \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{reads-class}}
-#' @rdname loadReads
+#' @rdname segvis-loadReads
 #' @examples
 #' \dontrun{ loadReads(profile_object,mc=8)}
 setGeneric("loadReads",

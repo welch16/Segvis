@@ -15,7 +15,9 @@ Depends:
     Rsamtools (>= 1.16.1),
     ggplot2 (>= 1.0),
     knitr (>= 1.6),
-    rbamtools (>= 2.10)
+    rbamtools (>= 2.10),    
+Imports:
+    data.table (>= 1.9.2)
 VignetteBuilder: knitr
 Suggests:
     BiocStyle
