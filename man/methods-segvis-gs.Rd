@@ -85,7 +85,7 @@ isPET(object) <- value
 
 \S4method{fragLen}{segvis,numeric}(object) <- value
 
-\S4method{chr}{segvis,numeric}(object) <- value
+\S4method{chr}{segvis,character}(object) <- value
 
 \S4method{isPET}{segvis,logical}(object) <- value
 }

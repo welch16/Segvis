@@ -106,6 +106,12 @@ setReplaceMethod("regions",
   signature = signature(object = "segvis",value = "GRanges"),
   definition = function(object,value){
     stopifnot(class(value) == "GRanges")
+    unique_chr = unique(as.character(seqnames(value)))
+    if(length(chr(object)) >
+      length(unique_chr)){
+      warning("There are more chromosomes in chr(object) than in the regions. User's supplied additional chromosomes are being removed")
+      chr(object) = chr(object)[chr(object) %in% unique_chr]
+    }
     if(all(chr(object) != "")){
       chr_regions = unique(as.character(seqnames(value)))
       chr_in =sapply(chr_regions,function(x)x%in%chr(object))
@@ -156,7 +162,7 @@ setReplaceMethod("fragLen",
 #' @rdname methods-segvis-gs
 #' @name chr<-
 setReplaceMethod("chr",
-  signature = signature(object = "segvis",value = "numeric"),
+  signature = signature(object = "segvis",value = "character"),
   definition = function(object,value){
     stopifnot(is.character(value))
     object@chr = value
@@ -173,8 +179,8 @@ setReplaceMethod("isPET",
     return(object)
 })    
 
-#' @rdname methods-segvis-show
-#' @name show
+# @rdname methods-segvis-show
+# @name show
 setMethods("show",
   signature = signature(object = "segvis"),
   definition = function(object){
@@ -238,12 +244,12 @@ setMethods("loadReads",
     return(object)
 })
 
-# @rdname profile-methods
-# @name matchReads
-# @aliases profile
+#' @rdname segvis-matchReads
+#' @name matchReads
 setMethods("matchReads",
-  signature = signature(object = "profile",mc = "numeric"),
+  signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object,mc = 8){
+    browser()
     if(object@.haveReads & object@.haveRegions){    
       side = (maxBandwidth(object)-1)/2      
       chr = names(seqlengths(regions(object)))
