@@ -249,7 +249,6 @@ setMethods("loadReads",
 setMethods("matchReads",
   signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object,mc = 8){
-    browser()
     if(object@.haveReads & object@.haveRegions){    
       side = (maxBandwidth(object)-1)/2      
       chr = names(seqlengths(regions(object)))
@@ -259,13 +258,7 @@ setMethods("matchReads",
       regions = GRangesList(lapply(regions,function(x)
         trim(GRanges(seqnames = seqnames(x),ranges = IRanges(start = start(x) - side,
           end = end(x) + side),strand = strand(x)))))
-      names(regions) = chr      
-      if(length(remChr(object)>1))
-      {                
-        chr = chr[!chr %in% remChr(object)]       
-      }else{
-        if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
-      }
+      names(regions) = chr
       message("Matching reads for forward strand")
       m1 = mclapply(chr,function(chrom,reads,reg,object){
         message("Matching forward reads for ",chrom)

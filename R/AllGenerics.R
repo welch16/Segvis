@@ -160,15 +160,15 @@ setGeneric("loadReads",
   standardGeneric("loadReads")
 )           
 
-#' @title matchReads methods for profile class
+#' @title matchReads methods for segvis class
 #' @description Match the reads to the extended regions stored in the object slots. 
-#' @param object profile object 
+#' @param object segvis object 
 #' @param mc numeric, the number of cores used with parallel
-#' @return profile object
+#' @return segvis object
 #' @export
 #' @docType methods
 #' @seealso \code{\link{matchF}}, \code{\link{matchR}} and \code{\link{match-class}}
-#' @rdname matchReads
+#' @rdname segvis-matchReads
 #' @examples
 #' \dontrun{ matchReads(profile_object,mc=8)}
 setGeneric("matchReads",
