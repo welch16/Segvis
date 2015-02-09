@@ -262,10 +262,14 @@ setMethods("matchReads",
       message("Matching reads for forward strand")
       m1 = mclapply(chr,function(chrom,reads,reg,object){
         message("Matching forward reads for ",chrom)
-        overlaps = findOverlaps(reg[[chrom]],resize(reads[[chrom]],fragLen(object)))       
+        if(isPET(object)){
+          overlaps = findOverlaps(reg[[chrom]],reads[[chrom]])
+        }else{
+          overlaps = findOverlaps(reg[[chrom]],resize(reads[[chrom]],fragLen(object)))
+        }
         mm = lapply(1:length(reg[[chrom]]),
-          function(i,overlaps)subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),
-          overlaps)  
+          function(i,overlaps)
+          subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),overlaps)  
         message("Forward strand matching for ",chrom," done");return(mm)},
         readsF(object),regions,object,mc.cores = mc)
       names(m1) = chr            
@@ -273,10 +277,14 @@ setMethods("matchReads",
       message("Matching reads for reverse strand")
       m2 = mclapply(chr,function(chrom,reads,reg,object){
         message("Matching reverse reads for ",chrom)
-        overlaps = findOverlaps(reg[[chrom]],resize(reads[[chrom]],fragLen(object)))
+        if(isPET(object)){
+          overlaps = findOverlaps(reg[[chrom]],reads[[chrom]])
+        }else{
+          overlaps = findOverlaps(reg[[chrom]],resize(reads[[chrom]],fragLen(object)))
+        }
         mm = lapply(1:length(reg[[chrom]]),
-          function(i,overlaps)subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),
-          overlaps)
+          function(i,overlaps)
+          subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),overlaps)
         message("Reverse strand matching for ",chrom," done");return(mm)},
         readsR(object),regions,object,mc.cores = mc)
       names(m2) = chr
