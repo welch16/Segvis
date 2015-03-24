@@ -167,7 +167,7 @@ setGeneric("loadReads",
 #' @return segvis object
 #' @export
 #' @docType methods
-#' @seealso \code{\link{matchF}}, \code{\link{matchR}} and \code{\link{match-class}}
+#' @seealso \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{reads-class}}
 #' @rdname segvis-matchReads
 #' @examples
 #' \dontrun{ matchReads(profile_object,mc=8)}
@@ -184,7 +184,7 @@ setGeneric("matchReads",
 #' @export
 #' @docType methods
 #' @seealso \code{\link{loadReads}} and \code{\link{matchReads}}
-#' @rdname getCoverage
+#' @rdname segvis-getCoverage
 #' @examples
 #' \dontrun{ getCoverage(profile_object,mc=8)}
 setGeneric("getCoverage",
@@ -244,56 +244,75 @@ setGeneric("ProfileMatrix",
 #' @title Generic method readsF for profile and reads classes
 #' @description Get method for reads and profile classes that returns the reads from the forward strand
 #' @param object reads object
-#' @return Returns a GRangesList with the reads of the forward strand
+#' @return Returns a list of data.table's  with the reads of the backward strand
 #' @export
 #' @seealso \code{\link{reads-class}}
 #' @docType methods
-#' @rdname readsF
+#' @rdname methods-segvis-gs
 setGeneric("readsF",
   function(object)
   standardGeneric("readsF")
 )           
 
+#' @export
+#' @docType methods
+#' @rdname methods-segvis-gs
+setGeneric("readsF<-",
+  function(object,value)
+  standardGeneric("readsF<-")
+)           
+
 #' @title Generic method readsR for profile and reads classes
 #' @description Get method for reads and profile classes that returns the reads from the backward strand
 #' @param object reads object
-#' @return Returns a GRangesList with the reads of the backward strand
+#' @return Returns a list of data.table's  with the reads of the backward strand
 #' @export
 #' @seealso \code{\link{reads-class}}
 #' @docType methods
-#' @rdname readsR
+#' @rdname methods-segvis-gs
 setGeneric("readsR",
   function(object)
   standardGeneric("readsR")           
 )
 
+
+#' @export
+#' @docType methods
+#' @rdname methods-segvis-gs
+setGeneric("readsR<-",
+  function(object,value)
+  standardGeneric("readsR<-")
+)           
+
+
+
 # match generic methods
 
-#' @title matchF method for profile and match classes
-#' @description Get method for match class with "+" strand
-#' @param match object
-#' @return In case of the get method returns the reads of the forward strand
-#' @export
-#' @docType methods
-#' @seealso \code{\link{match-class}}
-#' @rdname matchF
-setGeneric("matchF",
-  function(object)
-  standardGeneric("matchF")
-)           
+# @title matchF method for profile and match classes
+# @description Get method for match class with "+" strand
+# @param match object
+# @return In case of the get method returns the reads of the forward strand
+# @export
+# @docType methods
+# @seealso \code{\link{match-class}}
+# @rdname matchF
+## setGeneric("matchF",
+##   function(object)
+##   standardGeneric("matchF")
+## )           
 
-#' @title matchR method for profile and match clases
-#' @description Get method for match class with "-" strand
-#' @param match object
-#' @return list The match of the reads with "-" strand
-#' @export
-#' @docType methods
-#' @seealso \code{\link{match-class}}
-#' @rdname matchR
-setGeneric("matchR",
-  function(object)
-  standardGeneric("matchR")
-)           
+# @title matchR method for profile and match clases
+# @description Get method for match class with "-" strand
+# @param match object
+# @return list The match of the reads with "-" strand
+# @export
+# @docType methods
+# @seealso \code{\link{match-class}}
+# @rdname matchR
+## setGeneric("matchR",
+##   function(object)
+##   standardGeneric("matchR")
+## )           
 
 # Generic methods for profileMatrix class
 

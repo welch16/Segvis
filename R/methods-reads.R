@@ -19,27 +19,30 @@ setMethod("readsR",
   definition = function(object)object@readsR
 )
 
-## ## Set methods
+## Set methods
 
-## # @rdname reads-methods
-## # @name setReads1
-## # @aliases reads
-## setReplaceMethod("readsF",
-##   signature = signature(object = "reads",value = "GRangesList"),
-##   definition = function(object,value){
-##     object@readsF = value
-##     return(object)
-## })    
+# @rdname reads-methods
+# @name setReads1
+# @aliases reads
+setReplaceMethod("readsF",
+  signature = signature(object = "reads",value = "list"),
+  definition = function(object,value){
+    object@readsF = value
+    return(object)
+})    
 
-## # @rdname reads-methods
-## # @name setReads2
-## # @aliases reads
-## setReplaceMethod("readsR",
-##   signature = signature(object = "reads",value = "GRangesList"),
-##   definition = function(object,value){
-##     object@readsR = value
-##     return(object)
-## })
+# @rdname reads-methods
+# @name setReads2
+# @aliases reads
+setReplaceMethod("readsR",
+  signature = signature(object = "reads",value = "list"),
+  definition = function(object,value){
+    object@readsR = value
+    return(object)
+})
+
+
+
 
 ## # @rdname reads-methods
 ## # @name show

@@ -16,16 +16,16 @@ NULL
 .GRanges.data.table <- function(x)
 {
   stopifnot(c("seqnames","start","end","strand") %in% names(x))
-  return(GRanges(seqnames = x$seqnames,ranges =
-    IRanges(start = x$start,end = x$end),
-    strand = x$strand))                 
+  return(GRanges(seqnames = x[,(seqnames)],
+    ranges = .IRanges.data.table(x),
+    strand = x[,(strand)]))             
 }
 
 #' @export
-.separate.reads <- function(greads,chrom,side,mc)
+.IRanges.data.table <- function(x)
 {
-  chr_reads = mclapply(chrom,function(ch,greads,side){
-    return(greads[seqnames == ch & strand == side])},
-    greads,side,mc.cores = mc)
-  return(chr_reads)
+  stopifnot(c("seqnames","start","end","strand") %in% names(x))
+  return(IRanges(start = x[,(start)],end = x[,(end)]))
 }
+
+

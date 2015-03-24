@@ -1,9 +1,9 @@
 
-#' @title match class description
-#' @description Contains the match of a set a reads of a ChIP - Seq experiment given a set of regions in the genome. 
-#' @slot matchF - List of positions of the reads in list that match with each region and have + strand
-#' @slot matchR - List of positions of the reads in list that match with each region and have - strand
-#' @seealso \code{\link{matchF}} and  \code{\link{matchR}}
+# @title match class description
+# @description Contains the match of a set a reads of a ChIP - Seq experiment given a set of regions in the genome. 
+# @slot matchF List of positions of the reads in list that match with each region and have + strand
+# @slot matchR List of positions of the reads in list that match with each region and have - strand
+# @seealso \code{\link{matchF}} and  \code{\link{matchR}}
 setClass("match",
   representation(matchF = "list",matchR = "list"),
   contains = "list",         
@@ -16,13 +16,12 @@ setValidity("match",
 
 #' @title reads class description
 #' @description Contains the reads obtained in a ChIP - seq experiment separated by strand and then by chromosome.
-#' @slot readsF - GRangesList of the reads of the ChIP - Seq experiment that have + strand
-#' @slot readsR - GRangesList of the reads of the ChIP - Seq experiment that have - strand
+#' @slot readsF List of data.table objects containing the reads of the ChIP - Seq experiment that have + strand.
+#' @slot readsR List of data.table object containning the reads of the ChIP - Seq experiment that have - strand
 #' @seealso \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{loadReads}}
 setClass("reads",
-  representation(readsF = "GRangesList",readsR = "GRangesList"),
-  contains = "GRangesList",
-  prototype = prototype(readsF = GRangesList(),readsR = GRangesList()))
+  representation(readsF = "list",readsR = "list"),
+  prototype = prototype(readsF = list(),readsR = list()))
 
 setValidity("reads",
   function(object){

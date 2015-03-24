@@ -10,15 +10,15 @@
 \alias{fragLen<-}
 \alias{isPET}
 \alias{isPET<-}
-\alias{matchF}
-\alias{matchR}
 \alias{maxBandwidth}
 \alias{maxBandwidth<-}
 \alias{name}
 \alias{name<-}
 \alias{profileCurve}
 \alias{readsF}
+\alias{readsF<-}
 \alias{readsR}
+\alias{readsR<-}
 \alias{regions}
 \alias{regions<-}
 \title{Get and set methods for segvis class}
@@ -51,6 +51,14 @@ isPET(object)
 
 isPET(object) <- value
 
+readsF(object)
+
+readsF(object) <- value
+
+readsR(object)
+
+readsR(object) <- value
+
 \S4method{name}{segvis}(object)
 
 \S4method{regions}{segvis}(object)
@@ -68,10 +76,6 @@ isPET(object) <- value
 \S4method{readsF}{segvis}(object)
 
 \S4method{readsR}{segvis}(object)
-
-\S4method{matchF}{segvis}(object)
-
-\S4method{matchR}{segvis}(object)
 
 \S4method{profileCurve}{segvis}(object)
 
@@ -93,16 +97,32 @@ isPET(object) <- value
 \item{object}{An object of class segvis}
 
 \item{value}{The class of this parameter depends on the function, for \code{file<-}, \code{name<-} and \code{chr<-} is a string; for \code{fragLen<-} and  \code{maxBandwidth} is a numeric value; for \code{regions<-} is a GRanges object and for \code{isPET<-} is a logical value}
+
+\item{object}{reads object}
+
+\item{object}{reads object}
 }
 \value{
 Returns the value with the same name as the function
 
 Returns a segvis object with the value indicated by the functions being updated with value
+
+Returns a list of data.table's  with the reads of the backward strand
+
+Returns a list of data.table's  with the reads of the backward strand
 }
 \description{
 This methods determine how to get and set attributes dor the segvis class. The structure is similar to the one use by bioconductor objects
+
+Get method for reads and profile classes that returns the reads from the forward strand
+
+Get method for reads and profile classes that returns the reads from the backward strand
 }
 \seealso{
 \code{\link{segvis-class}}
+
+\code{\link{reads-class}}
+
+\code{\link{reads-class}}
 }
 

@@ -66,19 +66,19 @@ setMethod("readsR",
   definition = function(object)readsR(object@reads)
 )
 
-#' @rdname methods-segvis-gs
-#' @name matchF
-setMethod("matchF",
-  signature = signature(object = "segvis"),
-  definition = function(object)matchF(object@match)
-)
+# @rdname methods-segvis-gs
+# @name matchF
+## setMethod("matchF",
+##   signature = signature(object = "segvis"),
+##   definition = function(object)matchF(object@match)
+## )
 
-#' @rdname methods-segvis-gs
-#' @name matchR
-setMethod("matchR",
-  signature = signature(object = "segvis"),
-  definition = function(object)matchR(object@match)
-)
+# @rdname methods-segvis-gs
+# @name matchR
+## setMethod("matchR",
+##   signature = signature(object = "segvis"),
+##   definition = function(object)matchR(object@match)
+## )
 
 #' @rdname methods-segvis-gs
 #' @name profileCurve
@@ -200,12 +200,36 @@ setMethods("show",
     }
 #    cat("---------------------------\n")
 })
-          
+
+#' @rdname methods-segvis-readsF
+#' @name readsF
+setReplaceMethod("readsF",
+  signature = signature(object = "segvis",value = "list"),
+  definition = function(object,value){
+    readsF(object@reads) = value
+    return(object)
+  }
+)                 
+
+#' @rdname methods-segvis-readsR
+#' @name readsR
+setReplaceMethod("readsR",
+  signature = signature(object = "segvis",value = "list"),
+  definition = function(object,value){
+    readsR(object@reads) = value
+    return(object)
+  }
+)                 
+
+
+
 #' @rdname segvis-loadReads
 #' @name loadReads
 setMethods("loadReads",
   signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object,mc ){
+
+    ## this chunk reads the bam file
     message("Reading ",file(object))
     if(isPET(object)){
       message("Setting PET flag")
@@ -217,28 +241,34 @@ setMethods("loadReads",
     greads = readGAlignmentsFromBam(file(object),
       param = param,use.names = FALSE)
     greads = .data.table.GRanges(as(greads, "GRanges"))
-    setkey(greads,seqnames,strand)
+    setkey(greads,seqnames,strand)    
     message("Bam file loaded")
-    message("Separating by chromosome")
+
+    ## validates the chromosomes, that must coincide between
+    ## regions, reads and the ones supplied by user
     chr_reads = unique(greads$seqnames)
     chr_in =sapply(chr_reads,function(x)x%in%chr(object))
     if(!all(chr_in)){
       warning("Removing reads that aren't in ",chr(object))
     }
     greads = greads[chr(object)]
+
+    ## separates by chromosome and strand
     message("Separating reads by strand")
     message("Forward strand reads extracted")
-    greads1 = .separate.reads(greads,chr(object),"+",mc)
+    greads1 = separate.by.chrom(greads,chr(object),"+",mc,sort=TRUE)
     names(greads1) = chr(object)
     message("Reverse strand reads extracted")
-    greads2 = .separate.reads(greads,chr(object),"-",mc)
-    names(greads2) = chr(object)        
+    greads2 = separate.by.chrom(greads,chr(object),"-",mc,sort=TRUE)
+    names(greads2) = chr(object)
     message("Finished separating reads")
-    gr1 = GRangesList(
-      mclapply(greads1,.GRanges.data.table,mc.cores = mc))
-    gr2 = GRangesList(
-      mclapply(greads2,.GRanges.data.table,mc.cores = mc))   
-    object@reads = new("reads",readsF = gr1,readsR = gr2)
+    ## gr1 = GRangesList(
+    ##   mclapply(greads1,.GRanges.data.table,mc.cores = mc))
+    ## gr2 = GRangesList(
+    ##   mclapply(greads2,.GRanges.data.table,mc.cores = mc))
+
+    ## Creates the reads object
+    object@reads = new("reads",readsF = greads1,readsR = greads2)
     object@.haveReads = TRUE
     message("Reading bam files... Done")
     return(object)
@@ -249,47 +279,70 @@ setMethods("loadReads",
 setMethods("matchReads",
   signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object,mc = 8){
-    if(object@.haveReads & object@.haveRegions){    
+    if(object@.haveReads & object@.haveRegions){
+
+      ## separates the regions by chromose, extend the regions by (maxBw - 1)/2 to each
+      ## side 
       side = (maxBandwidth(object)-1)/2      
       chr = names(seqlengths(regions(object)))
-      regions = lapply(chr,function(chrom,reg){
-        subset(reg,subset = as.character(seqnames(reg)) == chrom)
-      },regions(object))
-      regions = GRangesList(lapply(regions,function(x)
-        trim(GRanges(seqnames = seqnames(x),ranges = IRanges(start = start(x) - side,
-          end = end(x) + side),strand = strand(x)))))
-      names(regions) = chr
+      match_regions = regions(object)
+      start(match_regions) = start(match_regions) - side
+      end(match_regions) = end(match_regions) + side      
+      match_regions = separate.by.chrom(.data.table.GRanges(match_regions),
+        chr, "*",mc,sort=FALSE)
+      names(match_regions) = chr
+
+      ## find overlaps between reads and regions   
+      overlapsF = mcmapply(.find.overlaps,readsF(object),
+        match_regions,SIMPLIFY=FALSE,mc.cores =mc,mc.silent =TRUE)
+      overlapsR = mcmapply(.find.overlaps,readsR(object),
+        match_regions,SIMPLIFY=FALSE,mc.cores =mc,mc.silent =TRUE)
+              
+      ## matching reads
       message("Matching reads for forward strand")
-      m1 = mclapply(chr,function(chrom,reads,reg,object){
-        message("Matching forward reads for ",chrom)
-        if(isPET(object)){
-          overlaps = findOverlaps(reg[[chrom]],reads[[chrom]])
-        }else{
-          overlaps = findOverlaps(reg[[chrom]],resize(reads[[chrom]],fragLen(object)))
-        }
-        mm = lapply(1:length(reg[[chrom]]),
-          function(i,overlaps)
-          subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),overlaps)  
-        message("Forward strand matching for ",chrom," done");return(mm)},
-        readsF(object),regions,object,mc.cores = mc)
-      names(m1) = chr            
-      message("Forward strand done")
-      message("Matching reads for reverse strand")
-      m2 = mclapply(chr,function(chrom,reads,reg,object){
-        message("Matching reverse reads for ",chrom)
-        if(isPET(object)){
-          overlaps = findOverlaps(reg[[chrom]],reads[[chrom]])
-        }else{
-          overlaps = findOverlaps(reg[[chrom]],resize(reads[[chrom]],fragLen(object)))
-        }
-        mm = lapply(1:length(reg[[chrom]]),
-          function(i,overlaps)
-          subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),overlaps)
-        message("Reverse strand matching for ",chrom," done");return(mm)},
-        readsR(object),regions,object,mc.cores = mc)
-      names(m2) = chr
-      message("Reverse strand done")
-      object@match = new("match",matchF = m1,matchR = m2)
+      readsF(object) = mcmapply(.match.reads,readsF(object),overlapsF,
+        SIMPLIFY= FALSE,mc.cores = mc ,mc.silent =TRUE)
+      readsR(object) = mcmapply(.match.reads,readsR(object),overlapsR,
+        SIMPLIFY= FALSE,mc.cores = mc ,mc.silent =TRUE)
+
+      ## regions = mclapply(regions,.GRanges.data.table,mc.cores = mc)
+      ## regions = GRangesList(lapply(regions,function(x){
+      ##   ext_region = GRanges(seqnames = seqnames(x),ranges = IRanges(start = start(x) - side,
+      ##     end = end(x) + side),strand = strand(x))
+      ##   ext_region = sort(ext_region)
+      ##   return(trim(ext_region))}))
+            
+      ## match the reads
+      ## m1 = mclapply(chr,function(chrom,reads,reg,object){
+      ##   message("Matching forward reads for ",chrom)
+      ##   if(isPET(object)){
+      ##     overlaps = findOverlaps(reg[[chrom]],reads[[chrom]])
+      ##   }else{
+      ##     overlaps = findOverlaps(reg[[chrom]],resize(reads[[chrom]],fragLen(object)))
+      ##   }
+      ##   mm = lapply(1:length(reg[[chrom]]),
+      ##     function(i,overlaps)
+      ##     subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),overlaps)  
+      ##   message("Forward strand matching for ",chrom," done");return(mm)},
+      ##   readsF(object),regions,object,mc.cores = mc)
+      ## names(m1) = chr            
+      ## message("Forward strand done")
+      ## message("Matching reads for reverse strand")
+      ## m2 = mclapply(chr,function(chrom,reads,reg,object){
+      ##   message("Matching reverse reads for ",chrom)
+      ##   if(isPET(object) | fragLen(object) == 0 ){
+      ##     overlaps = findOverlaps(reg[[chrom]],reads[[chrom]])
+      ##   }else{
+      ##     overlaps = findOverlaps(reg[[chrom]],resize(reads[[chrom]],fragLen(object)))
+      ##   }
+      ##   mm = lapply(1:length(reg[[chrom]]),
+      ##     function(i,overlaps)
+      ##     subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),overlaps)
+      ##   message("Reverse strand matching for ",chrom," done");return(mm)},
+      ##   readsR(object),regions,object,mc.cores = mc)
+      ## names(m2) = chr
+      ## message("Reverse strand done")
+      ## object@match = new("match",matchF = m1,matchR = m2)
       object@.readsMatched = TRUE
      return(object)      
     }else{
@@ -297,26 +350,20 @@ setMethods("matchReads",
     }
 })
 
-# @rdname profile-methods
-# @name getCoverage
-# @aliases profile
+#' @rdname segvis-getCoverage
+#' @name getCoverage
 setMethods("getCoverage",
-  signature = signature(object = "profile",mc = "numeric"),
+  signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object, mc = 8){
-    if(object@.readsMatched == TRUE){      
+    if(object@.readsMatched == TRUE){
       chr = names(seqlengths(regions(object)))
-      if(length(remChr(object)>1))
-      {                
-        chr = chr[!chr %in% remChr(object)]       
-      }else{
-        if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
-      }
       ll = lapply(chr,function(chrom,reg){
         length(subset(reg,subset = as.character(seqnames(reg)) == chrom))
       },regions(object))
-      names(ll) = chr           
+      names(ll) = chr
+      browser()
       curve = lapply(chr,function(chrom,object,ll,mc){
-        message("Retrieving reads for ",chrom)        
+        message("Retrieving reads for ",chrom)
         l = ll[[chrom]]
         r1 = readsF(object)[[chrom]]
         r2 = readsR(object)[[chrom]]
@@ -324,9 +371,13 @@ setMethods("getCoverage",
         m2 = matchR(object)[[chrom]]
         message("Calculating coverage for ",chrom)
         z = mclapply(1:l,function(i,r1,r2,m1,m2){
-          coverage(c(resize(r1[m1[[i]]],fragLen(object)),
-                     resize(r2[m2[[i]]],fragLen(object))))[[chrom]]}
-                 ,r1,r2,m1,m2,mc.cores = mc)        
+          if(isPET(object) | fragLen(object) == 0 ){
+            cover = coverage(c(r1[m1[[i]]],r2[m2[[i]]]))[[chrom]]
+            }else{
+            cover = coverage(c(resize(r1[m1[[i]]],fragLen(object)),
+             resize(r2[m2[[i]]],fragLen(object))))[[chrom]]
+          }
+        return(cover)},r1,r2,m1,m2,mc.cores = mc)        
         message("Coverage calculated for ",chrom)
         return(z)},
         object,ll,mc)     

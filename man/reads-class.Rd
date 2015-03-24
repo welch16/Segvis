@@ -10,9 +10,9 @@ Contains the reads obtained in a ChIP - seq experiment separated by strand and t
 \section{Slots}{
 
 \describe{
-\item{\code{readsF}}{- GRangesList of the reads of the ChIP - Seq experiment that have + strand}
+\item{\code{readsF}}{List of data.table objects containing the reads of the ChIP - Seq experiment that have + strand.}
 
-\item{\code{readsR}}{- GRangesList of the reads of the ChIP - Seq experiment that have - strand}
+\item{\code{readsR}}{List of data.table object containning the reads of the ChIP - Seq experiment that have - strand}
 }}
 \seealso{
 \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{loadReads}}

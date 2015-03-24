@@ -22,6 +22,6 @@ Match the reads to the extended regions stored in the object slots.
 \dontrun{ matchReads(profile_object,mc=8)}
 }
 \seealso{
-\code{\link{matchF}}, \code{\link{matchR}} and \code{\link{match-class}}
+\code{\link{readsF}}, \code{\link{readsR}} and \code{\link{reads-class}}
 }
 
