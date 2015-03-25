@@ -127,3 +127,13 @@ setClass("profileMatrixList",
   contains = "list"
 )         
 
+#' @title segvisList class description
+#' @description Contains a list of segvis objects
+#' @exportClass segvisList
+setClass("segvisList",
+  prototype = prototype(elementType = "segvis"),
+  contains = "list"
+)         
+
+
+         

@@ -1,5 +1,5 @@
 
-# Methods for profile class
+# Methods for segvis class
 
 ## Get methods
 
