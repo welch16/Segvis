@@ -1,19 +1,3 @@
-
-# @title match class description
-# @description Contains the match of a set a reads of a ChIP - Seq experiment given a set of regions in the genome. 
-# @slot matchF List of positions of the reads in list that match with each region and have + strand
-# @slot matchR List of positions of the reads in list that match with each region and have - strand
-# @seealso \code{\link{matchF}} and  \code{\link{matchR}}
-setClass("match",
-  representation(matchF = "list",matchR = "list"),
-  contains = "list",         
-  prototype = prototype(matchF = list(),matchR = list()))
-
-setValidity("match",
-  function(object){
-    return(length(object@matchF) == length(object@matchR))
-})            
-
 #' @title reads class description
 #' @description Contains the reads obtained in a ChIP - seq experiment separated by strand and then by chromosome.
 #' @slot readsF List of data.table objects containing the reads of the ChIP - Seq experiment that have + strand.
@@ -74,7 +58,6 @@ setClass("segvis",
                  chr = "character",
                  isPET = "logical",                 
                  reads = "reads",
-                 match = "match",
                  profileCurve = "list",
                  .haveRegions = "logical",
                  .haveReads = "logical",
@@ -89,7 +72,6 @@ setClass("segvis",
                  chr = "",
                  isPET = FALSE,
                  reads = new("reads"),
-                 match = new("match"),
                  profileCurve = list(),
                  .haveRegions = FALSE,
                  .haveReads = FALSE,

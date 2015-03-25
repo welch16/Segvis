@@ -221,8 +221,6 @@ setReplaceMethod("readsR",
   }
 )                 
 
-
-
 #' @rdname segvis-loadReads
 #' @name loadReads
 setMethods("loadReads",
