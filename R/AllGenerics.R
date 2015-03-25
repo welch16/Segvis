@@ -131,17 +131,17 @@ setGeneric("isPET<-",
   standardGeneric("isPET<-")           
 )           
 
-#' @title profileCurve methods for profile class
+#' @title profiles methods for segvis class
 #' @description Returns the coverage for each region considered
-#' @param object A profile object
+#' @param object A segvis object
 #' @return RleList. A list made of an Rle object for each region
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profile-class}} and \code{\link{getCoverage}}
-#' @rdname profileCurve
-setGeneric("profileCurve",
+#' @seealso \code{\link{segvis-class}} and \code{\link{segvis-getCoverage}}
+#' @rdname methods-segvis-gs
+setGeneric("profiles",
   function(object)
-  standardGeneric("profileCurve")
+  standardGeneric("profiles")
 )  
     
 #' @title loadReads method for segvis class
@@ -208,15 +208,15 @@ setGeneric("buildProfileMatrix",
   standardGeneric("buildProfileMatrix")
 )
 
-#' @title findSummit method for profile class
-#' @description This method finds the summit of each region whenever is possible, otherwise returns NA
-#' @param object profile object
+#' @title findSummit method for segvis class
+#' @description This method finds the summit of each region whenever is possible, otherwise returns NA. The regions of the segvis object don't need to have the same width
+#' @param object segvis object
 #' @param bw, the bandwidth used to smooth the profiles, must be and odd number less or equal than the maxBandwidth
 #' @param mc, the number of cores used with parallel
 #' @return Numeric vector
 #' @export
 #' @docType methods
-#' @rdname findSummit
+#' @rdname segvis-findSummit 
 #' @examples
 #' \dontrun{ findSummit(profile_object,bw = 151,mc=8)}
 setGeneric("findSummit",

@@ -66,28 +66,12 @@ setMethod("readsR",
   definition = function(object)readsR(object@reads)
 )
 
-# @rdname methods-segvis-gs
-# @name matchF
-## setMethod("matchF",
-##   signature = signature(object = "segvis"),
-##   definition = function(object)matchF(object@match)
-## )
-
-# @rdname methods-segvis-gs
-# @name matchR
-## setMethod("matchR",
-##   signature = signature(object = "segvis"),
-##   definition = function(object)matchR(object@match)
-## )
-
 #' @rdname methods-segvis-gs
-#' @name profileCurve
-setMethod("profileCurve",
+#' @name profiles
+setMethod("profiles",
   signature = signature(object = "segvis"),
-  definition = function(object)object@profileCurve
+  definition = function(object)object@profiles
 )  
-
-
 
 ## Set methods
 
@@ -315,16 +299,16 @@ setMethods("getCoverage",
 
       # init coverage calculation
       chr = names(seqlengths(regions(object)))
-      matched_regions = separate.by.chrom(.data.table.GRanges(regions(object)),
+      match_regions = separate.by.chrom(.data.table.GRanges(regions(object)),
           chr, "*",mc,sort=FALSE)
-      nregions = mclapply(matched_regions,nrow,mc.cores = mc,mc.silent =TRUE)
+      nregions = mclapply(match_regions,nrow,mc.cores = mc,mc.silent =TRUE)
 
       # coverage calculation
       message("Calculating coverage")      
       curves = mapply(calculate_chrom_coverage,chr,nregions,
         MoreArgs = list(object,mc),SIMPLIFY=FALSE)      
       names(curves) = chr
-      object@profileCurve = curves
+      object@profiles = curves
       object@.coverageCalculated = TRUE
       message("Coverage done")
       return(object)                
@@ -351,44 +335,32 @@ setMethods("buildProfileMatrix",
   return(matList)
 })    
 
-# @rdname profile-methods
-# @name findSummit
-# @aliases profile
+#' @rdname segvis-findSummit
+#' @name findSummit
 setMethods("findSummit",          
-  signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
+  signature = signature(object = "segvis",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc=8){
-  message("Calculating profiles for each chromosome")
-  matList = .calculateMAprofile(object,bw,mc)
-  message("Finding summits for each chromosome")
-  chr = names(seqlengths(regions(object)))
-  if(length(remChr(object)>1))
-  {                
-    chr = chr[!chr %in% remChr(object)]       
-  }else{
-    if(remChr(object) != "")chr = chr[!chr %in% remChr(object)]
-  }
-  regions = lapply(chr,function(chrom,reg){
-        subset(reg,subset = as.character(seqnames(reg)) == chrom)
-      },regions(object))
-  names(regions) = chr
-  summits_chr = lapply(chr,function(chrom,regions,matList){
-    message("Finding summit for regions of ",chrom)    
-    reg = regions[[chrom]]
-    ll = length(reg)
-    rStart = start(reg)
-    rEnd = end(reg)
-    mat = matList[[chrom]]
-    z = mclapply(1:ll,function(i,mat,rStart,rEnd){
-      if(all(is.na(mat[[i]]))){
-        summit = NA
-      }else{
-        x = seq(rStart[i],rEnd[i],by = 1)
-        summit = x[which.max(mat[[i]])]
-      }
-      return(summit)
-    },mat,rStart,rEnd)
-    return(unlist(z))         
-  },regions,matList)
+
+    message("Calculating profiles for each chromosome")
+    profile_curves = .calculate_profile_curves(object,bw,mc)
+
+    message("Finding summits for each chromosome")
+    chr = names(seqlengths(regions(object)))
+    match_regions = separate.by.chrom(.data.table.GRanges(regions(object)),
+        chr, "*",mc,sort=FALSE)    
+    names(match_regions) = chr
+    
+    ## find summits for each chromosome
+    summits_chr = lapply(chr,function(chrom,regions,curves){
+      message("Finding summit for regions of ",chrom)
+      reg = regions[[chrom]]
+      regionStart = reg[,(start)]
+      regionEnd = reg[,(end)]
+      curve = curves[[chrom]]
+      summits = mcmapply(.find_summit,curve,regionStart,regionEnd,
+        SIMPLIFY=FALSE,mc.cores = mc,mc.silent = TRUE)
+      return(unlist(summits))         
+  },match_regions,profile_curves)
   return(unlist(summits_chr))    
 })
 

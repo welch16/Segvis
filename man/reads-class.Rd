@@ -5,14 +5,16 @@
 \alias{reads-class}
 \title{reads class description}
 \description{
-Contains the reads obtained in a ChIP - seq experiment separated by strand and then by chromosome.
+Contains the reads obtained in a ChIP - seq experiment
 }
 \section{Slots}{
 
 \describe{
-\item{\code{readsF}}{List of data.table objects containing the reads of the ChIP - Seq experiment that have + strand.}
+\item{\code{readsF}}{List of data.table objects containing the reads of the
+ChIP - Seq experiment that have + strand.}
 
-\item{\code{readsR}}{List of data.table object containning the reads of the ChIP - Seq experiment that have - strand}
+\item{\code{readsR}}{List of data.table object containning the reads of the
+ChIP - Seq experiment that have - strand}
 }}
 \seealso{
 \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{loadReads}}

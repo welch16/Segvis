@@ -26,9 +26,7 @@ This object is the base class of the segvis package. It contains all the informa
 
 \item{\code{reads}}{Reads object, which contains the reads used to build the profile separated by strand}
 
-\item{\code{match}}{Match object, which contains the}
-
-\item{\code{profileCuve}}{RleList - For each region, there is a Rle object}
+\item{\code{profiles}}{RleList - For each region, there is a Rle object}
 
 \item{\code{.haveRegions}}{logical - Indicates if the object have the regions loaded}
 

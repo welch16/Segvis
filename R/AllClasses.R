@@ -1,7 +1,14 @@
 #' @title reads class description
-#' @description Contains the reads obtained in a ChIP - seq experiment separated by strand and then by chromosome.
-#' @slot readsF List of data.table objects containing the reads of the ChIP - Seq experiment that have + strand.
-#' @slot readsR List of data.table object containning the reads of the ChIP - Seq experiment that have - strand
+#'
+#' @description Contains the reads obtained in a ChIP - seq experiment
+# separated by strand and then by chromosome.
+#'
+#' @slot readsF List of data.table objects containing the reads of the
+#' ChIP - Seq experiment that have + strand.
+#'
+#' @slot readsR List of data.table object containning the reads of the
+#' ChIP - Seq experiment that have - strand
+#'
 #' @seealso \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{loadReads}}
 setClass("reads",
   representation(readsF = "list",readsR = "list"),
@@ -32,9 +39,7 @@ setValidity("reads",
 #'
 #' @slot reads Reads object, which contains the reads used to build the profile separated by strand
 #'
-#' @slot match Match object, which contains the
-#'
-#' @slot profileCuve RleList - For each region, there is a Rle object
+#' @slot profiles RleList - For each region, there is a Rle object
 #'
 #' @slot .haveRegions logical - Indicates if the object have the regions loaded
 #'
@@ -58,7 +63,7 @@ setClass("segvis",
                  chr = "character",
                  isPET = "logical",                 
                  reads = "reads",
-                 profileCurve = "list",
+                 profiles = "list",
                  .haveRegions = "logical",
                  .haveReads = "logical",
                  .readsMatched = "logical",
@@ -72,7 +77,7 @@ setClass("segvis",
                  chr = "",
                  isPET = FALSE,
                  reads = new("reads"),
-                 profileCurve = list(),
+                 profiles = list(),
                  .haveRegions = FALSE,
                  .haveReads = FALSE,
                  .readsMatched = FALSE,
@@ -106,7 +111,6 @@ setClass("profileMatrix",
                  bandwidth = "numeric",                 
                  normConst = "numeric",
                  .isScaled = "logical"),
-#  contains = "GRanges",
   prototype = prototype(name = "",
                  regions = GRanges(),
                  profileMat = matrix(nrow=0,ncol = 0),
