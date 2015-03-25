@@ -170,23 +170,23 @@ setGeneric("loadReads",
 #' @seealso \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{reads-class}}
 #' @rdname segvis-matchReads
 #' @examples
-#' \dontrun{ matchReads(profile_object,mc=8)}
+#' \dontrun{ matchReads(segvis_object,mc=8)}
 setGeneric("matchReads",
   function(object,mc)
   standardGeneric("matchReads")
 )           
 
 #' @title getCoverage method for profile class
-#' @description Build the coverage using the reads matched by the matchReads method. It returns a Rle object for each region.
-#' @param object profile object
+#' @description Calculate  the coverage using the reads matched by the matchReads method. It returns a Rle object for each region.
+#' @param object segvis object
 #' @param mc numeric, the number of cores used with parallel
-#' @return profile object
+#' @return segvis object
 #' @export
 #' @docType methods
 #' @seealso \code{\link{loadReads}} and \code{\link{matchReads}}
 #' @rdname segvis-getCoverage
 #' @examples
-#' \dontrun{ getCoverage(profile_object,mc=8)}
+#' \dontrun{ getCoverage(segvis_object,mc=8)}
 setGeneric("getCoverage",
   function(object,mc)
   standardGeneric("getCoverage")           

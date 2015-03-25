@@ -229,7 +229,7 @@ setMethods("loadReads",
   signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object,mc ){
 
-    ## this chunk reads the bam file
+    ## reads the bam file
     message("Reading ",file(object))
     if(isPET(object)){
       message("Setting PET flag")
@@ -262,10 +262,6 @@ setMethods("loadReads",
     greads2 = separate.by.chrom(greads,chr(object),"-",mc,sort=TRUE)
     names(greads2) = chr(object)
     message("Finished separating reads")
-    ## gr1 = GRangesList(
-    ##   mclapply(greads1,.GRanges.data.table,mc.cores = mc))
-    ## gr2 = GRangesList(
-    ##   mclapply(greads2,.GRanges.data.table,mc.cores = mc))
 
     ## Creates the reads object
     object@reads = new("reads",readsF = greads1,readsR = greads2)
@@ -305,44 +301,6 @@ setMethods("matchReads",
       readsR(object) = mcmapply(.match.reads,readsR(object),overlapsR,
         SIMPLIFY= FALSE,mc.cores = mc ,mc.silent =TRUE)
 
-      ## regions = mclapply(regions,.GRanges.data.table,mc.cores = mc)
-      ## regions = GRangesList(lapply(regions,function(x){
-      ##   ext_region = GRanges(seqnames = seqnames(x),ranges = IRanges(start = start(x) - side,
-      ##     end = end(x) + side),strand = strand(x))
-      ##   ext_region = sort(ext_region)
-      ##   return(trim(ext_region))}))
-            
-      ## match the reads
-      ## m1 = mclapply(chr,function(chrom,reads,reg,object){
-      ##   message("Matching forward reads for ",chrom)
-      ##   if(isPET(object)){
-      ##     overlaps = findOverlaps(reg[[chrom]],reads[[chrom]])
-      ##   }else{
-      ##     overlaps = findOverlaps(reg[[chrom]],resize(reads[[chrom]],fragLen(object)))
-      ##   }
-      ##   mm = lapply(1:length(reg[[chrom]]),
-      ##     function(i,overlaps)
-      ##     subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),overlaps)  
-      ##   message("Forward strand matching for ",chrom," done");return(mm)},
-      ##   readsF(object),regions,object,mc.cores = mc)
-      ## names(m1) = chr            
-      ## message("Forward strand done")
-      ## message("Matching reads for reverse strand")
-      ## m2 = mclapply(chr,function(chrom,reads,reg,object){
-      ##   message("Matching reverse reads for ",chrom)
-      ##   if(isPET(object) | fragLen(object) == 0 ){
-      ##     overlaps = findOverlaps(reg[[chrom]],reads[[chrom]])
-      ##   }else{
-      ##     overlaps = findOverlaps(reg[[chrom]],resize(reads[[chrom]],fragLen(object)))
-      ##   }
-      ##   mm = lapply(1:length(reg[[chrom]]),
-      ##     function(i,overlaps)
-      ##     subjectHits(subset(overlaps,subset = queryHits(overlaps) == i)),overlaps)
-      ##   message("Reverse strand matching for ",chrom," done");return(mm)},
-      ##   readsR(object),regions,object,mc.cores = mc)
-      ## names(m2) = chr
-      ## message("Reverse strand done")
-      ## object@match = new("match",matchF = m1,matchR = m2)
       object@.readsMatched = TRUE
      return(object)      
     }else{
@@ -356,36 +314,45 @@ setMethods("getCoverage",
   signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object, mc = 8){
     if(object@.readsMatched == TRUE){
+
+      # init coverage calculation
       chr = names(seqlengths(regions(object)))
-      ll = lapply(chr,function(chrom,reg){
-        length(subset(reg,subset = as.character(seqnames(reg)) == chrom))
-      },regions(object))
-      names(ll) = chr
-      browser()
-      curve = lapply(chr,function(chrom,object,ll,mc){
-        message("Retrieving reads for ",chrom)
-        l = ll[[chrom]]
-        r1 = readsF(object)[[chrom]]
-        r2 = readsR(object)[[chrom]]
-        m1 = matchF(object)[[chrom]]
-        m2 = matchR(object)[[chrom]]
-        message("Calculating coverage for ",chrom)
-        z = mclapply(1:l,function(i,r1,r2,m1,m2){
-          if(isPET(object) | fragLen(object) == 0 ){
-            cover = coverage(c(r1[m1[[i]]],r2[m2[[i]]]))[[chrom]]
-            }else{
-            cover = coverage(c(resize(r1[m1[[i]]],fragLen(object)),
-             resize(r2[m2[[i]]],fragLen(object))))[[chrom]]
-          }
-        return(cover)},r1,r2,m1,m2,mc.cores = mc)        
-        message("Coverage calculated for ",chrom)
-        return(z)},
-        object,ll,mc)     
-      names(curve) = chr
-      object@profileCurve = curve
+      matched_regions = separate.by.chrom(.data.table.GRanges(regions(object)),
+          chr, "*",mc,sort=FALSE)
+      nregions = mclapply(matched_regions,nrow,mc.cores = mc,mc.silent =TRUE)
+
+      # coverage calculation ,
+      message("Calculating coverage")      
+      curves = mapply(calculate_chrom_coverage,chr,nregions,
+        MoreArgs = list(object,mc),SIMPLIFY=FALSE)      
+      names(curves) = chr
+      object@profileCurve = curves
       object@.coverageCalculated = TRUE
       message("Coverage done")
-      return(object)     
+      return(object)                
+      ## ## ll = lapply(chr,function(chrom,reg){
+      ## ##   length(subset(reg,subset = as.character(seqnames(reg)) == chrom))
+      ## ## },regions(object))
+      ## ## names(ll) = chr
+      ## curve = lapply(chr,function(chrom,object,ll,mc){
+      ##   message("Retrieving reads for ",chrom)
+      ##   l = ll[[chrom]]
+      ##   r1 = readsF(object)[[chrom]]
+      ##   r2 = readsR(object)[[chrom]]
+      ##   m1 = matchF(object)[[chrom]]
+      ##   m2 = matchR(object)[[chrom]]
+      ##   message("Calculating coverage for ",chrom)
+      ##   z = mclapply(1:l,function(i,r1,r2,m1,m2){
+      ##     if(isPET(object) | fragLen(object) == 0 ){
+      ##       cover = coverage(c(r1[m1[[i]]],r2[m2[[i]]]))[[chrom]]
+      ##       }else{
+      ##       cover = coverage(c(resize(r1[m1[[i]]],fragLen(object)),
+      ##        resize(r2[m2[[i]]],fragLen(object))))[[chrom]]
+      ##     }
+      ##   return(cover)},r1,r2,m1,m2,mc.cores = mc)        
+      ##   message("Coverage calculated for ",chrom)
+      ##   return(z)},
+      ##   object,ll,mc)     
     }else{
       warning("The reads haven't been matched yet")
     }
