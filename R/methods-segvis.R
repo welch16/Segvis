@@ -321,7 +321,7 @@ setMethods("getCoverage",
           chr, "*",mc,sort=FALSE)
       nregions = mclapply(matched_regions,nrow,mc.cores = mc,mc.silent =TRUE)
 
-      # coverage calculation ,
+      # coverage calculation
       message("Calculating coverage")      
       curves = mapply(calculate_chrom_coverage,chr,nregions,
         MoreArgs = list(object,mc),SIMPLIFY=FALSE)      
@@ -330,29 +330,6 @@ setMethods("getCoverage",
       object@.coverageCalculated = TRUE
       message("Coverage done")
       return(object)                
-      ## ## ll = lapply(chr,function(chrom,reg){
-      ## ##   length(subset(reg,subset = as.character(seqnames(reg)) == chrom))
-      ## ## },regions(object))
-      ## ## names(ll) = chr
-      ## curve = lapply(chr,function(chrom,object,ll,mc){
-      ##   message("Retrieving reads for ",chrom)
-      ##   l = ll[[chrom]]
-      ##   r1 = readsF(object)[[chrom]]
-      ##   r2 = readsR(object)[[chrom]]
-      ##   m1 = matchF(object)[[chrom]]
-      ##   m2 = matchR(object)[[chrom]]
-      ##   message("Calculating coverage for ",chrom)
-      ##   z = mclapply(1:l,function(i,r1,r2,m1,m2){
-      ##     if(isPET(object) | fragLen(object) == 0 ){
-      ##       cover = coverage(c(r1[m1[[i]]],r2[m2[[i]]]))[[chrom]]
-      ##       }else{
-      ##       cover = coverage(c(resize(r1[m1[[i]]],fragLen(object)),
-      ##        resize(r2[m2[[i]]],fragLen(object))))[[chrom]]
-      ##     }
-      ##   return(cover)},r1,r2,m1,m2,mc.cores = mc)        
-      ##   message("Coverage calculated for ",chrom)
-      ##   return(z)},
-      ##   object,ll,mc)     
     }else{
       warning("The reads haven't been matched yet")
     }
