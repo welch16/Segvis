@@ -284,103 +284,67 @@ setGeneric("readsR<-",
   standardGeneric("readsR<-")
 )           
 
-
-
-# match generic methods
-
-# @title matchF method for profile and match classes
-# @description Get method for match class with "+" strand
-# @param match object
-# @return In case of the get method returns the reads of the forward strand
-# @export
-# @docType methods
-# @seealso \code{\link{match-class}}
-# @rdname matchF
-## setGeneric("matchF",
-##   function(object)
-##   standardGeneric("matchF")
-## )           
-
-# @title matchR method for profile and match clases
-# @description Get method for match class with "-" strand
-# @param match object
-# @return list The match of the reads with "-" strand
-# @export
-# @docType methods
-# @seealso \code{\link{match-class}}
-# @rdname matchR
-## setGeneric("matchR",
-##   function(object)
-##   standardGeneric("matchR")
-## )           
-
-# Generic methods for profileMatrix class
+# Generic methods for segvis_block class
 
 ## Get methods
 
-#' @title profileMat method for profileMatrix class
-#' @description Get and Set methods of the profile matrix for the profileMatrix class 
-#' @param object profileMatrix object
-#' @return In case of the get method, it returns the profile matrix
+#' @title cover_table method for segvis_block class
+#'
+#' @description This methods determine how to get and set attributes for the segvis_block class. The structure is similar to the one use by bioconductor objects
+#'
+#' @param object An object of class segvis_block
+#'
+#' @return Returns the value with the same name as the function
+#'
 #' @export
-#' @seealso \code{\link{profileMatrix-class}}
+#'
 #' @docType methods
-#' @rdname profileMat
-setGeneric("profileMat",
+#'
+#' @seealso \code{\link{segvis-class}}
+#'
+#' @rdname methods-segvis_block-gs
+setGeneric("cover_table",
   function(object)
-  standardGeneric("profileMat")           
+  standardGeneric("cover_table")           
 )        
 
-#' @param value A matrix with a the profile for each region
-#' @return In case of the set method, it returns a profileMatrix object where the profile matrix has been replaced by value
-#' @export
-#' @rdname profileMat
-setGeneric("profileMat<-",
+#' @param value The class of this parameter depends on the function, \code{name<-} is a string; for \code{bandwidth<-} and  \code{normConst} is a numeric value; for \code{regions<-} is a GRanges object and for \code{cover_table<-} is a data.table
+#'
+#' @return Returns a segvis object with the value indicated by the functions being updated with value
+#'
+#' @rdname methods-segvis_block-gs
+setGeneric("cover_table<-",
   function(object,value)
-  standardGeneric("profileMat<-")
+  standardGeneric("cover_table<-")
 )           
 
-#' @title bandwidth method for profileMatrix class
-#' @description Get and Set methods for the bandwidth parameter of the profileMatrix class
-#' @param object profileMatrix class
-#' @return In case of the get method, the value in the bandwidth slot of the object
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profileMatrix-class}}
-#' @rdname bandwidth
+#' @rdname methods-segvis_block-gs
 setGeneric("bandwidth",
   function(object)
   standardGeneric("bandwidth")           
 )           
 
-#' @param value Numeric value with the bandwidth used to smooth the profile in profileMatrix object
-#' @return In case of the set method, it returns the profileMatrix object with the bandwidth value replaced by value
 #' @export
 #' @docType methods
-#' @rdname bandwidth
+#' @rdname methods-segvis_block-gs
 setGeneric("bandwidth<-",
   function(object,value)
   standardGeneric("bandwidth<-")
 )           
 
-#' @title normConst method for profileMatrix class
-#' @description Get and Set methods for the normConst parameter for profileMatrix class
-#' @param object profileMatrix object
-#' @return In case of the get method it returns the constant used to normalize the profile
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profileMatrix-class}}
-#' @rdname normConst
+#' @rdname methods-segvis_block-gs
 setGeneric("normConst",
   function(object)
   standardGeneric("normConst")           
 )           
 
-#' @param value Numeric value with the constant used to normalize the profile
-#' @return In case of the set method it returns the profileMatrix object with the normalizing constant replced by value
 #' @export
 #' @docType methods
-#' @rdname normConst
+#' @rdname methods-segvis_block-gs
 setGeneric("normConst<-",
   function(object,value)
   standardGeneric("normConst<-")

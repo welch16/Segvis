@@ -95,15 +95,15 @@ setValidity("segvis",
   return(object@fragLen >=0 & object@maxBandwidth >=1)
 })  
 
-#' @title profileMatrix class description
-#' @description Contains a matrix with the individual coverage for each region
-#' @slot name - Character with the name of the profiles
-#' @slot regions - GRanges with the regions
-#' @slot profileMat - Matrix - Actual profile matrix
-#' @slot bandwidth - Numeric value used to smooth the individual coverages
-#' @slot normConst - Numeric Normalizing constant
-#' @slot .isScaled - Logical representing if the profile matrix is scaled
-#' @exportClass profileMatrix
+# @title profileMatrix class description
+# @description Contains a matrix with the individual coverage for each region
+# @slot name - Character with the name of the profiles
+# @slot regions - GRanges with the regions
+# @slot profileMat - Matrix - Actual profile matrix
+# @slot bandwidth - Numeric value used to smooth the individual coverages
+# @slot normConst - Numeric Normalizing constant
+# @slot .isScaled - Logical representing if the profile matrix is scaled
+# @exportClass profileMatrix
 setClass("profileMatrix",
   representation(name = "character",
                  regions = "GRanges",
@@ -153,9 +153,9 @@ setClass("segvis_block",
                  .isScaled = FALSE)
 )                             
 
-#' @title profileMatrixList class description
-#' @description Contains a list of profileMatrix objects
-#' @exportClass profileMatrixList
+# @title profileMatrixList class description
+# @description Contains a list of profileMatrix objects
+# @exportClass profileMatrixList
 setClass("profileMatrixList",
   prototype = prototype(elementType = "profileMatrix"),
   contains = "list"

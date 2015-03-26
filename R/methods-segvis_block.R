@@ -3,86 +3,77 @@
 
 ## Get methods
 
-# @rdname profileMatrix-methods
-# @name name
-# @aliases profileMatrix
+#' @rdname methods-segvis_block-gs
+#' @name name
 setMethod("name",
-  signature = signature(object = "profileMatrix"),
+  signature = signature(object = "segvis_block"),
   definition = function(object)object@name
 )
 
-# @rdname profileMatrix-methods
-# @name regions
-# @aliases profileMatrix
+#' @rdname methods-segvis_block-gs
+#' @name regions
 setMethod("regions",
-  signature = signature(object = "profileMatrix"),
+  signature = signature(object = "segvis_block"),
   definition = function(object)object@regions
 )
 
-# @rdname profileMatrix-methods
-# @name profMat
-# @aliases profileMatrix
-setMethod("profileMat",
-  signature = signature(object = "profileMatrix"),
-  definition = function(object)object@profileMat
+#' @rdname methods-segvis_block-gs
+#' @name cover_table
+setMethod("cover_table",
+  signature = signature(object = "segvis_block"),
+  definition = function(object)object@cover_table
 )           
 
-# @rdname profileMatrix-methods
-# @name bandwidth
-# @aliases profileMatrix
+#' @rdname methods-segvis_block-gs
+#' @name bandwidth
 setMethod("bandwidth",
-  signature = signature(object = "profileMatrix"),
+  signature = signature(object = "segvis_block"),
   definition = function(object)object@bandwidth
 )           
 
-# @rdname profileMatrix-methods
-# @name normConst
-# @aliases profileMatrix
+#' @rdname methods-segvis_block-gs
+#' @name normConst
 setMethod("normConst",
-  signature = signature(object = "profileMatrix"),
+  signature = signature(object = "segvis_block"),
   definition = function(object)object@normConst
 )
 
 ## Set methods
 
-# @rdname profileMatrix-methods
-# @name name
-# @aliases profileMatrix
+#' @rdname methods-segvis_block-gs
+#' @name name
 setReplaceMethod("name",
-  signature = signature(object = "profileMatrix",value = "character"),
+  signature = signature(object = "segvis_block",value = "character"),
   definition = function(object,value){
     object@name = value
     return(object)
 })    
 
-# @rdname profileMatrix-methods
-# @name setRegions
-# @aliases profileMatrix
+#' @rdname methods-segvis_block-gs
+#' @name regions
 setReplaceMethod("regions",
-  signature = signature(object = "profileMatrix",value = "GRanges"),
+  signature = signature(object = "segvis_block",value = "GRanges"),
   definition = function(object,value){    
     stopifnot(class(value) == "GRanges")
     object@regions = value
     return(object)    
 })
 
-# @rdname profileMatrix-methods
-# @name setProfileMat
-# @aliases profileMatrix
-setReplaceMethod("profileMat",
-  signature = signature(object = "profileMatrix",value = "matrix"),
+#' @rdname methods-segvis_block-gs
+#' @name cover_table
+setReplaceMethod("cover_table",
+  signature = signature(object = "segvis_block",value = "data.table"),
   definition = function(object,value){    
-    stopifnot(class(value) == "matrix")
+    stopifnot(class(value) == "data.table")
     stopifnot(length(regions(object))==nrow(value))
     object@profileMat = value
     return(object)    
 })           
 
-# @rdname profileMatrix-methods
-# @name setBandwidth
-# @aliases profileMatrix
+#' @rdname methods-segvis_block-gs
+#' @name bandwidth
 setReplaceMethod("bandwidth",
-  signature = signature(object = "profileMatrix",value = "numeric"),
+  signature = signature(object = "segvis_block",value = "numeric"),
   definition = function(object,value){
     stopifnot(value >=1)
     stopifnot(value %% 2 == 1)
@@ -90,11 +81,10 @@ setReplaceMethod("bandwidth",
     return(object)
 })           
 
-# @rdname profileMatrix-methods
-# @name setNormConst
-# @aliases profileMatrix
+#' @rdname methods-segvis_block-gs
+#' @name normConst
 setReplaceMethod("normConst",
-  signature = signature(object = "profileMatrix",value = "numeric"),
+  signature = signature(object = "segvis_block",value = "numeric"),
   definition = function(object,value){
     stopifnot(value > 0)
     object@normConst = value
@@ -116,7 +106,7 @@ setMethods("meanProfile",
 # @rdname profileMatrix-methods
 # @name show
 setMethod("show",
-  signature = signature(object = "profileMatrix"),
+  signature = signature(object = "segvis_block"),
   definition = function(object){
     cat("Profile matrix for",name(object),"\n")
     cat("Bandwidth:",bandwidth(object),"\n")
