@@ -386,14 +386,14 @@ setGeneric("normConst<-",
   standardGeneric("normConst<-")
 )           
 
-#' @title countReads method for profile class
+#' @title countReads method for segvis class
 #' @description Counts the number of reads considered  in object
-#' @param object profile object
-#' @return In case of the get method it returns the constant used to normalize the profile
+#' @param object segvis object
+#' @return The number of reads in the bam file considered for the \code{segvis} object
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profile}}
-#' @rdname countReads
+#' @seealso \code{\link{segvis}}
+#' @rdname segvis-countReads
 setGeneric("countReads",
   function(object)
   standardGeneric("countReads")

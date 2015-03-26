@@ -364,12 +364,12 @@ setMethods("findSummit",
   return(unlist(summits_chr))    
 })
 
-# @rdname profile-methods
-# @name normConst
-# @aliases profile
+#' @rdname segvis-countReads
+#' @name countReads
 setMethods("countReads",
-  signature = signature(object = "profile"),
-  definition = function(object){   
+  signature = signature(object = "segvis"),
+  definition = function(object){
+    ## Check the case for a PET file    
     reader = bamReader(file(object),idx=TRUE)
     readMatrix = bamCountAll(reader)
     counts = sum(readMatrix$nAligns)
