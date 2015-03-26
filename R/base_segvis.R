@@ -79,3 +79,13 @@ calculate_chrom_coverage <- function(chr,nreg,object,mc)
     mc.cores = mc,mc.silent = TRUE)
   return(curves)
 }
+
+.join_info <- function(chr,region,profile,mc)
+{
+  nreg = nrow(region)
+  chr_cover = mclapply(1:nreg,function(i,region,profile)
+    data.table(chr = chr,match=i,coord = seq(region[i,(start)],region[i,(end)],by=1),
+      tagCounts = profile[[i]]),region,profile,mc.cores = mc,mc.silent = mc)
+  chr_cover = do.call(rbind,chr_cover)
+  return(chr_cover)
+}

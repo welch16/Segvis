@@ -317,24 +317,6 @@ setMethods("getCoverage",
     }
 })    
 
-# @rdname profile-methods
-# @name buildProfileMatrix
-# @aliases profile
-setMethods("buildProfileMatrix",
-  signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
-  definition = function(object,bw,mc=8){
-  if(length(unique(width(regions(object))))>1){
-      stop("The width of the regions isn't unique, can't build profile matrix")
-  }  
-  message("Calculating profiles for each chromosome")
-  matList = .calculateMAprofile(object,bw,mc)
-  message("Joining profiles into matrix")
-  matList = lapply(matList,function(x)do.call(rbind,x))
-  matList = do.call(rbind,matList)
-  message("Profile matrix built")
-  return(matList)
-})    
-
 #' @rdname segvis-findSummit
 #' @name findSummit
 setMethods("findSummit",          
@@ -376,16 +358,40 @@ setMethods("countReads",
     return(counts)  
 })
 
-# @rdname profile-methods
-# @name ProfileMatrix
-# @aliases profile
-setMethods("ProfileMatrix",
-  signature = signature(object = "profile",bw = "numeric",mc = "numeric"),
+#'@rdname segvis-joinProfiles
+#' @name joinProfiles
+setMethods("joinProfiles",
+  signature = signature(object = "segvis",bw = "numeric",mc = "numeric"),
+  definition = function(object,bw,mc=8){
+
+  ## calculate the coverage vectors
+  message("Calculating profiles for each chromosome")
+  profile_curves = .calculate_profile_curves(object,bw,mc)
+
+  ## init regions data
+  chr = names(seqlengths(regions(object)))
+  match_regions = separate.by.chrom(.data.table.GRanges(regions(object)),
+    chr, "*",mc,sort=FALSE)    
+  names(match_regions) = chr
+
+  ## join regions a profiles into data.table's
+  joined_info= mapply(.join_info,chr,match_regions,profile_curves,
+    MoreArgs = list(mc),SIMPLIFY=FALSE)
+  joined_info = do.call(rbind,joined_info)
+  
+  message("All profiles joint")
+  return(joined_info)
+})    
+
+#' @rdname Segvis_block
+#' @name Segvis_block
+setMethods("Segvis_block",
+  signature = signature(object = "segvis",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc){    
-    mat = buildProfileMatrix(object,bw,mc)
-    nc = countReads(object)
+    cover_table = joinProfiles(object,bw,mc)    
     nm = name(object)
     gr = regions(object)
-    pmatrix = new("profileMatrix",name = nm,regions = gr,profileMat = mat,bandwidth = bw,normConst = nc)
-    return(pmatrix)
-})    
+    segvis_block = new("segvis_block",name = nm,regions = gr,
+      cover_table = cover_table,bandwidth = bw,normConst = 1)
+    return(segvis_block)
+})             

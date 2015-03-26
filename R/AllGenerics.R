@@ -192,20 +192,20 @@ setGeneric("getCoverage",
   standardGeneric("getCoverage")           
 )
 
-#' @title buildProfileMatrix method for profile class
-#' @description If all the regions have the same width, this method build a profile matrix of dimension nr. regions x width
-#' @param object profile object
-#' @param bw, the bandwidth used to smooth the profiles, must be and odd number less or equal than the maxBandwidth
-#' @param mc, the number of cores used with parallel
-#' @return matrix object
+#' @title joinProfiles method for segvis class
+#' @description Joins all the coverages into a data.table with columns chr|match|coord|tagCounts
+#' @param object segvis object
+#' @param bw Numeric values with the bandwidth used to smooth the profiles, must be and odd number less or equal than the maxBandwidth
+#' @param mc Numeric value representing the number of cores used with parallel
+#' @return data.table object
 #' @export
 #' @docType methods
-#' @rdname buildProfileMatrix
+#' @rdname segvis-joinProfiles
 #' @examples
-#' \dontrun{ buildProfileMatrix(profile_object,bw = 151,mc=8)}
-setGeneric("buildProfileMatrix",
+#' \dontrun{ joinProfiles(segvis_object,bw = 151,mc=8)}
+setGeneric("joinProfiles",
   function(object,bw,mc)
-  standardGeneric("buildProfileMatrix")
+  standardGeneric("joinProfiles")
 )
 
 #' @title findSummit method for segvis class
@@ -224,21 +224,21 @@ setGeneric("findSummit",
   standardGeneric("findSummit")
 )
 
-#' @title Create a profileMatrix object
-#' @description Constructor for profileMatrix class, it takes both name and region from \code{object}
-#' @param object profile object
-#' @param bw Numeric used to smooth the profile curves
-#' @param mc Numeric, the number of cores used with parallel
-#' @return a profileMatrix object
+#' @title Create a segvis_block object
+#' @description Constructor for segvis_block class, it takes both name and region from \code{object}
+#' @param object segvis object
+#' @param bw Numeric value with the bandwidth used to smooth the profiles, must be and odd number less or equal than the maxBandwidth
+#' @param mc Numeric value with the number of cores used with parallel
+#' @return a sevis_block object
 #' @export
 #' @docType methods
-#' @rdname ProfileMatrix
-#' @seealso \code{\link{profileMatrix-class}}
+#' @rdname Segvis_block
+#' @seealso \code{\link{segvis_block-class}}
 #' @examples
-#' \dontrun{ProfileMatrix(profile_object,bw = 151,mc=8)}
-setGeneric("ProfileMatrix",
+#' \dontrun{Segvis_block(profile_object,bw = 151,mc=8)}
+setGeneric("Segvis_block",
   function(object,bw,mc)
-  standardGeneric("ProfileMatrix")
+  standardGeneric("Segvis_block")
 )           
 
 #' @title Generic method readsF for profile and reads classes

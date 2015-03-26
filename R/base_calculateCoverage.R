@@ -64,8 +64,8 @@
       message("Calculating profile for ",chrom)
       chr_reg = regions[[chrom]]
       nreg = length(chr_reg)
-      regionStart = chr_reg[,(start)]-side + 1
-      regionEnd = chr_reg[,(end)] + side - 1
+      regionStart = chr_reg[,(start)]-side 
+      regionEnd = chr_reg[,(end)] + side 
       stepList = profiles(object)[[chrom]]
       chr_curves = mcmapply(.calc_profile,regionStart,regionEnd,stepList,
         MoreArgs = list(bw,side),SIMPLIFY=FALSE,mc.cores=mc,mc.silent=TRUE)

@@ -119,6 +119,40 @@ setClass("profileMatrix",
                  .isScaled = FALSE)
 )    
 
+#' @title segvis_block class description
+#'
+#' @description Contains a data.table with the individual coverages for each region
+#'
+#' @slot name Character with the name of the profiles
+#'
+#' @slot regions GRanges object with the regions of the individuals profiles
+#'
+#' @slot cover_table data.table with the individuals coverages for each region
+#'
+#' @slot bandwidth Numeric value used to smooth the individual profiles
+#'
+#' @slot normCont Numeric normalizing contanst
+#'
+#' @slot .isScaled Logical value representing if the profiles are scaled to \code{normConst}
+#'
+#' @exportClass segvis_block
+#'
+#' @rdname segvis_block-class
+setClass("segvis_block",
+  representation(name = "character",
+                 regions = "GRanges",
+                 cover_table = "data.table",
+                 bandwidth = "numeric",
+                 normConst = "numeric",
+                 .isScaled = "logical"),
+  prototype = prototype(name = "",
+                 regions = GRanges(),
+                 cover_table = data.table(),
+                 bandwidth = 1,
+                 normConst = 1,
+                 .isScaled = FALSE)
+)                             
+
 #' @title profileMatrixList class description
 #' @description Contains a list of profileMatrix objects
 #' @exportClass profileMatrixList
@@ -130,10 +164,7 @@ setClass("profileMatrixList",
 #' @title segvisList class description
 #' @description Contains a list of segvis objects
 #' @exportClass segvisList
-setClass("segvisList",
-  prototype = prototype(elementType = "segvis"),
+setClass("segvis_blockList",
+  prototype = prototype(elementType = "segvis_block"),
   contains = "list"
-)         
-
-
-         
+)      
