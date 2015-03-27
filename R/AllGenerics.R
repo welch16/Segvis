@@ -241,12 +241,7 @@ setGeneric("Segvis_block",
   standardGeneric("Segvis_block")
 )           
 
-#' @title Generic method readsF for profile and reads classes
-#' @description Get method for reads and profile classes that returns the reads from the forward strand
-#' @param object reads object
-#' @return Returns a list of data.table's  with the reads of the backward strand
 #' @export
-#' @seealso \code{\link{reads-class}}
 #' @docType methods
 #' @rdname methods-segvis-gs
 setGeneric("readsF",
@@ -262,19 +257,13 @@ setGeneric("readsF<-",
   standardGeneric("readsF<-")
 )           
 
-#' @title Generic method readsR for profile and reads classes
-#' @description Get method for reads and profile classes that returns the reads from the backward strand
-#' @param object reads object
-#' @return Returns a list of data.table's  with the reads of the backward strand
 #' @export
-#' @seealso \code{\link{reads-class}}
 #' @docType methods
 #' @rdname methods-segvis-gs
 setGeneric("readsR",
   function(object)
   standardGeneric("readsR")           
 )
-
 
 #' @export
 #' @docType methods
@@ -362,8 +351,6 @@ setGeneric("countReads",
   function(object)
   standardGeneric("countReads")
 )           
-
-
 
 #' @title summarize method for segvis_block class
 #' @description This methods summarizes the coverage of the data when all the regions have the same width. To do so, it pilles up all tagCounts and applies FUN to each coordinate.
