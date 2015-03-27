@@ -365,19 +365,20 @@ setGeneric("countReads",
 
 
 
-#' @title meanProfile method for profileMatrix class
-#' @description This method calculates the "average" profile of the matrix respect to their rows. As in the mean function it is possible to set a trim parameter
-#' @param object profileMatrix object
-#' @param trim Numeric. By default is set to zero. If trim =0, it calculated the row-wise mean, if trim >= 0.5 then is calculates the row-wise median, otherwise it calculate a row-wise trimmed mean.
-#' @return Numeric vector
+#' @title summarize method for segvis_block class
+#' @description This methods summarizes the coverage of the data when all the regions have the same width. To do so, it pilles up all tagCounts and applies FUN to each coordinate.
+#' @param object segvis_block object
+#' @param FUN Function used to summarize the tagCounts, for example if \code{FUN = mean}, then it will returns a vector with the mean of all tagCounts by centered coordinate. In particular, \code{FUN} needs to take vector argument + optional parameters
+#' @param ... Rest of the arguments needed to use \code{FUN}
+#' @return A numeric vector
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profileMatrix-class}}
-#' @rdname meanProfile
-setGeneric("meanProfile",
-  function(object,...)
-  standardGeneric("meanProfile")
-)           
+#' @seealso \code{\link{segvis_block-class}}
+#' @rdname methods-segvis_block-summarize
+setGeneric("summarize",
+  function(object,FUN,...)
+  standardGeneric("summarize"))
+
 
 #' @title normalize method for segvis_block class
 #' @description This method normalizes the segvis_block tagCounts by multiplying it times value.

@@ -91,18 +91,23 @@ setReplaceMethod("normConst",
     return(object)
 })                        
 
-# @rdname profileMatrix-methods
-# @name meanProfile
-setMethods("meanProfile",
-  signature = signature(object = "profileMatrix",trim = "numeric"),
-  definition = function(object,trim){
-    if(missing(trim))trim=0
-    stopifnot(is.numeric(trim))
-    mat = profileMat(object)
-    return(sapply(1:ncol(mat),function(i,mat)
-      mean(mat[,i],trim = trim,na.rm = TRUE),mat))
+#' @rdname methods-segvis_block-summarize
+#' @name summarize
+setMethods("summarize",
+  signature = signature(object = "segvis_block",FUN = "function",... = "ANY"),
+  definition = function(object,FUN,...){
+    ## check length of matches
+    lengths = cover_table(object)[,length(coord),by = .(chr,match)]
+    if(length(u <- unique(lengths[,(V1)])) > 1){
+      stop("All regions must have the same length")
+    }
+    out = copy(cover_table(object))
+    out[,center:=0L]
+    out[,center:= out[,coord - min(coord) + 1,by = .(chr,match)][,(V1)]]           
+    summary = out[,FUN(tagCounts,...),by =.(chr,center)]
+    return(summary[,(V1)])
 })
-    
+                     
 # @rdname profileMatrix-methods
 # @name show
 setMethod("show",
