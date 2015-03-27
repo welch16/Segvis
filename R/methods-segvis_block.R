@@ -140,12 +140,12 @@ setMethod("subset.pm",
     return(.filter_profileMat(object,cond))
 })
 
-# @rdname profileMatrix-methods
-# @name addColumn
+#' @rdname methods-segvis_block-addColumn
+#' @name addColumn
 setMethods("addColumn",
-  signature = signature(object = "profileMatrix",name = "character",col = "ANY"),
+  signature = signature(object = "segvis_block",name = "character",col = "ANY"),
   definition = function(object,name,col){
-    stopifnot(length(col) == length(regions(object)))
+    stopifnot(length(col) == length(regions(object)))    
     elementMetadata(regions(object))@listData[[name]] = col
     return(object)
 })

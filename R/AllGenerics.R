@@ -408,16 +408,16 @@ setGeneric("subset.pm",
   function(object,condition)
   standardGeneric("subset.pm"))
 
-#' @title addColumn method for profileMatrix class
+#' @title addColumn method for segvis_block class
 #' @description This method helps to add a new column to the profile matrix object, is works similarly than using the $ operator over \code{regions(object)}
-#' @param object profileMatrix object
+#' @param object segvis_block object
 #' @param name Character with the name of the column to be add
 #' @param col Vector of the same lengh as \code{regions(object)}
-#' @return Returns a profileMatrix object with the new column added to \code{regions(object)}
+#' @return Returns a segvis_block object with the new column added to \code{regions(object)}
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profileMatrix-class}}
-#' @rdname addColumn
+#' @seealso \code{\link{segvis_block-class}}
+#' @rdname methods-segvis_block-addColumn
 setGeneric("addColumn",
   function(object,name,col)
   standardGeneric("addColumn"))           
