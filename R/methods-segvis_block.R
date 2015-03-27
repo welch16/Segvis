@@ -108,7 +108,7 @@ setMethods("meanProfile",
 setMethod("show",
   signature = signature(object = "segvis_block"),
   definition = function(object){
-    cat("Profile matrix for",name(object),"\n")
+    cat("Segvis profile:",name(object),"\n")
     cat("Bandwidth:",bandwidth(object),"\n")
     if( object@.isScaled){
       cat("The profile matrix IS scaled\n")
@@ -118,15 +118,15 @@ setMethod("show",
     show(regions(object))
 })
 
-# @rdname profileMatrix-methods
-# @name normalize.matrix
-setMethods("normalize.matrix",
-  signature = signature(object = "profileMatrix",value = "numeric",base = "numeric"),
+#' @rdname methods-segvis_block-normalize
+#' @name normalize
+setMethods("normalize",
+  signature = signature(object = "segvis_block",value = "numeric",base = "numeric"),
   definition = function(object, value,base){
     if(missing(base))base = 1000000
     if(missing(value))value = base/normConst(object)
     stopifnot(value > 0)
-    profileMat(object) = value * profileMat(object)
+    cover_table(object)[,tagCounts := value * tagCounts]
     object@.isScaled = TRUE
     return(object) 
 })

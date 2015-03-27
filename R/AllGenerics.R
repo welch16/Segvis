@@ -379,18 +379,20 @@ setGeneric("meanProfile",
   standardGeneric("meanProfile")
 )           
 
-#' @title normalize.matrix method for profileMatrix class
-#' @description This method normalizes the profile matrix by multiplying it times value
-#' @param object profileMatrix object
+#' @title normalize method for segvis_block class
+#' @description This method normalizes the segvis_block tagCounts by multiplying it times value.
+#' It normalizes the tagCounts by multiplying it times base / normConst
+#' @param object segvis_block object
 #' @param value A positive number or a missing value. If is missing is going to normalize as if they were 1 million reads in the experiment
-#' @return A profileMatrix object where the profileMat slot has been normalized
+#' @param base A positive integer considering the base used to normalize the tagCounts
+#' @return A segvis_block object where the cover_table contains normalized tagCounts
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profileMatrix-class}}
-#'@rdname normalize.matrix
-setGeneric("normalize.matrix",
+#' @seealso \code{\link{segvis_block-class}}
+#' @rdname methods-segvis_block-normalize
+setGeneric("normalize",
   function(object,...)
-  standardGeneric("normalize.matrix")
+  standardGeneric("normalize")
 )           
 
 #' @title subset.pm method for profileMatrix class
