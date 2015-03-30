@@ -3,14 +3,14 @@
 
 ## Get methods
 
-#' @rdname methods-segvis-gs
+#' @rdname methods-reads-gs
 #' @name readsF
 setMethod("readsF",
   signature = signature(object = "reads"),
   definition = function(object)object@readsF
 )
 
-#' @rdname methods-segvis-gs
+#' @rdname methods-reads-gs
 #' @name readsR
 setMethod("readsR",
   signature = signature(object = "reads"),
@@ -19,7 +19,7 @@ setMethod("readsR",
 
 ## Set methods
 
-#' @rdname methods-segvis-gs
+#' @rdname methods-reads-gs
 #' @name readsF
 setReplaceMethod("readsF",
   signature = signature(object = "reads",value = "list"),
@@ -28,7 +28,7 @@ setReplaceMethod("readsF",
     return(object)
 })
 
-#' @rdname methods-segvis-gs
+#' @rdname methods-reads-gs
 #' @name readsR
 setReplaceMethod("readsR",
   signature = signature(object = "reads",value = "list"),

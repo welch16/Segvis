@@ -52,15 +52,15 @@ setMethod("isPET",
   definition = function(object)object@isPET
 )          
 
-#' @rdname methods-segvis-gs
-#' @name readsF
+# @rdname methods-segvis-gs
+# @name readsF
 setMethod("readsF",
   signature = signature(object = "segvis"),
   definition = function(object)readsF(object@reads)
 )           
 
-#' @rdname methods-segvis-gs
-#' @name readsR
+# @rdname methods-segvis-gs
+# @name readsR
 setMethod("readsR",
   signature = signature(object = "segvis"),
   definition = function(object)readsR(object@reads)
@@ -185,8 +185,8 @@ setMethods("show",
 #    cat("---------------------------\n")
 })
 
-#' @rdname methods-segvis-readsF
-#' @name readsF
+# @rdname methods-segvis-readsF
+# @name readsF
 setReplaceMethod("readsF",
   signature = signature(object = "segvis",value = "list"),
   definition = function(object,value){
@@ -195,8 +195,8 @@ setReplaceMethod("readsF",
   }
 )                 
 
-#' @rdname methods-segvis-readsR
-#' @name readsR
+# @rdname methods-segvis-readsR
+# @name readsR
 setReplaceMethod("readsR",
   signature = signature(object = "segvis",value = "list"),
   definition = function(object,value){
