@@ -11,11 +11,12 @@
 
 \begin{document}
 
-\title{Segvis: A package for visualization of high throughout sequencing data along genomic segments}
+\title{Segvis: A package for visualization of high throughput
+  sequencing data along genomic segments}
 \author{Rene Welch (\href{mailto:welch@stat.wisc.edu}{welch@stat.wisc.edu}) and S\"{u}nd\"{u}z Kele\c{s} (\href{mailto:welch@stat.wisc.edu}{keles@stat.wisc.edu})   \\
   Department of Statistics, University of Wisconsin - Madison \\
   Madison, WI} 
-\date{October 2014}
+\date{April 2015}
 
 \maketitle
 
@@ -27,23 +28,34 @@
 This vignette provides an introduction to the visualization of
 sequencing data by using the \Rpackage{Segvis}
 package. The minimum input to the package includes:
-\begin{enumerate}
-\item One or more bam files of aligned read data (e.g. from ChIP-seq experiments)
 
-\item Coordinates for regions of interest
+\begin{enumerate}
+
+\item One or more bam files of aligned read data (e.g. from ChIP-seq
+  experiments).
+
+\item Coordinates for regions of interest.
 
 \end{enumerate}
 
- \Rpackage{Segvis} provides different tools to summarize and
-visualize these data, including but not limited to the following tasks:
+\Rpackage{Segvis} provides different tools to summarize and visualize
+these data, including but not limited to the following tasks:
 
 \begin{itemize}
-\item Extract read data of specified input regions
-\item Plot data from different files (conditions) accross the same set of regions, e.g. peak plots for ChIP-seq
-\item Plot central measures for a set of regions with the same width
+
+\item Extract read data of specified input regions.
+
+\item Plot data from different files (conditions) accross the same set
+  of regions, e.g. peak plots for ChIP-seq.
+
+\item Calculate and plot statistics(e.g. mean, median, variace, etc.)
+  over a window around biologically meaningful coordinates (TSS, TFBS,
+  etc.)
+
 \item Subset this regions according to user defined annotations
-\item Plot the heatmap of signal curves accross regions separated by
-  annotation
+
+% \item Plot the heatmap of signal curves accross regions separated by
+%   annotation
 \end{itemize}
 
 \section{The basics}
