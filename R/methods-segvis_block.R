@@ -136,13 +136,13 @@ setMethods("normalize",
     return(object) 
 })
            
-# @rdname profileMatrix-methods
-# @name subset.pm
-setMethod("subset.pm",
-  signature = signature(object = "profileMatrix",condition = "ANY"),
-  definition = function(object, condition){    
-    cond = .subset_profileMat_logical(object,substitute(condition))
-    return(.filter_profileMat(object,cond))
+#' @rdname methods-segvis_block-subset
+#' @name subset
+setMethod("subset",
+  signature = signature(object = "segvis_block",condition = "ANY"),
+  definition = function(object, condition){
+    cond = .subset_logical(object,substitute(condition))
+    return(.filter_sb(object,cond))
 })
 
 #' @rdname methods-segvis_block-addColumn

@@ -13,6 +13,8 @@ Segvis(regionName, file, maxBandwidth, chr, fragLen = 0, isPET = FALSE)
 
 \item{maxBandwidth}{Numeric value of the maximum possible value to smooth the profile curve}
 
+\item{chr}{String or string vector specifying the organism or chromosomes to be used}
+
 \item{fragLen}{Numeric value of the fragment length used to extend the reads}
 }
 \value{
@@ -26,10 +28,4 @@ Constructor for segvis class
 \describe{
 \item{\code{isPET}}{logical, Indicates is the reads come from a PET experiments or a SET experiment}
 }}
-\examples{
-rn = "sites"
-f = "somefile.bam"
-maxBw = 1;fl = 200
-Segvis(regionName = rn,file =f,maxBandwidth = maxBw, fragLen = fl)
-}
 

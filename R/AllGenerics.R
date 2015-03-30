@@ -241,9 +241,13 @@ setGeneric("Segvis_block",
   standardGeneric("Segvis_block")
 )           
 
+#' @title Get and set method of reads objects
+#' @description \code{readsF} operates on the forward reads, while \code{readsR} operates on the backward reads
+#' @param object Either a \code{segvis} o \code{reads} object
+#' @param value A data.table converted from a \code{GRanges} object
 #' @export
 #' @docType methods
-#' @rdname methods-segvis-gs
+#' @rdname methods-reads-gs
 setGeneric("readsF",
   function(object)
   standardGeneric("readsF")
@@ -251,7 +255,7 @@ setGeneric("readsF",
 
 #' @export
 #' @docType methods
-#' @rdname methods-segvis-gs
+#' @rdname methods-reads-gs
 setGeneric("readsF<-",
   function(object,value)
   standardGeneric("readsF<-")
@@ -259,7 +263,7 @@ setGeneric("readsF<-",
 
 #' @export
 #' @docType methods
-#' @rdname methods-segvis-gs
+#' @rdname methods-reads-gs
 setGeneric("readsR",
   function(object)
   standardGeneric("readsR")           
@@ -267,7 +271,7 @@ setGeneric("readsR",
 
 #' @export
 #' @docType methods
-#' @rdname methods-segvis-gs
+#' @rdname methods-reads-gs
 setGeneric("readsR<-",
   function(object,value)
   standardGeneric("readsR<-")
@@ -383,18 +387,18 @@ setGeneric("normalize",
   standardGeneric("normalize")
 )           
 
-#' @title subset.pm method for profileMatrix class
+#' @title subset method for segvis_block class
 #' @description This method works similarly to the subset of IRanges, GenomicRanges, GenomicAlignments, etc. Althought it doesn't consider the select parameter.
-#' @param object profileMatrix object
+#' @param object segvis_block object
 #' @param condition This is an expression considering the characteristics taht the subset need to satisfy
-#' @return Returns a profileMatrix object with the same parameters as object except regions and profileMat which are filtered to satisfy the conditions on condition.
+#' @return Returns a segvis_block object with the same parameters as object except regions and profileMat which are filtered to satisfy the conditions on condition.
 #' @export
 #' @docType methods
-#' @seealso \code{\link{profileMatrix-class}}
-#' @rdname subset.pm
-setGeneric("subset.pm",
+#' @seealso \code{\link{segvis_block-class}}
+#' @rdname subset
+setGeneric("subset",
   function(object,condition)
-  standardGeneric("subset.pm"))
+  standardGeneric("subset"))
 
 #' @title addColumn method for segvis_block class
 #' @description This method helps to add a new column to the profile matrix object, is works similarly than using the $ operator over \code{regions(object)}

@@ -3,7 +3,7 @@
 \docType{class}
 \name{segvis_blockList-class}
 \alias{segvis_blockList-class}
-\title{segvisList class description}
+\title{segvis_blockList class description}
 \description{
 Contains a list of segvis objects
 }

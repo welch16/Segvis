@@ -91,7 +91,6 @@ setClass("segvis",
 
 setValidity("segvis",
   function(object){
-  # Checks that readsList and matchList have same length  
   return(object@fragLen >=0 & object@maxBandwidth >=1)
 })  
 
@@ -161,10 +160,12 @@ setClass("profileMatrixList",
   contains = "list"
 )         
 
-#' @title segvisList class description
+#' @title segvis_blockList class description
 #' @description Contains a list of segvis objects
-#' @exportClass segvisList
-setClass("segvis_blockList",
+#' @exportClass segvis_blockList
+setClass("segvis_blockList",         
   prototype = prototype(elementType = "segvis_block"),
   contains = "list"
 )      
+
+
