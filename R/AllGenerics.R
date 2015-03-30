@@ -414,31 +414,52 @@ setGeneric("addColumn",
   function(object,name,col)
   standardGeneric("addColumn"))           
 
-#' @title plot.profile method for profileMatrixList class
+#' @title plot_profiles method for segvis_block_list class
+#'
 #' @description This method returns the ggplot object used later to print the plot
-#' @param object profileMatrixList object
+#'
+#' @param object segvis_block_list object
+#'
 #' @param condition The condition used to filter the profileMatrix objects, if there is no condition then it doesn't filter the objects
-#' @param coord Numeric vector representing the coordinates used in the x-axis of the plot, by default considers the natural index \code{1:ncol(profileMatrix)}
-#' @param trim Numeric. By default is set to zero. If trim =0, it calculated the row-wise mean, if trim >= 0.5 then is calculates the row-wise median, otherwise it calculate a row-wise trimmed mean.
+#'
+#' @param coord Numeric vector representing the coordinates used in the x-axis of the plot, by default considers the natural index \code{1:ncol(segvis_block)}
+#'
+#' @param FUN Function used to summarize the profiles
+#'
+#' @param ... Additional arguments of \code{FUN}
+#'
 #' @return The ggplot object used to print the plot
+#'
 #' @export
+#'
 #' @docType methods
-#' @seealso \code{\link{profileMatrixList-class}}
-#' @rdname plot.profiles
-setGeneric("plot.profiles",
-  function(object,...)
-  standardGeneric("plot.profiles"))          
+#' @seealso \code{\link{segvis_block_list-class}}
+#' @rdname plot_profiles
+setGeneric("plot_profiles",
+  function(object,condition,coord,FUN,...,mc)
+  standardGeneric("plot_profiles"))          
 
-#' @title mergeList method for profileMatrixList class
-#' @description This methods returns a profileMatrix class object which contains the regions and coverage curves of the list merged
-#' @details In this case, we are going to merge by consider the priority implied by the order in list. Which means if there is an overlap between a region of object[[1]] with a region of object[[2]], the algorithm is going to choose the region of object[[1]] and so on.
-#' @param object profileMatrixList with the profile matrices to be merged
-#' @return A profileMatrix object with the regions and matrices merged
+#' @title plot_profiles method for segvis_block_list class
+#'
+#' @description This method returns the ggplot object used later to print the plot
+#'
+#' @param object segvis_block_list object
+#'
+#' @param condition The condition used to filter the profileMatrix objects, if there is no condition then it doesn't filter the objects
+#'
+#' @param coord Numeric vector representing the coordinates used in the x-axis of the plot, by default considers the natural index \code{1:ncol(segvis_block)}
+#'
+#' @param FUN Function used to summarize the profiles
+#'
+#' @param ... Additional arguments of \code{FUN}
+#'
+#' @return A data.table containing the data ready to plot by ggplot
+#'
 #' @export
+#'
 #' @docType methods
-#' @seealso \code{\link{profileMatrixList-class}}
-#' @rdname mergeList
-setGeneric("mergeList",
-  function(object)
-  standardGeneric("mergeList")
-)           
+#' @seealso \code{\link{segvis_block_list-class}}
+#' @rdname plot_profiles
+setGeneric("plot_data",
+  function(object,condition,coord,FUN,...,mc)
+  standardGeneric("plot_data"))

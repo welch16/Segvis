@@ -160,10 +160,10 @@ setClass("profileMatrixList",
   contains = "list"
 )         
 
-#' @title segvis_blockList class description
+#' @title segvis_block_list class description
 #' @description Contains a list of segvis objects
-#' @exportClass segvis_blockList
-setClass("segvis_blockList",         
+#' @exportClass segvis_block_list
+setClass("segvis_block_list",         
   prototype = prototype(elementType = "segvis_block"),
   contains = "list"
 )      
