@@ -16,11 +16,11 @@
 #'
 #' @return A segvis object
 #'
-#' @examples
-#' rn = "sites"
-#' f = "somefile.bam"
-#' maxBw = 1;fl = 200
-#' Segvis(regionName = rn,file =f,maxBandwidth = maxBw, fragLen = fl)
+# @examples
+# rn = "sites"
+# f = "somefile.bam"
+# maxBw = 1;fl = 200
+# Segvis(regionName = rn,file =f,maxBandwidth = maxBw, fragLen = fl)
 
 Segvis <- function(regionName,file,maxBandwidth,chr,fragLen=0,isPET=FALSE)
 {

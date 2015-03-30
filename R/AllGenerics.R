@@ -395,7 +395,7 @@ setGeneric("normalize",
 #' @export
 #' @docType methods
 #' @seealso \code{\link{segvis_block-class}}
-#' @rdname subset
+#' @rdname methods-segvis_block-subset
 setGeneric("subset",
   function(object,condition)
   standardGeneric("subset"))
@@ -434,7 +434,7 @@ setGeneric("addColumn",
 #'
 #' @docType methods
 #' @seealso \code{\link{segvis_block_list-class}}
-#' @rdname plot_profiles
+#' @rdname methods-segvis_block_list-plot_profiles
 setGeneric("plot_profiles",
   function(object,condition,coord,FUN,...,mc)
   standardGeneric("plot_profiles"))          
@@ -459,7 +459,7 @@ setGeneric("plot_profiles",
 #'
 #' @docType methods
 #' @seealso \code{\link{segvis_block_list-class}}
-#' @rdname plot_profiles
+#' @rdname methods-segvis_block_list-plot_data
 setGeneric("plot_data",
   function(object,condition,coord,FUN,...,mc)
   standardGeneric("plot_data"))

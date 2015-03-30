@@ -13,8 +13,6 @@ Segvis(regionName, file, maxBandwidth, chr, fragLen = 0, isPET = FALSE)
 
 \item{maxBandwidth}{Numeric value of the maximum possible value to smooth the profile curve}
 
-\item{chr}{String or string vector specifying the organism or chromosomes to be used}
-
 \item{fragLen}{Numeric value of the fragment length used to extend the reads}
 }
 \value{
