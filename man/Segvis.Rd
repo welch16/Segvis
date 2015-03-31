@@ -4,10 +4,10 @@
 \alias{Segvis}
 \title{Creates a segvis object}
 \usage{
-Segvis(regionName, file, maxBandwidth, chr, fragLen = 0, isPET = FALSE)
+Segvis(name, file, maxBandwidth, chr, fragLen = 0, isPET = FALSE)
 }
 \arguments{
-\item{regionName}{Name of the segvis object}
+\item{name}{Name of the segvis object}
 
 \item{file}{Character string with the file name that contain the reads}
 

@@ -168,11 +168,11 @@ setMethods("show",
   signature = signature(object = "segvis"),
   definition = function(object){
 #    cat("---------------------------\n")
-    cat("Profile for",name(object),"regions\n")
+    cat("Segvis for",name(object),"regions\n")
     cat("Paired-end Tags: ",isPET(object),"\n")
     cat("Fragment length:",fragLen(object),"\n")
     cat("Max Bandwidth:", maxBandwidth(object),"\n")
-    cat("Using reads files:\n")
+    cat("Using reads file:\n")
     cat(file(object),sep = "\n")
     len = length(seqlengths(regions(object)))
     if( len > 0){

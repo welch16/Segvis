@@ -2,7 +2,7 @@
 #'
 #' @description Constructor for segvis class
 #'
-#' @param regionName Name of the segvis object
+#' @param name Name of the segvis object
 #'
 #' @param file Character string with the file name that contain the reads
 #'
@@ -22,9 +22,9 @@
 # maxBw = 1;fl = 200
 # Segvis(regionName = rn,file =f,maxBandwidth = maxBw, fragLen = fl)
 
-Segvis <- function(regionName,file,maxBandwidth,chr,fragLen=0,isPET=FALSE)
+Segvis <- function(name,file,maxBandwidth,chr,fragLen=0,isPET=FALSE)
 {
-  stopifnot(is.character(regionName))
+  stopifnot(is.character(name))
   stopifnot(is.character(file))
   stopifnot(is.logical(isPET))
   stopifnot(is.character(chr))
@@ -43,6 +43,6 @@ Segvis <- function(regionName,file,maxBandwidth,chr,fragLen=0,isPET=FALSE)
   }else{
     warning("Chromosomes supplied by user")
   }
-  return(new("segvis",name = regionName,file=file,
+  return(new("segvis",name = name,file=file,
     maxBandwidth = maxBandwidth, fragLen = fragLen,isPET=isPET,chr =chr))
 }
