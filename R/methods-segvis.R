@@ -91,8 +91,7 @@ setReplaceMethod("regions",
   definition = function(object,value){
     stopifnot(class(value) == "GRanges")
     unique_chr = unique(as.character(seqnames(value)))
-    if(length(chr(object)) >
-      length(unique_chr)){
+    if(length(chr(object)) > length(unique_chr)){
       warning("There are more chromosomes in chr(object) than in the regions. User's supplied additional chromosomes are being removed")
       chr(object) = chr(object)[chr(object) %in% unique_chr]
     }

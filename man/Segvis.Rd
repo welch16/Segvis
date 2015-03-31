@@ -2,7 +2,7 @@
 % Please edit documentation in R/Segvis.R
 \name{Segvis}
 \alias{Segvis}
-\title{Creates a segvis objec}
+\title{Creates a segvis object}
 \usage{
 Segvis(regionName, file, maxBandwidth, chr, fragLen = 0, isPET = FALSE)
 }

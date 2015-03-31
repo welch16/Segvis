@@ -1,4 +1,4 @@
-#' @title Creates a segvis objec
+#' @title Creates a segvis object
 #'
 #' @description Constructor for segvis class
 #'
