@@ -10,21 +10,25 @@
 {
   z = step_fn
   x = seq(regionStart,regionEnd,by=1)
-  if(nrun(z)==1){
-    if(runValue(z) == 0){
-      y = rep(NA,length(x))
+  if(!is.null(z)){
+    if(nrun(z)==1){
+      if(runValue(z) == 0){
+        y = rep(NA,length(x))
+      }else{
+        y = rep(runValue(z),length(x))
+      }
     }else{
-      y = rep(runValue(z),length(x))
+      xp = cumsum(runLength(z)[1:(nrun(z)-1)])
+      yp = runValue(z)
+      y = stepfun(xp,yp,right = TRUE)(x)
+      y =  .ma(y,bw)
+    }
+    if(side > 0){
+      y = y[-c(1:side)]
+      y = y[1:(length(y) - side)]
     }
   }else{
-    xp = cumsum(runLength(z)[1:(nrun(z)-1)])
-    yp = runValue(z)
-    y = stepfun(xp,yp,right = TRUE)(x)
-    y =  .ma(y,bw)
-  }
-  if(side > 0){
-    y = y[-c(1:side)]
-    y = y[1:(length(y) - side)]
+    y = rep(0,length(x))
   }
   return(as.numeric(y))
 }
@@ -68,7 +72,8 @@
       regionEnd = chr_reg[,(end)] + side 
       stepList = profiles(object)[[chrom]]
       chr_curves = mcmapply(.calc_profile,regionStart,regionEnd,stepList,
-        MoreArgs = list(bw,side),SIMPLIFY=FALSE,mc.cores=mc,mc.silent=TRUE)
+        MoreArgs = list(bw,side),SIMPLIFY=FALSE,mc.cores=mc,mc.silent=TRUE,
+        mc.preschedule =FALSE)
       return(chr_curves)
     },object,match_regions,side,mc)
     names(curves) = chr

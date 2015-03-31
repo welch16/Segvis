@@ -123,16 +123,23 @@ load it into \R{} by using:
 Then to convert it into a \Rclass{GRanges} object we can use:
 
 <<gr_peaks,include=TRUE,echo=TRUE,eval=TRUE>>=
-  
+
+  K = 2000
   ctcf_gr = GRanges(seqnames = ctcf_peaks$V1,
     ranges = IRanges(start = ctcf_peaks$V2,
       end = ctcf_peaks$V3),strand = "*")
+  ctcf_gr = ctcf_gr[order(ctcf_peaks$V7,decreasing=TRUE)[1:K]]
   ctcf_gr
 
 @ 
 
 A complete description of the meaning of each column in the peaks file
 is given in \url{https://genome.ucsc.edu/FAQ/FAQformat.html#format12}.
+Using the signal values (on the 7th column), we are going to consider
+the top \Sexpr{K} peaks:
+
+ 
+
 
 \subsection{Creating a \Robject{segvis} object}
 \label{subsec:create}
@@ -170,7 +177,7 @@ following parameters:
 <<parameters_segvis , include=TRUE,echo=TRUE,eval=TRUE, warning=FALSE>>=
   
   ctcf = Segvis(name = "ctcf_peaks",
-    file = "../inst/extdata/reads/encode_K562_Ctcf_first3chr_Rep1.bam",
+    file = "../inst/extdata/reads/encode_K562_Ctcf_first3chr_Rep1.sort.bam",
     maxBandwidth = 101,fragLen = 200,isPET = FALSE,
     chr = c("chr1","chr2","chr3"))                 
   regions(ctcf) = ctcf_gr
@@ -178,53 +185,50 @@ following parameters:
 
 @ 
 
+\subsection{Creating \Robject{segvis\_block} object}
+\label{subsec:cover}
+
+\Rpackage{Segvis} allows the use of several cores by using the
+parameter \Rcode{mc}, which specifies the number of cores used by
+parallel processing. To create a \Robject{segvis\_block} object it is
+necessary to follow a series of steps:
+
+<<segvis_block , include=TRUE,echo=TRUE,eval=TRUE,message=FALSE>>=
+ 
+  ctcf = loadReads(ctcf, mc = 24)
+  ctcf = matchReads(ctcf,mc = 24)
+  ctcf = getCoverage(ctcf,mc = 24)
+  ctcf_block = Segvis_block(ctcf,bw = 1,mc = 24)
+  
+@ 
+
+To obtain the number of reads considered in an experiment:
+
+<<countReads,include=TRUE,echo=TRUE,eval=TRUE>>=
+
+  ctcf_reads = countReads(ctcf)
+  ctcf_reads
+  
+@ 
+
+In order to visually compare the enrichment level of several
+experiments it is necessary to normalize the experiment, which
+\Rpackage{Segvis} allows to do, by using:
+
+<<normalize,include=TRUE,echo=TRUE,eval=TRUE>>=
+
+  normConst(ctcf_block) = ctcf_reads
+  ctcf_block = normalize(ctcf_block)
+  
+@ 
 
 
 
 
 
-% \subsection{Creating a \Robject{profile} object}
 
-% To create an \Robject{profile} object, there are needed two sources of
-% data, the regions that are need to explore and a set of aligned
-% reads. To define a \Robject{profile}, it is necessary to define some
-% additional parameters:
 
-% <<create_prof,include=TRUE,echo=TRUE,eval=TRUE>>=
-%   name = "H3k27ac"
-%   file ="../inst/extdata/encode_K562_H3k27ac_first3chr.sort.bam"
-%   maxBw = 501
-%   fl = 200
-%   ourProfile = Profile(regionName = name,file = file,fileFormat= "bam",maxBandwidth = maxBw,fragLen = fl,remChr = "")
-%   ourProfile
-% @
 
-% \Rpackage{Segvis} is going to warn the user if there aren't any
-% regions loaded. To load the regions a \Robject{GRanges} is necessary,
-% to build one there are some instructions in \ref{gr1}.
-
-% <<regions_prof,cache=TRUE,include=TRUE,echo=TRUE,eval=TRUE,tidy=TRUE>>=
-%   load(file = "../data/peaks_ctcf.RData")
-%   windowExt = 1000
-%   start(peaks_ctcf) = peaks_ctcf$summit - windowExt
-%   end(peaks_ctcf) = peaks_ctcf$summit + windowExt
-%   regions(ourProfile) = peaks_ctcf
-%   ourProfile
-% @
-
-% \subsection{Creating the coverage curves}
-
-% To create a the coverage curves it is necessary to follow three steps
-% \Rcode{loadReads}, \Rcode{matchReads} and \Rcode{getCoverage}:
-
-% <<load_reads,cache=TRUE,include=TRUE,echo=TRUE,eval=FALSE,tidy=TRUE>>=
-%   mc =8
-%   ourProfile = loadReads(ourProfile,mc)
-%   ourProfile = matchReads(ourProfile,mc)
-%   ourProfile = getCoverage(ourProfile,mc)
-% @
-
-% \label{cover}
 
 % \section{Some examples}
 

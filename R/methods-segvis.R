@@ -279,6 +279,7 @@ setMethods("matchReads",
       message("Matching reads for forward strand")
       readsF(object) = mcmapply(.match.reads,readsF(object),overlapsF,
         SIMPLIFY= FALSE,mc.cores = mc ,mc.silent =TRUE)
+      message("Matching reads for reverse strand")
       readsR(object) = mcmapply(.match.reads,readsR(object),overlapsR,
         SIMPLIFY= FALSE,mc.cores = mc ,mc.silent =TRUE)
 
@@ -386,7 +387,7 @@ setMethods("joinProfiles",
 #' @name Segvis_block
 setMethods("Segvis_block",
   signature = signature(object = "segvis",bw = "numeric",mc = "numeric"),
-  definition = function(object,bw,mc){    
+  definition = function(object,bw,mc){
     cover_table = joinProfiles(object,bw,mc)    
     nm = name(object)
     gr = regions(object)
