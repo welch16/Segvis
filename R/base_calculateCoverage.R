@@ -29,6 +29,10 @@
     }
   }else{
     y = rep(0,length(x))
+    if(side > 0){
+      y = y[-c(1:side)]
+      y = y[1:(length(y) - side)]
+    }       
   }
   return(as.numeric(y))
 }

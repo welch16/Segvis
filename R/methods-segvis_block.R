@@ -99,12 +99,12 @@ setMethods("summarize",
     ## check length of matches
     lengths = cover_table(object)[,length(coord),by = .(chr,match)]
     if(length(u <- unique(lengths[,(V1)])) > 1){
-      stop("All regions must have the same length")
+       warning("All regions must have the same length")
     }
     out = copy(cover_table(object))
     out[,center:=0L]
     out[,center:= out[,coord - min(coord) + 1,by = .(chr,match)][,(V1)]]           
-    summary = out[,FUN(tagCounts,...),by =.(chr,center)]
+    summary = out[,FUN(tagCounts,...),by =.(center)]
     return(summary[,(V1)])
 })
                      
