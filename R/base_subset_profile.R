@@ -19,7 +19,7 @@
     cond[is.na(cond)] = FALSE
   }
   coverage = copy(cover_table(object))
-  lengths = coverage[,length(chr),by=match][,(V1)]
+  lengths = coverage[,length(coord),by=.(chr,match)][,(V1)]
   extended_cond = unlist(mapply(function(x,l)rep(x,l),cond,lengths,SIMPLIFY=FALSE))
 
   # Add condition to data.table, filter and remove condition
