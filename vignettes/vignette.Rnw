@@ -136,9 +136,7 @@ Then to convert it into a \Rclass{GRanges} object we can use:
 A complete description of the meaning of each column in the peaks file
 is given in \url{https://genome.ucsc.edu/FAQ/FAQformat.html#format12}.
 Using the signal values (on the 7th column), we are going to consider
-the top \Sexpr{K} peaks:
-
- 
+the top \Sexpr{K} peaks.
 
 
 \subsection{Creating a \Robject{segvis} object}
@@ -211,7 +209,7 @@ To obtain the number of reads considered in an experiment:
   
 @ 
 
-In order to visually compare the enrichment level of several
+In order to visually compare the enrichment level of more than one
 experiments it is necessary to normalize the experiment, which
 \Rpackage{Segvis} allows to do, by using:
 
@@ -221,6 +219,275 @@ experiments it is necessary to normalize the experiment, which
   ctcf_block = normalize(ctcf_block)
   
 @ 
+
+\section{Some examples}
+\label{sec:examples}
+
+\subsection{Plotting different marks accross specific peaks}
+\label{sec:marks}
+
+Using the same peaks as before. We are going to create a
+\Robject{segvis\_block} for two additional marks, and plot all three
+marks the top 3 peaks, therefore we need to build two new
+\Robject{segvis\_block} objects:
+
+<<new_marks,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE>>=
+
+  h3k27ac = Segvis(name = "h3k27ac",
+    file = "../inst/extdata/reads/encode_K562_H3k27ac_first3chr.sort.bam",
+    maxBandwidth = 101,fragLen = 200,isPET = FALSE,
+    chr = c("chr1","chr2","chr3"))
+  regions(h3k27ac) = ctcf_gr
+
+  h3k27ac = loadReads(h3k27ac, mc = 24)
+  h3k27ac = matchReads(h3k27ac,mc = 24)
+  h3k27ac = getCoverage(h3k27ac,mc = 24)
+  h3k27ac_block = Segvis_block(h3k27ac,bw = 1,mc = 24)
+
+  h3k4me1 = Segvis(name = "h3k4me1",
+    file = "../inst/extdata/reads/encode_K562_H3k4me1_first3chr.sort.bam",
+    maxBandwidth = 101,fragLen = 200,isPET = FALSE,
+    chr = c("chr1","chr2","chr3"))
+  regions(h3k4me1) = ctcf_gr
+
+  h3k4me1 = loadReads(h3k4me1, mc = 24)
+  h3k4me1 = matchReads(h3k4me1,mc = 24)
+  h3k4me1 = getCoverage(h3k4me1,mc = 24)
+  h3k4me1_block = Segvis_block(h3k4me1,bw = 1,mc = 24)
+                 
+@ 
+
+When sequencing data from different samples are considered together,
+they are often normalized to account for differences in the sequencing
+depths. The \Rcode{normalize} function provides normalization
+functionalities. The default to to scale all the samples to 1M
+reads. 
+
+<<block_list,include=TRUE,echo=TRUE,eval=TRUE,message =FALSE,warning=FALSE>>=
+
+  h3k27ac_reads = countReads(h3k27ac)  
+  normConst(h3k27ac_block) = h3k27ac_reads
+  h3k27ac_block = normalize(h3k27ac_block)
+
+  h3k4me1_reads = countReads(h3k4me1)                 
+  normConst(h3k4me1_block) = h3k4me1_reads
+  h3k4me1_block = normalize(h3k4me1_block)
+
+  block_list = Segvis_block_list(ctcf_block,h3k27ac_block,h3k4me1_block)
+  names(block_list) = c("ctcf","h3k27ac","h3k4me1")
+                                   
+@  
+
+Then we can visualize all three marks over one regions by using the
+\Rcode{plot\_profiles} function:
+
+<<include=TRUE,echo=TRUE,eval=TRUE>>=
+
+  rstart = start(ctcf_gr)[1]
+  rend = end(ctcf_gr)[1]
+  chr = as.character(seqnames(ctcf_gr)[1])
+  iden = function(x)x  
+  
+  p1 = plot_profiles(block_list,condition = seqnames == chr & start == rstart,
+    coord = rstart:rend,FUN = iden,mc=24)
+                 
+@ 
+
+The output of \Rcode{plot\_profiles} is a \Robject{ggplot} object,
+which we can modify it to obtains better looking plots.
+
+<<include=TRUE,eval=TRUE,echo=TRUE,warning=FALSE,message=FALSE>>=
+
+  p2 = p1 + facet_grid(condition~.,scales = "free_y")
+  p3 = p2 + scale_colour_brewer(palette = "Dark2")+theme(legend.position = "none")
+
+@ 
+
+\begin{figure}[H]
+  \centering
+<<include=TRUE,eval=TRUE,echo=FALSE,out.width='4.6cm',out.height='4cm',fig.show='hold'>>=
+
+  p1
+  p2
+  p3            
+
+@   
+
+\caption{Initial use to plot the first Ctcf peak with all three marks
+  (Ctcf, H3k27ac and H3k4me1). From left to right: \Rcode{p1},
+  \Rcode{p2} and \Rcode{p3}.}
+\end{figure}
+
+\subsection{Finding the summit of a specific mark's peaks}
+\label{sec:summit}
+
+One of the functions of \Rpackage{Segvis} is to calculate and plot
+statistics over a window around biologically meaningful coordinates
+like TSS, TFBS, etc. This coordinates are not always available,
+therefore \Rpackage{Segvis} allows to find the summits of peaks formed
+by a collection of genomic regions and fragment reads. 
+
+In subsection \ref{subsec:cover}, we built the \Rcode{ctcf} object
+which contains both regions and fragment reads, we can find the summit
+by using the \Rcode{findSummit}, and then ``add'' it to the
+\Robject{segvis\_block}'s regions:
+
+<<summits,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE>>=
+
+  summits = findSummit(ctcf,bw=1,mc=24)
+  ctcf_block= addColumn(ctcf_block,name="summit",col=summits)
+  ctcf_block
+                    
+@ 
+
+
+\subsection{Summarizing the coverage for a set of same width regions}
+\label{subsec:summary}
+
+Another functionality of \Rpackage{Segvis} is to calculate and plot
+statistics(e.g. mean, median, variace, etc.)  over a window around
+biologically meaningful coordinates (TSS, TFBS, etc.), for which we
+are going to consider the summits that we found as those coordinates:
+
+<<include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE>>=
+
+  window_ext = 500
+  new_start = summits - window_ext
+  new_end = summits + window_ext
+  new_regions = GRanges(seqnames = seqnames(ctcf_gr),
+    ranges = IRanges(start = new_start,end = new_end),strand ="*")
+
+  regions(ctcf) = new_regions
+  regions(h3k27ac) = new_regions
+  regions(h3k4me1) = new_regions
+  all_segvis = list("ctcf"=ctcf,"h3k27ac"=h3k27ac,"h3k4me1"=h3k4me1)
+            
+@ 
+
+We are going to create a new \Robject{segvis\_block\_list} based on
+the new regions, for which we can apply the same methods
+\Rcode{loadReads}, \Rcode{matchReads}, \Rcode{getCoverage} and
+\Rcode{Segvis\_block} to build it. This time, we are going to use two
+functions to apply all methods together:
+
+<<new_profiles,include=TRUE,echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE>>=
+
+  do_all <- function(segvis_obj,bw,mc)
+  {
+    segvis_obj = loadReads(segvis_obj,mc = mc)
+    segvis_obj = matchReads(segvis_obj,mc = mc)
+    segvis_obj = getCoverage(segvis_obj,mc = mc)
+    out = Segvis_block(segvis_obj,bw = bw , mc = mc)
+    return(out)     
+  }
+
+  all_segvis_blocks = lapply(all_segvis,do_all,bw = 1, mc = 24)
+  nreads = c(ctcf_reads,h3k27ac_reads,h3k4me1_reads)
+
+  assign_and_normalize <- function(segvis_bl_obj,nreads)
+  {
+    normConst(segvis_bl_obj) = nreads
+    segvis_bl_obj = normalize(segvis_bl_obj)
+    return(segvis_bl_obj)    
+  }
+            
+  all_segvis_blocks = mapply(assign_and_normalize,
+    all_segvis_blocks,nreads,SIMPLIFY=FALSE)
+  all_segvis_blocks = Segvis_block_list(all_segvis_blocks)
+  names(all_segvis_blocks) = names(all_segvis)
+  
+@ 
+
+In this case, we have again \Sexpr{K} regions with the same width of
+$m = \Sexpr{2* window_ext + 1}$, i.e. we can think it as a matrix of
+$K \times m$ and to analize it we can apply the same function to all
+column vectors of this matrix:
+
+<<include=TRUE,echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE>>=
+
+  q1 = plot_profiles(all_segvis_blocks,FUN = mean,mc = 24,
+    coord = -window_ext:window_ext)+xlab("distance to summit")+
+    ylab("mean normalized counts")+
+    scale_color_brewer(guide = guide_legend(title = "condition"),palette = "Dark2")+
+    theme(legend.position = "top")+geom_vline(xintercept=0,linetype= 2)
+            
+  q2 = plot_profiles(all_segvis_blocks,FUN = median,mc = 24,
+    coord = -window_ext:window_ext)+xlab("distance to summit")+
+    ylab("median normalized counts")+
+    scale_color_brewer(guide = guide_legend(title = "condition"),palette = "Dark2")+
+    theme(legend.position = "top")+geom_vline(xintercept=0,linetype= 2)    
+                  
+@ 
+
+We can even use functions created in the moment, they just need to
+take a vector argument and return a 1 - dimensional value.
+
+<<include=TRUE,echo = TRUE,eval = TRUE,warning = FALSE,message = FALSE>>=
+
+  varlog <- function(x)var(log(1 + x))
+            
+  q3 = plot_profiles(all_segvis_blocks,FUN = varlog,mc = 24,
+    coord = -window_ext:window_ext)+xlab("distance to summit")+
+    ylab("variance of log( 1 + normalized counts)")+
+    scale_color_brewer(guide = guide_legend(title = "condition"),palette = "Dark2")+
+    theme(legend.position = "top")+geom_vline(xintercept=0,linetype= 2)
+
+@ 
+
+
+\begin{figure}[H]
+  \centering
+<<include=TRUE,eval=TRUE,echo=FALSE,out.width='4.6cm',out.height='4cm',fig.show='hold'>>=
+
+  q1
+  q2
+  q3            
+
+@ 
+
+  \caption{Mean, median and varlog profiles of all three marks
+    (Ctcf,H3k27ac and H3k4me1) across the first \Sexpr{K} Ctcf peaks}
+\end{figure}
+
+Another of \Rpackage{Segvis} functionalities is to calculate the data
+without generating the plot by the use of the \Rcode{plot\_data}
+function, which uses the same arguments as \Rcode{plot\_profiles}:
+
+<<include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE>>=
+
+  # x is the genomic coordinates or distance to summit in thise case
+  # y is the normalized counts
+  # 1001 x 3 conditions = 3003 rows (in table below)
+  new_data = plot_data(all_segvis_blocks,FUN = mean,trim = .1,mc = 24,
+    coord = -window_ext:window_ext)
+  new_data
+  
+@ 
+
+And we can use this \Rcode{data.table} into previously defined plot:
+
+<<include=TRUE,echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE>>=
+
+  p4 = p3 %+% new_data
+  
+@ 
+
+\begin{figure}[H]
+  \centering
+<<include=TRUE,eval=TRUE,echo=FALSE,out.width='4.6cm',out.height='4cm',fig.show='hold'>>=
+
+  p4
+
+@   
+
+  \caption{Median coverage plot, by using a previously defined \Rcode{ggplot} object}
+\end{figure}
+
+
+\subsection{Subsetting the data}
+\label{subsec:subset}
+
+
 
 
 
@@ -484,22 +751,6 @@ experiments it is necessary to normalize the experiment, which
 <<sessionInfo,include=TRUE,echo =TRUE,eval=TRUE,results="asis">>=
   toLatex(sessionInfo())
 @
-
-
-% This format is used to provide called peaks of signal enrichment based on pooled, normalized (interpreted) data. It is a BED6+4 format.
-
-% chrom - Name of the chromosome (or contig, scaffold, etc.).
-% chromStart - The starting position of the feature in the chromosome or scaffold. The first base in a chromosome is numbered 0.
-% chromEnd - The ending position of the feature in the chromosome or scaffold. The chromEnd base is not included in the display of the feature. For example, the first 100 bases of a chromosome are defined as chromStart=0, chromEnd=100, and span the bases numbered 0-99.
-% name - Name given to a region (preferably unique). Use '.' if no name is assigned.
-% score - Indicates how dark the peak will be displayed in the browser (0-1000). If all scores were '0' when the data were submitted to the DCC, the DCC assigned scores 1-1000 based on signal value. Ideally the average signalValue per base spread is between 100-1000.
-% strand - +/- to denote strand or orientation (whenever applicable). Use '.' if no orientation is assigned.
-
-% signalValue - Measurement of overall (usually, average) enrichment for the region.
-% pValue - Measurement of statistical significance (-log10). Use -1 if no pValue is assigned.
-% qValue - Measurement of statistical significance using false discovery rate (-log10). Use -1 if no qValue is assigned.
-% peak - Point-source called for this peak; 0-based offset from chromStart. Use -1 if no point-source called.
-
 
 
 
