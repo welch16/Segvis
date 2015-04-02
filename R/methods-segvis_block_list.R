@@ -24,7 +24,7 @@ setMethods("plot_profiles",
     plot_data = mcmapply(create_plot_data,profiles,nms,MoreArgs = list(coord),
       SIMPLIFY=FALSE,mc.silent=TRUE,mc.cores = mc)
     plot_data = do.call(rbind,plot_data)
-    out = ggplot(plot_data,aes(x,y,colour = as.factor(condition)))+geom_line()+
+    out = ggplot(plot_data,aes(x,y,colour = as.factor(condition)))+geom_line(size=1.1)+
       scale_colour_discrete(guide = guide_legend(title = "condition"))+
       xlab("genomic coordinates")+ylab("normalized coverage")        
     return(out)                  
