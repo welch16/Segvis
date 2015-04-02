@@ -136,6 +136,7 @@
   new_end = summits + window_ext
   new_regions = GRanges(seqnames = seqnames(ctcf_gr),
     ranges = IRanges(start = new_start,end = new_end),strand ="*")
+  str(width(new_regions))            
 
   regions(ctcf) = new_regions
   regions(h3k27ac) = new_regions
@@ -208,20 +209,102 @@
   # x is the genomic coordinates or distance to summit in thise case
   # y is the normalized counts
   # 1001 x 3 conditions = 3003 rows (in table below)
-  new_data = plot_data(all_segvis_blocks,FUN = mean,trim = .1,mc = 24,
+  new_data1 = plot_data(all_segvis_blocks,FUN = mean,trim = .1,mc = 24,
     coord = -window_ext:window_ext)
-  new_data
+  new_data2 = plot_data(all_segvis_blocks,FUN = median,mc = 24,
+    coord = -window_ext:window_ext)            
+  new_data1
   
 
 ## ----include=TRUE,echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE-----------------------
 
-  p4 = p3 %+% new_data
-  
+  p4 = p3 %+% new_data1 + ylab("average normalized counts")
+  p5 = p3 %+% new_data2 + ylab("median normalized counts")
+             
 
 ## ----include=TRUE,eval=TRUE,echo=FALSE,out.width='4.6cm',out.height='4cm',fig.show='hold'----
 
   p4
+  p5            
 
+
+## ----include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE-----------------------
+
+  dnase_file = "../inst/extdata/peaks/encode_K562_dnase_openChrom_first3chr.narrowPeak"
+  list.files("../inst/extdata/peaks/")
+  dnase_sites = read.table(dnase_file)
+  dnase_gr = GRanges(seqname = dnase_sites$V1,
+    ranges = IRanges(start = dnase_sites$V2,end = dnase_sites$V3),
+    strand = "*")
+ dnase_gr
+
+
+## ----include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE-----------------------
+
+  nr_overlaps = countOverlaps(regions(all_segvis_blocks[[1]]),dnase_gr)
+  all_segvis_blocks = lapply(all_segvis_blocks,
+    addColumn,name = "dnase_overlaps",col =nr_overlaps)
+  all_segvis_blocks[[1]]
+                          
+
+## ----subset_example,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE--------
+
+  ctcf_subset = subset(all_segvis_blocks[[1]],dnase_overlaps > 0)
+  ctcf_subset
+  cover_table(ctcf_subset)
+  
+
+## ----include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE-----------------------
+
+  
+  s1 = plot_profiles(all_segvis_blocks,FUN = mean,mc = 24,
+    condition = dnase_overlaps > 0 ,    
+    coord = -window_ext:window_ext)+xlab("distance to summit")+
+    ylab("mean normalized counts")+
+    scale_color_brewer(guide = guide_legend(title = "condition"),palette = "Dark2")+
+    theme(legend.position = "top")+geom_vline(xintercept=0,linetype= 2)
+            
+  s2 = plot_profiles(all_segvis_blocks,FUN = median,mc = 24,
+    condition = dnase_overlaps > 0 ,    
+    coord = -window_ext:window_ext)+xlab("distance to summit")+
+    ylab("median normalized counts")+
+    scale_color_brewer(guide = guide_legend(title = "condition"),palette = "Dark2")+
+    theme(legend.position = "top")+geom_vline(xintercept=0,linetype= 2)
+
+  s3 = plot_profiles(all_segvis_blocks,FUN = varlog,mc = 24,
+    condition = dnase_overlaps > 0 ,
+    coord = -window_ext:window_ext)+xlab("distance to summit")+
+    ylab("variance of log( 1 + normalized counts)")+
+    scale_color_brewer(guide = guide_legend(title = "condition"),palette = "Dark2")+
+    theme(legend.position = "top")+geom_vline(xintercept=0,linetype= 2)
+                       
+
+## ----include=TRUE,eval=TRUE,echo=FALSE,out.width='4.6cm',out.height='4cm',fig.show='hold'----
+
+  s1
+  s2
+  s3
+
+
+## ----include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE-----------------------
+
+  mean_overlap_data = plot_data(all_segvis_blocks,FUN = mean,mc = 24,
+    condition = dnase_overlaps > 0,
+    coord = -window_ext:window_ext)
+  mean_comp_data = plot_data(all_segvis_blocks,FUN = mean,mc = 24,
+    condition = dnase_overlaps ==  0,
+    coord = -window_ext:window_ext)
+  new_data = rbind(mean_overlap_data[,overlap:="yes"],
+    mean_comp_data[,overlap:="no"])
+  fancy_plot = ggplot(new_data,aes(x,y,colour = condition))+geom_line(size=1.1)+
+    facet_grid(overlap~.,scales = "free_y")+theme(legend.position = "top")+
+    ggtitle("DHS overlaps")+geom_vline(xintercept = 0,linetype=2,size=1.1)+
+    xlab("distance to summit")+ylab("average coverage")+
+    scale_color_brewer(palette = "Set1")
+                            
+
+## ----include=TRUE,eval=TRUE,echo=FALSE,out.width='6cm',out.height='5cm',fig.show='hold'----
+  fancy_plot
 
 ## ----sessionInfo,include=TRUE,echo =TRUE,eval=TRUE,results="asis"-----------------------
   toLatex(sessionInfo())

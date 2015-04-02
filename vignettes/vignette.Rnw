@@ -356,6 +356,7 @@ are going to consider the summits that we found as those coordinates:
   new_end = summits + window_ext
   new_regions = GRanges(seqnames = seqnames(ctcf_gr),
     ranges = IRanges(start = new_start,end = new_end),strand ="*")
+  str(width(new_regions))            
 
   regions(ctcf) = new_regions
   regions(h3k27ac) = new_regions
@@ -419,8 +420,8 @@ column vectors of this matrix:
                   
 @ 
 
-We can even use functions created in the moment, they just need to
-take a vector argument and return a 1 - dimensional value.
+We can even use functions created in the moment, the only need to take
+a vector argument and return a 1 - dimensional value.
 
 <<include=TRUE,echo = TRUE,eval = TRUE,warning = FALSE,message = FALSE>>=
 
@@ -447,6 +448,7 @@ take a vector argument and return a 1 - dimensional value.
 
   \caption{Mean, median and varlog profiles of all three marks
     (Ctcf,H3k27ac and H3k4me1) across the first \Sexpr{K} Ctcf peaks}
+\label{fig2}
 \end{figure}
 
 Another of \Rpackage{Segvis} functionalities is to calculate the data
@@ -458,9 +460,11 @@ function, which uses the same arguments as \Rcode{plot\_profiles}:
   # x is the genomic coordinates or distance to summit in thise case
   # y is the normalized counts
   # 1001 x 3 conditions = 3003 rows (in table below)
-  new_data = plot_data(all_segvis_blocks,FUN = mean,trim = .1,mc = 24,
+  new_data1 = plot_data(all_segvis_blocks,FUN = mean,trim = .1,mc = 24,
     coord = -window_ext:window_ext)
-  new_data
+  new_data2 = plot_data(all_segvis_blocks,FUN = median,mc = 24,
+    coord = -window_ext:window_ext)            
+  new_data1
   
 @ 
 
@@ -468,8 +472,9 @@ And we can use this \Rcode{data.table} into previously defined plot:
 
 <<include=TRUE,echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE>>=
 
-  p4 = p3 %+% new_data
-  
+  p4 = p3 %+% new_data1 + ylab("average normalized counts")
+  p5 = p3 %+% new_data2 + ylab("median normalized counts")
+             
 @ 
 
 \begin{figure}[H]
@@ -477,22 +482,140 @@ And we can use this \Rcode{data.table} into previously defined plot:
 <<include=TRUE,eval=TRUE,echo=FALSE,out.width='4.6cm',out.height='4cm',fig.show='hold'>>=
 
   p4
+  p5            
 
 @   
 
-  \caption{Median coverage plot, by using a previously defined \Rcode{ggplot} object}
+\caption{Mean and median coverage plot, by using a previously defined
+  \Rcode{ggplot} object}
 \end{figure}
 
 
-\subsection{Subsetting the data}
+\subsection{Subsetting and exploring the data with respect to user
+  defined annotations}
 \label{subsec:subset}
 
+\Rpackage{Segvis} have methods to explore the data too. Lets consider
+as before that we want to explore the top \Sexpr{K} Ctcf peaks, for
+which we already pre-processed a \Rcode{segvis\_block\_list} made with
+Ctcf, H3k27ac and H3k4me1 fragment reads. Now, we want to explore this
+set of peaks respect to additional annotation information as to wheter
+this peaks overlap with Dnase accesible regions.
 
+We read the Dnase hypersensitive sites from a file, and convert it to
+a \Rcode{GRanges} object:
 
+<<include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE>>=
 
+  dnase_file = "../inst/extdata/peaks/encode_K562_dnase_openChrom_first3chr.narrowPeak"
+  list.files("../inst/extdata/peaks/")
+  dnase_sites = read.table(dnase_file)
+  dnase_gr = GRanges(seqname = dnase_sites$V1,
+    ranges = IRanges(start = dnase_sites$V2,end = dnase_sites$V3),
+    strand = "*")
+ dnase_gr
 
+@ 
 
+We count the number of overlaps between the Dnase hypersensitive sites
+and the top \Sexpr{K} Ctcf peaks and add those columns to the
+\Rcode{segvis\_block\_list} we calculated in \label{subsec:summary}:
 
+<<include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE>>=
+
+  nr_overlaps = countOverlaps(regions(all_segvis_blocks[[1]]),dnase_gr)
+  all_segvis_blocks = lapply(all_segvis_blocks,
+    addColumn,name = "dnase_overlaps",col =nr_overlaps)
+  all_segvis_blocks[[1]]
+                          
+@ 
+
+Then we can \Rcode{subset} the data based on queries based on that
+annotation, for example:
+
+<<subset_example,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE>>=
+
+  ctcf_subset = subset(all_segvis_blocks[[1]],dnase_overlaps > 0)
+  ctcf_subset
+  cover_table(ctcf_subset)
+  
+@ 
+
+Furthermore we can recreate the plots of figure \ref{fig2} for the
+Ctcf peaks that overlap Dnse hypersensitive sites:
+
+<<include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE>>=
+
+  
+  s1 = plot_profiles(all_segvis_blocks,FUN = mean,mc = 24,
+    condition = dnase_overlaps > 0 ,    
+    coord = -window_ext:window_ext)+xlab("distance to summit")+
+    ylab("mean normalized counts")+
+    scale_color_brewer(guide = guide_legend(title = "condition"),palette = "Dark2")+
+    theme(legend.position = "top")+geom_vline(xintercept=0,linetype= 2)
+            
+  s2 = plot_profiles(all_segvis_blocks,FUN = median,mc = 24,
+    condition = dnase_overlaps > 0 ,    
+    coord = -window_ext:window_ext)+xlab("distance to summit")+
+    ylab("median normalized counts")+
+    scale_color_brewer(guide = guide_legend(title = "condition"),palette = "Dark2")+
+    theme(legend.position = "top")+geom_vline(xintercept=0,linetype= 2)
+
+  s3 = plot_profiles(all_segvis_blocks,FUN = varlog,mc = 24,
+    condition = dnase_overlaps > 0 ,
+    coord = -window_ext:window_ext)+xlab("distance to summit")+
+    ylab("variance of log( 1 + normalized counts)")+
+    scale_color_brewer(guide = guide_legend(title = "condition"),palette = "Dark2")+
+    theme(legend.position = "top")+geom_vline(xintercept=0,linetype= 2)
+                       
+@ 
+
+\begin{figure}[H]
+  \centering
+
+<<include=TRUE,eval=TRUE,echo=FALSE,out.width='4.6cm',out.height='4cm',fig.show='hold'>>=
+
+  s1
+  s2
+  s3
+
+@ 
+
+\caption{Mean, median and varlog profiles of all three marks
+  (Ctcf,H3k27ac and H3k4me1) across the first \Sexpr{K} Ctcf peaks
+  that overlap with Dnse hypersentive sites}
+  \label{fig4}
+\end{figure}
+
+Furthermore, we can use the \Rcode{plot\_data} method to build more
+complicated figures. For example:
+
+<<include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE>>=
+
+  mean_overlap_data = plot_data(all_segvis_blocks,FUN = mean,mc = 24,
+    condition = dnase_overlaps > 0,
+    coord = -window_ext:window_ext)
+  mean_comp_data = plot_data(all_segvis_blocks,FUN = mean,mc = 24,
+    condition = dnase_overlaps ==  0,
+    coord = -window_ext:window_ext)
+  new_data = rbind(mean_overlap_data[,overlap:="yes"],
+    mean_comp_data[,overlap:="no"])
+  fancy_plot = ggplot(new_data,aes(x,y,colour = condition))+geom_line(size=1.1)+
+    facet_grid(overlap~.,scales = "free_y")+theme(legend.position = "top")+
+    ggtitle("DHS overlaps")+geom_vline(xintercept = 0,linetype=2,size=1.1)+
+    xlab("distance to summit")+ylab("average coverage")+
+    scale_color_brewer(palette = "Set1")
+                            
+@ 
+
+\begin{figure}[H]
+  \centering
+<<include=TRUE,eval=TRUE,echo=FALSE,out.width='6cm',out.height='5cm',fig.show='hold'>>=
+  fancy_plot
+@   
+\caption{Average coverage of Ctcf, H3k27ac and H3k4me1 over Ctcf peaks
+  overlapping with Dnase Hypersensitive Sites(DHS)}
+\end{figure}
 
 
 
