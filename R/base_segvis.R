@@ -54,16 +54,33 @@ separate.by.chrom <- function(greads,chrom,st,mc,sort=FALSE)
 
 region_coverage <-  function(fwd,bwd,isPET,fragLen,chr)
 {
-  if(isPET | fragLen == 0){
-    # check the PET case, I think I need to match a read in fwd
-    # with the one in bwd by qname
-    reads = .GRanges.data.table(rbind(fwd,bwd))
+  if(isPET){
+    qnames = intersect(fwd[,(name)],bwd[,(name)])
+    setkey(fwd,name)
+    setkey(bwd,name)
+    pair_fwd = fwd[name %in% qnames]
+    pair_bwd = bwd[name %in% qnames]
+    if(!identical(pair_fwd[,(name)],pair_bwd[,(name)])){
+      setorder(pair_fwd,name)
+      setorder(pair_bwd,name)
+    }
+    reads = copy(pair_fwd)
+    reads[,end:= pair_bwd[,(end)]]
+    reads[,name:=NULL]
+    reads[,strand:="*"]
+    reads = reads[end - start > -1]  
+    reads = .GRanges.data.table(reads)
   }else{
-    reads = resize(.GRanges.data.table(rbind(fwd,bwd)),fragLen)
+    if(fragLen == 0){
+      reads = .GRanges.data.table(rbind(fwd,bwd))
+    }else{
+      reads = resize(.GRanges.data.table(rbind(fwd,bwd)),fragLen)
+    }
   }
   return(coverage(reads)[[chr]])
 }
-      
+
+
 calculate_chrom_coverage <- function(chr,nreg,object,mc)
 {
   fwd_reads = readsF(object)[[chr]]
@@ -77,6 +94,7 @@ calculate_chrom_coverage <- function(chr,nreg,object,mc)
   curves = mcmapply(region_coverage,sep_fwd_reads,sep_bwd_reads,
     MoreArgs = list(isPET(object),fragLen(object),chr),SIMPLIFY =FALSE,
     mc.cores = mc,mc.silent = TRUE)
+
   return(curves)
 }
 

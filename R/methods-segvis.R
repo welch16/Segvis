@@ -209,19 +209,25 @@ setReplaceMethod("readsR",
 setMethods("loadReads",
   signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object,mc ){
-
     ## reads the bam file
     message("Reading ",file(object))
     if(isPET(object)){
       message("Setting PET flag")
       pet_flag = scanBamFlag(isPaired = TRUE)
-      param = ScanBamParam(which = regions(object),flag = pet_flag)
+      param = ScanBamParam(which = regions(object),flag = pet_flag,what = "qname")
     }else{
       param = ScanBamParam(which = regions(object))
     }    
     greads = readGAlignmentsFromBam(file(object),
-      param = param,use.names = FALSE)
-    greads = .data.table.GRanges(as(greads, "GRanges"))
+      param = param,use.names = FALSE)    
+    if(isPET(object)){
+      qname = elementMetadata(greads)[["qname"]]
+      greads = .data.table.GRanges(as(greads, "GRanges"))
+      greads[,name:=qname] # add qname to greads
+      setorder(greads,name)
+    }else{
+      greads = .data.table.GRanges(as(greads, "GRanges"))
+    }
     setkey(greads,seqnames,strand)    
     message("Bam file loaded")
 
@@ -259,7 +265,8 @@ setMethods("matchReads",
     if(object@.haveReads & object@.haveRegions){
 
       ## separates the regions by chromose, extend the regions by (maxBw - 1)/2 to each
-      ## side 
+      ## side
+      
       side = (maxBandwidth(object)-1)/2      
       chr = names(seqlengths(regions(object)))
       match_regions = regions(object)
@@ -317,6 +324,9 @@ setMethods("getCoverage",
     }
 })    
 
+
+
+
 #' @rdname segvis-findSummit
 #' @name findSummit
 setMethods("findSummit",          
@@ -351,10 +361,13 @@ setMethods("findSummit",
 setMethods("countReads",
   signature = signature(object = "segvis"),
   definition = function(object){
-    ## Check the case for a PET file    
+    ## Check the case for a PET file
     reader = bamReader(file(object),idx=TRUE)
     readMatrix = bamCountAll(reader)
     counts = sum(readMatrix$nAligns)
+    if(isPET(object)){
+      counts = ceiling(counts/2)
+    }
     return(counts)  
 })
 
