@@ -221,7 +221,7 @@ setMethods("loadReads",
     greads = readGAlignmentsFromBam(file(object),
       param = param,use.names = FALSE)    
     if(isPET(object)){
-      qname = elementMetadata(greads)[["qname"]]
+      qname = as.numeric(as.factor(elementMetadata(greads)[["qname"]]))
       greads = .data.table.GRanges(as(greads, "GRanges"))
       greads[,name:=qname] # add qname to greads
       setorder(greads,name)
