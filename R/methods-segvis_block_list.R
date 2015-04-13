@@ -22,7 +22,7 @@ setMethods("plot_profiles",
     }    
     profiles = mclapply(subsets,summarize,FUN,...,mc.cores = mc)
     plot_data = mcmapply(create_plot_data,profiles,nms,MoreArgs = list(coord),
-      SIMPLIFY=FALSE,mc.silent=TRUE,mc.cores = mc)
+      SIMPLIFY=FALSE,mc.silent=TRUE,mc.cores = mc,mc.preschedule=TRUE)
     plot_data = do.call(rbind,plot_data)
     out = ggplot(plot_data,aes(x,y,colour = as.factor(condition)))+geom_line(size=1.1)+
       scale_colour_discrete(guide = guide_legend(title = "condition"))+
@@ -53,7 +53,7 @@ setMethods("plot_data",
   }
   profiles = mclapply(subsets,summarize,FUN,...,mc.cores = mc)
   plot_data = mcmapply(create_plot_data,profiles,nms,MoreArgs = list(coord),
-    SIMPLIFY=FALSE,mc.silent=TRUE,mc.cores = mc)
+    SIMPLIFY=FALSE,mc.silent=TRUE,mc.cores = mc,mc.preschedule=TRUE)
   plot_data = do.call(rbind,plot_data)    
  return(plot_data)
 })

@@ -77,7 +77,7 @@
       stepList = profiles(object)[[chrom]]
       chr_curves = mcmapply(.calc_profile,regionStart,regionEnd,stepList,
         MoreArgs = list(bw,side),SIMPLIFY=FALSE,mc.cores=mc,mc.silent=TRUE,
-        mc.preschedule =FALSE)
+        mc.preschedule =TRUE)
       return(chr_curves)
     },object,match_regions,side,mc)
     names(curves) = chr

@@ -278,17 +278,17 @@ setMethods("matchReads",
 
       ## find overlaps between reads and regions   
       overlapsF = mcmapply(.find.overlaps,readsF(object),
-        match_regions,SIMPLIFY=FALSE,mc.cores =mc,mc.silent =TRUE)
+        match_regions,SIMPLIFY=FALSE,mc.cores =mc,mc.silent =TRUE,mc.preschedule=TRUE)
       overlapsR = mcmapply(.find.overlaps,readsR(object),
-        match_regions,SIMPLIFY=FALSE,mc.cores =mc,mc.silent =TRUE)
+        match_regions,SIMPLIFY=FALSE,mc.cores =mc,mc.silent =TRUE,mc.preschedule=TRUE)
               
       ## matching reads
       message("Matching reads for forward strand")
       readsF(object) = mcmapply(.match.reads,readsF(object),overlapsF,
-        SIMPLIFY= FALSE,mc.cores = mc ,mc.silent =TRUE)
+        SIMPLIFY= FALSE,mc.cores = mc ,mc.silent =TRUE,mc.preschedule=TRUE)
       message("Matching reads for reverse strand")
       readsR(object) = mcmapply(.match.reads,readsR(object),overlapsR,
-        SIMPLIFY= FALSE,mc.cores = mc ,mc.silent =TRUE)
+        SIMPLIFY= FALSE,mc.cores = mc ,mc.silent =TRUE,mc.preschedule=TRUE)
 
       object@.readsMatched = TRUE
      return(object)      
@@ -350,7 +350,7 @@ setMethods("findSummit",
       regionEnd = reg[,(end)]
       curve = curves[[chrom]]
       summits = mcmapply(.find_summit,curve,regionStart,regionEnd,
-        SIMPLIFY=FALSE,mc.cores = mc,mc.silent = TRUE)
+        SIMPLIFY=FALSE,mc.cores = mc,mc.silent = TRUE,mc.preschedule=TRUE)
       return(unlist(summits))         
   },match_regions,profile_curves)
   return(unlist(summits_chr))    

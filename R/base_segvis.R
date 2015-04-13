@@ -93,7 +93,7 @@ calculate_chrom_coverage <- function(chr,nreg,object,mc)
     bwd_reads,mc.cores = mc,mc.silent= TRUE)
   curves = mcmapply(region_coverage,sep_fwd_reads,sep_bwd_reads,
     MoreArgs = list(isPET(object),fragLen(object),chr),SIMPLIFY =FALSE,
-    mc.cores = mc,mc.silent = TRUE)
+    mc.cores = mc,mc.silent = TRUE,mc.preschedule = TRUE)
 
   return(curves)
 }
@@ -103,7 +103,8 @@ calculate_chrom_coverage <- function(chr,nreg,object,mc)
   nreg = nrow(region)
   chr_cover = mclapply(1:nreg,function(i,region,profile)
     data.table(chr = chr,match=i,coord = seq(region[i,(start)],region[i,(end)],by=1),
-      tagCounts = profile[[i]]),region,profile,mc.cores = mc,mc.silent = mc)
+      tagCounts = profile[[i]]),region,profile,mc.cores = mc,mc.silent = TRUE,
+      mc.preschedule = TRUE)
   chr_cover = do.call(rbind,chr_cover)
   return(chr_cover)
 }
