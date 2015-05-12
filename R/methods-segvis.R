@@ -211,8 +211,11 @@ setMethods("loadReads",
   definition = function(object,mc ){
     ## reads the bam file
     message("Reading ",file(object))
+    
     if(isPET(object)){
       message("Setting PET flag")
+      ## when the reads are paired end tags, it gets the qname to match the
+      ## both ends of the fragment
       pet_flag = scanBamFlag(isPaired = TRUE)
       param = ScanBamParam(which = regions(object),flag = pet_flag,what = "qname")
     }else{
@@ -221,6 +224,7 @@ setMethods("loadReads",
     greads = readGAlignmentsFromBam(file(object),
       param = param,use.names = FALSE)    
     if(isPET(object)){
+      ## convert the qname into a numeric value for computation efficiency
       qname = as.numeric(as.factor(elementMetadata(greads)[["qname"]]))
       greads = .data.table.GRanges(as(greads, "GRanges"))
       greads[,name:=qname] # add qname to greads
@@ -236,8 +240,21 @@ setMethods("loadReads",
     chr_reads = unique(greads$seqnames)
     chr_in =sapply(chr_reads,function(x)x%in%chr(object))
     if(!all(chr_in)){
-      warning("Removing reads that aren't in ",chr(object))
+      warning("Removing reads that aren't in user's supplied chromosome")
     }
+
+    ## update options of data.table for when there are no fragment for a region,
+    ## then it would get an empty row for that chromosome (other value is NA)
+
+    chr_in = sapply(chr(object),function(x)x%in%chr_reads)
+    if(!all(chr_in)){
+      missing_chr= names(which(!chr_in))
+      for(ch in missing_chr){
+        warning("There are no reads for ",ch," in " ,file(object))
+      }        
+    }
+
+    options(datatable.nomatch =0)
     greads = greads[chr(object)]
 
     ## separates by chromosome and strand
