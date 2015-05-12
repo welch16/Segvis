@@ -145,16 +145,14 @@ setGeneric("profiles",
 )  
     
 #' @title loadReads method for segvis class
-#' @description Load the fragment stored in the file slot of the segvis object. The reads are divided by chromosome and by strand
+#' @description Load the fragment stored in the file slot of the segvis object. The reads are divided by chromosome and by strand.
 #' @param object segvis object
 #' @param mc numeric, the number of cores used with parallel
-#' @return profile object
+#' @return segvis object
 #' @export
 #' @docType methods
 #' @seealso \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{reads-class}}
 #' @rdname segvis-loadReads
-#' @examples
-#' \dontrun{ loadReads(profile_object,mc=8)}
 setGeneric("loadReads",
   function(object,mc)
   standardGeneric("loadReads")
@@ -227,15 +225,13 @@ setGeneric("findSummit",
 #' @title Create a segvis_block object
 #' @description Constructor for segvis_block class, it takes both name and region from \code{object}
 #' @param object segvis object
-#' @param bw Numeric value with the bandwidth used to smooth the profiles, must be and odd number less or equal than the maxBandwidth
+#' @param bw Numeric value with the bandwidth used to smooth the coverage profiles, must be and odd number less or equal than the maxBandwidth
 #' @param mc Numeric value with the number of cores used with parallel
 #' @return a sevis_block object
 #' @export
 #' @docType methods
 #' @rdname Segvis_block
 #' @seealso \code{\link{segvis_block-class}}
-#' @examples
-#' \dontrun{Segvis_block(profile_object,bw = 151,mc=8)}
 setGeneric("Segvis_block",
   function(object,bw,mc)
   standardGeneric("Segvis_block")
@@ -391,7 +387,7 @@ setGeneric("normalize",
 #' @description This method works similarly to the subset of IRanges, GenomicRanges, GenomicAlignments, etc. Althought it doesn't consider the select parameter.
 #' @param object segvis_block object
 #' @param condition This is an expression considering the characteristics taht the subset need to satisfy
-#' @return Returns a segvis_block object with the same parameters as object except regions and profileMat which are filtered to satisfy the conditions on condition.
+#' @return Returns a segvis_block object with the same parameters as object except regions and cover_table which are filtered to satisfy the conditions on condition.
 #' @export
 #' @docType methods
 #' @seealso \code{\link{segvis_block-class}}
