@@ -6,17 +6,17 @@
 #' @seealso \code{\link{segvis_block-class}}
 Segvis_block_list <- function(...)
 {
-  aslist = list(...)
-  if(length(aslist)==1){
-    if(class(aslist[[1]])=="list"){
-      segvislist = new("segvis_block_list",aslist[[1]])      
+  aslist <- list(...)
+  if(length(aslist) == 1){
+    if(class(aslist[[1]]) == "list"){
+      segvislist <- new("segvis_block_list",aslist[[1]])      
     }else{
-      segvislist = new("segvis_block_list",list(aslist[[1]]))
+      segvislist <- new("segvis_block_list",list(aslist[[1]]))
     }    
   }else{
-    segvislist = new("segvis_block_list",aslist)
+    segvislist <- new("segvis_block_list",aslist)
   }
-  classes = lapply(segvislist,FUN=class)
+  classes <- lapply(segvislist,FUN=class)
   stopifnot(all(classes == "segvis_block"))
   return(segvislist)  
 }

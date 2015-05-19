@@ -24,7 +24,7 @@ setMethod("readsR",
 setReplaceMethod("readsF",
   signature = signature(object = "reads",value = "list"),
   definition = function(object,value){
-    object@readsF = value
+    object@readsF <- value
     return(object)
 })
 
@@ -33,6 +33,6 @@ setReplaceMethod("readsF",
 setReplaceMethod("readsR",
   signature = signature(object = "reads",value = "list"),
   definition = function(object,value){
-    object@readsR = value
+    object@readsR <- value
     return(object)
 })

@@ -45,7 +45,7 @@ setMethod("normConst",
 setReplaceMethod("name",
   signature = signature(object = "segvis_block",value = "character"),
   definition = function(object,value){
-    object@name = value
+    object@name <- value
     return(object)
 })    
 
@@ -55,7 +55,7 @@ setReplaceMethod("regions",
   signature = signature(object = "segvis_block",value = "GRanges"),
   definition = function(object,value){    
     stopifnot(class(value) == "GRanges")
-    object@regions = value
+    object@regions <- value
     return(object)    
 })
 
@@ -65,8 +65,8 @@ setReplaceMethod("cover_table",
   signature = signature(object = "segvis_block",value = "data.table"),
   definition = function(object,value){    
     stopifnot(class(value) == "data.table")
-    stopifnot(length(regions(object))==nrow(value))
-    object@profileMat = value
+    stopifnot(length(regions(object)) == nrow(value))
+    object@profileMat <- value
     return(object)    
 })           
 
@@ -77,7 +77,7 @@ setReplaceMethod("bandwidth",
   definition = function(object,value){
     stopifnot(value >=1)
     stopifnot(value %% 2 == 1)
-    object@bandwidth = value
+    object@bandwidth <- value
     return(object)
 })           
 
@@ -87,7 +87,7 @@ setReplaceMethod("normConst",
   signature = signature(object = "segvis_block",value = "numeric"),
   definition = function(object,value){
     stopifnot(value > 0)
-    object@normConst = value
+    object@normConst <- value
     return(object)
 })                        
 
@@ -101,10 +101,10 @@ setMethods("summarize",
     if(length(u <- unique(lengths[,(V1)])) > 1){
        warning("All regions must have the same length")
     }
-    out = copy(cover_table(object))
-    out[,center:=0L]
-    out[,center:= out[,coord - min(coord) + 1,by = .(chr,match)][,(V1)]]           
-    summary = out[,FUN(tagCounts,...),by =.(center)]
+    out <- copy(cover_table(object))
+    out[,center := 0L]
+    out[,center := out[,coord - min(coord) + 1,by = .(chr,match)][,(V1)]]           
+    summary <- out[,FUN(tagCounts,...),by =.(center)]
     return(summary[,(V1)])
 })
                      
@@ -141,7 +141,7 @@ setMethods("normalize",
 setMethod("subset",
   signature = signature(object = "segvis_block",condition = "ANY"),
   definition = function(object, condition){
-    cond = .subset_logical(object,substitute(condition))
+    cond <- .subset_logical(object,substitute(condition))
     return(.filter_sb(object,cond))
 })
 
@@ -151,7 +151,7 @@ setMethods("addColumn",
   signature = signature(object = "segvis_block",name = "character",col = "ANY"),
   definition = function(object,name,col){
     stopifnot(length(col) == length(regions(object)))    
-    elementMetadata(regions(object))@listData[[name]] = col
+    elementMetadata(regions(object))@listData[[name]] <- col
     return(object)
 })
 

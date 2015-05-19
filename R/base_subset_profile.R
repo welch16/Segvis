@@ -5,7 +5,7 @@
 #' @return A logical vector with the same length as the number of regions
 #' @rdname filter_sb
 .subset_logical<- function(object,condition_call){
-  cond = as.logical(eval(condition_call,as(regions(object),"data.frame"),parent.frame()))
+  cond <- as.logical(eval(condition_call,as(regions(object),"data.frame"),parent.frame()))
   return(cond)
 }
 
@@ -18,18 +18,18 @@
     warning("There are regions impossible to evaluate")
     cond[is.na(cond)] = FALSE
   }
-  coverage = copy(cover_table(object))
-  lengths = coverage[,length(coord),by=.(chr,match)][,(V1)]
-  extended_cond = unlist(mapply(function(x,l)rep(x,l),cond,lengths,SIMPLIFY=FALSE))
+  coverage <- copy(cover_table(object))
+  lengths <- coverage[,length(coord),by=.(chr,match)][,(V1)]
+  extended_cond <- unlist(mapply(function(x,l)rep(x,l),cond,lengths,SIMPLIFY=FALSE))
 
   # Add condition to data.table, filter and remove condition
-  out_regions = regions(object)[cond]
+  out_regions <- regions(object)[cond]
   rm(cond)
   coverage[,cond:=extended_cond]
-  coverage = coverage[cond == TRUE]
+  coverage <- coverage[cond == TRUE]
   coverage[,cond:=NULL]
     
-  out = new("segvis_block",name = name(object),regions = out_regions,
+  out <- new("segvis_block",name = name(object),regions = out_regions,
     bandwidth = bandwidth(object),normConst =  normConst(object),
     cover_table = coverage,.isScaled = object@.isScaled)
   

@@ -30,13 +30,13 @@ Segvis <- function(name,file,maxBandwidth,chr,fragLen=0,isPET=FALSE)
   stopifnot(is.character(chr))
   if(isPET){
     warning("The reads are PET, fragLen is set to zero ")
-    fragLen =0
+    fragLen <- 0
   }
   if(length(chr) == 1){
     if(chr == "human"){
-      chr = paste0("chr",c(1:22,"X","Y"))
+      chr <- paste0("chr",c(1:22,"X","Y"))
     }else if(chr == "mouse"){
-      chr = paste0("chr",c(1:19,"X","Y"))
+      chr <- paste0("chr",c(1:19,"X","Y"))
     }else{
       warning("Chromosome supplied by user")
     }    
