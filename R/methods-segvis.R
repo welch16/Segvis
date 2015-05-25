@@ -217,6 +217,11 @@ setMethods("loadReads",
   definition = function(object,mc ){
     ## reads the bam file
     message("Reading ",file(object))
+
+    side <- (maxBandwidth(object)-1)/2      
+    regions_to_load <- regions(object)    
+    start(regions_to_load) <- start(regions_to_load) - side - fragLen(object)
+    end(regions_to_load) <- end(regions_to_load) - side - fragLen(object)          
     
     if(isPET(object)){
       message("Setting PET flag")
@@ -287,14 +292,14 @@ setMethods("matchReads",
   definition = function(object,mc = 8){
     if(object@.haveReads & object@.haveRegions){
 
-      ## separates the regions by chromose, extend the regions by (maxBw - 1)/2 to each
+      ## separates the regions by chromosome, extend the regions by (maxBw - 1)/2 to each
       ## side
       
       side <- (maxBandwidth(object)-1)/2      
       chr <- names(seqlengths(regions(object)))
       match_regions <- regions(object)
-      start(match_regions) <- start(match_regions) - side
-      end(match_regions) <- end(match_regions) + side      
+      start(match_regions) <- start(match_regions) - side - fragLen(object)
+      end(match_regions) <- end(match_regions) + side + fragLen(object)
       match_regions <- separate.by.chrom(.data.table.GRanges(match_regions),
         chr, "*",mc,sort=FALSE)
       names(match_regions) <- chr

@@ -49,8 +49,9 @@ separate.by.chrom <- function(greads,chrom,st,mc,sort=FALSE)
 
 .match.reads <- function(reads,overlaps)
 {
+  reads = reads[queryHits(overlaps)]
   reads[,match:= 0L]
-  reads[queryHits(overlaps),match:=subjectHits(overlaps)]
+  reads[,match:=subjectHits(overlaps)]
   return(reads)
 }
 
