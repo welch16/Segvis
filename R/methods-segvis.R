@@ -218,6 +218,13 @@ setMethods("loadReads",
     ## reads the bam file
     message("Reading ",file(object))
 
+    bai <- paste0(file(object),".bai")
+    if(!file.exists(bai)){
+      warning("Creating index file ",bai)
+      message("Creating index file ",bai)
+      indexBam(file(object))
+    }
+    
     side <- (maxBandwidth(object)-1)/2      
     regions_to_load <- regions(object)    
     start(regions_to_load) <- start(regions_to_load) - side - fragLen(object)
@@ -331,7 +338,6 @@ setMethods("getCoverage",
   signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object, mc = 8){
     if(object@.readsMatched == TRUE){
-
       # init coverage calculation
       chr <- names(seqlengths(regions(object)))
       match_regions <- separate.by.chrom(.data.table.GRanges(regions(object)),

@@ -88,7 +88,7 @@ region_coverage <-  function(fwd,bwd,isPET,fragLen,chr)
 
 
 calculate_chrom_coverage <- function(chr,nreg,object,mc)
-{
+{  
   fwd_reads <- readsF(object)[[chr]]
   bwd_reads <- readsR(object)[[chr]]
   setkey(fwd_reads,match)
@@ -97,6 +97,7 @@ calculate_chrom_coverage <- function(chr,nreg,object,mc)
     fwd_reads,mc.cores = mc,mc.silent= TRUE)
   sep_bwd_reads <- mclapply(1:nreg,function(i,reads)reads[match==i,],
     bwd_reads,mc.cores = mc,mc.silent= TRUE)
+  message("Calculating coverage for ",chr)
   curves <- mcmapply(region_coverage,sep_fwd_reads,sep_bwd_reads,
     MoreArgs = list(isPET(object),fragLen(object),chr),SIMPLIFY =FALSE,
     mc.cores = mc,mc.silent = TRUE,mc.preschedule = TRUE)
