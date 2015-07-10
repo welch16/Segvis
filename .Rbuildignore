@@ -2,3 +2,4 @@
 Makefile
 .git/*
 poster/*
+inst/extdata
