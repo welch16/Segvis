@@ -2,8 +2,6 @@
 #' @import data.table
 NULL
 
-
-#' @export
 .data.table.GRanges <- function(x)
 {
   dt <- data.table(seqnames = as.character( seqnames(x)),
@@ -12,7 +10,6 @@ NULL
   return(dt)
 }
 
-#' @export
 .GRanges.data.table <- function(x)
 {
   stopifnot(c("seqnames","start","end","strand") %in% names(x))
@@ -21,7 +18,6 @@ NULL
     strand = x[,(strand)]))             
 }
 
-#' @export
 .IRanges.data.table <- function(x)
 {
   stopifnot(c("seqnames","start","end","strand") %in% names(x))
