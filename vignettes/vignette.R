@@ -8,8 +8,9 @@
 
 ## ----real_load,include=FALSE,echo=FALSE,eval=TRUE---------------------------------------
 
-  library(devtools)
-  load_all("../")
+  ## this is to avoid all messages that appear when loading
+  library(Segvis)
+  library(ggplot2)
 
 
 ## ----peaks_file,include=TRUE,echo=TRUE,eval=TRUE----------------------------------------
@@ -98,7 +99,7 @@
   names(block_list) = c("ctcf","h3k27ac","h3k4me1")
                                    
 
-## ----include=TRUE,echo=TRUE,eval=TRUE---------------------------------------------------
+## ----ex1_code,include=TRUE,echo=TRUE,eval=TRUE------------------------------------------
 
   rstart = start(ctcf_gr)[1]
   rend = end(ctcf_gr)[1]
@@ -109,13 +110,13 @@
     coord = rstart:rend,FUN = iden,mc=24)
                  
 
-## ----include=TRUE,eval=TRUE,echo=TRUE,warning=FALSE,message=FALSE-----------------------
+## ----ex1_code2,include=TRUE,eval=TRUE,echo=TRUE,warning=FALSE,message=FALSE-------------
 
   p2 = p1 + facet_grid(condition~.,scales = "free_y")
   p3 = p2 + scale_colour_brewer(palette = "Dark2")+theme(legend.position = "none")
 
 
-## ----include=TRUE,eval=TRUE,echo=FALSE,out.width='4.6cm',out.height='4cm',fig.show='hold'----
+## ----ex1,include=TRUE,eval=TRUE,echo=FALSE,out.width='4.6cm',out.height='4cm',fig.show='hold'----
 
   p1
   p2
@@ -129,7 +130,7 @@
   ctcf_block
                     
 
-## ----include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE-----------------------
+## ----ex2_code,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE--------------
 
   window_ext = 500
   new_start = summits - window_ext
@@ -171,7 +172,7 @@
   names(all_segvis_blocks) = names(all_segvis)
   
 
-## ----include=TRUE,echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE-----------------------
+## ----ex2_plots,include=TRUE,echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE-------------
 
   q1 = plot_profiles(all_segvis_blocks,FUN = mean,mc = 24,
     coord = -window_ext:window_ext)+xlab("distance to summit")+
@@ -186,7 +187,7 @@
     theme(legend.position = "top")+geom_vline(xintercept=0,linetype= 2)    
                   
 
-## ----include=TRUE,echo = TRUE,eval = TRUE,warning = FALSE,message = FALSE---------------
+## ----ex2_plots2,include=TRUE,echo = TRUE,eval = TRUE,warning = FALSE,message = FALSE----
 
   varlog <- function(x)var(log(1 + x))
             
@@ -197,14 +198,14 @@
     theme(legend.position = "top")+geom_vline(xintercept=0,linetype= 2)
 
 
-## ----include=TRUE,eval=TRUE,echo=FALSE,out.width='4.6cm',out.height='4cm',fig.show='hold'----
+## ----ex2,include=TRUE,eval=TRUE,echo=FALSE,out.width='4.6cm',out.height='4cm',fig.show='hold'----
 
   q1
   q2
   q3            
 
 
-## ----include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE-----------------------
+## ----ex3_code,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE--------------
 
   # x is the genomic coordinates or distance to summit in thise case
   # y is the normalized counts
@@ -216,19 +217,19 @@
   new_data1
   
 
-## ----include=TRUE,echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE-----------------------
+## ----ex3_plots,include=TRUE,echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE-------------
 
   p4 = p3 %+% new_data1 + ylab("average normalized counts")
   p5 = p3 %+% new_data2 + ylab("median normalized counts")
              
 
-## ----include=TRUE,eval=TRUE,echo=FALSE,out.width='4.6cm',out.height='4cm',fig.show='hold'----
+## ----ex3,include=TRUE,eval=TRUE,echo=FALSE,out.width='4.6cm',out.height='4cm',fig.show='hold'----
 
   p4
   p5            
 
 
-## ----include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE-----------------------
+## ----ex4_code,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE--------------
 
   dnase_file = "../inst/extdata/peaks/encode_K562_dnase_openChrom_first3chr.narrowPeak"
   list.files("../inst/extdata/peaks/")
@@ -239,7 +240,7 @@
  dnase_gr
 
 
-## ----include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE-----------------------
+## ----ex4_code2,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE-------------
 
   nr_overlaps = countOverlaps(regions(all_segvis_blocks[[1]]),dnase_gr)
   all_segvis_blocks = lapply(all_segvis_blocks,
@@ -247,14 +248,14 @@
   all_segvis_blocks[[1]]
                           
 
-## ----subset_example,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE--------
+## ----ex4_code3,subset_example,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE----
 
   ctcf_subset = subset(all_segvis_blocks[[1]],dnase_overlaps > 0)
   ctcf_subset
   cover_table(ctcf_subset)
   
 
-## ----include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE-----------------------
+## ----ex4_plots,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE-------------
 
   
   s1 = plot_profiles(all_segvis_blocks,FUN = mean,mc = 24,
@@ -279,14 +280,14 @@
     theme(legend.position = "top")+geom_vline(xintercept=0,linetype= 2)
                        
 
-## ----include=TRUE,eval=TRUE,echo=FALSE,out.width='4.6cm',out.height='4cm',fig.show='hold'----
+## ----ex4,include=TRUE,eval=TRUE,echo=FALSE,out.width='4.6cm',out.height='4cm',fig.show='hold'----
 
   s1
   s2
   s3
 
 
-## ----include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE-----------------------
+## ----ex5_code,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE--------------
 
   mean_overlap_data = plot_data(all_segvis_blocks,FUN = mean,mc = 24,
     condition = dnase_overlaps > 0,
@@ -303,7 +304,7 @@
     scale_color_brewer(palette = "Set1")
                             
 
-## ----include=TRUE,eval=TRUE,echo=FALSE,out.width='6cm',out.height='5cm',fig.show='hold'----
+## ----ex5,include=TRUE,eval=TRUE,echo=FALSE,out.width='6cm',out.height='5cm',fig.show='hold'----
   fancy_plot
 
 ## ----sessionInfo,include=TRUE,echo =TRUE,eval=TRUE,results="asis"-----------------------
