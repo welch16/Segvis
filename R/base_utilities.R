@@ -1,6 +1,5 @@
 
 #' @import data.table
-NULL
 
 .data.table.GRanges <- function(x)
 {

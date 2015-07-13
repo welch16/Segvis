@@ -11,7 +11,7 @@
   z <- step_fn
   x <- seq(regionStart,regionEnd,by=1)
   if(!is.null(z)){
-    ## Case when the coverage function is constant
+    # Case when the coverage function is constant
     if(nrun(z)==1){      
       if(runValue(z) == 0){
         y <- rep(NA,length(x))
@@ -24,7 +24,7 @@
       y <- stepfun(xp,yp,right = TRUE)(x)
       y <- .ma(y,bw)
     }
-    ## remove the extra window added to each side
+    # remove the extra window added to each side
     if(side > 0){
       y <- y[-c(1:side)]
       y <- y[1:(length(y) - side)]
@@ -62,14 +62,14 @@
 
     stopifnot(bw <= maxBandwidth(object))
 
-    ## init algorithm to calculate curves
+    #'#' init algorithm to calculate curves
     chr <- names(seqlengths(regions(object)))
     side <- (maxBandwidth(object)-1)/2
     match_regions <- separate.by.chrom(.data.table.GRanges(regions(object)),
       chr, "*",mc,sort=FALSE)
     names(match_regions) = chr
 
-    ## calculate profile curves
+    # calculate profile curves
     curves <- lapply(chr,function(chrom,object,regions,side,mc){
       message("Calculating profile for ",chrom)
       chr_reg <- regions[[chrom]]
