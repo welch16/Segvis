@@ -5,6 +5,13 @@
 \alias{segvis_block_list-class}
 \title{segvis_block_list class description}
 \description{
-Contains a list of segvis objects
+Contains a list of \code{segvis_block} objects
+}
+\details{
+\section{Slots}{
+  \describe{
+   \item{\code{list}:}{A list of \code{segvis_block} objects or several \code{segvis_block} objects separated by commas}
+   }
+}
 }
 
