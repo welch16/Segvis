@@ -8,12 +8,10 @@
 
 ## ----real_load,include=FALSE,echo=FALSE,eval=TRUE---------------------------------------
 
-  ## this is to avoid all messages that appear when loading
-  devtools::load_all("../")
+  library(Segvis)
   library(ggplot2)
   library(rbamtools)    
   library(Rsamtools)
-
 
 
 ## ----peaks_file,include=TRUE,echo=TRUE,eval=TRUE----------------------------------------

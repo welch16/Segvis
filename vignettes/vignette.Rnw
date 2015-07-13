@@ -78,12 +78,10 @@ The package can be loaded with the command:
 
 <<real_load,include=FALSE,echo=FALSE,eval=TRUE>>=
 
-  ## this is to avoid all messages that appear when loading
-  devtools::load_all("../")
+  library(Segvis)
   library(ggplot2)
   library(rbamtools)    
   library(Rsamtools)
-
 
 @
 
