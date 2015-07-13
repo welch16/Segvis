@@ -1,5 +1,5 @@
 
-#' @import data.table
+##' @import data.table
 
 # @title Set of functions to subset segvis_block objects
 # @description \code{.subset_logical} Function to obtain a logical vector of the elements in regions(object) such that satisfy condition_all

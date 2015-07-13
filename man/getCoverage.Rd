@@ -19,9 +19,13 @@ segvis object
 Calculate  the coverage using the reads matched by the matchReads method. It returns a Rle object for each region.
 }
 \examples{
-\dontrun{ getCoverage(segvis_object,mc=8)}
+\dontrun{
+
+getCoverage(segvis_object,mc=8)
+
+}
 }
 \seealso{
-\code{\link{loadReads}} and \code{\link{matchReads}}
+\code{\link{loadReads}}, \code{\link{matchReads}} and \code{\link{findSummit}}
 }
 

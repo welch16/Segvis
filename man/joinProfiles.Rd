@@ -10,17 +10,24 @@ joinProfiles(object, bw, mc)
 \arguments{
 \item{object}{segvis object}
 
-\item{bw}{Numeric values with the bandwidth used to smooth the profiles, must be and odd number less or equal than the maxBandwidth}
+\item{bw}{Numeric value with the bandwidth used to smooth the coverage profiles, must be and odd number less or equal than the maxBandwidth}
 
-\item{mc}{Numeric value representing the number of cores used with parallel}
+\item{mc}{Numeric value with the number of cores used with parallel}
 }
 \value{
-data.table object
+A data.table object
 }
 \description{
 Joins all the coverages into a data.table with columns chr|match|coord|tagCounts
 }
 \examples{
-\dontrun{ joinProfiles(segvis_object,bw = 151,mc=8)}
+\dontrun{
+
+joinProfiles(segvis_object,bw = 151,mc=4)
+
+}
+}
+\seealso{
+\code{\link{segvis_block-class}},\code{\link{segvis-class}}
 }
 

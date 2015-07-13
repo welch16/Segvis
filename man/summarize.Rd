@@ -23,9 +23,11 @@ This methods summarizes the coverage of the data when all the regions have the s
 }
 \examples{
 \dontrun{
+
 summarize(segvis_block,mean)
 summarize(segvis_block,mean,trim=.25)
 summarize(segvis_block,median)
+
 }
 }
 \seealso{

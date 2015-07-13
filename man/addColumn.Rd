@@ -25,6 +25,7 @@ This method helps to add a new column to the profile matrix object, is works sim
 \dontrun{
 
 addColumn(segvis_block,"cond_name",cond_vec)
+
 }
 }
 \seealso{

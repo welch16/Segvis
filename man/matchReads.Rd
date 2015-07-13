@@ -19,7 +19,11 @@ segvis object
 Match the reads to the extended regions stored in the object slots.
 }
 \examples{
-\dontrun{ matchReads(segvis_object,mc=8)}
+\dontrun{
+
+matchReads(segvis_object,mc=8)
+
+}
 }
 \seealso{
 \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{reads-class}}

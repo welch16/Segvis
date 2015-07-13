@@ -3,46 +3,62 @@
 
 ## Get methods
 
-#' @rdname methods-segvis_block-gs
-#' @name name
+##' @rdname name
+##' @name name
+##' @aliases name
+##' @docType methods
+##' @exportMethod name
 setMethod("name",
   signature = signature(object = "segvis_block"),
   definition = function(object)object@name
 )
 
-#' @rdname methods-segvis_block-gs
-#' @name regions
+##' @rdname regions
+##' @name regions
+##' @aliases regions
+##' @docType methods
+##' @exportMethod regions
 setMethod("regions",
   signature = signature(object = "segvis_block"),
   definition = function(object)object@regions
 )
 
-#' @rdname methods-segvis_block-gs
-#' @name cover_table
+##' @rdname cover_table
+##' @name cover_table
+##' @aliases cover_table
+##' @docType methods
+##' @exportMethod cover_table
 setMethod("cover_table",
   signature = signature(object = "segvis_block"),
   definition = function(object)object@cover_table
 )           
 
-#' @rdname methods-segvis_block-gs
-#' @name bandwidth
+##' @rdname bandwidth
+##' @name bandwidth
+##' @aliases bandwidth
+##' @docType methods
+##' @exportMethod bandwidth
 setMethod("bandwidth",
   signature = signature(object = "segvis_block"),
   definition = function(object)object@bandwidth
 )           
 
-#' @rdname normConst
-#' @name normConst
-#' @aliases normConst
+##' @rdname normConst
+##' @name normConst
+##' @aliases normConst
+##' @docType methods
+##' @exportMethod normConst
 setMethod("normConst",
   signature = signature(object = "segvis_block"),
   definition = function(object)object@normConst
 )
 
-## Set methods
 
-#' @rdname methods-segvis_block-gs
-#' @name name
+##' @rdname name
+##' @name name
+##' @aliases name<-
+##' @docType methods
+##' @exportMethod name<-
 setReplaceMethod("name",
   signature = signature(object = "segvis_block",value = "character"),
   definition = function(object,value){
@@ -50,8 +66,11 @@ setReplaceMethod("name",
     return(object)
 })    
 
-#' @rdname methods-segvis_block-gs
-#' @name regions
+##' @rdname regions
+##' @name regions
+##' @aliases regions<-
+##' @docType methods
+##' @exportMethod regions<-
 setReplaceMethod("regions",
   signature = signature(object = "segvis_block",value = "GRanges"),
   definition = function(object,value){    
@@ -60,8 +79,11 @@ setReplaceMethod("regions",
     return(object)    
 })
 
-#' @rdname methods-segvis_block-gs
-#' @name cover_table
+##' @rdname cover_table
+##' @name cover_table
+##' @aliases cover_table<-
+##' @docType methods
+##' @exportMethod cover_table<-
 setReplaceMethod("cover_table",
   signature = signature(object = "segvis_block",value = "data.table"),
   definition = function(object,value){    
@@ -71,8 +93,11 @@ setReplaceMethod("cover_table",
     return(object)    
 })           
 
-#' @rdname methods-segvis_block-gs
-#' @name bandwidth
+##' @rdname bandwidth
+##' @name bandwidth
+##' @aliases bandwidth<-
+##' @docType methods
+##' @exportMethod bandwidth<-
 setReplaceMethod("bandwidth",
   signature = signature(object = "segvis_block",value = "numeric"),
   definition = function(object,value){
@@ -82,9 +107,11 @@ setReplaceMethod("bandwidth",
     return(object)
 })           
 
-#' @rdname normConst
-#' @name normConst
-#' @aliases normConst<-,ANY-methods
+##' @rdname normConst
+##' @name normConst
+##' @aliases normConst<-
+##' @docType methods
+##' @exportMethod normConst<-
 setReplaceMethod("normConst",
   signature = signature(object = "segvis_block",value = "numeric"),
   definition = function(object,value){
@@ -93,9 +120,11 @@ setReplaceMethod("normConst",
     return(object)
 })                        
 
-#' @rdname summarize
-#' @name summarize
-#' @aliases summarize,ANY-method
+##' @rdname summarize
+##' @name summarize
+##' @aliases summarize,ANY-method
+##' @docType methods
+##' @exportMethod summarize
 setMethods("summarize",
   signature = signature(object = "segvis_block",FUN = "function",... = "ANY"),
   definition = function(object,FUN,...){
@@ -126,9 +155,11 @@ setMethod("show",
     show(regions(object))
 })
 
-#' @rdname normalize
-#' @name normalize
-#' @aliases normalize
+##' @rdname normalize
+##' @name normalize
+##' @aliases normalize
+##' @docType methods
+##' @exportMethod normalize
 setMethods("normalize",
   signature = signature(object = "segvis_block",value = "numeric",base = "numeric"),
   definition = function(object, value,base){
@@ -140,9 +171,11 @@ setMethods("normalize",
     return(object) 
 })
            
-#' @rdname subset_block
-#' @name subset_block
-#' @aliases subset_block,ANY-method
+##' @rdname subset_block
+##' @name subset_block
+##' @aliases subset_block,ANY-method
+##' @docType methods
+##' @exportMethod subset_block
 setMethod("subset_block",
   signature = signature(object = "segvis_block",condition = "ANY"),
   definition = function(object, condition){
@@ -150,9 +183,11 @@ setMethod("subset_block",
     return(.filter_sb(object,cond))
 })
 
-#' @rdname addColumn
-#' @name addColumn
-#' @aliases addColumn,ANY-method
+##' @rdname addColumn
+##' @name addColumn
+##' @aliases addColumn,ANY-method
+##' @docType methods
+##' @exportMethod addColumn
 setMethods("addColumn",
   signature = signature(object = "segvis_block",name = "character",col = "ANY"),
   definition = function(object,name,col){

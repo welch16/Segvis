@@ -3,8 +3,8 @@
 \docType{methods}
 \name{normConst}
 \alias{normConst}
-\alias{normConst<-,ANY-methods}
-\title{normConst method for segvis_block class}
+\alias{normConst<-}
+\title{normConst methods for segvis_block class}
 \usage{
 normConst(object)
 
@@ -17,29 +17,24 @@ normConst(object) <- value
 \arguments{
 \item{object}{segvis_block object}
 
-\item{value}{Numeric normalizing constant value}
-
-\item{object}{segvis_block object}
+\item{value}{Numeric value}
 }
 \value{
-A numeric value
+The normalizing constant of the segvis_block object
 
-A segvis_block object
+A segvis_block object with the normConst replcated
 }
 \description{
-This method returns the normalizing constant of a \code{segvis_block} object
+normConst method returns the normalizing constant of a segvis_block object
 
-This method assigns a new normalizing constant to a \code{segvis_block} object
+normConst<- assigns a new normalizing constant to a segvis_block object
 }
 \examples{
 \dontrun{
 
 normConst(segvis_block)
-}
-\dontrun{
-
+normConst(segvis_block) <- 100
 normConst(segvis_block) <- countReads(segvis)
-normConst(segvis_block) <- 1e3
 
 }
 }

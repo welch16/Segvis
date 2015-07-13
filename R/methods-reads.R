@@ -1,38 +1,51 @@
 
 # Methods for reads class
 
-## Get methods
+#### readsF
 
-#' @rdname methods-reads-gs
-#' @name readsF
+##' @name readsF
+##' @rdname readsF
+##' @docType methods
+##' @aliases readsF
+##' @exportMethod readsF
 setMethod("readsF",
-  signature = signature(object = "reads"),
-  definition = function(object)object@readsF
+    signature = signature(object = "reads"),
+    definition = function(object)object@readsF
 )
 
-#' @rdname methods-reads-gs
-#' @name readsR
-setMethod("readsR",
-  signature = signature(object = "reads"),
-  definition = function(object)object@readsR
-)
-
-## Set methods
-
-#' @rdname methods-reads-gs
-#' @name readsF
+##' @name readsF
+##' @rdname readsF
+##' @docType methods
+##' @aliases readsF<-
+##' @exportMethod readsF<-
 setReplaceMethod("readsF",
-  signature = signature(object = "reads",value = "list"),
-  definition = function(object,value){
-    object@readsF <- value
-    return(object)
+    signature = signature(object = "reads",value = "list"),
+    definition = function(object,value){
+        object@readsF <- value
+        return(object)
 })
 
-#' @rdname methods-reads-gs
-#' @name readsR
+#### readsR
+
+##' @name readsR
+##' @rdname readsR
+##' @docType methods
+##' @aliases readsR
+##' @exportMethod readsR
+setMethod("readsR",
+    signature = signature(object = "reads"),
+    definition = function(object)object@readsR
+)
+
+
+##' @name readsR
+##' @rdname readsR
+##' @docType methods
+##' @aliases readsR<-
+##' @exportMethod readsR<-
 setReplaceMethod("readsR",
-  signature = signature(object = "reads",value = "list"),
-  definition = function(object,value){
-    object@readsR <- value
-    return(object)
+    signature = signature(object = "reads",value = "list"),
+    definition = function(object,value){
+        object@readsR <- value
+        return(object)
 })

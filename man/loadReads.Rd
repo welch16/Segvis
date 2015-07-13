@@ -18,6 +18,13 @@ segvis object
 \description{
 Load the fragment stored in the file slot of the segvis object. The reads are divided by chromosome and by strand.
 }
+\examples{
+\dontrun{
+
+segvis <- loadReads(segvis,mc=8)
+
+}
+}
 \seealso{
 \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{reads-class}}
 }

@@ -1,75 +1,106 @@
-#' @import data.table
-#' @import rbamtools
-#' @import Rsamtools
-#' @importFrom GenomicAlignments readGAlignmentsFromBam
+##' @import data.table
+##' @import rbamtools
+##' @import Rsamtools
+##' @importFrom GenomicAlignments readGAlignmentsFromBam
+##' @importFrom GenomicAlignments seqnames
+##' @importFrom GenomicAlignments findOverlaps
 NULL
 
-
-#' @rdname methods-segvis-gs
-#' @name name 
+##' @rdname name
+##' @name name
+##' @aliases name
+##' @docType methods
+##' @exportMethod name
 setMethod("name",
   signature = signature(object = "segvis"),
   definition = function(object)object@name
 )           
 
-#' @rdname methods-segvis-gs
-#' @name regions
+##' @rdname regions
+##' @name regions
+##' @aliases regions
+##' @docType methods
+##' @exportMethod regions
 setMethod("regions",
   signature = signature(object = "segvis"),
   definition = function(object)object@regions
 )           
 
-#' @rdname methods-segvis-gs
-#' @name file
+##' @rdname file
+##' @name file
+##' @aliases file
+##' @docType methods
+##' @exportMethod file
 setMethod("file",
   signature = signature(object = "segvis"),
   definition = function(object)object@file
 )           
 
-#' @rdname methods-segvis-gs
-#' @name maxBandwidth
+##' @rdname maxBandwidth
+##' @name maxBandwidth
+##' @aliases maxBandwidth
+##' @docType methods
+##' @exportMethod maxBandwidth
 setMethod("maxBandwidth",
   signature = signature(object = "segvis"),
   definition  = function(object)object@maxBandwidth
 )           
 
-#' @rdname methods-segvis-gs
-#' @name fragLen
+##' @rdname fragLen
+##' @name fragLen
+##' @aliases fragLen
+##' @docType methods
+##' @exportMethod fragLen
 setMethod("fragLen",
   signature = signature(object = "segvis"),
   definition = function(object)object@fragLen
 )           
 
-#' @rdname methods-segvis-gs
-#' @name chr
+##' @rdname chr
+##' @name chr
+##' @aliases chr
+##' docType methods
+##' @exportMethod chr
 setMethod("chr",
   signature = signature(object = "segvis"),
   definition = function(object)object@chr
 )          
 
-#' @rdname methods-segvis-gs
-#' @name isPET
+##' @rdname isPET
+##' @name isPET
+##' @aliases isPET
+##' @docType methods
+##' @exportMethod isPET
 setMethod("isPET",
   signature = signature(object = "segvis"),
   definition = function(object)object@isPET
 )          
-
-# @rdname methods-segvis-gs
-# @name readsF
+##' @name readsF
+##' @rdname readsF
+##' @docType methods
+##' @aliases readsF
+##' @exportMethod readsF
 setMethod("readsF",
   signature = signature(object = "segvis"),
   definition = function(object)readsF(object@reads)
 )           
 
-# @rdname methods-segvis-gs
-# @name readsR
+
+##' @name readsR
+##' @rdname readsR
+##' @docType methods
+##' @aliases readsR
+##' @exportMethod readsR
 setMethod("readsR",
   signature = signature(object = "segvis"),
   definition = function(object)readsR(object@reads)
 )
 
-#' @rdname methods-segvis-gs
-#' @name profiles
+##' @rdname profiles
+##' @name profiles
+##' @docType methods
+##' @aliases profiles
+##' @exportMethod profiles
 setMethod("profiles",
   signature = signature(object = "segvis"),
   definition = function(object)object@profiles
@@ -77,8 +108,11 @@ setMethod("profiles",
 
 ## Set methods
 
-#' @rdname methods-segvis-gs
-#' @name name<-
+##' @rdname name
+##' @name name
+##' @aliases name<-
+##' @docType methods
+##' @exportMethod name<-
 setReplaceMethod("name",
   signature = signature(object = "segvis",value = "character"),
   definition = function(object,value){
@@ -86,8 +120,12 @@ setReplaceMethod("name",
     return(object)
 })
    
-#' @rdname methods-segvis-gs
-#' @name regions<-
+
+##' @rdname regions
+##' @name regions
+##' @aliases regions<-
+##' @docType methods
+##' @exportMethod regions<-
 setReplaceMethod("regions",
   signature = signature(object = "segvis",value = "GRanges"),
   definition = function(object,value){
@@ -114,8 +152,11 @@ setReplaceMethod("regions",
     return(object)
 })
 
-#' @rdname methods-segvis-gs
-#' @name file<-
+##' @rdname file
+##' @name file
+##' @aliases file<-
+##' @docType methods
+##' @exportMethod file<-
 setReplaceMethod("file",
   signature = signature(object = "segvis",value = "character"),
   definition = function(object,value){
@@ -126,8 +167,13 @@ setReplaceMethod("file",
     return(object)
 })    
 
-#' @rdname methods-segvis-gs
-#' @name maxBandwidth<-
+
+
+##' @rdname maxBandwidth
+##' @name maxBandwidth
+##' @aliases maxBandwidth<-
+##' @docType methods
+##' @exportMethod maxBandwidth<-
 setReplaceMethod("maxBandwidth",
   signature = signature(object = "segvis", value = "numeric"),
   definition = function(object,value){
@@ -139,8 +185,11 @@ setReplaceMethod("maxBandwidth",
     return(object)
 })    
 
-#' @rdname methods-segvis-gs
-#' @name fragLen<-
+##' @rdname fragLen
+##' @name fragLen
+##' @aliases fragLen<-
+##' @docType methods
+##' @exportMethod fragLen<-
 setReplaceMethod("fragLen",
   signature = signature(object = "segvis", value = "numeric"),
   definition = function(object,value){
@@ -150,8 +199,11 @@ setReplaceMethod("fragLen",
     return(object)
 })    
 
-#' @rdname methods-segvis-gs
-#' @name chr<-
+##' @rdname chr
+##' @name chr
+##' @aliases chr<-
+##' @docType methods
+##' @exportMethod chr<-
 setReplaceMethod("chr",
   signature = signature(object = "segvis",value = "character"),
   definition = function(object,value){
@@ -160,8 +212,11 @@ setReplaceMethod("chr",
     return(object)
 })
 
-#' @rdname methods-segvis-gs
-#' @name isPET<-
+##' @rdname isPET
+##' @name isPET
+##' @aliases isPET<-
+##' @docType methods
+##' @exportMethod isPET<-
 setReplaceMethod("isPET",
   signature = signature(object = "segvis",value = "logical"),
   definition = function(object,value){
@@ -192,8 +247,12 @@ setMethods("show",
 #    cat("---------------------------\n")
 })
 
-# @rdname methods-segvis-readsF
-# @name readsF
+
+##' @name readsR
+##' @rdname readsR
+##' @docType methods
+##' @aliases readsR<-
+##' @exportMethod readsF
 setReplaceMethod("readsF",
   signature = signature(object = "segvis",value = "list"),
   definition = function(object,value){
@@ -202,8 +261,12 @@ setReplaceMethod("readsF",
   }
 )                 
 
-# @rdname methods-segvis-readsR
-# @name readsR
+
+##' @name readsR
+##' @rdname readsR
+##' @docType methods
+##' @aliases readsR<-
+##' @exportMethod readsR
 setReplaceMethod("readsR",
   signature = signature(object = "segvis",value = "list"),
   definition = function(object,value){
@@ -212,8 +275,11 @@ setReplaceMethod("readsR",
   }
 )                 
 
-#' @rdname segvis-loadReads
-#' @name loadReads
+##' @rdname loadReads
+##' @name loadReads
+##' @aliases loadReads
+##' @docType methods
+##' @exportMethod loadReads
 setMethods("loadReads",
   signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object,mc ){
@@ -294,8 +360,11 @@ setMethods("loadReads",
     return(object)
 })
 
-#' @rdname segvis-matchReads
-#' @name matchReads
+##' @rdname matchReads
+##' @name matchReads
+##' @aliases matchReads
+##' @docType methods
+##' @exportMethod matchReads
 setMethods("matchReads",
   signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object,mc = 8){
@@ -334,8 +403,11 @@ setMethods("matchReads",
     }
 })
 
-#' @rdname segvis-getCoverage
-#' @name getCoverage
+##' @rdname getCoverage
+##' @name getCoverage
+##' @aliases getCoverage
+##' @docType methods
+##' @exportMethod getCoverage
 setMethods("getCoverage",
   signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object, mc = 8){
@@ -360,11 +432,11 @@ setMethods("getCoverage",
     }
 })    
 
-
-
-
-#' @rdname segvis-findSummit
-#' @name findSummit
+##' @rdname findSummit
+##' @name findSummit
+##' @aliases findSummit
+##' @docType methods
+##' @exportMethod findSummit
 setMethods("findSummit",          
   signature = signature(object = "segvis",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc=8){
@@ -392,9 +464,11 @@ setMethods("findSummit",
   return(unlist(summits_chr))    
 })
 
-#' @rdname countReads
-#' @name countReads
-#' @aliases countReads,ANY-method
+##' @rdname countReads
+##' @name countReads
+##' @aliases countReads
+##' @docType methods
+##' @exportMethod countReads
 setMethods("countReads",
   signature = signature(object = "segvis"),
   definition = function(object){
@@ -408,8 +482,11 @@ setMethods("countReads",
     return(counts)  
 })
 
-#'@rdname segvis-joinProfiles
-#' @name joinProfiles
+##' @rdname joinProfiles
+##' @name joinProfiles
+##' @aliases joinProfiles
+##' @docType methods
+##' @exportMethod joinProfiles
 setMethods("joinProfiles",
   signature = signature(object = "segvis",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc=8){
@@ -433,8 +510,11 @@ setMethods("joinProfiles",
   return(joined_info)
 })    
 
-#' @rdname Segvis_block
-#' @name Segvis_block
+##' @rdname Segvis_block
+##' @name Segvis_block
+##' @aliases Segvis_block
+##' @docType methods
+##' @exportMethod Segvis_block
 setMethods("Segvis_block",
   signature = signature(object = "segvis",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc){

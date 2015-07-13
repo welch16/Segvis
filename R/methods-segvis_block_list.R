@@ -1,9 +1,11 @@
-#' @import ggplot2
+##' @import ggplot2
 NULL
 
-#' @name plot_profiles
-#' @rdname plot_profiles
-#' @aliases plot_profiles,ANY-method
+##' @name plot_profiles
+##' @rdname plot_profiles
+##' @aliases plot_profiles,ANY-method
+##' @docType methods
+##' @exportMethod plot_profiles
 setMethods("plot_profiles",
   signature = signature(object = "segvis_block_list",
     condition = "ANY",coord = "numeric",FUN = "function",...="ANY",
@@ -37,9 +39,11 @@ setMethods("plot_profiles",
     return(out)                  
 })
 
-#' @name plot_data
-#' @rdname plot_data
-#' @aliases plot_data,ANY-method
+##' @name plot_data
+##' @rdname plot_data
+##' @aliases plot_data,ANY-method
+##' @docType methods
+##' @exportMethod plot_data
 setMethods("plot_data",
   signature = signature(object = "segvis_block_list",
     condition = "ANY",coord = "numeric",FUN = "function",...="ANY",

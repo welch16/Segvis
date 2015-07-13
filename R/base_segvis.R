@@ -1,5 +1,5 @@
 
-#' @import data.table
+##' @import data.table
 
 separate.by.chrom <- function(greads,chrom,st,mc,sort=FALSE)
 {

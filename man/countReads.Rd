@@ -3,7 +3,6 @@
 \docType{methods}
 \name{countReads}
 \alias{countReads}
-\alias{countReads,ANY-method}
 \title{countReads method for segvis class}
 \usage{
 countReads(object)
@@ -19,7 +18,9 @@ Counts the number of reads considered  in object
 }
 \examples{
 \dontrun{
+
 countReads(segvis)
+
 }
 }
 \seealso{

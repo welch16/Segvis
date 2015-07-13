@@ -3,7 +3,7 @@
 \docType{methods}
 \name{Segvis_block}
 \alias{Segvis_block}
-\title{Create a segvis_block object}
+\title{Segvis_block constructor from a segvis object}
 \usage{
 Segvis_block(object, bw, mc)
 }
@@ -15,12 +15,20 @@ Segvis_block(object, bw, mc)
 \item{mc}{Numeric value with the number of cores used with parallel}
 }
 \value{
-a sevis_block object
+a segvis_block object
 }
 \description{
-Constructor for segvis_block class, it takes both name and region from \code{object}
+This method returns a segvis_block object built out of the arguments in a segvis object
+}
+\examples{
+\dontrun{
+
+mc <- 4
+segvis_block <- Segvis_block(segvis,101,mc)
+
+}
 }
 \seealso{
-\code{\link{segvis_block-class}}
+\code{\link{segvis_block-class}},\code{\link{segvis-class}}
 }
 

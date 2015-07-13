@@ -1,260 +1,553 @@
 
 # generic methods for various classes
 
-
-#' @export
-#' 
-#' @rdname methods-segvis-gs
+##' name methods
+##'
+##' name returns a string with the name of the segvis object
+##' 
+##' @param object A \code{segvis} object
+##'
+##' @return A string with the name of the object
+##'
+##' @export
+##' @docType methods
+##' @seealso \code{\link{segvis-class}}
+##' @rdname name
+##' @name name
+##' @examples
+##' \dontrun{
+##'
+##' name(segvis)
+##' name(segvis) <- "my_regions"
+##' 
+##' }
 setGeneric("name",
   function(object)
   standardGeneric("name")
 )
 
-#' @param value The class of this parameter depends on the function, for \code{file<-}, \code{name<-} and \code{chr<-} is a string; for \code{fragLen<-} and  \code{maxBandwidth} is a numeric value; for \code{regions<-} is a GRanges object and for \code{isPET<-} is a logical value
-#'
-#' @return Returns a segvis object with the value indicated by the functions being updated with value
-#'
-#' @rdname methods-segvis-gs
+##' name<- assigns a new a name to the segvis object
+##'
+##' @param value A character with the name of the object
+##'
+##' @return A segvis object
+##' @rdname name
+##' @name name
 setGeneric("name<-",
   function(object,value)
   standardGeneric("name<-")
 )           
 
-#' @export
-#' @rdname methods-segvis-gs
+##' regions methods
+##'
+##' regions return a GenomicRanges object with the regions used by segvis
+##' 
+##' @param object A \code{segvis} object
+##'
+##' @return A GenomicRanges object
+##'
+##' @export
+##' @docType methods
+##' @seealso \code{\link{segvis-class}}
+##' @rdname regions
+##' @name regions
+##' @examples
+##' \dontrun{
+##'
+##' regions(segvis)
+##' regions(segvis) <- gr  ## gr is a GenomicRanges object
+##' 
+##' }
 setGeneric("regions",
   function(object)
   standardGeneric("regions")
 )
 
-#' @export
-#' @rdname methods-segvis-gs
+##' regions<- assigns a GenomicRanges object as the regions used by segvis
+##'
+##' @param value A GenomicRanges object
+##'
+##' @return A segvis object
+##' @rdname regions
+##' @name regions
 setGeneric("regions<-",
   function(object,value)
   standardGeneric("regions<-")
 )
 
-#' Generic methods for profile class
-
-#'#'  Get methods
-
-#' @export
-#' @docType methods
-#' @rdname methods-segvis-gs
+##' file methods
+##'
+##' file return the file name used in the segvis object
+##' 
+##' @param object A \code{segvis} object
+##'
+##' @return A string
+##'
+##' @export
+##' @docType methods
+##' @seealso \code{\link{segvis-class}}
+##' @rdname file
+##' @name file
+##' @examples
+##' \dontrun{
+##'
+##' file(segvis)
+##' file(segvis) <- "path/to/file/myFile.bam"
+##' 
+##' }
 setGeneric("file",           
   function(object)
   standardGeneric("file")           
 )
 
-#' @export
-#' @docType methods
-#' @rdname methods-segvis-gs
+
+##' file<- assigns a string with the file name of the reads to be used 
+##'
+##' @param value A character value with the name of bam the file with the reads 
+##'
+##' @return A segvis object
+##' @rdname file
+##' @name file
 setGeneric("file<-",
   function(object,value)
   standardGeneric("file<-")
 )
 
-#' @export
-#' @docType methods
-#' @rdname methods-segvis-gs
+##' maxBandwidth methods
+##'
+##' maxBandwidth returns a numeric value representing the possible bandwidths upper bound to smooth the coverage profiles.
+##' 
+##' @param object A \code{segvis} object
+##'
+##' @return A integer value
+##'
+##' @export
+##' @docType methods
+##' @seealso \code{\link{segvis-class}}
+##' @rdname maxBandwidth
+##' @name maxBandwidth
+##' @examples
+##' \dontrun{
+##'
+##' maxBandwidthfragLen(segvis)
+##' maxBandwidth(segvis) <- 201
+##' 
+##' }
 setGeneric("maxBandwidth",
   function(object)
   standardGeneric("maxBandwidth")           
 )
 
-#' @export
-#' @docType methods
-#' @rdname methods-segvis-gs
+
+##' maxBandwidth<- assigns an integer value the bandwidth upper bound to use when smoothing the profiles in segvis_block object
+##'
+##' @param value A numeric value representing the maximum bandwidth, it need to be an odd number
+##'
+##' @return A segvis object
+##' @rdname maxBandwidth
+##' @name maxBandwidth
 setGeneric("maxBandwidth<-",
   function(object,value)
   standardGeneric("maxBandwidth<-")
 )           
 
-#' @export
-#' @docType methods
-#' @rdname methods-segvis-gs
+##' fragLen methods
+##'
+##' fragLen returns a numeric value representing the fragment length used to extend the fragment reads in the Single Ended case (i.e. isPET = FALSE)
+##' 
+##' @param object A \code{segvis} object
+##'
+##' @return A integer value
+##'
+##' @export
+##' @docType methods
+##' @seealso \code{\link{segvis-class}}
+##' @rdname fragLen
+##' @name fragLen
+##' @examples
+##' \dontrun{
+##'
+##' fragLen(segvis)
+##' fragLen(segvis) <- 200
+##' 
+##' }
 setGeneric("fragLen",
   function(object)
   standardGeneric("fragLen")           
 )
 
-#' @export
-#' @docType methods
-#' @rdname methods-segvis-gs
+##' fragLen<- assigns an integer value representing the bp to extend the fragments in SET case
+##'
+##' @param value A numeric value representing the fragment length
+##'
+##' @return A segvis object
+##' @rdname fragLen
+##' @name fragLen
 setGeneric("fragLen<-",
   function(object,value)
   standardGeneric("fragLen<-")
 )           
 
-#' @export
-#' @docType methods
-#' @rdname methods-segvis-gs
+##' chr methods
+##'
+##' chr returns a character vector naming the chromosomes used in the analysis
+##'
+##' @param object A \code{segvis} object
+##'
+##' @return A character vector
+##'
+##' @export
+##' @docType methods
+##' @seealso \code{\link{segvis-class}}, \code{\link{buildSegvis}}
+##' @rdname chr
+##' @name chr
+##' @examples
+##' \dontrun{
+##'
+##' chr(segvis)
+##' chr(segvis) <- c("chr1","chr2",...,"chrX","chrY") ## this is not correct actually
+##' 
+##' }
 setGeneric("chr",
   function(object)
   standardGeneric("chr")
 )
 
-#' @export
-#' @docType methods
-#' @rdname methods-segvis-gs
+
+##' chr<- assigns a logical flag to the segvis object
+##'
+##' @param value A character vector with the chromosomes to use in the analysis
+##'
+##' @return A segvis object
+##' @rdname chr
+##' @name chr
 setGeneric("chr<-",
   function(object,value)
   standardGeneric("chr<-")           
 )
 
-#' @export
-#' @docType methods
-#' @rdname methods-segvis-gs
+
+##' isPET methods
+##'
+##' isPET returns a logical flag wheter the reads to consider are Paired Ended or not
+##'
+##' @param object A \code{segvis} object
+##'
+##' @return A logical flag
+##'
+##' @export
+##' @docType methods
+##' @seealso \code{\link{segvis-class}}
+##' @rdname isPET
+##' @name isPET
+##' @examples
+##' \dontrun{
+##'
+##' isPET(segvis)
+##' isPET(segvis) <- TRUE
+##' 
+##' }
 setGeneric("isPET",
   function(object)
   standardGeneric("isPET")           
 )
            
-#' @export
-#' @docType methods
-#' @rdname methods-segvis-gs
+##' isPET<- assigns a logical flag to the segvis object
+##'
+##' @param value A logical flag that represents wheter the reads to use are Paired Ended or not
+##'
+##' @return A segvis object
+##' @rdname isPET
+##' @name isPET
 setGeneric("isPET<-",
   function(object,value)
   standardGeneric("isPET<-")           
 )           
 
-#' @title profiles methods for segvis class
-#' @description Returns the coverage for each region considered
-#' @param object A segvis object
-#' @return RleList. A list made of an Rle object for each region
-#' @export
-#' @docType methods
-#' @seealso \code{\link{segvis-class}} and \code{\link{segvis-getCoverage}}
-#' @rdname methods-segvis-gs
+
+
+
+##' profiles methods for segvis class
+##'
+##' Returns the coverage for each region considered
+##'
+##' @param object A segvis object
+##'
+##' @return RleList. A list made of an Rle object for each region
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis-class}} and \code{\link{getCoverage}}
+##'
+##' @rdname profiles
+##' @name profiles
+##'
+##' @examples
+##' \dontrun{
+##'
+##' profiles(segvis)
+##'
+##' }
 setGeneric("profiles",
   function(object)
   standardGeneric("profiles")
 )  
     
-#' @title loadReads method for segvis class
-#' @description Load the fragment stored in the file slot of the segvis object. The reads are divided by chromosome and by strand.
-#' @param object segvis object
-#' @param mc numeric, the number of cores used with parallel
-#' @return segvis object
-#' @export
-#' @docType methods
-#' @seealso \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{reads-class}}
-#' @rdname segvis-loadReads
+##' loadReads method for segvis class
+##'
+##' Load the fragment stored in the file slot of the segvis object. The reads are divided by chromosome and by strand.
+##' @param object segvis object
+##'
+##' @param mc numeric, the number of cores used with parallel
+##'
+##' @return segvis object
+##'
+##' @export
+##' @docType methods
+##'
+##' @seealso \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{reads-class}}
+##'
+##' @rdname loadReads
+##' @name loadReads
+##'
+##' @examples
+##' \dontrun{
+##'
+##' segvis <- loadReads(segvis,mc=8)
+##'
+##' }
 setGeneric("loadReads",
   function(object,mc)
   standardGeneric("loadReads")
 )           
 
-#' @title matchReads methods for segvis class
-#' @description Match the reads to the extended regions stored in the object slots. 
-#' @param object segvis object 
-#' @param mc numeric, the number of cores used with parallel
-#' @return segvis object
-#' @export
-#' @docType methods
-#' @seealso \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{reads-class}}
-#' @rdname segvis-matchReads
-#' @examples
-#' \dontrun{ matchReads(segvis_object,mc=8)}
+##' matchReads methods for segvis class
+##'
+##' Match the reads to the extended regions stored in the object slots.
+##'
+##' @param object segvis object
+##'
+##' @param mc numeric, the number of cores used with parallel
+##'
+##' @return segvis object
+##' 
+##' @export
+##' @docType methods
+##'
+##' @seealso \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{reads-class}}
+##'
+##' @rdname matchReads
+##' @name matchReads
+##'
+##' @examples
+##' \dontrun{
+##'
+##' matchReads(segvis_object,mc=8)
+##'
+##' }
 setGeneric("matchReads",
   function(object,mc)
   standardGeneric("matchReads")
 )           
 
-#' @title getCoverage method for profile class
-#' @description Calculate  the coverage using the reads matched by the matchReads method. It returns a Rle object for each region.
-#' @param object segvis object
-#' @param mc numeric, the number of cores used with parallel
-#' @return segvis object
-#' @export
-#' @docType methods
-#' @seealso \code{\link{loadReads}} and \code{\link{matchReads}}
-#' @rdname segvis-getCoverage
-#' @examples
-#' \dontrun{ getCoverage(segvis_object,mc=8)}
+
+##' getCoverage method for profile class
+##'
+##' Calculate  the coverage using the reads matched by the matchReads method. It returns a Rle object for each region.
+##'
+##' @param object segvis object
+##' 
+##' @param mc numeric, the number of cores used with parallel
+##'
+##' @return segvis object
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{loadReads}}, \code{\link{matchReads}} and \code{\link{findSummit}}
+##' 
+##' @rdname getCoverage
+##' @name getCoverage
+##'
+##' @examples
+##' \dontrun{
+##' 
+##' getCoverage(segvis_object,mc=8)
+##'
+##' }
 setGeneric("getCoverage",
   function(object,mc)
   standardGeneric("getCoverage")           
 )
 
-#' @title joinProfiles method for segvis class
-#' @description Joins all the coverages into a data.table with columns chr|match|coord|tagCounts
-#' @param object segvis object
-#' @param bw Numeric values with the bandwidth used to smooth the profiles, must be and odd number less or equal than the maxBandwidth
-#' @param mc Numeric value representing the number of cores used with parallel
-#' @return data.table object
-#' @export
-#' @docType methods
-#' @rdname segvis-joinProfiles
-#' @examples
-#' \dontrun{ joinProfiles(segvis_object,bw = 151,mc=8)}
+
+##' joinProfiles method for segvis class
+##'
+##' Joins all the coverages into a data.table with columns chr|match|coord|tagCounts
+##'
+##' @param object segvis object
+##'
+##' @param bw Numeric value with the bandwidth used to smooth the coverage profiles, must be and odd number less or equal than the maxBandwidth
+##'
+##' @param mc Numeric value with the number of cores used with parallel
+##'
+##' @return A data.table object
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis_block-class}},\code{\link{segvis-class}}
+##'
+##' @rdname joinProfiles
+##' @name joinProfiles
+##'
+##' @examples
+##' \dontrun{
+##'
+##' joinProfiles(segvis_object,bw = 151,mc=4)
+##' 
+##' }
 setGeneric("joinProfiles",
   function(object,bw,mc)
   standardGeneric("joinProfiles")
 )
 
-#' @title findSummit method for segvis class
-#' @description This method finds the summit of each region whenever is possible, otherwise returns NA. The regions of the segvis object don't need to have the same width
-#' @param object segvis object
-#' @param bw, the bandwidth used to smooth the profiles, must be and odd number less or equal than the maxBandwidth
-#' @param mc, the number of cores used with parallel
-#' @return Numeric vector
-#' @export
-#' @docType methods
-#' @rdname segvis-findSummit 
-#' @examples
-#' \dontrun{ findSummit(profile_object,bw = 151,mc=8)}
+##' findSummit method for segvis class
+##' 
+##' This method finds the summit of each region whenever is possible, otherwise returns NA. The regions of the segvis object don't need to have the same width
+##' 
+##' @param object segvis object
+##' 
+##' @param bw, the bandwidth used to smooth the profiles, must be and odd number less or equal than the maxBandwidth
+##' 
+##' @param mc, the number of cores used with parallel
+##'
+##' @return Numeric vector with the estimated summits
+##' 
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{getCoverage}},\code{\link{segvis-class}}
+##' @rdname findSummit
+##' @name findSummmit
+##'
+##' @examples
+##' \dontrun{
+##' 
+##' summits <- findSummit(profile_object,bw = 151,mc=8)
+##' 
+##' }
 setGeneric("findSummit",
   function(object,bw,mc)
   standardGeneric("findSummit")
 )
 
-#' @title Create a segvis_block object
-#' @description Constructor for segvis_block class, it takes both name and region from \code{object}
-#' @param object segvis object
-#' @param bw Numeric value with the bandwidth used to smooth the coverage profiles, must be and odd number less or equal than the maxBandwidth
-#' @param mc Numeric value with the number of cores used with parallel
-#' @return a sevis_block object
-#' @export
-#' @docType methods
-#' @rdname Segvis_block
-#' @seealso \code{\link{segvis_block-class}}
+##' Segvis_block constructor from a segvis object
+##'
+##' This method returns a segvis_block object built out of the arguments in a segvis object
+##'
+##' @param object segvis object
+##'
+##' @param bw Numeric value with the bandwidth used to smooth the coverage profiles, must be and odd number less or equal than the maxBandwidth
+##'
+##' @param mc Numeric value with the number of cores used with parallel
+##'
+##' @return a segvis_block object
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis_block-class}},\code{\link{segvis-class}}
+##'
+##' @rdname Segvis_block
+##' @name Segvis_block
+##'
+##' @examples
+##' \dontrun{
+##'
+##' mc <- 4
+##' segvis_block <- Segvis_block(segvis,101,mc)
+##'
+##' }
 setGeneric("Segvis_block",
   function(object,bw,mc)
   standardGeneric("Segvis_block")
 )           
 
-#' @title Get and set method of reads objects
-#' @description \code{readsF} operates on the forward reads, while \code{readsR} operates on the backward reads
-#' @param object Either a \code{segvis} o \code{reads} object
-#' @param value A data.table converted from a \code{GRanges} object
-#' @export
-#' @docType methods
-#' @rdname methods-reads-gs
+##' readsF methods
+##'
+##' readsF returns a list of forward reads of segvis or reads objects
+##'
+##' @param object Either a \code{segvis} or a \code{reads} object
+##'
+##' @return A list of data.table with same format as a GenomicRanges object with an additional match column
+##'
+##' @export
+##' @docType methods
+##' @seealso \code{\link{reads-class}},\code{\link{segvis-class}}
+##' @rdname readsF
+##' @name readsF
+##' @examples
+##' \dontrun{
+##' readsF(segvis)
+##' readsF(reads)
+##' readsF(segvis) <- new_reads
+##' }
 setGeneric("readsF",
   function(object)
   standardGeneric("readsF")
 )           
 
-#' @export
-#' @docType methods
-#' @rdname methods-reads-gs
+##' readsF<- assisgn a list of forward reads to a reads or to a segvis object
+##'
+##' @param value A list of data.table with same format as a GenomicRanges object with an additional match column
+##'
+##' @return A reads or a segvis object with modified forward reads
+##' @rdname readsF
+##' @name readsF
 setGeneric("readsF<-",
   function(object,value)
   standardGeneric("readsF<-")
 )           
 
-#' @export
-#' @docType methods
-#' @rdname methods-reads-gs
+
+##' readsR methods
+##'
+##' readsR returns a list of backward reads of segvis or reads objects
+##'
+##' @param object Either a \code{segvis} o \code{reads} object
+##'
+##' @return A list of data.table with same format as a GenomicRanges object with an additional match column
+##'
+##' @export
+##' @docType methods
+##' @seealso \code{\link{reads-class}},\code{\link{segvis-class}}
+##' @rdname readsR
+##' @name readsR
+##' @examples
+##' \dontrun{
+##' readsR(segvis)
+##' readsR(reads)
+##' readsR(segvis) <- new_reads
+##' }
 setGeneric("readsR",
   function(object)
   standardGeneric("readsR")           
 )
 
-#' @export
-#' @docType methods
-#' @rdname methods-reads-gs
+##' readsR<- assisgn a list of backward reads to a reads or to a segvis object
+##'
+##' @param value A list of data.table with same format as a GenomicRanges object with an additional match column
+##'
+##' @return A reads or a segvis object with modified backward reads
+##' @rdname readsR
+##' @name readsR
 setGeneric("readsR<-",
   function(object,value)
   standardGeneric("readsR<-")
@@ -263,332 +556,387 @@ setGeneric("readsR<-",
 # Generic methods for segvis_block class
 # Get methods
 
-#' @title cover_table method for segvis_block class
-#'
-#' @description This methods determine how to get and set attributes for the segvis_block class. The structure is similar to the one use by bioconductor objects
-#'
-#' @param object An object of class segvis_block
-#'
-#' @return Returns the value with the same name as the function
-#'
-#' @export
-#'
-#' @docType methods
-#'
-#' @seealso \code{\link{segvis-class}}
-#'
-#' @rdname methods-segvis_block-gs
+##' cover_table methods for segvis_block class
+##'
+##' cover_table method returns coverage table of a segvis_block object
+##'
+##' @param object segvis_block object
+##'
+##' @return The coverage data.table of a segvis_block object
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis_block-class}}
+##'
+##' @rdname cover_table
+##'
+##' @name cover_table
+##'
 setGeneric("cover_table",
   function(object)
   standardGeneric("cover_table")           
 )        
 
-#' @param value The class of this parameter depends on the function, \code{name<-} is a string; for \code{bandwidth<-} and  \code{normConst} is a numeric value; for \code{regions<-} is a GRanges object and for \code{cover_table<-} is a data.table
-#'
-#' @return Returns a segvis object with the value indicated by the functions being updated with value
-#'
-#' @rdname methods-segvis_block-gs
+##' cover_table<- assigns a new coverage table to a segvis_block object
+##'
+##' @param value data.table with the new coverage of the se
+##'
+##' @return A segvis_block object with the bandwidth replcated
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis_block-class}}
+##'
+##' @rdname cover_table
+##'
+##' @name cover_table
+##'
 setGeneric("cover_table<-",
   function(object,value)
   standardGeneric("cover_table<-")
-)           
+)
 
-#' @export
-#' @docType methods
-#' @rdname methods-segvis_block-gs
+
+##' bandwidth methods for segvis_block class
+##'
+##' bandwidth method returns the smoothing bandwidth of a segvis_block object
+##'
+##' @param object segvis_block object
+##'
+##' @return The smoothing bandwidth of the segvis_block object
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis_block-class}}
+##'
+##' @rdname bandwidth
+##'
+##' @name bandwidth
+##'
+##' @examples
+##' \dontrun{
+##'
+##' bandwidth(segvis_block)
+##' bandwidth(segvis_block) <- 101
+##'
+##' }
 setGeneric("bandwidth",
   function(object)
   standardGeneric("bandwidth")           
 )           
 
-#' @export
-#' @docType methods
-#' @rdname methods-segvis_block-gs
+
+##' bandwidth<- assigns a new smoothing bandwidth to a segvis_block object
+##'
+##' @param value Numeric value
+##'
+##' @return A segvis_block object with the bandwidth replcated
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis_block-class}}
+##'
+##' @rdname bandwidth
+##'
+##' @name bandwidth
+##'
 setGeneric("bandwidth<-",
   function(object,value)
   standardGeneric("bandwidth<-")
 )           
 
-#' normConst method for segvis_block class
-#'
-#' This method returns the normalizing constant of a \code{segvis_block} object
-#'
-#' @param object segvis_block object
-#'
-#' @return A numeric value
-#'
-#' @export
-#'
-#' @docType methods
-#'
-#' @seealso \code{\link{segvis_block-class}}
-#'
-#' @examples
-#' \dontrun{
-#'
-#' normConst(segvis_block) 
-#' }
-
+##' normConst methods for segvis_block class
+##'
+##' normConst method returns the normalizing constant of a segvis_block object
+##'
+##' @param object segvis_block object
+##'
+##' @return The normalizing constant of the segvis_block object
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis_block-class}}
+##'
+##' @rdname normConst
+##'
+##' @name normConst
+##'
+##' @examples
+##' \dontrun{
+##'
+##' normConst(segvis_block)
+##' normConst(segvis_block) <- 100
+##' normConst(segvis_block) <- countReads(segvis)
+##'
+##' }
 setGeneric("normConst",
   function(object)
   standardGeneric("normConst")           
 )           
 
 
-#' normConst<- method for segvis_block class
-#'
-#' This method assigns a new normalizing constant to a \code{segvis_block} object
-#'
-#' @param object segvis_block object
-#'
-#' @param value Numeric normalizing constant value
-#'
-#' @return A segvis_block object
-#'
-#' @export
-#'
-#' @docType methods
-#'
-#' @name normConst
-#' @rdname normConst
-#' @seealso \code{\link{segvis_block-class}}
-#'
-#' @examples
-#' \dontrun{
-#'
-#' normConst(segvis_block) <- countReads(segvis)
-#' normConst(segvis_block) <- 1e3
-#'
-#' }
+##' normConst<- assigns a new normalizing constant to a segvis_block object
+##'
+##' @param value Numeric value
+##'
+##' @return A segvis_block object with the normConst replcated
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis_block-class}}
+##'
+##' @rdname normConst
+##'
+##' @name normConst
+##'
 setGeneric("normConst<-",
   function(object,value)
   standardGeneric("normConst<-")
 )           
 
-#' countReads method for segvis class
-#'
-#' Counts the number of reads considered  in object
-#'
-#' @param object segvis object
-#'
-#' @return The number of reads in the bam file considered for the \code{segvis} object
-#'
-#' @export
-#'
-#' @docType methods
-#'
-#' @seealso \code{\link{segvis-class}}
-#'
-#' @rdname countReads
-#'
-#' @name countReads
-#'
-#' @examples
-#' \dontrun{
-#' countReads(segvis)
-#' }
+##' countReads method for segvis class
+##'
+##' Counts the number of reads considered  in object
+##'
+##' @param object segvis object
+##'
+##' @return The number of reads in the bam file considered for the \code{segvis} object
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis-class}}
+##'
+##' @rdname countReads
+##'
+##' @name countReads
+##'
+##' @examples
+##' \dontrun{
+##'
+##' countReads(segvis)
+##'
+##' }
 setGeneric("countReads",
   function(object)
   standardGeneric("countReads")
 )           
 
-#' summarize method for segvis_block class
-#'
-#' This methods summarizes the coverage of the data when all the regions have the same width. To do so, it pilles up all tagCounts and applies FUN to each coordinate.
-#'
-#' @param object segvis_block object
-#'
-#' @param FUN Function used to summarize the tagCounts, for example if \code{FUN = mean}, then it will returns a vector with the mean of all tagCounts by centered coordinate. In particular, \code{FUN} needs to take vector argument + optional parameters
-#'
-#' @param ... Rest of the arguments needed to use \code{FUN}
-#'
-#' @return A numeric vector
-#'
-#' @export
-#'
-#' @docType methods
-#'
-#' @seealso \code{\link{segvis_block-class}}
-#'
-#' @rdname summarize
-#'
-#' @name summarize
-#'
-#' @examples
-#' \dontrun{
-#' summarize(segvis_block,mean)
-#' summarize(segvis_block,mean,trim=.25)
-#' summarize(segvis_block,median)
-#' }
+##' summarize method for segvis_block class
+##'
+##' This methods summarizes the coverage of the data when all the regions have the same width. To do so, it pilles up all tagCounts and applies FUN to each coordinate.
+##'
+##' @param object segvis_block object
+##'
+##' @param FUN Function used to summarize the tagCounts, for example if \code{FUN = mean}, then it will returns a vector with the mean of all tagCounts by centered coordinate. In particular, \code{FUN} needs to take vector argument + optional parameters
+##'
+##' @param ... Rest of the arguments needed to use \code{FUN}
+##'
+##' @return A numeric vector
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis_block-class}}
+##'
+##' @rdname summarize
+##'
+##' @name summarize
+##'
+##' @examples
+##' \dontrun{
+##'
+##' summarize(segvis_block,mean)
+##' summarize(segvis_block,mean,trim=.25)
+##' summarize(segvis_block,median)
+##'
+##' }
 setGeneric("summarize",
   function(object,FUN,...)
   standardGeneric("summarize"))
 
 
-#' normalize method for segvis_block class
-#'
-#' This method normalizes the segvis_block tagCounts by multiplying it times value. It normalizes the tagCounts by multiplying it times base / normConst
-#'
-#' @param object segvis_block object
-#'
-#' @param ... Remaining \code{normalize} parameters. \code{value} and \code{base}
-#'
-#' @export
-#'
-#' @docType methods
-#'
-#' @seealso \code{\link{segvis_block-class}}
-#'
-#' @rdname normalize
-#'
-#' @name normalize
-#'
-#' @examples
-#' \dontrun{
-#'
-#' normalize(segvis_block)
-#' normalize(segvis_block,base = 1e9) ## rpkm
-#'
-#' }
+##' normalize method for segvis_block class
+##'
+##' This method normalizes the segvis_block tagCounts by multiplying it times value. It normalizes the tagCounts by multiplying it times base / normConst
+##'
+##' @param object segvis_block object
+##'
+##' @param ... Remaining \code{normalize} parameters. \code{value} and \code{base}
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis_block-class}}
+##'
+##' @rdname normalize
+##'
+##' @name normalize
+##'
+##' @examples
+##' \dontrun{
+##'
+##' normalize(segvis_block)
+##' normalize(segvis_block,base = 1e9) ## rpkm
+##'
+##' }
 setGeneric("normalize",
   function(object,...)
   standardGeneric("normalize")
 )           
 
-#' subset_block method for segvis_block class
-#'
-#' This method works similarly to the subset of IRanges, GenomicRanges, GenomicAlignments, etc. Althought it doesn't consider the select parameter.
-#'
-#' @param object segvis_block object
-#'
-#' @param condition This is an expression considering the characteristics taht the subset need to satisfy
-#'
-#' @return Returns a segvis_block object with the same parameters as object except regions and cover_table which are filtered to satisfy the conditions on condition.
-#'
-#' @export
-#'
-#' @docType methods
-#'
-#' @seealso \code{\link{segvis_block-class}}
-#'
-#' @rdname subset_block
-#'
-#' @name subset_block
-#'
-#' @examples
-#' \dontrun{
-#' subset(segvis_block, cond == TRUE)
-#' }
+##' subset_block method for segvis_block class
+##'
+##' This method works similarly to the subset of IRanges, GenomicRanges, GenomicAlignments, etc. Althought it doesn't consider the select parameter.
+##'
+##' @param object segvis_block object
+##'
+##' @param condition This is an expression considering the characteristics taht the subset need to satisfy
+##'
+##' @return Returns a segvis_block object with the same parameters as object except regions and cover_table which are filtered to satisfy the conditions on condition.
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis_block-class}}
+##'
+##' @rdname subset_block
+##'
+##' @name subset_block
+##'
+##' @examples
+##' \dontrun{
+##'
+##' subset(segvis_block, cond == TRUE)
+##'
+##' }
 setGeneric("subset_block",
   function(object,condition)
   standardGeneric("subset_block"))
 
-#' addColumn method for segvis_block class
-#'
-#' This method helps to add a new column to the profile matrix object, is works similarly than using the $ operator over \code{regions(object)}
-#'
-#' @param object segvis_block object
-#'
-#' @param name Character with the name of the column to be add
-#'
-#' @param col Vector of the same lengh as \code{regions(object)}
-#'
-#' @return Returns a segvis_block object with the new column added to \code{regions(object)}
-#'
-#' @export
-#'
-#' @docType methods
-#'
-#' @seealso \code{\link{segvis_block-class}}
-#'
-#' @rdname addColumn
-#'
-#' @name addColumn
-#'
-#' @examples
-#' \dontrun{
-#'
-#' addColumn(segvis_block,"cond_name",cond_vec)
-#' }
+##' addColumn method for segvis_block class
+##'
+##' This method helps to add a new column to the profile matrix object, is works similarly than using the $ operator over \code{regions(object)}
+##'
+##' @param object segvis_block object
+##'
+##' @param name Character with the name of the column to be add
+##'
+##' @param col Vector of the same lengh as \code{regions(object)}
+##'
+##' @return Returns a segvis_block object with the new column added to \code{regions(object)}
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis_block-class}}
+##'
+##' @rdname addColumn
+##'
+##' @name addColumn
+##'
+##' @examples
+##' \dontrun{
+##'
+##' addColumn(segvis_block,"cond_name",cond_vec)
+##'
+##' }
 setGeneric("addColumn",
   function(object,name,col)
   standardGeneric("addColumn"))           
 
-#' plot_profiles method for segvis_block_list class
-#'
-#' This method returns the ggplot object used later to print the plot
-#'
-#' @param object segvis_block_list object
-#'
-#' @param condition The condition used to filter the profileMatrix objects, if there is no condition then it doesn't filter the objects
-#'
-#' @param coord Numeric vector representing the coordinates used in the x-axis of the plot, by default considers the natural index \code{1:ncol(segvis_block)}
-#'
-#' @param FUN Function used to summarize the profiles
-#'
-#' @param ... Additional arguments of \code{FUN}
-#'
-#' @param mc Number of cores used by parallel
-#'
-#' @return The ggplot object used to print the plot
-#'
-#' @export
-#'
-#' @docType methods
-#'
-#' @seealso \code{\link{segvis_block_list-class}},\code{\link{plot_data}}
-#'
-#' @rdname plot_profiles
-#' @name plot_profiles
-#'
-#' @examples
-#' \dontrun{
-#'
-#'  plot_profiles(segvis_block_list, mean, trim = .05,mc = 8)
-#'
-#'  ## if the segvis_block_list have a column called row
-#'  plot_profiles(segvis_block_list, FUN = function(x)x,condition = row == 1,mc = 8)
-#'
-#' }
+##' plot_profiles method for segvis_block_list class
+##'
+##' This method returns the ggplot object used later to print the plot
+##'
+##' @param object segvis_block_list object
+##'
+##' @param condition The condition used to filter the profileMatrix objects, if there is no condition then it doesn't filter the objects
+##'
+##' @param coord Numeric vector representing the coordinates used in the x-axis of the plot, by default considers the natural index \code{1:ncol(segvis_block)}
+##'
+##' @param FUN Function used to summarize the profiles
+##'
+##' @param ... Additional arguments of \code{FUN}
+##'
+##' @param mc Number of cores used by parallel
+##'
+##' @return The ggplot object used to print the plot
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis_block_list-class}},\code{\link{plot_data}}
+##'
+##' @rdname plot_profiles
+##' @name plot_profiles
+##'
+##' @examples
+##' \dontrun{
+##'
+##'  plot_profiles(segvis_block_list, mean, trim = .05,mc = 8)
+##'
+##'  ## if the segvis_block_list have a column called row
+##'  plot_profiles(segvis_block_list, FUN = function(x)x,condition = row == 1,mc = 8)
+##'
+##' }
 setGeneric(name="plot_profiles",
   def=function(object,condition,coord,FUN,...,mc)
   standardGeneric("plot_profiles"))          
 
-#' plot_data method for segvis_block_list class
-#'
-#' This method returns the data.table used to later make a ggplot. The idea is to used this table to make more complicated plots
-#'
-#' @param object segvis_block_list object
-#'
-#' @param condition The condition used to filter the profileMatrix objects, if there is no condition then it doesn't filter the objects
-#'
-#' @param coord Numeric vector representing the coordinates used in the x-axis of the plot, by default considers the natural index \code{1:ncol(segvis_block)}
-#'
-#' @param FUN Function used to summarize the profiles
-#'
-#' @param ... Additional arguments of \code{FUN}
-#'
-#' @param mc Number of cores used by parallel
-#'
-#' @return A data.table with the data used to make a plot
-#'
-#' @export
-#'
-#' @docType methods
-#'
-#' @seealso \code{\link{segvis_block_list-class}},\code{\link{plot_profiles}}
-#'
-#' @rdname plot_data
-#' @name plot_data
-#'
-#' @examples
-#' \dontrun{
-#'
-#'  plot_data(segvis_block_list, mean, trim = .05,mc = 8)
-#'
-#'  ## if the segvis_block_list have a column called row
-#'  plot_data(segvis_block_list, FUN = function(x)x,condition = row == 1,mc = 8)
-#'
-#' }
+##' plot_data method for segvis_block_list class
+##'
+##' This method returns the data.table used to later make a ggplot. The idea is to used this table to make more complicated plots
+##'
+##' @param object segvis_block_list object
+##'
+##' @param condition The condition used to filter the profileMatrix objects, if there is no condition then it doesn't filter the objects
+##'
+##' @param coord Numeric vector representing the coordinates used in the x-axis of the plot, by default considers the natural index \code{1:ncol(segvis_block)}
+##'
+##' @param FUN Function used to summarize the profiles
+##'
+##' @param ... Additional arguments of \code{FUN}
+##'
+##' @param mc Number of cores used by parallel
+##'
+##' @return A data.table with the data used to make a plot
+##'
+##' @export
+##'
+##' @docType methods
+##'
+##' @seealso \code{\link{segvis_block_list-class}},\code{\link{plot_profiles}}
+##'
+##' @rdname plot_data
+##' @name plot_data
+##'
+##' @examples
+##' \dontrun{
+##'
+##'  plot_data(segvis_block_list, mean, trim = .05,mc = 8)
+##'
+##'  ## if the segvis_block_list have a column called row
+##'  plot_data(segvis_block_list, FUN = function(x)x,condition = row == 1,mc = 8)
+##'
+##' }
 setGeneric(name="plot_data",
   def=function(object,condition,coord,FUN,...,mc)standardGeneric("plot_data"))

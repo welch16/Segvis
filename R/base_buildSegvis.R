@@ -1,32 +1,32 @@
-#' Builds a segvis object
-#'
-#' Constructor for segvis class
-#'
-#' @param name Name of the segvis object
-#'
-#' @param file Character string with the file name that contain the reads
-#'
-#' @param maxBandwidth Numeric value of the maximum possible value to smooth the profile curve
-#'
-#' @param chr Character vector containing the chromosomes which Segvis is going to process. If the user uses 'human' or 'mouse', then Segvis is going to build the chromosome vector
-#'
-#' @param fragLen Numeric value of the fragment length used to extend the reads
-#'
-#' @param isPET logical, Indicates is the reads come from a PET experiments or a SET experiment
-#'
-#' @export
-#'
-#' @return A segvis object
-#'
-#' @rdname buildSegvis
-#' @name buildSegvis
-#' @examples
-#' \dontrun{
-#' rn = "sites"
-#' f = "somefile.bam"
-#' maxBw = 1;fl = 200
-#' buildSegvis(regionName = rn,file =f,maxBandwidth = maxBw, fragLen = fl)
-#' }
+##' Builds a segvis object
+##'
+##' Constructor for segvis class
+##'
+##' @param name Name of the segvis object
+##'
+##' @param file Character string with the file name that contain the reads
+##'
+##' @param maxBandwidth Numeric value of the maximum possible value to smooth the profile curve
+##'
+##' @param chr Character vector containing the chromosomes which Segvis is going to process. If the user uses 'human' or 'mouse', then Segvis is going to build the chromosome vector
+##'
+##' @param fragLen Numeric value of the fragment length used to extend the reads
+##'
+##' @param isPET logical, Indicates is the reads come from a PET experiments or a SET experiment
+##'
+##' @export
+##'
+##' @return A segvis object
+##'
+##' @rdname buildSegvis
+##' @name buildSegvis
+##' @examples
+##' \dontrun{
+##' rn = "sites"
+##' f = "somefile.bam"
+##' maxBw = 1;fl = 200
+##' buildSegvis(regionName = rn,file =f,maxBandwidth = maxBw, fragLen = fl)
+##' }
 
 buildSegvis <- function(name,file,maxBandwidth,chr,fragLen=0,isPET=FALSE)
 {
