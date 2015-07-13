@@ -3,6 +3,7 @@
 \docType{methods}
 \name{plot_profiles}
 \alias{plot_profiles}
+\alias{plot_profiles,ANY-method}
 \title{plot_profiles method for segvis_block_list class}
 \usage{
 plot_profiles(object, condition, coord, FUN, ..., mc)
@@ -17,6 +18,8 @@ plot_profiles(object, condition, coord, FUN, ..., mc)
 \item{FUN}{Function used to summarize the profiles}
 
 \item{...}{Additional arguments of \code{FUN}}
+
+\item{mc}{Number of cores used by parallel}
 }
 \value{
 The ggplot object used to print the plot
@@ -24,7 +27,17 @@ The ggplot object used to print the plot
 \description{
 This method returns the ggplot object used later to print the plot
 }
+\examples{
+\dontrun{
+
+ plot_profiles(segvis_block_list, mean, trim = .05,mc = 8)
+
+ ## if the segvis_block_list have a column called row
+ plot_profiles(segvis_block_list, FUN = function(x)x,condition = row == 1,mc = 8)
+
+}
+}
 \seealso{
-\code{\link{segvis_block_list-class}}
+\code{\link{segvis_block_list-class}},\code{\link{plot_data}}
 }
 

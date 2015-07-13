@@ -1,6 +1,9 @@
+#' @import ggplot2
+NULL
 
-#' @rdname methods-segvis_block_list-plot_profiles
 #' @name plot_profiles
+#' @rdname plot_profiles
+#' @aliases plot_profiles,ANY-method
 setMethods("plot_profiles",
   signature = signature(object = "segvis_block_list",
     condition = "ANY",coord = "numeric",FUN = "function",...="ANY",
@@ -27,14 +30,16 @@ setMethods("plot_profiles",
     plot_data <- mcmapply(create_plot_data,profiles,nms,MoreArgs = list(coord),
       SIMPLIFY = FALSE,mc.silent=TRUE,mc.cores = mc,mc.preschedule=TRUE)
     plot_data <- do.call(rbind,plot_data)
+    x <- y <- NULL
     out <- ggplot(plot_data,aes(x,y,colour = as.factor(condition)))+geom_line(size=1.1)+
       scale_colour_discrete(guide = guide_legend(title = "condition"))+
       xlab("genomic coordinates")+ylab("normalized coverage")        
     return(out)                  
 })
 
-#' @rdname methods-segvis_block_list-plot_data
 #' @name plot_data
+#' @rdname plot_data
+#' @aliases plot_data,ANY-method
 setMethods("plot_data",
   signature = signature(object = "segvis_block_list",
     condition = "ANY",coord = "numeric",FUN = "function",...="ANY",

@@ -3,6 +3,7 @@
 \docType{methods}
 \name{addColumn}
 \alias{addColumn}
+\alias{addColumn,ANY-method}
 \title{addColumn method for segvis_block class}
 \usage{
 addColumn(object, name, col)
@@ -19,6 +20,12 @@ Returns a segvis_block object with the new column added to \code{regions(object)
 }
 \description{
 This method helps to add a new column to the profile matrix object, is works similarly than using the $ operator over \code{regions(object)}
+}
+\examples{
+\dontrun{
+
+addColumn(segvis_block,"cond_name",cond_vec)
+}
 }
 \seealso{
 \code{\link{segvis_block-class}}

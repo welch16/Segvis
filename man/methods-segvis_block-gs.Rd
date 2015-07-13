@@ -7,8 +7,6 @@
 \alias{cover_table}
 \alias{cover_table<-}
 \alias{name}
-\alias{normConst}
-\alias{normConst<-}
 \alias{regions}
 \title{cover_table method for segvis_block class}
 \usage{
@@ -20,10 +18,6 @@ bandwidth(object)
 
 bandwidth(object) <- value
 
-normConst(object)
-
-normConst(object) <- value
-
 \S4method{name}{segvis_block}(object)
 
 \S4method{regions}{segvis_block}(object)
@@ -32,8 +26,6 @@ normConst(object) <- value
 
 \S4method{bandwidth}{segvis_block}(object)
 
-\S4method{normConst}{segvis_block}(object)
-
 \S4method{name}{segvis_block,character}(object) <- value
 
 \S4method{regions}{segvis_block,GRanges}(object) <- value
@@ -41,8 +33,6 @@ normConst(object) <- value
 \S4method{cover_table}{segvis_block,data.table}(object) <- value
 
 \S4method{bandwidth}{segvis_block,numeric}(object) <- value
-
-\S4method{normConst}{segvis_block,numeric}(object) <- value
 }
 \arguments{
 \item{object}{An object of class segvis_block}

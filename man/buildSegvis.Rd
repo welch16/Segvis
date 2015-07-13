@@ -13,6 +13,8 @@ buildSegvis(name, file, maxBandwidth, chr, fragLen = 0, isPET = FALSE)
 
 \item{maxBandwidth}{Numeric value of the maximum possible value to smooth the profile curve}
 
+\item{chr}{Character vector containing the chromosomes which Segvis is going to process. If the user uses 'human' or 'mouse', then Segvis is going to build the chromosome vector}
+
 \item{fragLen}{Numeric value of the fragment length used to extend the reads}
 
 \item{isPET}{logical, Indicates is the reads come from a PET experiments or a SET experiment}

@@ -7,11 +7,4 @@
 \description{
 Contains a list of \code{segvis_block} objects
 }
-\details{
-\section{Slots}{
-  \describe{
-   \item{\code{list}:}{A list of \code{segvis_block} objects or several \code{segvis_block} objects separated by commas}
-   }
-}
-}
 

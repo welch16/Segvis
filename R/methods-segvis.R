@@ -1,7 +1,9 @@
+#' @import data.table
+#' @import rbamtools
+#' @import Rsamtools
+#' @importFrom GenomicAlignments readGAlignmentsFromBam
+NULL
 
-# Methods for segvis class
-
-## Get methods
 
 #' @rdname methods-segvis-gs
 #' @name name 
@@ -390,8 +392,9 @@ setMethods("findSummit",
   return(unlist(summits_chr))    
 })
 
-#' @rdname segvis-countReads
+#' @rdname countReads
 #' @name countReads
+#' @aliases countReads,ANY-method
 setMethods("countReads",
   signature = signature(object = "segvis"),
   definition = function(object){

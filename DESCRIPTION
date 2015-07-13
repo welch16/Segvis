@@ -13,10 +13,12 @@ Depends:
     GenomicAlignments (>= 1.0.1),
     data.table (>= 1.9.2)
 Imports:
-    knitr (>= 1.6),
+    methods,
     rbamtools (>= 2.10),    
     Rsamtools (>= 1.16.1),
     ggplot2 (>= 1.0)
-VignetteBuilder: knitr
 Suggests:
+    knitr (>= 1.10),
     BiocStyle
+VignetteBuilder: knitr
+

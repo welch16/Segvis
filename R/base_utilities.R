@@ -1,6 +1,4 @@
 
-#' @import data.table
-
 .data.table.GRanges <- function(x)
 {
   dt <- data.table(seqnames = as.character( seqnames(x)),

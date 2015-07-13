@@ -3,6 +3,7 @@
 \docType{methods}
 \name{summarize}
 \alias{summarize}
+\alias{summarize,ANY-method}
 \title{summarize method for segvis_block class}
 \usage{
 summarize(object, FUN, ...)
@@ -19,6 +20,13 @@ A numeric vector
 }
 \description{
 This methods summarizes the coverage of the data when all the regions have the same width. To do so, it pilles up all tagCounts and applies FUN to each coordinate.
+}
+\examples{
+\dontrun{
+summarize(segvis_block,mean)
+summarize(segvis_block,mean,trim=.25)
+summarize(segvis_block,median)
+}
 }
 \seealso{
 \code{\link{segvis_block-class}}

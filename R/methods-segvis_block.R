@@ -31,8 +31,9 @@ setMethod("bandwidth",
   definition = function(object)object@bandwidth
 )           
 
-#' @rdname methods-segvis_block-gs
+#' @rdname normConst
 #' @name normConst
+#' @aliases normConst
 setMethod("normConst",
   signature = signature(object = "segvis_block"),
   definition = function(object)object@normConst
@@ -81,8 +82,9 @@ setReplaceMethod("bandwidth",
     return(object)
 })           
 
-#' @rdname methods-segvis_block-gs
+#' @rdname normConst
 #' @name normConst
+#' @aliases normConst<-,ANY-methods
 setReplaceMethod("normConst",
   signature = signature(object = "segvis_block",value = "numeric"),
   definition = function(object,value){
@@ -91,25 +93,26 @@ setReplaceMethod("normConst",
     return(object)
 })                        
 
-#' @rdname methods-segvis_block-summarize
+#' @rdname summarize
 #' @name summarize
+#' @aliases summarize,ANY-method
 setMethods("summarize",
   signature = signature(object = "segvis_block",FUN = "function",... = "ANY"),
   definition = function(object,FUN,...){
     ## check length of matches
-    lengths = cover_table(object)[,length(coord),by = .(chr,match)]
+    V1 <- center <- tagCounts <- NULL
+    lengths = cover_table(object)[,length(coord),by = list(chr,match)]
     if(length(u <- unique(lengths[,(V1)])) > 1){
        warning("All regions must have the same length")
     }
     out <- copy(cover_table(object))
+    center <- NULL
     out[,center := 0L]
-    out[,center := out[,coord - min(coord) + 1,by = .(chr,match)][,(V1)]]           
-    summary <- out[,FUN(tagCounts,...),by =.(center)]
+    out[,center := out[,coord - min(coord) + 1,by = list(chr,match)][,(V1)]]           
+    summary <- out[,FUN(tagCounts,...),by =list(center)]
     return(summary[,(V1)])
 })
                      
-# @rdname profileMatrix-methods
-# @name show
 setMethod("show",
   signature = signature(object = "segvis_block"),
   definition = function(object){
@@ -123,8 +126,9 @@ setMethod("show",
     show(regions(object))
 })
 
-#' @rdname methods-segvis_block-normalize
+#' @rdname normalize
 #' @name normalize
+#' @aliases normalize
 setMethods("normalize",
   signature = signature(object = "segvis_block",value = "numeric",base = "numeric"),
   definition = function(object, value,base){
@@ -136,17 +140,19 @@ setMethods("normalize",
     return(object) 
 })
            
-#' @rdname methods-segvis_block-subset
-#' @name subset
-setMethod("subset",
+#' @rdname subset_block
+#' @name subset_block
+#' @aliases subset_block,ANY-method
+setMethod("subset_block",
   signature = signature(object = "segvis_block",condition = "ANY"),
   definition = function(object, condition){
     cond <- .subset_logical(object,substitute(condition))
     return(.filter_sb(object,cond))
 })
 
-#' @rdname methods-segvis_block-addColumn
+#' @rdname addColumn
 #' @name addColumn
+#' @aliases addColumn,ANY-method
 setMethods("addColumn",
   signature = signature(object = "segvis_block",name = "character",col = "ANY"),
   definition = function(object,name,col){

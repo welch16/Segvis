@@ -3,6 +3,7 @@
 \docType{methods}
 \name{countReads}
 \alias{countReads}
+\alias{countReads,ANY-method}
 \title{countReads method for segvis class}
 \usage{
 countReads(object)
@@ -16,7 +17,12 @@ The number of reads in the bam file considered for the \code{segvis} object
 \description{
 Counts the number of reads considered  in object
 }
+\examples{
+\dontrun{
+countReads(segvis)
+}
+}
 \seealso{
-\code{\link{segvis}}
+\code{\link{segvis-class}}
 }
 

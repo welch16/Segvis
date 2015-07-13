@@ -1,20 +1,9 @@
 
 # generic methods for various classes
 
-#' @title Get and set methods for segvis class
-#'
-#' @description This methods determine how to get and set attributes dor the segvis class. The structure is similar to the one use by bioconductor objects
-#'
-#' @param object An object of class segvis
-#'
-#' @return Returns the value with the same name as the function
-#'
+
 #' @export
-#'
-#' @docType methods
-#'
-#' @seealso \code{\link{segvis-class}}
-#'
+#' 
 #' @rdname methods-segvis-gs
 setGeneric("name",
   function(object)
@@ -32,7 +21,6 @@ setGeneric("name<-",
 )           
 
 #' @export
-#' @docType methods
 #' @rdname methods-segvis-gs
 setGeneric("regions",
   function(object)
@@ -40,16 +28,15 @@ setGeneric("regions",
 )
 
 #' @export
-#' @docType methods
 #' @rdname methods-segvis-gs
 setGeneric("regions<-",
   function(object,value)
   standardGeneric("regions<-")
 )
 
-# Generic methods for profile class
+#' Generic methods for profile class
 
-##  Get methods
+#'#'  Get methods
 
 #' @export
 #' @docType methods
@@ -274,8 +261,7 @@ setGeneric("readsR<-",
 )           
 
 # Generic methods for segvis_block class
-
-## Get methods
+# Get methods
 
 #' @title cover_table method for segvis_block class
 #'
@@ -323,96 +309,214 @@ setGeneric("bandwidth<-",
   standardGeneric("bandwidth<-")
 )           
 
+#' normConst method for segvis_block class
+#'
+#' This method returns the normalizing constant of a \code{segvis_block} object
+#'
+#' @param object segvis_block object
+#'
+#' @return A numeric value
+#'
 #' @export
+#'
 #' @docType methods
-#' @rdname methods-segvis_block-gs
+#'
+#' @seealso \code{\link{segvis_block-class}}
+#'
+#' @examples
+#' \dontrun{
+#'
+#' normConst(segvis_block) 
+#' }
+
 setGeneric("normConst",
   function(object)
   standardGeneric("normConst")           
 )           
 
+
+#' normConst<- method for segvis_block class
+#'
+#' This method assigns a new normalizing constant to a \code{segvis_block} object
+#'
+#' @param object segvis_block object
+#'
+#' @param value Numeric normalizing constant value
+#'
+#' @return A segvis_block object
+#'
 #' @export
+#'
 #' @docType methods
-#' @rdname methods-segvis_block-gs
+#'
+#' @name normConst
+#' @rdname normConst
+#' @seealso \code{\link{segvis_block-class}}
+#'
+#' @examples
+#' \dontrun{
+#'
+#' normConst(segvis_block) <- countReads(segvis)
+#' normConst(segvis_block) <- 1e3
+#'
+#' }
 setGeneric("normConst<-",
   function(object,value)
   standardGeneric("normConst<-")
 )           
 
-#' @title countReads method for segvis class
-#' @description Counts the number of reads considered  in object
+#' countReads method for segvis class
+#'
+#' Counts the number of reads considered  in object
+#'
 #' @param object segvis object
+#'
 #' @return The number of reads in the bam file considered for the \code{segvis} object
+#'
 #' @export
+#'
 #' @docType methods
-#' @seealso \code{\link{segvis}}
-#' @rdname segvis-countReads
+#'
+#' @seealso \code{\link{segvis-class}}
+#'
+#' @rdname countReads
+#'
+#' @name countReads
+#'
+#' @examples
+#' \dontrun{
+#' countReads(segvis)
+#' }
 setGeneric("countReads",
   function(object)
   standardGeneric("countReads")
 )           
 
-#' @title summarize method for segvis_block class
-#' @description This methods summarizes the coverage of the data when all the regions have the same width. To do so, it pilles up all tagCounts and applies FUN to each coordinate.
+#' summarize method for segvis_block class
+#'
+#' This methods summarizes the coverage of the data when all the regions have the same width. To do so, it pilles up all tagCounts and applies FUN to each coordinate.
+#'
 #' @param object segvis_block object
+#'
 #' @param FUN Function used to summarize the tagCounts, for example if \code{FUN = mean}, then it will returns a vector with the mean of all tagCounts by centered coordinate. In particular, \code{FUN} needs to take vector argument + optional parameters
+#'
 #' @param ... Rest of the arguments needed to use \code{FUN}
+#'
 #' @return A numeric vector
+#'
 #' @export
+#'
 #' @docType methods
+#'
 #' @seealso \code{\link{segvis_block-class}}
-#' @rdname methods-segvis_block-summarize
+#'
+#' @rdname summarize
+#'
+#' @name summarize
+#'
+#' @examples
+#' \dontrun{
+#' summarize(segvis_block,mean)
+#' summarize(segvis_block,mean,trim=.25)
+#' summarize(segvis_block,median)
+#' }
 setGeneric("summarize",
   function(object,FUN,...)
   standardGeneric("summarize"))
 
 
-#' @title normalize method for segvis_block class
-#' @description This method normalizes the segvis_block tagCounts by multiplying it times value.
-#' It normalizes the tagCounts by multiplying it times base / normConst
+#' normalize method for segvis_block class
+#'
+#' This method normalizes the segvis_block tagCounts by multiplying it times value. It normalizes the tagCounts by multiplying it times base / normConst
+#'
 #' @param object segvis_block object
-#' @param value A positive number or a missing value. If is missing is going to normalize as if they were 1 million reads in the experiment
-#' @param base A positive integer considering the base used to normalize the tagCounts
-#' @return A segvis_block object where the cover_table contains normalized tagCounts
+#'
+#' @param ... Remaining \code{normalize} parameters. \code{value} and \code{base}
+#'
 #' @export
+#'
 #' @docType methods
+#'
 #' @seealso \code{\link{segvis_block-class}}
-#' @rdname methods-segvis_block-normalize
+#'
+#' @rdname normalize
+#'
+#' @name normalize
+#'
+#' @examples
+#' \dontrun{
+#'
+#' normalize(segvis_block)
+#' normalize(segvis_block,base = 1e9) ## rpkm
+#'
+#' }
 setGeneric("normalize",
   function(object,...)
   standardGeneric("normalize")
 )           
 
-#' @title subset method for segvis_block class
-#' @description This method works similarly to the subset of IRanges, GenomicRanges, GenomicAlignments, etc. Althought it doesn't consider the select parameter.
+#' subset_block method for segvis_block class
+#'
+#' This method works similarly to the subset of IRanges, GenomicRanges, GenomicAlignments, etc. Althought it doesn't consider the select parameter.
+#'
 #' @param object segvis_block object
+#'
 #' @param condition This is an expression considering the characteristics taht the subset need to satisfy
+#'
 #' @return Returns a segvis_block object with the same parameters as object except regions and cover_table which are filtered to satisfy the conditions on condition.
+#'
 #' @export
+#'
 #' @docType methods
+#'
 #' @seealso \code{\link{segvis_block-class}}
-#' @rdname methods-segvis_block-subset
-setGeneric("subset",
+#'
+#' @rdname subset_block
+#'
+#' @name subset_block
+#'
+#' @examples
+#' \dontrun{
+#' subset(segvis_block, cond == TRUE)
+#' }
+setGeneric("subset_block",
   function(object,condition)
-  standardGeneric("subset"))
+  standardGeneric("subset_block"))
 
-#' @title addColumn method for segvis_block class
-#' @description This method helps to add a new column to the profile matrix object, is works similarly than using the $ operator over \code{regions(object)}
+#' addColumn method for segvis_block class
+#'
+#' This method helps to add a new column to the profile matrix object, is works similarly than using the $ operator over \code{regions(object)}
+#'
 #' @param object segvis_block object
+#'
 #' @param name Character with the name of the column to be add
+#'
 #' @param col Vector of the same lengh as \code{regions(object)}
+#'
 #' @return Returns a segvis_block object with the new column added to \code{regions(object)}
+#'
 #' @export
+#'
 #' @docType methods
+#'
 #' @seealso \code{\link{segvis_block-class}}
-#' @rdname methods-segvis_block-addColumn
+#'
+#' @rdname addColumn
+#'
+#' @name addColumn
+#'
+#' @examples
+#' \dontrun{
+#'
+#' addColumn(segvis_block,"cond_name",cond_vec)
+#' }
 setGeneric("addColumn",
   function(object,name,col)
   standardGeneric("addColumn"))           
 
-#' @title plot_profiles method for segvis_block_list class
+#' plot_profiles method for segvis_block_list class
 #'
-#' @description This method returns the ggplot object used later to print the plot
+#' This method returns the ggplot object used later to print the plot
 #'
 #' @param object segvis_block_list object
 #'
@@ -423,21 +527,36 @@ setGeneric("addColumn",
 #' @param FUN Function used to summarize the profiles
 #'
 #' @param ... Additional arguments of \code{FUN}
+#'
+#' @param mc Number of cores used by parallel
 #'
 #' @return The ggplot object used to print the plot
 #'
 #' @export
 #'
 #' @docType methods
-#' @seealso \code{\link{segvis_block_list-class}}
-#' @rdname methods-segvis_block_list-plot_profiles
-setGeneric("plot_profiles",
-  function(object,condition,coord,FUN,...,mc)
+#'
+#' @seealso \code{\link{segvis_block_list-class}},\code{\link{plot_data}}
+#'
+#' @rdname plot_profiles
+#' @name plot_profiles
+#'
+#' @examples
+#' \dontrun{
+#'
+#'  plot_profiles(segvis_block_list, mean, trim = .05,mc = 8)
+#'
+#'  ## if the segvis_block_list have a column called row
+#'  plot_profiles(segvis_block_list, FUN = function(x)x,condition = row == 1,mc = 8)
+#'
+#' }
+setGeneric(name="plot_profiles",
+  def=function(object,condition,coord,FUN,...,mc)
   standardGeneric("plot_profiles"))          
 
-#' @title plot_profiles method for segvis_block_list class
+#' plot_data method for segvis_block_list class
 #'
-#' @description This method returns the ggplot object used later to print the plot
+#' This method returns the data.table used to later make a ggplot. The idea is to used this table to make more complicated plots
 #'
 #' @param object segvis_block_list object
 #'
@@ -449,13 +568,27 @@ setGeneric("plot_profiles",
 #'
 #' @param ... Additional arguments of \code{FUN}
 #'
-#' @return A data.table containing the data ready to plot by ggplot
+#' @param mc Number of cores used by parallel
+#'
+#' @return A data.table with the data used to make a plot
 #'
 #' @export
 #'
 #' @docType methods
-#' @seealso \code{\link{segvis_block_list-class}}
-#' @rdname methods-segvis_block_list-plot_data
-setGeneric("plot_data",
-  function(object,condition,coord,FUN,...,mc)
-  standardGeneric("plot_data"))
+#'
+#' @seealso \code{\link{segvis_block_list-class}},\code{\link{plot_profiles}}
+#'
+#' @rdname plot_data
+#' @name plot_data
+#'
+#' @examples
+#' \dontrun{
+#'
+#'  plot_data(segvis_block_list, mean, trim = .05,mc = 8)
+#'
+#'  ## if the segvis_block_list have a column called row
+#'  plot_data(segvis_block_list, FUN = function(x)x,condition = row == 1,mc = 8)
+#'
+#' }
+setGeneric(name="plot_data",
+  def=function(object,condition,coord,FUN,...,mc)standardGeneric("plot_data"))

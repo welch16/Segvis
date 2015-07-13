@@ -17,7 +17,8 @@
 \alias{profiles}
 \alias{regions}
 \alias{regions<-}
-\title{Get and set methods for segvis class}
+\title{Generic methods for profile class
+#'  Get methods}
 \usage{
 name(object)
 
@@ -80,27 +81,22 @@ profiles(object)
 \S4method{isPET}{segvis,logical}(object) <- value
 }
 \arguments{
-\item{object}{An object of class segvis}
+\item{object}{A segvis object}
 
 \item{value}{The class of this parameter depends on the function, for \code{file<-}, \code{name<-} and \code{chr<-} is a string; for \code{fragLen<-} and  \code{maxBandwidth} is a numeric value; for \code{regions<-} is a GRanges object and for \code{isPET<-} is a logical value}
-
-\item{object}{A segvis object}
 }
 \value{
-Returns the value with the same name as the function
-
 Returns a segvis object with the value indicated by the functions being updated with value
 
 RleList. A list made of an Rle object for each region
 }
 \description{
-This methods determine how to get and set attributes dor the segvis class. The structure is similar to the one use by bioconductor objects
+Generic methods for profile class
+#'  Get methods
 
 Returns the coverage for each region considered
 }
 \seealso{
-\code{\link{segvis-class}}
-
 \code{\link{segvis-class}} and \code{\link{segvis-getCoverage}}
 }
 

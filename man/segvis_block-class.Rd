@@ -7,18 +7,21 @@
 \description{
 Contains a data.table with the individual coverages for each region
 }
-\details{
 \section{Slots}{
-  \describe{
-   \item{\code{name}:}{Character with the name of the profiles}
-   \item{\code{regions}:}{GRanges object with the regions of the individuals profiles}
-   \item{\code{cover}:}{table data.table with the individuals coverages for each region}
-   \item{\code{bandwidth}:}{Numeric value used to smooth the individual profiles}
-   \item{\code{normCont}:}{Numeric normalizing contanst}
-   \item{\code{.isScaled}:}{Logical value representing if the profiles are scaled to \code{normConst}}
-   }
-}
-}
+
+\describe{
+\item{\code{name}}{Character with the name of the profiles}
+
+\item{\code{regions}}{GRanges object with the regions of the individuals profiles}
+
+\item{\code{cover_table}}{data.table with the individuals coverages for each region}
+
+\item{\code{bandwidth}}{Numeric value used to smooth the individual profiles}
+
+\item{\code{normConst}}{Numeric normalizing contanst}
+
+\item{\code{.isScaled}}{Logical value representing if the profiles are scaled to \code{normConst}}
+}}
 \seealso{
 \code{\link{Segvis_block}}
 }

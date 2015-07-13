@@ -7,14 +7,13 @@
 \description{
 Contains the reads obtained in a ChIP - seq experiment separated by strand and then by chromosome. It has one component for each strand which are object of the data.table class with a match column to identify the regions
 }
-\details{
 \section{Slots}{
-  \describe{
-    \item{\code{readsF}:}{List of data.table objects containing the reads of the ChIP - Seq experiment that have + strand.}
-    \item{\code{readsR}:}{List of data.table object containning the reads of the ChIP - Seq experiment that have - strand}
-  }
-}
-}
+
+\describe{
+\item{\code{readsF}}{List of data.table objects containing the reads of the ChIP - Seq experiment that have + strand.}
+
+\item{\code{readsR}}{List of data.table object containning the reads of the ChIP - Seq experiment that have - strand}
+}}
 \seealso{
 \code{\link{loadReads}}
 }
