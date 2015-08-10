@@ -4,6 +4,7 @@
 ##' @importFrom GenomicAlignments readGAlignmentsFromBam
 ##' @importFrom GenomicAlignments seqnames
 ##' @importFrom GenomicAlignments findOverlaps
+##' @import parallel
 NULL
 
 ##' @rdname name

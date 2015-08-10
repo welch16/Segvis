@@ -17,7 +17,8 @@ Imports:
     methods,
     rbamtools (>= 2.10),    
     Rsamtools (>= 1.16.1),
-    ggplot2 (>= 1.0)
+    ggplot2 (>= 1.0),
+    parallel
 Suggests:
     knitr (>= 1.10),
     BiocStyle
