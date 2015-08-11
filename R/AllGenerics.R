@@ -823,7 +823,7 @@ setGeneric("normalize",
 ##' @examples
 ##' \dontrun{
 ##'
-##' subset(segvis_block, cond == TRUE)
+##' subset_block(segvis_block, cond == TRUE)
 ##'
 ##' }
 setGeneric("subset_block",

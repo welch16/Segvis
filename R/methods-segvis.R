@@ -1,7 +1,7 @@
 ##' @import data.table
 ##' @import rbamtools
 ##' @import Rsamtools
-##' @importFrom GenomicAlignments readGAlignmentsFromBam
+##' @importFrom GenomicAlignments readGAlignments
 ##' @importFrom GenomicAlignments seqnames
 ##' @importFrom GenomicAlignments findOverlaps
 ##' @importFrom GenomicAlignments start
@@ -326,7 +326,7 @@ setMethods("loadReads",
     }else{
       param <- ScanBamParam(which = regions(object))
     }    
-    greads <- readGAlignmentsFromBam(file(object),
+    greads <- readGAlignments(file(object),
       param = param,use.names = FALSE)    
     if(isPET(object)){
       ## convert the qname into a numeric value for computation efficiency

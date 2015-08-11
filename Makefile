@@ -17,7 +17,7 @@ clean:
 
 # knit the vignettes
 inst/doc/%.pdf:vignettes/%.Rnw
-	cd vignettes;R CMD Sweave --engine=knitr::knitr --pdf $(<F);cp -f $(<F) ../inst/doc;mv -f $(<F:.Rnw=.pdf) ../inst/doc ; rm -fr figure ; cd ..
+	cd vignettes;R CMD Sweave --engine=knitr::knitr --pdf $(<F);cp -f $(<F) ../inst/doc;mv -f $(<F:.Rnw=.pdf) ../inst/doc ; rm -fr figure ; rm -f vignette.aux ; rm -f vignette.log ; rm -f vignette.out; rm -f vignette.toc ; cd ..
 
 # create the poster
 poster/%.pdf:poster/%.tex poster/figs/fig0.pdf poster/figs/fig3.pdf poster/figs/fig2.pdf

@@ -82,6 +82,7 @@ The package can be loaded with the command:
   library(ggplot2)
   library(rbamtools)    
   library(Rsamtools)
+  K <- 50
 
 @
 
@@ -119,7 +120,7 @@ load it into \R{} by using:
  
 <<peaks_file,include=TRUE,echo=TRUE,eval=TRUE>>=
 
-  peaks_file <- "../inst/extdata/peaks/encode_K562_Ctcf_peaks_first3chr.narrowPeak"
+  peaks_file <- "../inst/extdata/example/encode_K562_Ctcf_peaks_first3chr.narrowPeak"
   ctcf_peaks <- read.table(peaks_file)
   head(ctcf_peaks,15)
 
@@ -129,11 +130,10 @@ Then to convert it into a \Rclass{GRanges} object we can use:
 
 <<gr_peaks,include=TRUE,echo=TRUE,eval=TRUE>>=
 
-  K <- 2000
   ctcf_gr <- GRanges(seqnames = ctcf_peaks$V1,
     ranges = IRanges(start = ctcf_peaks$V2,
       end = ctcf_peaks$V3),strand = "*")
-  ctcf_gr <- ctcf_gr[order(ctcf_peaks$V7,decreasing=TRUE)[1:K]]
+  ctcf_gr <- ctcf_gr[order(ctcf_peaks$V7,decreasing=TRUE)]
   ctcf_gr
 
 @ 
@@ -141,7 +141,7 @@ Then to convert it into a \Rclass{GRanges} object we can use:
 A complete description of the meaning of each column in the peaks file
 is given in \url{https://genome.ucsc.edu/FAQ/FAQformat.html#format12}.
 Using the signal values (on the 7th column), we are going to consider
-the top \Sexpr{K} peaks.
+the random 50 peaks per chromosome.
 
 
 \subsection{Creating a \Robject{segvis} object}
@@ -180,7 +180,7 @@ following parameters:
 <<parameters_segvis , include=TRUE,echo=TRUE,eval=TRUE, warning=FALSE>>=
   
   ctcf <- buildSegvis(name = "ctcf_peaks",
-    file = "../inst/extdata/reads/encode_K562_Ctcf_first3chr_Rep1.sort.bam",
+    file = "../inst/extdata/example/encode_K562_Ctcf_first3chr_Rep1.sort.bam",
     maxBandwidth = 101,fragLen = 200,isPET = FALSE,
     chr = c("chr1","chr2","chr3"))                 
   regions(ctcf) <- ctcf_gr
@@ -239,7 +239,7 @@ marks the top 3 peaks, therefore we need to build two new
 <<new_marks,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE>>=
 
   h3k27ac <- buildSegvis(name = "h3k27ac",
-    file = "../inst/extdata/reads/encode_K562_H3k27ac_first3chr.sort.bam",
+    file = "../inst/extdata/example/encode_K562_H3k27ac_first3chr.sort.bam",
     maxBandwidth = 101,fragLen = 200,isPET = FALSE,
     chr = c("chr1","chr2","chr3"))
   regions(h3k27ac) <- ctcf_gr
@@ -250,7 +250,7 @@ marks the top 3 peaks, therefore we need to build two new
   h3k27ac_block <- Segvis_block(h3k27ac,bw = 1,mc = 24)
 
   h3k4me1 <- buildSegvis(name = "h3k4me1",
-    file = "../inst/extdata/reads/encode_K562_H3k4me1_first3chr.sort.bam",
+    file = "../inst/extdata/example/encode_K562_H3k4me1_first3chr.sort.bam",
     maxBandwidth = 101,fragLen = 200,isPET = FALSE,
     chr = c("chr1","chr2","chr3"))
   regions(h3k4me1) <- ctcf_gr
@@ -404,10 +404,10 @@ functions to apply all methods together:
   
 @ 
 
-In this case, we have again \Sexpr{K} regions with the same width of
-$m = \Sexpr{2* window_ext + 1}$, i.e. we can think it as a matrix of
-$K \times m$ and to analize it we can apply the same function to all
-column vectors of this matrix:
+In this case, we have again 50 regions for each chromosome with the
+same width of $m = \Sexpr{2* window_ext + 1}$, i.e. we can think it as
+a matrix of $\Sexpr{K} \times m$ and to analize it we can apply the same
+function to all column vectors of this matrix:
 
 <<ex2_plots,include=TRUE,echo=TRUE,eval=TRUE,warning=FALSE,message=FALSE>>=
 
@@ -452,7 +452,7 @@ a vector argument and return a 1 - dimensional value.
 @ 
 
   \caption{Mean, median and varlog profiles of all three marks
-    (Ctcf,H3k27ac and H3k4me1) across the first \Sexpr{K} Ctcf peaks}
+    (Ctcf,H3k27ac and H3k4me1) across random \Sexpr{3*K} Ctcf peaks}
 \label{fig2}
 \end{figure}
 
@@ -501,10 +501,10 @@ And we can use this \Rcode{data.table} into previously defined plot:
 \label{subsec:subset}
 
 \Rpackage{Segvis} have methods to explore the data too. Lets consider
-as before that we want to explore the top \Sexpr{K} Ctcf peaks, for
-which we already pre-processed a \Rcode{segvis\_block\_list} made with
-Ctcf, H3k27ac and H3k4me1 fragment reads. Now, we want to explore this
-set of peaks respect to additional annotation information as to wheter
+as before that we want to explore some Ctcf peaks, for which we
+already pre-processed a \Rcode{segvis\_block\_list} made with Ctcf,
+H3k27ac and H3k4me1 fragment reads. Now, we want to explore this set
+of peaks respect to additional annotation information as to wheter
 this peaks overlap with Dnase accesible regions.
 
 We read the Dnase hypersensitive sites from a file, and convert it to
@@ -512,8 +512,7 @@ a \Rcode{GRanges} object:
 
 <<ex4_code,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE>>=
 
-  dnase_file <- "../inst/extdata/peaks/encode_K562_dnase_openChrom_first3chr.narrowPeak"
-  list.files("../inst/extdata/peaks/")
+  dnase_file <- "../inst/extdata/example/encode_K562_dnase_openChrom_first3chr.narrowPeak"
   dnase_sites = read.table(dnase_file)
   dnase_gr <- GRanges(seqname = dnase_sites$V1,
     ranges = IRanges(start = dnase_sites$V2,end = dnase_sites$V3),
@@ -523,30 +522,30 @@ a \Rcode{GRanges} object:
 @ 
 
 We count the number of overlaps between the Dnase hypersensitive sites
-and the top \Sexpr{K} Ctcf peaks and add those columns to the
+and the random \Sexpr{3*K} Ctcf peaks and add those columns to the
 \Rcode{segvis\_block\_list} we calculated in \label{subsec:summary}:
 
 <<ex4_code2,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE>>=
 
   nr_overlaps <- countOverlaps(regions(all_segvis_blocks[[1]]),dnase_gr)
   all_segvis_blocks <- lapply(all_segvis_blocks,
-    addColumn,name = "dnase_overlaps",col =nr_overlaps)
+    addColumn,name = "dnase_overlaps",col = nr_overlaps)
   all_segvis_blocks[[1]]
                           
 @ 
 
-Then we can \Rcode{subset} the data based on queries based on that
-annotation, for example:
+% Then we can \Rcode{subset_block} the data based on queries based on that
+% annotation, for example:
 
-<<ex4_code3,subset_example,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE>>=
+<<ex4_code3,subset_example,include=FALSE,echo=FALSE,eval=FALSE,message=FALSE,warning=FALSE>>=
 
-  ctcf_subset <- subset(all_segvis_blocks[[1]],dnase_overlaps > 0)
+  ctcf_subset <- subset_block(all_segvis_blocks[[1]],condition = dnase_overlaps > 0)
   ctcf_subset
   cover_table(ctcf_subset)
   
 @ 
 
-Furthermore we can recreate the plots of figure \ref{fig2} for the
+Then we can recreate the plots of figure \ref{fig2} for the
 Ctcf peaks that overlap Dnse hypersensitive sites:
 
 <<ex4_plots,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE>>=
@@ -587,7 +586,7 @@ Ctcf peaks that overlap Dnse hypersensitive sites:
 @ 
 
 \caption{Mean, median and varlog profiles of all three marks
-  (Ctcf,H3k27ac and H3k4me1) across the first \Sexpr{K} Ctcf peaks
+  (Ctcf,H3k27ac and H3k4me1) across the random Ctcf peaks
   that overlap with Dnse hypersentive sites}
   \label{fig4}
 \end{figure}

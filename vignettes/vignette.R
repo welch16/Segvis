@@ -12,29 +12,29 @@
   library(ggplot2)
   library(rbamtools)    
   library(Rsamtools)
+  K <- 50
 
 
 ## ----peaks_file,include=TRUE,echo=TRUE,eval=TRUE----------------------------------------
 
-  peaks_file <- "../inst/extdata/peaks/encode_K562_Ctcf_peaks_first3chr.narrowPeak"
+  peaks_file <- "../inst/extdata/example/encode_K562_Ctcf_peaks_first3chr.narrowPeak"
   ctcf_peaks <- read.table(peaks_file)
   head(ctcf_peaks,15)
 
 
 ## ----gr_peaks,include=TRUE,echo=TRUE,eval=TRUE------------------------------------------
 
-  K <- 2000
   ctcf_gr <- GRanges(seqnames = ctcf_peaks$V1,
     ranges = IRanges(start = ctcf_peaks$V2,
       end = ctcf_peaks$V3),strand = "*")
-  ctcf_gr <- ctcf_gr[order(ctcf_peaks$V7,decreasing=TRUE)[1:K]]
+  ctcf_gr <- ctcf_gr[order(ctcf_peaks$V7,decreasing=TRUE)]
   ctcf_gr
 
 
 ## ----parameters_segvis , include=TRUE,echo=TRUE,eval=TRUE, warning=FALSE----------------
   
   ctcf <- buildSegvis(name = "ctcf_peaks",
-    file = "../inst/extdata/reads/encode_K562_Ctcf_first3chr_Rep1.sort.bam",
+    file = "../inst/extdata/example/encode_K562_Ctcf_first3chr_Rep1.sort.bam",
     maxBandwidth = 101,fragLen = 200,isPET = FALSE,
     chr = c("chr1","chr2","chr3"))                 
   regions(ctcf) <- ctcf_gr
@@ -64,7 +64,7 @@
 ## ----new_marks,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE-------------
 
   h3k27ac <- buildSegvis(name = "h3k27ac",
-    file = "../inst/extdata/reads/encode_K562_H3k27ac_first3chr.sort.bam",
+    file = "../inst/extdata/example/encode_K562_H3k27ac_first3chr.sort.bam",
     maxBandwidth = 101,fragLen = 200,isPET = FALSE,
     chr = c("chr1","chr2","chr3"))
   regions(h3k27ac) <- ctcf_gr
@@ -75,7 +75,7 @@
   h3k27ac_block <- Segvis_block(h3k27ac,bw = 1,mc = 24)
 
   h3k4me1 <- buildSegvis(name = "h3k4me1",
-    file = "../inst/extdata/reads/encode_K562_H3k4me1_first3chr.sort.bam",
+    file = "../inst/extdata/example/encode_K562_H3k4me1_first3chr.sort.bam",
     maxBandwidth = 101,fragLen = 200,isPET = FALSE,
     chr = c("chr1","chr2","chr3"))
   regions(h3k4me1) <- ctcf_gr
@@ -232,8 +232,7 @@
 
 ## ----ex4_code,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE--------------
 
-  dnase_file <- "../inst/extdata/peaks/encode_K562_dnase_openChrom_first3chr.narrowPeak"
-  list.files("../inst/extdata/peaks/")
+  dnase_file <- "../inst/extdata/example/encode_K562_dnase_openChrom_first3chr.narrowPeak"
   dnase_sites = read.table(dnase_file)
   dnase_gr <- GRanges(seqname = dnase_sites$V1,
     ranges = IRanges(start = dnase_sites$V2,end = dnase_sites$V3),
@@ -245,16 +244,16 @@
 
   nr_overlaps <- countOverlaps(regions(all_segvis_blocks[[1]]),dnase_gr)
   all_segvis_blocks <- lapply(all_segvis_blocks,
-    addColumn,name = "dnase_overlaps",col =nr_overlaps)
+    addColumn,name = "dnase_overlaps",col = nr_overlaps)
   all_segvis_blocks[[1]]
                           
 
-## ----ex4_code3,subset_example,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE----
-
-  ctcf_subset <- subset(all_segvis_blocks[[1]],dnase_overlaps > 0)
-  ctcf_subset
-  cover_table(ctcf_subset)
-  
+## ----ex4_code3,subset_example,include=FALSE,echo=FALSE,eval=FALSE,message=FALSE,warning=FALSE----
+#  
+#    ctcf_subset <- subset_block(all_segvis_blocks[[1]],condition = dnase_overlaps > 0)
+#    ctcf_subset
+#    cover_table(ctcf_subset)
+#  
 
 ## ----ex4_plots,include=TRUE,echo=TRUE,eval=TRUE,message=FALSE,warning=FALSE-------------
 

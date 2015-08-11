@@ -24,7 +24,7 @@ This method works similarly to the subset of IRanges, GenomicRanges, GenomicAlig
 \examples{
 \dontrun{
 
-subset(segvis_block, cond == TRUE)
+subset_block(segvis_block, cond == TRUE)
 
 }
 }
