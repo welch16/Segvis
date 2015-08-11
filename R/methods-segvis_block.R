@@ -163,6 +163,7 @@ setMethod("show",
 setMethods("normalize",
   signature = signature(object = "segvis_block",value = "numeric",base = "numeric"),
   definition = function(object, value,base){
+    tagCounts <- NULL
     if(missing(base))base = 1000000
     if(missing(value))value = base/normConst(object)
     stopifnot(value > 0)

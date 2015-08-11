@@ -4,6 +4,24 @@
 ##' @importFrom GenomicAlignments readGAlignmentsFromBam
 ##' @importFrom GenomicAlignments seqnames
 ##' @importFrom GenomicAlignments findOverlaps
+##' @importFrom GenomicAlignments start
+##' @importFrom GenomicAlignments end
+##' @importFrom GenomicRanges GRanges
+##' @importFrom GenomicRanges start<-
+##' @importFrom GenomicRanges end<-
+##' @importFrom GenomicRanges elementMetadata
+##' @importFrom GenomicRanges elementMetadata<-
+##' @importFrom GenomicRanges resize
+##' @importFrom GenomicRanges coverage
+##' @importFrom GenomicRanges queryHits
+##' @importFrom GenomicRanges subjectHits
+##' @importFrom GenomicRanges width
+##' @importFrom GenomicRanges strand
+##' @importFrom IRanges IRanges
+##' @importFrom GenomeInfoDb seqlengths
+##' @importFrom S4Vectors nrun
+##' @importFrom S4Vectors runValue
+##' @importFrom S4Vectors runLength
 ##' @import parallel
 NULL
 
