@@ -10,7 +10,7 @@ Description: Calculates the coverage of a set of genomic regions
 URL: https:github.com/welch16/Segvis
 License: GPL (>=2)
 Depends:
-    R (>= 3.1.1),
+    R (>= 3.2.1),
     GenomicAlignments (>= 1.0.1),
     GenomicRanges (>= 1.20.5),
     data.table (>= 1.9.2)
@@ -27,5 +27,5 @@ Suggests:
     knitr (>= 1.10),
     BiocStyle
 VignetteBuilder: knitr
-biocViews: ChIPSeq, Sequencing, Visualization
+biocViews: ChIPSeq, Sequencing, Visualization, Coverage, Alignment, DataImport
 
