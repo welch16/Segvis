@@ -322,12 +322,19 @@ setMethods("loadReads",
       ## when the reads are paired end tags, it gets the qname to match the
       ## both ends of the fragment
       pet_flag <- scanBamFlag(isPaired = TRUE)
-      param <- ScanBamParam(which = regions(object),flag = pet_flag,what = "qname")
+      param <- ScanBamParam(which = regions_to_load,flag = pet_flag,what = "qname")
     }else{
-      param <- ScanBamParam(which = regions(object))
+      param <- ScanBamParam(which = regions_to_load)
     }    
-    greads <- readGAlignments(file(object),
-      param = param,use.names = FALSE)    
+    greads <- readGAlignments(file(object), param = param,use.names = FALSE)
+    if(length(greads) == 0){
+      warning("Can't read ",file(object), " considering regions, going to try without them")
+      param@which <- IRangesList()
+      greads <- readGAlignments(file(object), param = param,use.names = FALSE)
+      overlap <- findOverlaps(as(greads,"GRanges"),regions_to_load)
+      greads <- greads[queryHits(overlap)]
+      rm(overlap)      
+    }
     if(isPET(object)){
       ## convert the qname into a numeric value for computation efficiency
       qname <- as.numeric(as.factor(elementMetadata(greads)[["qname"]]))
