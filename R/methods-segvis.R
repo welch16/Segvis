@@ -315,7 +315,7 @@ setMethods("loadReads",
     side <- (maxBandwidth(object)-1)/2      
     regions_to_load <- regions(object)    
     start(regions_to_load) <- start(regions_to_load) - side - fragLen(object)
-    end(regions_to_load) <- end(regions_to_load) - side - fragLen(object)          
+    end(regions_to_load) <- end(regions_to_load) + side + fragLen(object)          
     
     if(isPET(object)){
       message("Setting PET flag")
@@ -344,7 +344,7 @@ setMethods("loadReads",
     }else{
       greads <- .data.table.GRanges(as(greads, "GRanges"))
     }
-    setkey(greads,seqnames,strand)    
+    setkey(greads,seqnames)    
     message("Bam file loaded")
 
     ## validates the chromosomes, that must coincide between
