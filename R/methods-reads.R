@@ -3,8 +3,7 @@
 
 #### readsF
 
-##' @name readsF
-##' @rdname readsF
+##' @rdname readsF-methods
 ##' @docType methods
 ##' @aliases readsF
 ##' @exportMethod readsF
@@ -13,8 +12,7 @@ setMethod("readsF",
     definition = function(object)object@readsF
 )
 
-##' @name readsF
-##' @rdname readsF
+##' @rdname readsF-methods
 ##' @docType methods
 ##' @aliases readsF<-
 ##' @exportMethod readsF<-
@@ -27,8 +25,7 @@ setReplaceMethod("readsF",
 
 #### readsR
 
-##' @name readsR
-##' @rdname readsR
+##' @rdname readsR-methods
 ##' @docType methods
 ##' @aliases readsR
 ##' @exportMethod readsR
@@ -38,8 +35,7 @@ setMethod("readsR",
 )
 
 
-##' @name readsR
-##' @rdname readsR
+##' @rdname readsR-methods
 ##' @docType methods
 ##' @aliases readsR<-
 ##' @exportMethod readsR<-
