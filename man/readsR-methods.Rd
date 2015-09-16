@@ -3,7 +3,11 @@
 \docType{methods}
 \name{readsR}
 \alias{readsR}
+\alias{readsR,reads-method}
+\alias{readsR,segvis-method}
 \alias{readsR<-}
+\alias{readsR<-,reads,list-method}
+\alias{readsR<-,segvis,list-method}
 \title{readsR methods}
 \usage{
 readsR(object)
@@ -15,8 +19,6 @@ readsR(object) <- value
 \S4method{readsR}{reads,list}(object) <- value
 
 \S4method{readsR}{segvis}(object)
-
-\S4method{readsF}{segvis,list}(object) <- value
 
 \S4method{readsR}{segvis,list}(object) <- value
 }

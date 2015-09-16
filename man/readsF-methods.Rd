@@ -3,7 +3,11 @@
 \docType{methods}
 \name{readsF}
 \alias{readsF}
+\alias{readsF,reads-method}
+\alias{readsF,segvis-method}
 \alias{readsF<-}
+\alias{readsF<-,reads,list-method}
+\alias{readsF<-,segvis,list-method}
 \title{readsF methods}
 \usage{
 readsF(object)
@@ -15,6 +19,8 @@ readsF(object) <- value
 \S4method{readsF}{reads,list}(object) <- value
 
 \S4method{readsF}{segvis}(object)
+
+\S4method{readsF}{segvis,list}(object) <- value
 }
 \arguments{
 \item{object}{Either a \code{segvis} or a \code{reads} object}
