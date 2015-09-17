@@ -119,7 +119,7 @@ setMethod("summarize",
   definition = function(object,FUN,...){
     ## check length of matches
     V1 <- center <- tagCounts <- NULL
-    lengths = cover_table(object)[,length(coord),by = list(chr,match)]
+    lengths <- cover_table(object)[,length(coord),by = list(chr,match)]
     if(length(u <- unique(lengths[,(V1)])) > 1){
        warning("All regions must have the same length")
     }
