@@ -3,7 +3,9 @@
 \docType{methods}
 \name{maxBandwidth}
 \alias{maxBandwidth}
+\alias{maxBandwidth,segvis-method}
 \alias{maxBandwidth<-}
+\alias{maxBandwidth<-,segvis,numeric-method}
 \title{maxBandwidth methods}
 \usage{
 maxBandwidth(object)
@@ -32,7 +34,7 @@ maxBandwidth<- assigns an integer value the bandwidth upper bound to use when sm
 \examples{
 \dontrun{
 
-maxBandwidthfragLen(segvis)
+maxBandwidth(segvis)
 maxBandwidth(segvis) <- 201
 
 }

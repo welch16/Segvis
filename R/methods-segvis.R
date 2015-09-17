@@ -46,8 +46,7 @@ setMethod("regions",
   definition = function(object)object@regions
 )           
 
-##' @rdname file
-##' @name file
+##' @rdname file-methods
 ##' @aliases file
 ##' @docType methods
 ##' @exportMethod file
@@ -56,8 +55,7 @@ setMethod("file",
   definition = function(object)object@file
 )           
 
-##' @rdname maxBandwidth
-##' @name maxBandwidth
+##' @rdname maxBandwidth-methods
 ##' @aliases maxBandwidth
 ##' @docType methods
 ##' @exportMethod maxBandwidth
@@ -66,8 +64,7 @@ setMethod("maxBandwidth",
   definition  = function(object)object@maxBandwidth
 )           
 
-##' @rdname fragLen
-##' @name fragLen
+##' @rdname fragLen-methods
 ##' @aliases fragLen
 ##' @docType methods
 ##' @exportMethod fragLen
@@ -168,8 +165,7 @@ setReplaceMethod("regions",
     return(object)
 })
 
-##' @rdname file
-##' @name file
+##' @rdname file-methods
 ##' @aliases file<-
 ##' @docType methods
 ##' @exportMethod file<-
@@ -185,8 +181,7 @@ setReplaceMethod("file",
 
 
 
-##' @rdname maxBandwidth
-##' @name maxBandwidth
+##' @rdname maxBandwidth-methods
 ##' @aliases maxBandwidth<-
 ##' @docType methods
 ##' @exportMethod maxBandwidth<-
@@ -201,8 +196,7 @@ setReplaceMethod("maxBandwidth",
     return(object)
 })    
 
-##' @rdname fragLen
-##' @name fragLen
+##' @rdname fragLen-methods
 ##' @aliases fragLen<-
 ##' @docType methods
 ##' @exportMethod fragLen<-
@@ -479,12 +473,11 @@ setMethod("findSummit",
   return(unlist(summits_chr))    
 })
 
-##' @rdname countReads
-##' @name countReads
+##' @rdname countReads-methods
 ##' @aliases countReads
 ##' @docType methods
 ##' @exportMethod countReads
-setMethods("countReads",
+setMethod("countReads",
   signature = signature(object = "segvis"),
   definition = function(object){
     ## Check the case for a PET file

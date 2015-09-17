@@ -86,8 +86,7 @@ setGeneric("regions<-",
 ##' @export
 ##' @docType methods
 ##' @seealso \code{\link{segvis-class}}
-##' @rdname file
-##' @name file
+##' @rdname file-methods
 ##' @examples
 ##' \dontrun{
 ##'
@@ -106,8 +105,7 @@ setGeneric("file",
 ##' @param value A character value with the name of bam the file with the reads 
 ##'
 ##' @return A segvis object
-##' @rdname file
-##' @name file
+##' @rdname file-methods
 setGeneric("file<-",
   function(object,value)
   standardGeneric("file<-")
@@ -124,12 +122,11 @@ setGeneric("file<-",
 ##' @export
 ##' @docType methods
 ##' @seealso \code{\link{segvis-class}}
-##' @rdname maxBandwidth
-##' @name maxBandwidth
+##' @rdname maxBandwidth-methods
 ##' @examples
 ##' \dontrun{
 ##'
-##' maxBandwidthfragLen(segvis)
+##' maxBandwidth(segvis)
 ##' maxBandwidth(segvis) <- 201
 ##' 
 ##' }
@@ -144,8 +141,7 @@ setGeneric("maxBandwidth",
 ##' @param value A numeric value representing the maximum bandwidth, it need to be an odd number
 ##'
 ##' @return A segvis object
-##' @rdname maxBandwidth
-##' @name maxBandwidth
+##' @rdname maxBandwidth-methods
 setGeneric("maxBandwidth<-",
   function(object,value)
   standardGeneric("maxBandwidth<-")
@@ -162,8 +158,7 @@ setGeneric("maxBandwidth<-",
 ##' @export
 ##' @docType methods
 ##' @seealso \code{\link{segvis-class}}
-##' @rdname fragLen
-##' @name fragLen
+##' @rdname fragLen-methods
 ##' @examples
 ##' \dontrun{
 ##'
@@ -181,8 +176,7 @@ setGeneric("fragLen",
 ##' @param value A numeric value representing the fragment length
 ##'
 ##' @return A segvis object
-##' @rdname fragLen
-##' @name fragLen
+##' @rdname fragLen-methods
 setGeneric("fragLen<-",
   function(object,value)
   standardGeneric("fragLen<-")
@@ -701,9 +695,7 @@ setGeneric("normConst<-",
 ##'
 ##' @seealso \code{\link{segvis-class}}
 ##'
-##' @rdname countReads
-##'
-##' @name countReads
+##' @rdname countReads-methods
 ##'
 ##' @examples
 ##' \dontrun{

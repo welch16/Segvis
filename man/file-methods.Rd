@@ -3,7 +3,9 @@
 \docType{methods}
 \name{file}
 \alias{file}
+\alias{file,segvis-method}
 \alias{file<-}
+\alias{file<-,segvis,character-method}
 \title{file methods}
 \usage{
 file(object)

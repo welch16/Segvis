@@ -3,9 +3,12 @@
 \docType{methods}
 \name{countReads}
 \alias{countReads}
+\alias{countReads,segvis-method}
 \title{countReads method for segvis class}
 \usage{
 countReads(object)
+
+\S4method{countReads}{segvis}(object)
 }
 \arguments{
 \item{object}{segvis object}

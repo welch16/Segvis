@@ -3,7 +3,9 @@
 \docType{methods}
 \name{fragLen}
 \alias{fragLen}
+\alias{fragLen,segvis-method}
 \alias{fragLen<-}
+\alias{fragLen<-,segvis,numeric-method}
 \title{fragLen methods}
 \usage{
 fragLen(object)
