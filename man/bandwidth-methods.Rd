@@ -3,7 +3,9 @@
 \docType{methods}
 \name{bandwidth}
 \alias{bandwidth}
+\alias{bandwidth,segvis_block-method}
 \alias{bandwidth<-}
+\alias{bandwidth<-,segvis_block,numeric-method}
 \title{bandwidth methods for segvis_block class}
 \usage{
 bandwidth(object)
