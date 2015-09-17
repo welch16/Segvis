@@ -735,8 +735,8 @@ setGeneric("summarize",
 ##'
 ##' @param object segvis_block object
 ##'
-##' @param ... Remaining \code{normalize} parameters. \code{value} and \code{base}
-##'
+##' @param base Numeric value, indicating to which scale the profiles are gonna be scaled
+##' 
 ##' @export
 ##'
 ##' @docType methods
@@ -753,7 +753,7 @@ setGeneric("summarize",
 ##'
 ##' }
 setGeneric("normalize",
-  function(object,...)
+  function(object,base)
   standardGeneric("normalize")
 )           
 

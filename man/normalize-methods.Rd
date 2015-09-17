@@ -3,15 +3,20 @@
 \docType{methods}
 \name{normalize}
 \alias{normalize}
-\alias{normalize-methods}
+\alias{normalize,segvis_block,ANY-method}
+\alias{normalize,segvis_block,numeric-method}
 \title{normalize method for segvis_block class}
 \usage{
-normalize(object, ...)
+normalize(object, base)
+
+\S4method{normalize}{segvis_block,numeric}(object, base)
+
+\S4method{normalize}{segvis_block,ANY}(object)
 }
 \arguments{
 \item{object}{segvis_block object}
 
-\item{...}{Remaining \code{normalize} parameters. \code{value} and \code{base}}
+\item{base}{Numeric value, indicating to which scale the profiles are gonna be scaled}
 }
 \description{
 This method normalizes the segvis_block tagCounts by multiplying it times value. It normalizes the tagCounts by multiplying it times base / normConst

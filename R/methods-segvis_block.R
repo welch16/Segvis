@@ -146,22 +146,30 @@ setMethod("show",
 })
 
 ##' @rdname normalize-methods
-##' @name normalize-methods
 ##' @aliases normalize
 ##' @docType methods
 ##' @exportMethod normalize
-setMethods("normalize",
-  signature = signature(object = "segvis_block",value = "numeric",base = "numeric"),
-  definition = function(object, value,base){
+setMethod("normalize",
+  signature = signature(object = "segvis_block",base = "numeric"),
+  definition = function(object,base){
     tagCounts <- NULL
-    if(missing(base))base = 1000000
-    if(missing(value))value = base/normConst(object)
+    value = base/normConst(object)
     stopifnot(value > 0)
     cover_table(object)[,tagCounts := value * tagCounts]
     object@.isScaled = TRUE
     return(object) 
 })
-           
+
+##' @rdname normalize-methods
+##' @aliases normalize
+##' @docType methods
+##' @exportMethod normalize
+setMethod("normalize",
+  signature = signature(object = "segvis_block"),
+  definition = function(object){
+    return(normalize(object,1e6))
+})
+
 ##' @rdname subset_block-methods
 ##' @aliases subset_block,ANY-method
 ##' @docType methods
