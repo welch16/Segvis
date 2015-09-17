@@ -3,7 +3,9 @@
 \docType{methods}
 \name{chr}
 \alias{chr}
+\alias{chr,segvis-method}
 \alias{chr<-}
+\alias{chr<-,segvis,character-method}
 \alias{docType}
 \alias{methods}
 \title{chr methods}

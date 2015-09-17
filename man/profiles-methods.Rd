@@ -3,6 +3,7 @@
 \docType{methods}
 \name{profiles}
 \alias{profiles}
+\alias{profiles,segvis-method}
 \title{profiles methods for segvis class}
 \usage{
 profiles(object)

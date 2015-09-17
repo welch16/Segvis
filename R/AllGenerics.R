@@ -199,8 +199,7 @@ setGeneric("fragLen<-",
 ##' @export
 ##' @docType methods
 ##' @seealso \code{\link{segvis-class}}, \code{\link{buildSegvis}}
-##' @rdname chr
-##' @name chr
+##' @rdname chr-methods
 ##' @examples
 ##' \dontrun{
 ##'
@@ -219,8 +218,7 @@ setGeneric("chr",
 ##' @param value A character vector with the chromosomes to use in the analysis
 ##'
 ##' @return A segvis object
-##' @rdname chr
-##' @name chr
+##' @rdname chr-methods
 setGeneric("chr<-",
   function(object,value)
   standardGeneric("chr<-")           
@@ -238,8 +236,7 @@ setGeneric("chr<-",
 ##' @export
 ##' @docType methods
 ##' @seealso \code{\link{segvis-class}}
-##' @rdname isPET
-##' @name isPET
+##' @rdname isPET-methods
 ##' @examples
 ##' \dontrun{
 ##'
@@ -257,8 +254,7 @@ setGeneric("isPET",
 ##' @param value A logical flag that represents wheter the reads to use are Paired Ended or not
 ##'
 ##' @return A segvis object
-##' @rdname isPET
-##' @name isPET
+##' @rdname isPET-methods
 setGeneric("isPET<-",
   function(object,value)
   standardGeneric("isPET<-")           
@@ -281,8 +277,7 @@ setGeneric("isPET<-",
 ##'
 ##' @seealso \code{\link{segvis-class}} and \code{\link{getCoverage}}
 ##'
-##' @rdname profiles
-##' @name profiles
+##' @rdname profiles-methods
 ##'
 ##' @examples
 ##' \dontrun{
@@ -309,8 +304,7 @@ setGeneric("profiles",
 ##'
 ##' @seealso \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{reads-class}}
 ##'
-##' @rdname loadReads
-##' @name loadReads
+##' @rdname loadReads-methods
 ##'
 ##' @examples
 ##' \dontrun{
@@ -338,8 +332,7 @@ setGeneric("loadReads",
 ##'
 ##' @seealso \code{\link{readsF}}, \code{\link{readsR}} and \code{\link{reads-class}}
 ##'
-##' @rdname matchReads
-##' @name matchReads
+##' @rdname matchReads-methods
 ##'
 ##' @examples
 ##' \dontrun{
@@ -369,8 +362,7 @@ setGeneric("matchReads",
 ##'
 ##' @seealso \code{\link{loadReads}}, \code{\link{matchReads}} and \code{\link{findSummit}}
 ##' 
-##' @rdname getCoverage
-##' @name getCoverage
+##' @rdname getCoverage-methods
 ##'
 ##' @examples
 ##' \dontrun{
@@ -402,8 +394,7 @@ setGeneric("getCoverage",
 ##'
 ##' @seealso \code{\link{segvis_block-class}},\code{\link{segvis-class}}
 ##'
-##' @rdname joinProfiles
-##' @name joinProfiles
+##' @rdname joinProfiles-methods
 ##'
 ##' @examples
 ##' \dontrun{
@@ -433,8 +424,7 @@ setGeneric("joinProfiles",
 ##' @docType methods
 ##'
 ##' @seealso \code{\link{getCoverage}},\code{\link{segvis-class}}
-##' @rdname findSummit
-##' @name findSummmit
+##' @rdname findSummit-methods
 ##'
 ##' @examples
 ##' \dontrun{
@@ -465,8 +455,7 @@ setGeneric("findSummit",
 ##'
 ##' @seealso \code{\link{segvis_block-class}},\code{\link{segvis-class}}
 ##'
-##' @rdname Segvis_block
-##' @name Segvis_block
+##' @rdname Segvis_block-methods
 ##'
 ##' @examples
 ##' \dontrun{
@@ -491,8 +480,7 @@ setGeneric("Segvis_block",
 ##' @export
 ##' @docType methods
 ##' @seealso \code{\link{reads-class}},\code{\link{segvis-class}}
-##' @rdname readsF
-##' @name readsF
+##' @rdname readsF-methods
 ##' @examples
 ##' \dontrun{
 ##' readsF(segvis)
@@ -509,8 +497,7 @@ setGeneric("readsF",
 ##' @param value A list of data.table with same format as a GenomicRanges object with an additional match column
 ##'
 ##' @return A reads or a segvis object with modified forward reads
-##' @rdname readsF
-##' @name readsF
+##' @rdname readsF-methods
 setGeneric("readsF<-",
   function(object,value)
   standardGeneric("readsF<-")
@@ -528,8 +515,7 @@ setGeneric("readsF<-",
 ##' @export
 ##' @docType methods
 ##' @seealso \code{\link{reads-class}},\code{\link{segvis-class}}
-##' @rdname readsR
-##' @name readsR
+##' @rdname readsR-methods
 ##' @examples
 ##' \dontrun{
 ##' readsR(segvis)
@@ -546,8 +532,7 @@ setGeneric("readsR",
 ##' @param value A list of data.table with same format as a GenomicRanges object with an additional match column
 ##'
 ##' @return A reads or a segvis object with modified backward reads
-##' @rdname readsR
-##' @name readsR
+##' @rdname readsR-methods
 setGeneric("readsR<-",
   function(object,value)
   standardGeneric("readsR<-")
@@ -615,9 +600,7 @@ setGeneric("cover_table<-",
 ##'
 ##' @seealso \code{\link{segvis_block-class}}
 ##'
-##' @rdname bandwidth
-##'
-##' @name bandwidth
+##' @rdname bandwidth-methods
 ##'
 ##' @examples
 ##' \dontrun{
@@ -644,9 +627,7 @@ setGeneric("bandwidth",
 ##'
 ##' @seealso \code{\link{segvis_block-class}}
 ##'
-##' @rdname bandwidth
-##'
-##' @name bandwidth
+##' @rdname bandwidth-methods
 ##'
 setGeneric("bandwidth<-",
   function(object,value)
@@ -848,9 +829,7 @@ setGeneric("subset_block",
 ##'
 ##' @seealso \code{\link{segvis_block-class}}
 ##'
-##' @rdname addColumn
-##'
-##' @name addColumn
+##' @rdname addColumn-methods
 ##'
 ##' @examples
 ##' \dontrun{
@@ -886,8 +865,7 @@ setGeneric("addColumn",
 ##'
 ##' @seealso \code{\link{segvis_block_list-class}},\code{\link{plot_data}}
 ##'
-##' @rdname plot_profiles
-##' @name plot_profiles
+##' @rdname plot_profiles-methods
 ##'
 ##' @examples
 ##' \dontrun{
@@ -926,8 +904,7 @@ setGeneric(name="plot_profiles",
 ##'
 ##' @seealso \code{\link{segvis_block_list-class}},\code{\link{plot_profiles}}
 ##'
-##' @rdname plot_data
-##' @name plot_data
+##' @rdname plot_data-methods
 ##'
 ##' @examples
 ##' \dontrun{

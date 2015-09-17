@@ -3,7 +3,9 @@
 \docType{methods}
 \name{isPET}
 \alias{isPET}
+\alias{isPET,segvis-method}
 \alias{isPET<-}
+\alias{isPET<-,segvis,logical-method}
 \title{isPET methods}
 \usage{
 isPET(object)

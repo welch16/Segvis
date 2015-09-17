@@ -3,9 +3,12 @@
 \docType{methods}
 \name{getCoverage}
 \alias{getCoverage}
+\alias{getCoverage,segvis,numeric-method}
 \title{getCoverage method for profile class}
 \usage{
 getCoverage(object, mc)
+
+\S4method{getCoverage}{segvis,numeric}(object, mc = 8)
 }
 \arguments{
 \item{object}{segvis object}

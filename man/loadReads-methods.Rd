@@ -3,9 +3,12 @@
 \docType{methods}
 \name{loadReads}
 \alias{loadReads}
+\alias{loadReads,segvis,numeric-method}
 \title{loadReads method for segvis class}
 \usage{
 loadReads(object, mc)
+
+\S4method{loadReads}{segvis,numeric}(object, mc)
 }
 \arguments{
 \item{object}{segvis object}

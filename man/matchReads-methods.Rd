@@ -3,9 +3,12 @@
 \docType{methods}
 \name{matchReads}
 \alias{matchReads}
+\alias{matchReads,segvis,numeric-method}
 \title{matchReads methods for segvis class}
 \usage{
 matchReads(object, mc)
+
+\S4method{matchReads}{segvis,numeric}(object, mc = 8)
 }
 \arguments{
 \item{object}{segvis object}

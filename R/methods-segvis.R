@@ -18,6 +18,7 @@
 ##' @importFrom GenomicRanges width
 ##' @importFrom GenomicRanges strand
 ##' @importFrom IRanges IRanges
+##' @importFrom IRanges IRangesList
 ##' @importFrom GenomeInfoDb seqlengths
 ##' @importFrom S4Vectors nrun
 ##' @importFrom S4Vectors runValue
@@ -75,8 +76,7 @@ setMethod("fragLen",
   definition = function(object)object@fragLen
 )           
 
-##' @rdname chr
-##' @name chr
+##' @rdname chr-methods
 ##' @aliases chr
 ##' docType methods
 ##' @exportMethod chr
@@ -85,8 +85,7 @@ setMethod("chr",
   definition = function(object)object@chr
 )          
 
-##' @rdname isPET
-##' @name isPET
+##' @rdname isPET-methods
 ##' @aliases isPET
 ##' @docType methods
 ##' @exportMethod isPET
@@ -94,8 +93,8 @@ setMethod("isPET",
   signature = signature(object = "segvis"),
   definition = function(object)object@isPET
 )          
-##' @name readsF
-##' @rdname readsF
+
+##' @rdname readsF-methods
 ##' @docType methods
 ##' @aliases readsF
 ##' @exportMethod readsF
@@ -105,8 +104,7 @@ setMethod("readsF",
 )           
 
 
-##' @name readsR
-##' @rdname readsR
+##' @rdname readsR-methods
 ##' @docType methods
 ##' @aliases readsR
 ##' @exportMethod readsR
@@ -115,8 +113,7 @@ setMethod("readsR",
   definition = function(object)readsR(object@reads)
 )
 
-##' @rdname profiles
-##' @name profiles
+##' @rdname profiles-methods
 ##' @docType methods
 ##' @aliases profiles
 ##' @exportMethod profiles
@@ -218,8 +215,7 @@ setReplaceMethod("fragLen",
     return(object)
 })    
 
-##' @rdname chr
-##' @name chr
+##' @rdname chr-methods
 ##' @aliases chr<-
 ##' @docType methods
 ##' @exportMethod chr<-
@@ -231,8 +227,7 @@ setReplaceMethod("chr",
     return(object)
 })
 
-##' @rdname isPET
-##' @name isPET
+##' @rdname isPET-methods
 ##' @aliases isPET<-
 ##' @docType methods
 ##' @exportMethod isPET<-
@@ -267,10 +262,9 @@ setMethods("show",
 })
 
 
-##' @name readsR
-##' @rdname readsR
+##' @rdname readsF-methods
 ##' @docType methods
-##' @aliases readsR<-
+##' @aliases readsF<-
 ##' @exportMethod readsF
 setReplaceMethod("readsF",
   signature = signature(object = "segvis",value = "list"),
@@ -281,8 +275,7 @@ setReplaceMethod("readsF",
 )                 
 
 
-##' @name readsR
-##' @rdname readsR
+##' @rdname readsR-methods
 ##' @docType methods
 ##' @aliases readsR<-
 ##' @exportMethod readsR
@@ -294,12 +287,11 @@ setReplaceMethod("readsR",
   }
 )                 
 
-##' @rdname loadReads
-##' @name loadReads
+##' @rdname loadReads-methods
 ##' @aliases loadReads
 ##' @docType methods
 ##' @exportMethod loadReads
-setMethods("loadReads",
+setMethod("loadReads",
   signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object,mc ){
     ## reads the bam file
@@ -386,12 +378,11 @@ setMethods("loadReads",
     return(object)
 })
 
-##' @rdname matchReads
-##' @name matchReads
+##' @rdname matchReads-methods
 ##' @aliases matchReads
 ##' @docType methods
 ##' @exportMethod matchReads
-setMethods("matchReads",
+setMethod("matchReads",
   signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object,mc = 8){
     if(object@.haveReads & object@.haveRegions){
@@ -429,12 +420,11 @@ setMethods("matchReads",
     }
 })
 
-##' @rdname getCoverage
-##' @name getCoverage
+##' @rdname getCoverage-methods
 ##' @aliases getCoverage
 ##' @docType methods
 ##' @exportMethod getCoverage
-setMethods("getCoverage",
+setMethod("getCoverage",
   signature = signature(object = "segvis",mc = "numeric"),
   definition = function(object, mc = 8){
     if(object@.readsMatched == TRUE){
@@ -458,12 +448,11 @@ setMethods("getCoverage",
     }
 })    
 
-##' @rdname findSummit
-##' @name findSummit
+##' @rdname findSummit-methods
 ##' @aliases findSummit
 ##' @docType methods
 ##' @exportMethod findSummit
-setMethods("findSummit",          
+setMethod("findSummit",          
   signature = signature(object = "segvis",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc=8){
 
@@ -508,12 +497,11 @@ setMethods("countReads",
     return(counts)  
 })
 
-##' @rdname joinProfiles
-##' @name joinProfiles
+##' @rdname joinProfiles-methods
 ##' @aliases joinProfiles
 ##' @docType methods
 ##' @exportMethod joinProfiles
-setMethods("joinProfiles",
+setMethod("joinProfiles",
   signature = signature(object = "segvis",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc=8){
 
@@ -536,12 +524,11 @@ setMethods("joinProfiles",
   return(joined_info)
 })    
 
-##' @rdname Segvis_block
-##' @name Segvis_block
+##' @rdname Segvis_block-methods
 ##' @aliases Segvis_block
 ##' @docType methods
 ##' @exportMethod Segvis_block
-setMethods("Segvis_block",
+setMethod("Segvis_block",
   signature = signature(object = "segvis",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc){
     cover_table <- joinProfiles(object,bw,mc)    
