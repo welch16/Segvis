@@ -26,8 +26,7 @@
 ##' @import parallel
 NULL
 
-##' @rdname name
-##' @name name
+##' @rdname name-methods
 ##' @aliases name
 ##' @docType methods
 ##' @exportMethod name
@@ -36,8 +35,7 @@ setMethod("name",
   definition = function(object)object@name
 )           
 
-##' @rdname regions
-##' @name regions
+##' @rdname regions-methods
 ##' @aliases regions
 ##' @docType methods
 ##' @exportMethod regions
@@ -121,8 +119,7 @@ setMethod("profiles",
 
 ## Set methods
 
-##' @rdname name
-##' @name name
+##' @rdname name-methods
 ##' @aliases name<-
 ##' @docType methods
 ##' @exportMethod name<-
@@ -134,8 +131,7 @@ setReplaceMethod("name",
 })
    
 
-##' @rdname regions
-##' @name regions
+##' @rdname regions-methods
 ##' @aliases regions<-
 ##' @docType methods
 ##' @exportMethod regions<-

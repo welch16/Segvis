@@ -3,8 +3,7 @@
 
 ## Get methods
 
-##' @rdname name
-##' @name name
+##' @rdname name-methods
 ##' @aliases name
 ##' @docType methods
 ##' @exportMethod name
@@ -13,8 +12,7 @@ setMethod("name",
   definition = function(object)object@name
 )
 
-##' @rdname regions
-##' @name regions
+##' @rdname regions-methods
 ##' @aliases regions
 ##' @docType methods
 ##' @exportMethod regions
@@ -23,8 +21,7 @@ setMethod("regions",
   definition = function(object)object@regions
 )
 
-##' @rdname cover_table
-##' @name cover_table
+##' @rdname cover_table-methods
 ##' @aliases cover_table
 ##' @docType methods
 ##' @exportMethod cover_table
@@ -33,8 +30,7 @@ setMethod("cover_table",
   definition = function(object)object@cover_table
 )           
 
-##' @rdname bandwidth
-##' @name bandwidth
+##' @rdname bandwidth-methods
 ##' @aliases bandwidth
 ##' @docType methods
 ##' @exportMethod bandwidth
@@ -43,8 +39,7 @@ setMethod("bandwidth",
   definition = function(object)object@bandwidth
 )           
 
-##' @rdname normConst
-##' @name normConst
+##' @rdname normConst-methods
 ##' @aliases normConst
 ##' @docType methods
 ##' @exportMethod normConst
@@ -54,8 +49,7 @@ setMethod("normConst",
 )
 
 
-##' @rdname name
-##' @name name
+##' @rdname name-methods
 ##' @aliases name<-
 ##' @docType methods
 ##' @exportMethod name<-
@@ -66,8 +60,7 @@ setReplaceMethod("name",
     return(object)
 })    
 
-##' @rdname regions
-##' @name regions
+##' @rdname regions-methods
 ##' @aliases regions<-
 ##' @docType methods
 ##' @exportMethod regions<-
@@ -79,8 +72,7 @@ setReplaceMethod("regions",
     return(object)    
 })
 
-##' @rdname cover_table
-##' @name cover_table
+##' @rdname cover_table-methods
 ##' @aliases cover_table<-
 ##' @docType methods
 ##' @exportMethod cover_table<-
@@ -93,8 +85,7 @@ setReplaceMethod("cover_table",
     return(object)    
 })           
 
-##' @rdname bandwidth
-##' @name bandwidth
+##' @rdname bandwidth-methods
 ##' @aliases bandwidth<-
 ##' @docType methods
 ##' @exportMethod bandwidth<-
@@ -107,8 +98,7 @@ setReplaceMethod("bandwidth",
     return(object)
 })           
 
-##' @rdname normConst
-##' @name normConst
+##' @rdname normConst-methods
 ##' @aliases normConst<-
 ##' @docType methods
 ##' @exportMethod normConst<-
@@ -120,7 +110,7 @@ setReplaceMethod("normConst",
     return(object)
 })                        
 
-##' @rdname summarize
+##' @rdname summarize-methods
 ##' @name summarize
 ##' @aliases summarize,ANY-method
 ##' @docType methods
@@ -155,8 +145,8 @@ setMethod("show",
     show(regions(object))
 })
 
-##' @rdname normalize
-##' @name normalize
+##' @rdname normalize-methods
+##' @name normalize-methods
 ##' @aliases normalize
 ##' @docType methods
 ##' @exportMethod normalize
@@ -172,8 +162,7 @@ setMethods("normalize",
     return(object) 
 })
            
-##' @rdname subset_block
-##' @name subset_block
+##' @rdname subset_block-methods
 ##' @aliases subset_block,ANY-method
 ##' @docType methods
 ##' @exportMethod subset_block

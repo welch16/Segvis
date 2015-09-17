@@ -3,7 +3,9 @@
 \docType{methods}
 \name{normConst}
 \alias{normConst}
+\alias{normConst,segvis_block-method}
 \alias{normConst<-}
+\alias{normConst<-,segvis_block,numeric-method}
 \title{normConst methods for segvis_block class}
 \usage{
 normConst(object)

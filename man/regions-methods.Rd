@@ -3,7 +3,11 @@
 \docType{methods}
 \name{regions}
 \alias{regions}
+\alias{regions,segvis-method}
+\alias{regions,segvis_block-method}
 \alias{regions<-}
+\alias{regions<-,segvis,GRanges-method}
+\alias{regions<-,segvis_block,GRanges-method}
 \title{regions methods}
 \usage{
 regions(object)

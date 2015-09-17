@@ -4,6 +4,7 @@
 \name{subset_block}
 \alias{subset_block}
 \alias{subset_block,ANY-method}
+\alias{subset_block,segvis_block-method}
 \title{subset_block method for segvis_block class}
 \usage{
 subset_block(object, condition)

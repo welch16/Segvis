@@ -3,6 +3,7 @@
 \docType{methods}
 \name{normalize}
 \alias{normalize}
+\alias{normalize-methods}
 \title{normalize method for segvis_block class}
 \usage{
 normalize(object, ...)

@@ -3,7 +3,9 @@
 \docType{methods}
 \name{cover_table}
 \alias{cover_table}
+\alias{cover_table,segvis_block-method}
 \alias{cover_table<-}
+\alias{cover_table<-,segvis_block,data.table-method}
 \title{cover_table methods for segvis_block class}
 \usage{
 cover_table(object)

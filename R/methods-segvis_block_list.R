@@ -1,8 +1,8 @@
 ##' @import ggplot2
 NULL
 
-##' @name plot_profiles
-##' @rdname plot_profiles
+##' @rdname plot_profiles-methods
+##' @name plot_profiles-methods
 ##' @aliases plot_profiles,ANY-method
 ##' @docType methods
 ##' @exportMethod plot_profiles
@@ -39,8 +39,8 @@ setMethods("plot_profiles",
     return(out)                  
 })
 
-##' @name plot_data
-##' @rdname plot_data
+##' @rdname plot_data-methods
+##' @name plot_data-methods
 ##' @aliases plot_data,ANY-method
 ##' @docType methods
 ##' @exportMethod plot_data

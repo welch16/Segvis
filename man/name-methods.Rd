@@ -3,7 +3,11 @@
 \docType{methods}
 \name{name}
 \alias{name}
+\alias{name,segvis-method}
+\alias{name,segvis_block-method}
 \alias{name<-}
+\alias{name<-,segvis,character-method}
+\alias{name<-,segvis_block,character-method}
 \title{name methods}
 \usage{
 name(object)

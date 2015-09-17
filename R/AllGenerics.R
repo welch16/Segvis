@@ -12,8 +12,7 @@
 ##' @export
 ##' @docType methods
 ##' @seealso \code{\link{segvis-class}}
-##' @rdname name
-##' @name name
+##' @rdname name-methods
 ##' @examples
 ##' \dontrun{
 ##'
@@ -31,8 +30,7 @@ setGeneric("name",
 ##' @param value A character with the name of the object
 ##'
 ##' @return A segvis object
-##' @rdname name
-##' @name name
+##' @rdname name-methods
 setGeneric("name<-",
   function(object,value)
   standardGeneric("name<-")
@@ -49,8 +47,7 @@ setGeneric("name<-",
 ##' @export
 ##' @docType methods
 ##' @seealso \code{\link{segvis-class}}
-##' @rdname regions
-##' @name regions
+##' @rdname regions-methods
 ##' @examples
 ##' \dontrun{
 ##'
@@ -68,8 +65,7 @@ setGeneric("regions",
 ##' @param value A GenomicRanges object
 ##'
 ##' @return A segvis object
-##' @rdname regions
-##' @name regions
+##' @rdname regions-methods
 setGeneric("regions<-",
   function(object,value)
   standardGeneric("regions<-")
@@ -549,9 +545,7 @@ setGeneric("readsR<-",
 ##'
 ##' @seealso \code{\link{segvis_block-class}}
 ##'
-##' @rdname cover_table
-##'
-##' @name cover_table
+##' @rdname cover_table-methods
 ##'
 setGeneric("cover_table",
   function(object)
@@ -570,9 +564,7 @@ setGeneric("cover_table",
 ##'
 ##' @seealso \code{\link{segvis_block-class}}
 ##'
-##' @rdname cover_table
-##'
-##' @name cover_table
+##' @rdname cover_table-methods
 ##'
 setGeneric("cover_table<-",
   function(object,value)
@@ -642,9 +634,7 @@ setGeneric("bandwidth<-",
 ##'
 ##' @seealso \code{\link{segvis_block-class}}
 ##'
-##' @rdname normConst
-##'
-##' @name normConst
+##' @rdname normConst-methods
 ##'
 ##' @examples
 ##' \dontrun{
@@ -672,9 +662,7 @@ setGeneric("normConst",
 ##'
 ##' @seealso \code{\link{segvis_block-class}}
 ##'
-##' @rdname normConst
-##'
-##' @name normConst
+##' @rdname normConst-methods
 ##'
 setGeneric("normConst<-",
   function(object,value)
@@ -726,9 +714,7 @@ setGeneric("countReads",
 ##'
 ##' @seealso \code{\link{segvis_block-class}}
 ##'
-##' @rdname summarize
-##'
-##' @name summarize
+##' @rdname summarize-methods
 ##'
 ##' @examples
 ##' \dontrun{
@@ -757,9 +743,7 @@ setGeneric("summarize",
 ##'
 ##' @seealso \code{\link{segvis_block-class}}
 ##'
-##' @rdname normalize
-##'
-##' @name normalize
+##' @rdname normalize-methods
 ##'
 ##' @examples
 ##' \dontrun{
@@ -789,9 +773,7 @@ setGeneric("normalize",
 ##'
 ##' @seealso \code{\link{segvis_block-class}}
 ##'
-##' @rdname subset_block
-##'
-##' @name subset_block
+##' @rdname subset_block-methods
 ##'
 ##' @examples
 ##' \dontrun{
