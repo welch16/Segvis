@@ -231,7 +231,7 @@ setReplaceMethod("isPET",
 
 # @rdname methods-segvis-show
 # @name show
-setMethods("show",
+setMethod("show",
   signature = signature(object = "segvis"),
   definition = function(object){
 #    cat("---------------------------\n")
