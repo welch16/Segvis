@@ -111,12 +111,11 @@ setReplaceMethod("normConst",
 })                        
 
 ##' @rdname summarize-methods
-##' @name summarize
-##' @aliases summarize,ANY-method
+##' @aliases summarize,ANY,ANY-method
 ##' @docType methods
 ##' @exportMethod summarize
-setMethods("summarize",
-  signature = signature(object = "segvis_block",FUN = "function",... = "ANY"),
+setMethod("summarize",
+  signature = "ANY",
   definition = function(object,FUN,...){
     ## check length of matches
     V1 <- center <- tagCounts <- NULL

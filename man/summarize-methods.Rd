@@ -3,10 +3,13 @@
 \docType{methods}
 \name{summarize}
 \alias{summarize}
+\alias{summarize,ANY,ANY-method}
 \alias{summarize,ANY-method}
 \title{summarize method for segvis_block class}
 \usage{
 summarize(object, FUN, ...)
+
+\S4method{summarize}{ANY}(object, FUN, ...)
 }
 \arguments{
 \item{object}{segvis_block object}
