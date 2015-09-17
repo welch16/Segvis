@@ -184,12 +184,11 @@ setMethod("subset_block",
     return(.filter_sb(object,cond))
 })
 
-##' @rdname addColumn
-##' @name addColumn
+##' @rdname addColumn-methods
 ##' @aliases addColumn,ANY-method
 ##' @docType methods
 ##' @exportMethod addColumn
-setMethods("addColumn",
+setMethod("addColumn",
   signature = signature(object = "segvis_block",name = "character",col = "ANY"),
   definition = function(object,name,col){
     stopifnot(length(col) == length(regions(object)))    

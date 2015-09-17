@@ -4,9 +4,12 @@
 \name{addColumn}
 \alias{addColumn}
 \alias{addColumn,ANY-method}
+\alias{addColumn,segvis_block,character-method}
 \title{addColumn method for segvis_block class}
 \usage{
 addColumn(object, name, col)
+
+\S4method{addColumn}{segvis_block,character}(object, name, col)
 }
 \arguments{
 \item{object}{segvis_block object}
