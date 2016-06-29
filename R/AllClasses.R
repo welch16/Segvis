@@ -55,18 +55,19 @@ setValidity("SegvizData",
 ##' @examples
 ##' dr = system.file("inst","extdata","example",package = "Segvis")
 ##' files = list.files(dr,pattern = "bam",full.names =TRUE)
-##' files = files[grep("bai",files,invert = TRUE)][1:2]
+##' files = files[grep("bai",files,invert = TRUE)][1:3]
 ##'
 ##' reg = list.files(dr,pattern = "narrow",full.names =TRUE)
 ##' reg = readBedFile(reg[1])
-##' A  = SegvizData(regions = reg,files)
+##' segviz = SegvizData(regions = reg,files)
 ##'
 ##' @rdname SegvizData
 ##' @export
 SegvizData <- function(regions,files,is_pet = rep(FALSE,length(files)),
                        frag_len = 1,mc.cores = getOption("mc.cores" , 2L))
 {
-  stopifnot(is.character(files),is.logical(is_pet),is.numeric(frag_len))
+  stopifnot(is.character(files),all(file.exists(files)),
+            is.logical(is_pet),is.numeric(frag_len))
   if(length(is_pet) == 1){
     is_pet = rep(is_pet,length(files))
   }
