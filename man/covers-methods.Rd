@@ -4,7 +4,7 @@
 \name{covers}
 \alias{covers}
 \alias{covers,SegvizData-method}
-\title{covers methods}
+\title{covers method}
 \usage{
 covers(object)
 

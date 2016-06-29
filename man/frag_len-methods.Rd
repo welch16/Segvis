@@ -4,7 +4,7 @@
 \name{frag_len}
 \alias{frag_len}
 \alias{frag_len,SegvizData-method}
-\title{frag_len methods}
+\title{frag_len method}
 \usage{
 frag_len(object)
 

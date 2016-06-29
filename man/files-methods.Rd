@@ -4,7 +4,7 @@
 \name{files}
 \alias{files}
 \alias{files,SegvizData-method}
-\title{files methods}
+\title{files method}
 \usage{
 files(object)
 

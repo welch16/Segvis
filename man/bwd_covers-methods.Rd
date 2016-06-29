@@ -4,7 +4,7 @@
 \name{bwd_covers}
 \alias{bwd_covers}
 \alias{bwd_covers,SegvizData-method}
-\title{bwd_covers methods}
+\title{bwd_covers method}
 \usage{
 bwd_covers(object)
 

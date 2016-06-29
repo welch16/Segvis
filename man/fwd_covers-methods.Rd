@@ -4,7 +4,7 @@
 \name{fwd_covers}
 \alias{fwd_covers}
 \alias{fwd_covers,SegvizData-method}
-\title{fwd_covers methods}
+\title{fwd_covers method}
 \usage{
 fwd_covers(object)
 

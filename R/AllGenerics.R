@@ -1,10 +1,251 @@
+## Generic methods for SegvizData class
+
+##' files method
+##'
+##' files returns a character vectors with the files used in the SegvizData
+##' object.
+##'
+##' @param object A \code{SegvizData} object.
+##' @return A character vector with files used in the \code{SegvizData} object.
+##'
+##' @export
+##' @docType methods
+##'
+##' @seealso \code{\link{SegvizData-class}}
+##'
+##' @rdname files-methods
+##' @examples
+##'
+##' ## load SegvizData object
+##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+##' files(segviz)
+##'
+setGeneric("files",
+      function(object)
+      standardGeneric("files")
+)
+
+##' is_pet method
+##'
+##' is_pet returns a logical vector indicating if the aligned reads are paired
+##' end
+##'
+##' @param object A \code{SegvizData} object.
+##' @return A logical vector indicating if the aligned reads files are paired
+##' ended.
+##'
+##' @export
+##' @docType methods
+##'
+##' @seealso \code{\link{SegvizData-class}}
+##'
+##' @rdname is_pet-methods
+##' @examples
+##'
+##' ## load SegvizData object
+##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+##' is_pet(segviz)
+##'
+setGeneric("is_pet",
+      function(object)
+      standardGeneric("is_pet")
+)
+
+##' frag_len method
+##'
+##' frag_len returns a numeric vector with the fragment length used to extend
+##' the 5' ends of the aligned reads.
+##'
+##' @param object A \code{SegvizData} object.
+##' @return A numeric vector with the fragment length used to extend the 5' ends
+##' of the the aligned reads. If the reads were paired ended, then a value
+##' of \code{1} is assigned.
+##'
+##' @export
+##' @docType methods
+##'
+##' @seealso \code{\link{SegvizData-class}}
+##'
+##' @rdname frag_len-methods
+##' @examples
+##'
+##' ## load SegvizData object
+##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+##' frag_len(segviz)
+##'
+setGeneric("frag_len",
+        function(object)
+        standardGeneric("frag_len")
+)
+
+##' covers method
+##'
+##' covers returns a list with the \code{coverage} of each file in the
+##' \code{SegvizData} object.
+##'
+##' @param object A \code{SegvizData} object.
+##' @return A list of aggregated coverage for all the aligned reads considered.
+##'
+##' @export
+##' @docType methods
+##'
+##' @seealso \code{\link{SegvizData-class}}
+##'
+##' @rdname covers-methods
+##' @examples
+##'
+##' ## load SegvizData object
+##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+##' covers(segviz)
+##'
+setGeneric("covers",
+      function(object)
+      standardGeneric("covers")
+)
+
+##' fwd_covers method
+##'
+##' fwd_covers returns a list with the \code{coverage} of each file in the
+##' \code{SegvizData} object, calculated exclusively with the forward strand
+##' reads.
+##'
+##' @param object A \code{SegvizData} object.
+##' @return A list of the coverages for all the reads aligned to the forward
+##' strand.
+##'
+##' @export
+##' @docType methods
+##'
+##' @seealso \code{\link{SegvizData-class}}
+##'
+##' @rdname fwd_covers-methods
+##' @examples
+##'
+##' ## load SegvizData object
+##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+##' fwd_covers(segviz)
+##'
+setGeneric("fwd_covers",
+      function(object)
+      standardGeneric("fwd_covers")
+)
+
+##' bwd_covers method
+##'
+##' bwd_covers returns a list with the \code{coverage} of each file in the
+##' \code{SegvizData} object, calculated exclusively with the backward strand
+##' reads.
+##'
+##' @param object A \code{SegvizData} object.
+##' @return A list of the coverages for all the reads aligned to the reverse
+##' strand.
+##'
+##' @export
+##' @docType methods
+##'
+##' @seealso \code{\link{SegvizData-class}}
+##'
+##' @rdname bwd_covers-methods
+##' @examples
+##'
+##' ## load SegvizData object
+##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+##' bwd_covers(segviz)
+##'
+setGeneric("bwd_covers",
+        function(object)
+        standardGeneric("bwd_covers")
+)
+
+##' nreads method
+##'
+##' nreads returns a numeric vector with the number of the depth of all the
+##' experiments considered.
+##'
+##' @param object A \code{SegvizData} object.
+##' @return A numeric vector with the depth of each experiment.
+##'
+##' @export
+##' @docType methods
+##'
+##' @seealso \code{\link{SegvizData-class}}
+##'
+##' @rdname nreads-methods
+##' @examples
+##'
+##' ## load SegvizData object
+##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+##' nreads(segviz)
+##'
+setGeneric("nreads",
+      function(object)
+      standardGeneric("nreads")
+)
+
+##' find_summits method
+##'
+##' find_summits returns a numeric vector with the same length of the
+##' \code{GRanges} with the summits according to one of the files.
+##'
+##' @param object A \code{SegvizData} object.
+##' @param which.file A numeric value indicating which file is going to be
+##' used to calculate the summits. By default it takes the first file.
+##' @param mc.cores A numeric value with the number of cores to use,
+##' i.e. at most how many child processes will be run simultaneously.
+##'
+##' @return A numeric vector with the genomic coordinate with the summit in the
+##' \code{GRanges} according to one of the files in object.
+##'
+##' @export
+##' @rdname find_summits-methods
+##' @docType methods
+##'
+##' @seealso \code{\link{SegvizData-class}}
+##' @examples
+##'
+##' ## load SegvizData object
+##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+##' segviz$summit = find_summits(segviz,which.file = 1 ,mc.cores = 2)
+##'
+setGeneric("find_summits",
+      function(object,...)
+      standardGeneric("find_summits"))
+
+##' overlap_matrix method
+##'
+##' overlap_matrix returns a matrix of zeros and ones indicating if the regions
+##' in the \code{GRanges} object overlap a region in the respective bedfile
+##'
+##' @param object A \code{SegvizData} object.
+##' @param bedfiles A character vector with the files in bed fortmat.
+##' @param colnames A character vector with the names of the bed files. The
+##' default value for this is \code{basename(bedfiles)}.
+##'
+##' @return An overlap matrix between the \code{GRanges} and the bedfiles
+##'
+##' @export
+##' @rdname overlap_matrix-methods
+##' @docType methods
+##'
+##' @seealso \code{\link{SegvizData-class}}
+##' @examples
+##'
+##' ## load SegvizData object
+##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+##' bedfiles = list.files(system.file("extdata","example",package = "Segvis"),
+##'   pattern = "narrow",full.names = TRUE)[-1]
+##'   overlap_matrix(segviz,bedfiles,c("dnase1","dnase2"))
+##'
+setGeneric("overlap_matrix",
+      function(object,bedfiles,...)
+      standardGeneric("overlap_matrix"))
 
 # generic methods for various classes
 
 ##' name methods
 ##'
 ##' name returns a string with the name of the segvis object
-##' 
+##'
 ##' @param object A \code{segvis} object
 ##'
 ##' @return A string with the name of the object
@@ -18,7 +259,7 @@
 ##'
 ##' name(segvis)
 ##' name(segvis) <- "my_regions"
-##' 
+##'
 ##' }
 setGeneric("name",
   function(object)
@@ -34,12 +275,12 @@ setGeneric("name",
 setGeneric("name<-",
   function(object,value)
   standardGeneric("name<-")
-)           
+)
 
 ##' regions methods
 ##'
 ##' regions return a GenomicRanges object with the regions used by segvis
-##' 
+##'
 ##' @param object A \code{segvis} object
 ##'
 ##' @return A GenomicRanges object
@@ -53,7 +294,7 @@ setGeneric("name<-",
 ##'
 ##' regions(segvis)
 ##' regions(segvis) <- gr  ## gr is a GenomicRanges object
-##' 
+##'
 ##' }
 setGeneric("regions",
   function(object)
@@ -74,7 +315,7 @@ setGeneric("regions<-",
 ##' file methods
 ##'
 ##' file return the file name used in the segvis object
-##' 
+##'
 ##' @param object A \code{segvis} object
 ##'
 ##' @return A string
@@ -88,17 +329,17 @@ setGeneric("regions<-",
 ##'
 ##' file(segvis)
 ##' file(segvis) <- "path/to/file/myFile.bam"
-##' 
+##'
 ##' }
-setGeneric("file",           
+setGeneric("file",
   function(object)
-  standardGeneric("file")           
+  standardGeneric("file")
 )
 
 
-##' file<- assigns a string with the file name of the reads to be used 
+##' file<- assigns a string with the file name of the reads to be used
 ##'
-##' @param value A character value with the name of bam the file with the reads 
+##' @param value A character value with the name of bam the file with the reads
 ##'
 ##' @return A segvis object
 ##' @rdname file-methods
@@ -110,7 +351,7 @@ setGeneric("file<-",
 ##' maxBandwidth methods
 ##'
 ##' maxBandwidth returns a numeric value representing the possible bandwidths upper bound to smooth the coverage profiles.
-##' 
+##'
 ##' @param object A \code{segvis} object
 ##'
 ##' @return A integer value
@@ -124,11 +365,11 @@ setGeneric("file<-",
 ##'
 ##' maxBandwidth(segvis)
 ##' maxBandwidth(segvis) <- 201
-##' 
+##'
 ##' }
 setGeneric("maxBandwidth",
   function(object)
-  standardGeneric("maxBandwidth")           
+  standardGeneric("maxBandwidth")
 )
 
 
@@ -141,12 +382,12 @@ setGeneric("maxBandwidth",
 setGeneric("maxBandwidth<-",
   function(object,value)
   standardGeneric("maxBandwidth<-")
-)           
+)
 
 ##' fragLen methods
 ##'
 ##' fragLen returns a numeric value representing the fragment length used to extend the fragment reads in the Single Ended case (i.e. isPET = FALSE)
-##' 
+##'
 ##' @param object A \code{segvis} object
 ##'
 ##' @return A integer value
@@ -160,11 +401,11 @@ setGeneric("maxBandwidth<-",
 ##'
 ##' fragLen(segvis)
 ##' fragLen(segvis) <- 200
-##' 
+##'
 ##' }
 setGeneric("fragLen",
   function(object)
-  standardGeneric("fragLen")           
+  standardGeneric("fragLen")
 )
 
 ##' fragLen<- assigns an integer value representing the bp to extend the fragments in SET case
@@ -176,7 +417,7 @@ setGeneric("fragLen",
 setGeneric("fragLen<-",
   function(object,value)
   standardGeneric("fragLen<-")
-)           
+)
 
 ##' chr methods
 ##'
@@ -195,7 +436,7 @@ setGeneric("fragLen<-",
 ##'
 ##' chr(segvis)
 ##' chr(segvis) <- c("chr1","chr2",...,"chrX","chrY") ## this is not correct actually
-##' 
+##'
 ##' }
 setGeneric("chr",
   function(object)
@@ -211,7 +452,7 @@ setGeneric("chr",
 ##' @rdname chr-methods
 setGeneric("chr<-",
   function(object,value)
-  standardGeneric("chr<-")           
+  standardGeneric("chr<-")
 )
 
 
@@ -232,13 +473,13 @@ setGeneric("chr<-",
 ##'
 ##' isPET(segvis)
 ##' isPET(segvis) <- TRUE
-##' 
+##'
 ##' }
 setGeneric("isPET",
   function(object)
-  standardGeneric("isPET")           
+  standardGeneric("isPET")
 )
-           
+
 ##' isPET<- assigns a logical flag to the segvis object
 ##'
 ##' @param value A logical flag that represents wheter the reads to use are Paired Ended or not
@@ -247,8 +488,8 @@ setGeneric("isPET",
 ##' @rdname isPET-methods
 setGeneric("isPET<-",
   function(object,value)
-  standardGeneric("isPET<-")           
-)           
+  standardGeneric("isPET<-")
+)
 
 
 
@@ -278,8 +519,8 @@ setGeneric("isPET<-",
 setGeneric("profiles",
   function(object)
   standardGeneric("profiles")
-)  
-    
+)
+
 ##' loadReads method for segvis class
 ##'
 ##' Load the fragment stored in the file slot of the segvis object. The reads are divided by chromosome and by strand.
@@ -305,7 +546,7 @@ setGeneric("profiles",
 setGeneric("loadReads",
   function(object,mc)
   standardGeneric("loadReads")
-)           
+)
 
 ##' matchReads methods for segvis class
 ##'
@@ -316,7 +557,7 @@ setGeneric("loadReads",
 ##' @param mc numeric, the number of cores used with parallel
 ##'
 ##' @return segvis object
-##' 
+##'
 ##' @export
 ##' @docType methods
 ##'
@@ -333,7 +574,7 @@ setGeneric("loadReads",
 setGeneric("matchReads",
   function(object,mc)
   standardGeneric("matchReads")
-)           
+)
 
 
 ##' getCoverage method for profile class
@@ -341,7 +582,7 @@ setGeneric("matchReads",
 ##' Calculate  the coverage using the reads matched by the matchReads method. It returns a Rle object for each region.
 ##'
 ##' @param object segvis object
-##' 
+##'
 ##' @param mc numeric, the number of cores used with parallel
 ##'
 ##' @return segvis object
@@ -351,18 +592,18 @@ setGeneric("matchReads",
 ##' @docType methods
 ##'
 ##' @seealso \code{\link{loadReads}}, \code{\link{matchReads}} and \code{\link{findSummit}}
-##' 
+##'
 ##' @rdname getCoverage-methods
 ##'
 ##' @examples
 ##' \dontrun{
-##' 
+##'
 ##' getCoverage(segvis_object,mc=8)
 ##'
 ##' }
 setGeneric("getCoverage",
   function(object,mc)
-  standardGeneric("getCoverage")           
+  standardGeneric("getCoverage")
 )
 
 
@@ -390,7 +631,7 @@ setGeneric("getCoverage",
 ##' \dontrun{
 ##'
 ##' joinProfiles(segvis_object,bw = 151,mc=4)
-##' 
+##'
 ##' }
 setGeneric("joinProfiles",
   function(object,bw,mc)
@@ -398,17 +639,17 @@ setGeneric("joinProfiles",
 )
 
 ##' findSummit method for segvis class
-##' 
+##'
 ##' This method finds the summit of each region whenever is possible, otherwise returns NA. The regions of the segvis object don't need to have the same width
-##' 
+##'
 ##' @param object segvis object
-##' 
+##'
 ##' @param bw, the bandwidth used to smooth the profiles, must be and odd number less or equal than the maxBandwidth
-##' 
+##'
 ##' @param mc, the number of cores used with parallel
 ##'
 ##' @return Numeric vector with the estimated summits
-##' 
+##'
 ##' @export
 ##'
 ##' @docType methods
@@ -418,9 +659,9 @@ setGeneric("joinProfiles",
 ##'
 ##' @examples
 ##' \dontrun{
-##' 
+##'
 ##' summits <- findSummit(profile_object,bw = 151,mc=8)
-##' 
+##'
 ##' }
 setGeneric("findSummit",
   function(object,bw,mc)
@@ -457,7 +698,7 @@ setGeneric("findSummit",
 setGeneric("Segvis_block",
   function(object,bw,mc)
   standardGeneric("Segvis_block")
-)           
+)
 
 ##' readsF methods
 ##'
@@ -480,7 +721,7 @@ setGeneric("Segvis_block",
 setGeneric("readsF",
   function(object)
   standardGeneric("readsF")
-)           
+)
 
 ##' readsF<- assisgn a list of forward reads to a reads or to a segvis object
 ##'
@@ -491,7 +732,7 @@ setGeneric("readsF",
 setGeneric("readsF<-",
   function(object,value)
   standardGeneric("readsF<-")
-)           
+)
 
 
 ##' readsR methods
@@ -514,7 +755,7 @@ setGeneric("readsF<-",
 ##' }
 setGeneric("readsR",
   function(object)
-  standardGeneric("readsR")           
+  standardGeneric("readsR")
 )
 
 ##' readsR<- assisgn a list of backward reads to a reads or to a segvis object
@@ -526,7 +767,7 @@ setGeneric("readsR",
 setGeneric("readsR<-",
   function(object,value)
   standardGeneric("readsR<-")
-)           
+)
 
 # Generic methods for segvis_block class
 # Get methods
@@ -549,8 +790,8 @@ setGeneric("readsR<-",
 ##'
 setGeneric("cover_table",
   function(object)
-  standardGeneric("cover_table")           
-)        
+  standardGeneric("cover_table")
+)
 
 ##' cover_table<- assigns a new coverage table to a segvis_block object
 ##'
@@ -597,8 +838,8 @@ setGeneric("cover_table<-",
 ##' }
 setGeneric("bandwidth",
   function(object)
-  standardGeneric("bandwidth")           
-)           
+  standardGeneric("bandwidth")
+)
 
 
 ##' bandwidth<- assigns a new smoothing bandwidth to a segvis_block object
@@ -618,7 +859,7 @@ setGeneric("bandwidth",
 setGeneric("bandwidth<-",
   function(object,value)
   standardGeneric("bandwidth<-")
-)           
+)
 
 ##' normConst methods for segvis_block class
 ##'
@@ -646,8 +887,8 @@ setGeneric("bandwidth<-",
 ##' }
 setGeneric("normConst",
   function(object)
-  standardGeneric("normConst")           
-)           
+  standardGeneric("normConst")
+)
 
 
 ##' normConst<- assigns a new normalizing constant to a segvis_block object
@@ -667,7 +908,7 @@ setGeneric("normConst",
 setGeneric("normConst<-",
   function(object,value)
   standardGeneric("normConst<-")
-)           
+)
 
 ##' countReads method for segvis class
 ##'
@@ -694,7 +935,7 @@ setGeneric("normConst<-",
 setGeneric("countReads",
   function(object)
   standardGeneric("countReads")
-)           
+)
 
 ##' summarize method for segvis_block class
 ##'
@@ -736,7 +977,7 @@ setGeneric("summarize",
 ##' @param object segvis_block object
 ##'
 ##' @param base Numeric value, indicating to which scale the profiles are gonna be scaled
-##' 
+##'
 ##' @export
 ##'
 ##' @docType methods
@@ -755,7 +996,7 @@ setGeneric("summarize",
 setGeneric("normalize",
   function(object,base)
   standardGeneric("normalize")
-)           
+)
 
 ##' subset_block method for segvis_block class
 ##'
@@ -813,5 +1054,5 @@ setGeneric("subset_block",
 ##' }
 setGeneric("addColumn",
   function(object,name,col)
-  standardGeneric("addColumn"))           
+  standardGeneric("addColumn"))
 

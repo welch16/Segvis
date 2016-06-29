@@ -56,3 +56,43 @@ setMethod("nreads",
       signature = signature(object = "SegvizData"),
       definition = function(object)object@nreads)
 
+##' @rdname find_summits-methods
+##' @aliases find_summits
+##' @docType methods
+##' @exportMethod find_summits
+setMethod("find_summits",
+      signature = signature(object = "SegvizData"),
+      definition = function(object,which.file = 1,
+          mc.cores = getOption("mc.cores",2L)){
+        stopifnot(is.numeric(which.file),which.file >= 1,
+                  which.file <= length(files(object)))
+        cover = covers(object)[[which.file]]
+        subs = cover[object]
+        sm = mclapply(subs, .rle_summit,mc.cores = mc.cores)
+        names(sm) = NULL
+        start(object) + do.call(c,sm)
+      })
+
+##' @rdname overlap_matrix-methods
+##' @aliases overlap_matrix
+##' @docType methods
+##' @exportMethod overlap_matrix
+setMethod("overlap_matrix",
+      signature = signature(object = "SegvizData",bedfiles = "character"),
+      definition = function(object,bedfiles,
+                            colnames = basename(bedfiles)){
+        stopifnot(is.character(bedfiles),all(file.exists(bedfiles)))
+
+        regions = lapply(bedfiles,readBedFile)
+        overlaps = lapply(regions,function(x)overlapsAny(object,x))
+
+        mat = DataFrame(ifelse(do.call(cbind,overlaps),1,0))
+        colnames(mat) = colnames
+
+        mat
+
+      })
+
+
+
+

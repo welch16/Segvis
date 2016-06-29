@@ -4,7 +4,7 @@
 \name{is_pet}
 \alias{is_pet}
 \alias{is_pet,SegvizData-method}
-\title{is_pet methods}
+\title{is_pet method}
 \usage{
 is_pet(object)
 

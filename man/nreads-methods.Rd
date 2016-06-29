@@ -4,7 +4,7 @@
 \name{nreads}
 \alias{nreads}
 \alias{nreads,SegvizData-method}
-\title{nreads methods}
+\title{nreads method}
 \usage{
 nreads(object)
 
