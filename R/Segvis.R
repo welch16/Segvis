@@ -1,23 +1,15 @@
 
-##' A package for visualization of high throughout sequencing data along genomic segments
+##' A package for visualization of high throughput sequencing data along
+##' genomic segments
 ##'
-##' Segvis is an R package which can automatize tasks related to the
-##' visualization of aligned read data. 
+##' Segvis is an R package that automatizes visualization tasks for high
+##' throughput sequencing data. It allows the user to plot several marks
+##' accross specific genomic regions and functional profiles around specific
+##' coordinates.
 ##'
 ##' Segvis provides different tools to summarize and visualize data:
 ##'
-##' \itemize{
-##'  \item Extract read data of specified input regions
-##'
-##' \item Plot peaks of different conditions across the same set of regions
-##'
-##' \item Plot coordinate-wise statistics for a set of same width regions
-##'
-##' \item Subset regions according to used defined annotations and conditions
-##'
-##' }
-##'
 ##' @docType package
-##' @name Segvis
 ##' @rdname Segvis
+##' @name Segvis
 NULL
