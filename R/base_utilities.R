@@ -24,6 +24,62 @@ NULL
   return(cover)
 }
 
+.countReads <- function(file,is_pet)
+{
+  if(is_pet){
+    pet_flag = scanBamFlag(isPaired = TRUE,isMinusStrand = (st == "-"))
+    par = ScanBamParam(flag = pet_flag)
+  }else{
+    par = ScanBamParam()
+  }
+  nr = countBam(file,param = par)$records
+  if(is_pet){
+    nr = nr/2
+  }
+  return(nr)
+}
+
+.dt2gr <- function(x){
+  if(any(!names(x)[1:3] %in% c("seqnames","start","end"))){
+    x = x[,1:3,with = FALSE]
+    setnames(x,names(x),c("seqnames","start","end"))
+  }
+  x[,GRanges(seqnames = seqnames,
+             ranges = IRanges(
+               start = start,
+               end = end ))]
+}
+
+##' readBedFile
+##'
+##' Reads an increased bed file and adds the output into a \code{GRanges}
+##' object.
+##'
+##' @param file a character with the increased bed file location.
+##'
+##' @export
+##'
+##' @return A \code{GRanges} object.
+##'
+##' @rdname readBedFile
+##' @name readBedFile
+##'
+##' @references \url{https://genome.ucsc.edu/FAQ/FAQformat.html#format1}
+##'
+##' @examples
+##'
+##' reg = list.files(dr,pattern = "narrow",full.names =TRUE)
+##' readBedFile(reg[1])
+##'
+##'
+readBedFile <- function(file)
+{
+  dt = fread(file)
+  gr = .dt2gr(dt)
+  return(gr)
+}
+
+
 .data.table.GRanges <- function(x)
 {
   dt <- data.table(seqnames = as.character( seqnames(x)),

@@ -11,7 +11,8 @@ setClass("SegvizData",
            frag_len = "numeric",
            covers = "list",
            fwd_covers = "list",
-           bwd_covers = "list"
+           bwd_covers = "list",
+           nreads = "numeric"
            ),
          prototype = prototype(
            files = "",
@@ -19,7 +20,8 @@ setClass("SegvizData",
            frag_len = 1L,
            covers = list(),
            fwd_covers = list(),
-           bwd_covers = list()
+           bwd_covers = list(),
+           nreads = 0L
            ))
 
 setValidity("SegvizData",
@@ -51,7 +53,14 @@ setValidity("SegvizData",
 ##' @docType class
 ##'
 ##' @examples
-##' a = 1
+##' dr = system.file("inst","extdata","example",package = "Segvis")
+##' files = list.files(dr,pattern = "bam",full.names =TRUE)
+##' files = files[grep("bai",files,invert = TRUE)][1:2]
+##'
+##' reg = list.files(dr,pattern = "narrow",full.names =TRUE)
+##' reg = readBedFile(reg[1])
+##' A  = SegvizData(regions = reg,files)
+##'
 ##' @rdname SegvizData
 ##' @export
 SegvizData <- function(regions,files,is_pet = rep(FALSE,length(files)),
@@ -82,18 +91,23 @@ SegvizData <- function(regions,files,is_pet = rep(FALSE,length(files)),
                         SIMPLIFY = FALSE)
   covers = mapply("+",fwd_covers,bwd_covers,
                   SIMPLIFY = FALSE)
+  nreads = mcmapply(.countReads,files,is_pet,
+                    mc.cores = mc.cores,
+                    SIMPLIFY = TRUE)
+  names(fwd_covers) = NULL
+  names(bwd_covers) = NULL
+  names(covers) = NULL
+  names(nreads) = NULL
   new("SegvizData",regions,
       files = files,
       is_pet = is_pet,
       frag_len = frag_len,
       covers = covers,
       fwd_covers = fwd_covers,
-      bwd_covers = bwd_covers
+      bwd_covers = bwd_covers,
+      nreads = nreads
   )
 }
-
-
-
 
 
 

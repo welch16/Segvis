@@ -34,6 +34,13 @@ high-thoughput sequencing experiments across a set of user - defined
 genomic regions.
 }
 \examples{
-a = 1
+dr = system.file("inst","extdata","example",package = "Segvis")
+files = list.files(dr,pattern = "bam",full.names =TRUE)
+files = files[grep("bai",files,invert = TRUE)][1:2]
+
+reg = list.files(dr,pattern = "narrow",full.names =TRUE)
+reg = readBedFile(reg[1])
+A  = SegvizData(regions = reg,files)
+
 }
 
