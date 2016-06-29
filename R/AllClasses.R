@@ -1,6 +1,102 @@
 ##' @importFrom methods setClass setGeneric setMethod setRefClass
 NULL
 
+##' @rdname SegvizData
+##' @export
+setClass("SegvizData",
+         contains = "GRanges",
+         representation = representation(
+           files = "character",
+           is_pet = "logical",
+           frag_len = "numeric",
+           covers = "list",
+           fwd_covers = "list",
+           bwd_covers = "list"
+           ),
+         prototype = prototype(
+           files = "",
+           is_pet = FALSE,
+           frag_len = 1L,
+           covers = list(),
+           fwd_covers = list(),
+           bwd_covers = list()
+           ))
+
+setValidity("SegvizData",
+            function(object){
+              return(length(object@files) >= 1 &
+                       all(object@frag_len >= 1))
+            })
+
+##' SegvizData object and constructors
+##'
+##' \code{SegvizData} is a subclass of \code{GenomicRanges}, used to visualize
+##' high-thoughput sequencing experiments across a set of user - defined
+##' genomic regions.
+##'
+##' @param regions a \code{GRanges} object with the regions to be considered.
+##' @param files a character vector with the location of the bam files that
+##' contain the aligned reads.
+##' @param is_pet a logical vector with the same length as files indicating if
+##' the aligned reads in the respective bam file are paired.
+##' @param frag_len a numeric vector representing the average fragment length
+##' to which the aligned reads in their respective bam file are going to be
+##' extended. For PE reads, this parameter is not considered.
+##' @param mc.cores A numeric value with the number of cores to use,
+##' i.e. at most how many child processes will be run simultaneously.
+##'
+##' @return A SegvizData object.
+##' @aliases SegvizData SegvizData-class
+##'
+##' @docType class
+##'
+##' @examples
+##' a = 1
+##' @rdname SegvizData
+##' @export
+SegvizData <- function(regions,files,is_pet = rep(FALSE,length(files)),
+                       frag_len = 1,mc.cores = getOption("mc.cores" , 2L))
+{
+  stopifnot(is.character(files),is.logical(is_pet),is.numeric(frag_len))
+  if(length(is_pet) == 1){
+    is_pet = rep(is_pet,length(files))
+  }
+  if(length(frag_len) == 1){
+    frag_len = rep(frag_len,length(files))
+  }
+  stopifnot(length(files) == length(is_pet) ,
+            length(files) == length(frag_len))
+  fwd_covers = mcmapply(.readFileCover,
+                        files,
+                        is_pet,
+                        frag_len,
+                        MoreArgs = list(st = "+"),
+                        mc.cores = mc.cores,
+                        SIMPLIFY = FALSE)
+  bwd_covers = mcmapply(.readFileCover,
+                        files,
+                        is_pet,
+                        frag_len,
+                        MoreArgs = list(st = "-"),
+                        mc.cores = mc.cores,
+                        SIMPLIFY = FALSE)
+  covers = mapply("+",fwd_covers,bwd_covers,
+                  SIMPLIFY = FALSE)
+  new("SegvizData",regions,
+      files = files,
+      is_pet = is_pet,
+      frag_len = frag_len,
+      covers = covers,
+      fwd_covers = fwd_covers,
+      bwd_covers = bwd_covers
+  )
+}
+
+
+
+
+
+
 ##' reads class description
 ##'
 ##' Contains the reads obtained in a ChIP - seq experiment separated by strand and then by chromosome. It has one component for each strand which are object of the data.table class with a match column to identify the regions
@@ -19,7 +115,7 @@ setClass("reads",
 setValidity("reads",
   function(object){
     return(length(object@readsF) == length(object@readsR))
-})            
+})
 
 ##' Segvis class description
 ##'
@@ -27,7 +123,7 @@ setValidity("reads",
 ##'
 ##' @slot name Character with the name of the profiles
 ##' @slot regions GRanges object with the regions for which the profile want to be calcualted
-##' @slot file Character with the name of the file that contains the reads
+#' @slot file Character with the name of the file that contains the reads
 ##' @slot maxBandwidth Numeric value with the maximum bandwidth accepted when smoothing profiles. Must be odd
 ##' @slot fragLen Numeric value with the fragment length to resize the reads (if it is zero then it doesn't resize the reads)
 ##' @slot chr character vector, with the chromosomes to be considered
@@ -49,7 +145,7 @@ setClass("segvis",
                  maxBandwidth = "numeric",
                  fragLen = "numeric",
                  chr = "character",
-                 isPET = "logical",                 
+                 isPET = "logical",
                  reads = "reads",
                  profiles = "list",
                  .haveRegions = "logical",
@@ -75,7 +171,7 @@ setClass("segvis",
 setValidity("segvis",
   function(object){
   return(object@fragLen >=0 & object@maxBandwidth >=1)
-})  
+})
 
 ##' segvis_block class description
 ##'
@@ -113,9 +209,9 @@ setClass("segvis_block",
 ##' @exportClass segvis_block_list
 ##' @name segvis_block_list-class
 ##' @rdname segvis_block_list-class
-setClass("segvis_block_list",         
+setClass("segvis_block_list",
   prototype = prototype(elementType = "segvis_block"),
   contains = "list"
-)      
+)
 
 
