@@ -11,10 +11,11 @@ covers(object)
 \S4method{covers}{SegvizData}(object)
 }
 \arguments{
-\item{object}{A \code{SegvizData} object.}
+\item{object}{a \code{SegvizData} object.}
 }
 \value{
-A list of aggregated coverage for all the aligned reads considered.
+The \code{covers} method returns a list of aggregated coverage for
+all the aligned reads files considered.
 }
 \description{
 covers returns a list with the \code{coverage} of each file in the

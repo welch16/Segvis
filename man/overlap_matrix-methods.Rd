@@ -12,15 +12,17 @@ overlap_matrix(object, bedfiles, ...)
   colnames = basename(bedfiles))
 }
 \arguments{
-\item{object}{A \code{SegvizData} object.}
+\item{object}{a \code{SegvizData} object.}
 
-\item{bedfiles}{A character vector with the files in bed fortmat.}
+\item{bedfiles}{a character vector with the files in bed fortmat.}
 
-\item{colnames}{A character vector with the names of the bed files. The
+\item{colnames}{a character vector with the names of the bed files. The
 default value for this is \code{basename(bedfiles)}.}
 }
 \value{
-An overlap matrix between the \code{GRanges} and the bedfiles
+The \code{overlap_matrix} method returns an overlap matrix where each
+entry indicates if the row-region overlaps any of the intervals in the
+bedfiles.
 }
 \description{
 overlap_matrix returns a matrix of zeros and ones indicating if the regions

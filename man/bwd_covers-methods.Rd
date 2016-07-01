@@ -11,11 +11,12 @@ bwd_covers(object)
 \S4method{bwd_covers}{SegvizData}(object)
 }
 \arguments{
-\item{object}{A \code{SegvizData} object.}
+\item{object}{a \code{SegvizData} object.}
 }
 \value{
-A list of the coverages for all the reads aligned to the reverse
-strand.
+The \code{bwd_covers} method returns a list of aggregated coverage
+for all the aligned reads files considered, by using the reads in the reverse
+strand exclusively.
 }
 \description{
 bwd_covers returns a list with the \code{coverage} of each file in the

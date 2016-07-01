@@ -11,12 +11,13 @@ frag_len(object)
 \S4method{frag_len}{SegvizData}(object)
 }
 \arguments{
-\item{object}{A \code{SegvizData} object.}
+\item{object}{a \code{SegvizData} object.}
 }
 \value{
-A numeric vector with the fragment length used to extend the 5' ends
-of the the aligned reads. If the reads were paired ended, then a value
-of \code{1} is assigned.
+The \code{frag_len} method returns a numeric vector with the fragment
+length used to extend the 5' ends of the the aligned reads. If the reads
+were paired ended, then a value of \code{NA} is assigned, but the parameter is
+not used.
 }
 \description{
 frag_len returns a numeric vector with the fragment length used to extend

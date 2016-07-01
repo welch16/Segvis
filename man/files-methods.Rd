@@ -11,10 +11,11 @@ files(object)
 \S4method{files}{SegvizData}(object)
 }
 \arguments{
-\item{object}{A \code{SegvizData} object.}
+\item{object}{a \code{SegvizData} object.}
 }
 \value{
-A character vector with files used in the \code{SegvizData} object.
+The \code{files} method returns a character vector with the files
+used in the \code{SegvizData} object.
 }
 \description{
 files returns a character vectors with the files used in the SegvizData

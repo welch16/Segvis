@@ -12,17 +12,18 @@ find_summits(object, ...)
   mc.cores = getOption("mc.cores", 2L))
 }
 \arguments{
-\item{object}{A \code{SegvizData} object.}
+\item{object}{a \code{SegvizData} object.}
 
-\item{which.file}{A numeric value indicating which file is going to be
+\item{which.file}{a numeric value indicating which file is going to be
 used to calculate the summits. By default it takes the first file.}
 
-\item{mc.cores}{A numeric value with the number of cores to use,
+\item{mc.cores}{a numeric value with the number of cores to use,
 i.e. at most how many child processes will be run simultaneously.}
 }
 \value{
-A numeric vector with the genomic coordinate with the summit in the
-\code{GRanges} according to one of the files in object.
+The \code{find_summits} method returns a numeric vector with the
+genomic coordinate with the summit in the \code{GRanges} according to one
+of the files in object.
 }
 \description{
 find_summits returns a numeric vector with the same length of the

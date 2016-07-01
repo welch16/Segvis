@@ -11,10 +11,11 @@ nreads(object)
 \S4method{nreads}{SegvizData}(object)
 }
 \arguments{
-\item{object}{A \code{SegvizData} object.}
+\item{object}{a \code{SegvizData} object.}
 }
 \value{
-A numeric vector with the depth of each experiment.
+The \code{nreads} method returns a numeric vector with the depth
+of each experiment.
 }
 \description{
 nreads returns a numeric vector with the number of the depth of all the

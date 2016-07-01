@@ -26,7 +26,9 @@ extended. For PE reads, this parameter is not considered.}
 i.e. at most how many child processes will be run simultaneously.}
 }
 \value{
-A SegvizData object.
+\code{SegvizData} returns a \code{SegvizData} object which contains
+the forward, backward and aggregated coverage for every aligned read file in
+\code{files}.
 }
 \description{
 \code{SegvizData} is a subclass of \code{GenomicRanges}, used to visualize

@@ -11,11 +11,11 @@ is_pet(object)
 \S4method{is_pet}{SegvizData}(object)
 }
 \arguments{
-\item{object}{A \code{SegvizData} object.}
+\item{object}{a \code{SegvizData} object.}
 }
 \value{
-A logical vector indicating if the aligned reads files are paired
-ended.
+The \code{is_pet} method returns a logical vector indicating which
+aligned reads files are paired ended.
 }
 \description{
 is_pet returns a logical vector indicating if the aligned reads are paired
