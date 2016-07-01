@@ -90,8 +90,114 @@ setMethod("overlap_matrix",
         colnames(mat) = colnames
 
         mat
+      })
+
+##' @rdname DT_region-methods
+##' @aliases DT_region
+##' @docType methods
+##' @exportMethod as.data.table
+setMethod("DT_region",
+          signature = signature(object = "SegvizData",peak_id = "numeric"),
+          definition = function(object,peak_id,
+                                nameFiles = basename(files(object)),
+                                strands = "aggr",normalize = TRUE,
+                                base = 1e6){
+            if(is.numeric(peak_id) & !is.integer(peak_id)){
+              peak_id = as.integer(peak_id)
+            }
+
+            stopifnot(is.character(strands),
+                      tolower(strands) %in% c("aggr","fwd","bwd","both","all"))
+            stopifnot(is.integer(peak_id),
+                      is.logical(normalize))
+            stopifnot(1 <= peak_id , peak_id <= length(object))
+
+            if(is.numeric(nameFiles))nameFiles = as.character(nameFiles)
+
+            reg = object[peak_id]
+
+            aggr_dt = NULL
+            fwd_dt = NULL
+            bwd_dt = NULL
+
+            if(tolower(strands) %in% c("aggr","all")){
+              aggr_dt = mapply(.dt_cover,covers(object),
+                               nreads(object),nameFiles,
+                               MoreArgs = list(region = reg,
+                                               st = "aggr",
+                                               normalize = normalize,
+                                               base = base),
+                               SIMPLIFY = FALSE)
+            }
+
+            if(tolower(strands) %in% c("fwd","both","all")){
+              fwd_dt = mapply(.dt_cover,covers(object),
+                              nreads(object),nameFiles,
+                              MoreArgs = list(region = reg,
+                                              st = "fwd",
+                                              normalize = normalize,
+                                              base = base),
+                              SIMPLIFY = FALSE)
+            }
+            if(tolower(strands) %in% c("bwd","both","all")){
+              bwd_dt = mapply(.dt_cover,covers(object),
+                              nreads(object),nameFiles,
+                              MoreArgs = list(region = reg,
+                                              st = "bwd",
+                                              normalize = normalize,
+                                              base = base),
+                              SIMPLIFY = FALSE)
+            }
+
+            DT = rbindlist(c(fwd_dt,bwd_dt,aggr_dt))
+            DT
+          })
+
+
+
+##' @rdname plot_region-methods
+##' @aliases plot_region
+##' @docType methods
+##' @exportMethod plot_region
+setMethod("plot_region",
+      signature = signature(object = "SegvizData",peak_id = "numeric"),
+      definition = function(object,peak_id,
+                            nameFiles = basename(files(object)),
+                            strands = "aggr",normalize = TRUE,
+                            base = 1e6){
+        DT = DT_region(object,peak_id,nameFiles = nameFiles,
+                      strands = strands,normalize = normalize,
+                      base = base)
+        pal = c("black",brewer.pal(9,"Set1"))
+        browser()
+
+        if(tolower(strands ) %in% c("aggr","fwd","bwd")){
+          out = ggplot(DT,aes_string(x="coord",y= "tags",
+                                     linetype = "name"))+
+            geom_line()+xlab("Genomic Coordinates")+
+            ylab(ifelse(normalize,"Normalized Signal","Counts"))
+        }else if(tolower(strands) == "both"){
+          pal = pal[-1]
+          out = ggplot(DT,aes_string(x="coord",y= "tags",
+                                     linetype = "name",
+                                     colour = type))+
+            geom_line()+xlab("Genomic Coordinates")+
+            ylab(ifelse(normalize,"Normalized Signal","Counts"))
+        }else{
+          out = ggplot(DT,aes_string(x="coord",y= "tags",
+                                     linetype = "name",
+                                     colour = type))+
+            geom_line()+xlab("Genomic Coordinates")+
+            ylab(ifelse(normalize,"Normalized Signal","Counts"))
+        }
+        out
 
       })
+
+
+
+
+
 
 
 

@@ -27,7 +27,7 @@ setClass("SegvizData",
 setValidity("SegvizData",
             function(object){
               return(length(object@files) >= 1 &
-                       all(object@frag_len >= 1))
+                       all(object@frag_len >= 0))
             })
 
 ##' SegvizData object and constructors
@@ -47,7 +47,9 @@ setValidity("SegvizData",
 ##' @param mc.cores A numeric value with the number of cores to use,
 ##' i.e. at most how many child processes will be run simultaneously.
 ##'
-##' @return A SegvizData object.
+##' @return  \code{SegvizData} returns a \code{SegvizData} object which contains
+##' the forward, backward and aggregated coverage for every aligned read file in
+##' \code{files}.
 ##' @aliases SegvizData SegvizData-class
 ##'
 ##' @docType class
@@ -99,6 +101,7 @@ SegvizData <- function(regions,files,is_pet = rep(FALSE,length(files)),
   names(bwd_covers) = NULL
   names(covers) = NULL
   names(nreads) = NULL
+  frag_len[is_pet] = 0
   new("SegvizData",regions,
       files = files,
       is_pet = is_pet,

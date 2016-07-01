@@ -27,16 +27,28 @@ NULL
 .countReads <- function(file,is_pet)
 {
   if(is_pet){
-    pet_flag = scanBamFlag(isPaired = TRUE,isMinusStrand = (st == "-"))
+    pet_flag = scanBamFlag(isPaired = TRUE)
     par = ScanBamParam(flag = pet_flag)
   }else{
     par = ScanBamParam()
   }
   nr = countBam(file,param = par)$records
-  if(is_pet){
-    nr = nr/2
-  }
+#   if(is_pet){
+#     nr = nr/2
+#   }
   return(nr)
+}
+
+.dt_cover <- function(cover,nread,name,base = 1,region,st,normalize){
+  chr = as.character(seqnames(region))
+  cover = cover[region]
+  coord = seq(start(region),end(region),by = 1)
+  counts = as(cover,"data.frame")$value
+  if(normalize){
+    counts = counts * base / nread
+  }
+  dt = data.table(coord ,tags = counts ,name, type = st)
+  return(dt)
 }
 
 .dt2gr <- function(x){
@@ -51,6 +63,15 @@ NULL
 }
 
 .rle_summit <- function(x)which.max(as.vector(x))
+
+.subset_region_cover <- function(cover,reg)cover[reg]
+
+.plot_dt <- function(covers,nms,norm = NULL,reg)
+{
+  browser()
+
+}
+
 
 ##' readBedFile
 ##'
