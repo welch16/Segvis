@@ -9,7 +9,7 @@
 DT_region(object, peak_id, ...)
 
 \S4method{DT_region}{SegvizData,numeric}(object, peak_id,
-  nameFiles = basename(files(object)), strands = "aggr", normalize = TRUE,
+  nameFiles = basename(files(object)), type = "aggr", normalize = TRUE,
   base = 1e+06)
 }
 \arguments{
@@ -20,7 +20,7 @@ DT_region(object, peak_id, ...)
 \item{nameFiles}{a character vector with the shortened names that are going
 to be used in the plot.}
 
-\item{strands}{a character value indicating which strand to use. By default
+\item{type}{a character value indicating which strand to use. By default
 uses the aggregate coverage between both strands.}
 
 \item{normalize}{a logical value indicating if the profiles are normalized

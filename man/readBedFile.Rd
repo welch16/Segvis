@@ -18,6 +18,7 @@ object.
 }
 \examples{
 
+dr = system.file("extdata","example",package = "Segvis",mustWork = TRUE)
 reg = list.files(dr,pattern = "narrow",full.names =TRUE)
 readBedFile(reg[1])
 

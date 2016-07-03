@@ -259,7 +259,7 @@ setGeneric("overlap_matrix",
 ##' @param peak_id a numeric value indicating which region to plot.
 ##' @param nameFiles a character vector with the shortened names that are going
 ##' to be used in the plot.
-##' @param strands a character value indicating which strand to use. By default
+##' @param type a character value indicating which strand to use. By default
 ##' uses the aggregate coverage between both strands.
 ##' @param normalize a logical value indicating if the profiles are normalized
 ##' respect to its number of reads.
@@ -280,6 +280,76 @@ setGeneric("DT_region",
              standardGeneric("DT_region"))
 
 
+# definition = function(object,FUN = mean,
+#                       nameFiles = basename(files(object)),
+#                       type = "aggr",
+#                       base = 1e6,
+#                       mc.cores = getOption("mc.cores",2L)){
+
+##' DT_profile method
+##'
+##' DT_profile return a \code{data.table} object with the summarized functional
+##' profiles (summarized by using the argument \code{FUN}). For each coverage,
+##' file and distance from the anchor coordinate it applies FUN to the tags
+##' vector for all regions.
+##'
+##' @param object a \code{SegvizData} object.
+##' @param FUN a function to summarize the profiles by coordinate. The default
+##' value is the \code{mean}.
+##' @param nameFiles a character vector with the shortened names that are going
+##' to be used in the plot.
+##' @param type a character value indicating which strand to use. By default
+##' uses the aggregate coverage between both strands.
+##' @param base a numeric value indicating the number of aligned reads to which
+##' the signal is going to be normalized. The default value is \code{1e6}.
+##' \code{DT_profile} always normalizes the signal.
+##' @param mc.cores a numeric value indicating the number of multi-cores to be
+##' used.
+##'
+##' @return The \code{DT_profile} method returns a \code{data.table} object with
+##' the info. necessary to be plotted.
+##' @rdname DT_profile-methods
+##'
+##'@seealso \code{\link{SegvizData-class}},\code{\link{plot_profile-methods}}
+##' ## load SegvizData object
+##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+##' DT_profile(segviz)
+setGeneric("DT_profile",
+           function(object,...)
+             standardGeneric("DT_profile"))
+
+##' plot_profile method
+##'
+##' plot_profile return a \code{ggplot2} object with the plot of the summarized
+##' functional profiles (summarized by using the argument \code{FUN}). For each
+##' coverage, file and distance from the anchor coordinate it applies FUN to
+##' the tags vector for all regions.
+##'
+##' @param object a \code{SegvizData} object.
+##' @param FUN a function to summarize the profiles by coordinate. The default
+##' value is the \code{mean}.
+##' @param nameFiles a character vector with the shortened names that are going
+##' to be used in the plot.
+##' @param type a character value indicating which strand to use. By default
+##' uses the aggregate coverage between both strands.
+##' @param base a numeric value indicating the number of aligned reads to which
+##' the signal is going to be normalized. The default value is \code{1e6}.
+##' \code{DT_profile} always normalizes the signal.
+##' @param mc.cores a numeric value indicating the number of multi-cores to be
+##' used.
+##'
+##' @return The \code{plot_profile} method returns a \code{ggplot2} object with
+##' the summarized functional profiles.
+##' @rdname plot_profile-methods
+##'
+##'@seealso \code{\link{SegvizData-class}},\code{\link{DT_profile-methods}}
+##' ## load SegvizData object
+##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+##' plot_profile(segviz)
+setGeneric("plot_profile",
+           function(object,...)
+             standardGeneric("plot_profile"))
+
 
 ##' plot_region method
 ##'
@@ -290,7 +360,7 @@ setGeneric("DT_region",
 ##' @param peak_id a numeric value indicating which region to plot.
 ##' @param nameFiles a character vector with the shortened names that are going
 ##' to be used in the plot.
-##' @param strands a character value indicating which strand to use. By default
+##' @param type a character value indicating which strand to use. By default
 ##' uses the aggregate coverage between both strands.
 ##' @param normalize a logical value indicating if the profiles are normalized
 ##' respect to its number of reads.
@@ -309,7 +379,6 @@ setGeneric("DT_region",
 setGeneric("plot_region",
         function(object,peak_id,...)
         standardGeneric("plot_region"))
-
 
 ############## possibly methods to be removed
 

@@ -55,10 +55,10 @@ setValidity("SegvizData",
 ##' @docType class
 ##'
 ##' @examples
-##' dr = system.file("inst","extdata","example",package = "Segvis")
-##' files = list.files(dr,pattern = "bam",full.names =TRUE)
-##' files = files[grep("bai",files,invert = TRUE)][1:3]
 ##'
+##' dr = system.file("extdata","example",package = "Segvis",mustWork = TRUE)
+##' files = list.files(dr,pattern = "bam",full.names =TRUE)
+##' files = files[grep("bai",files,invert = TRUE)]
 ##' reg = list.files(dr,pattern = "narrow",full.names =TRUE)
 ##' reg = readBedFile(reg[1])
 ##' segviz = SegvizData(regions = reg,files)
@@ -113,8 +113,6 @@ SegvizData <- function(regions,files,is_pet = rep(FALSE,length(files)),
   )
 }
 
-
-
 ##' reads class description
 ##'
 ##' Contains the reads obtained in a ChIP - seq experiment separated by strand and then by chromosome. It has one component for each strand which are object of the data.table class with a match column to identify the regions
@@ -141,7 +139,7 @@ setValidity("reads",
 ##'
 ##' @slot name Character with the name of the profiles
 ##' @slot regions GRanges object with the regions for which the profile want to be calcualted
-#' @slot file Character with the name of the file that contains the reads
+##' @slot file Character with the name of the file that contains the reads
 ##' @slot maxBandwidth Numeric value with the maximum bandwidth accepted when smoothing profiles. Must be odd
 ##' @slot fragLen Numeric value with the fragment length to resize the reads (if it is zero then it doesn't resize the reads)
 ##' @slot chr character vector, with the chromosomes to be considered

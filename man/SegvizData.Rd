@@ -36,10 +36,10 @@ high-thoughput sequencing experiments across a set of user - defined
 genomic regions.
 }
 \examples{
-dr = system.file("inst","extdata","example",package = "Segvis")
-files = list.files(dr,pattern = "bam",full.names =TRUE)
-files = files[grep("bai",files,invert = TRUE)][1:3]
 
+dr = system.file("extdata","example",package = "Segvis",mustWork = TRUE)
+files = list.files(dr,pattern = "bam",full.names =TRUE)
+files = files[grep("bai",files,invert = TRUE)]
 reg = list.files(dr,pattern = "narrow",full.names =TRUE)
 reg = readBedFile(reg[1])
 segviz = SegvizData(regions = reg,files)

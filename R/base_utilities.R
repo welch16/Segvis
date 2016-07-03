@@ -18,7 +18,8 @@ NULL
       par = NULL
     }
     reads = readGAlignments(file,param = par)
-    reads = resize(as(reads,"GRanges"),frag_len)
+    reads = as(reads,"GRanges")
+    reads = resize(reads,frag_len)
     cover = coverage(reads)
   }
   return(cover)
@@ -39,7 +40,8 @@ NULL
   return(nr)
 }
 
-.dt_cover <- function(cover,nread,name,base = 1,region,st,normalize){
+.dt_cover <- function(cover,nread,name,base = 1,region,st,normalize,
+                      addRegion = FALSE){
   chr = as.character(seqnames(region))
   cover = cover[region]
   coord = seq(start(region),end(region),by = 1)
@@ -48,7 +50,23 @@ NULL
     counts = counts * base / nread
   }
   dt = data.table(coord ,tags = counts ,name, type = st)
+  if(addRegion){
+    reg = paste0(seqnames(region),":",start(region),"-",end(region))
+    dt[,region := reg]
+  }
   return(dt)
+}
+
+.dt_profile <- function(cover,nread,name , regions,st,base = 1,
+                        len,mc.cores = getOption("mc.cores",2L)){
+
+  prof_list = mclapply(regions,function(reg,len){
+    prof = .dt_cover(cover,nread,name,base,reg,st,TRUE,TRUE)
+    prof[,coord := seq(-len,len,by = 1)]
+    prof
+    },len,mc.cores = mc.cores)
+  prof = rbindlist(prof_list)
+  prof
 }
 
 .dt2gr <- function(x){
@@ -65,13 +83,6 @@ NULL
 .rle_summit <- function(x)which.max(as.vector(x))
 
 .subset_region_cover <- function(cover,reg)cover[reg]
-
-.plot_dt <- function(covers,nms,norm = NULL,reg)
-{
-  browser()
-
-}
-
 
 ##' readBedFile
 ##'
@@ -91,13 +102,14 @@ NULL
 ##'
 ##' @examples
 ##'
+##' dr = system.file("extdata","example",package = "Segvis",mustWork = TRUE)
 ##' reg = list.files(dr,pattern = "narrow",full.names =TRUE)
 ##' readBedFile(reg[1])
 ##'
 ##'
 readBedFile <- function(file)
 {
-  dt = fread(file)
+  dt = fread(file,showProgress = FALSE)
   gr = .dt2gr(dt)
   return(gr)
 }
