@@ -1,5 +1,4 @@
 ##' @import data.table
-##' @import rbamtools
 ##' @import Rsamtools
 ##' @importFrom GenomicAlignments readGAlignments
 ##' @importFrom GenomicAlignments seqnames
@@ -13,8 +12,8 @@
 ##' @importFrom GenomicRanges elementMetadata<-
 ##' @importFrom GenomicRanges resize
 ##' @importFrom GenomicRanges coverage
-##' @importFrom GenomicRanges queryHits
-##' @importFrom GenomicRanges subjectHits
+##' @importFrom S4Vectors queryHits
+##' @importFrom S4Vectors subjectHits
 ##' @importFrom GenomicRanges width
 ##' @importFrom GenomicRanges strand
 ##' @importFrom IRanges IRanges
@@ -33,7 +32,7 @@ NULL
 setMethod("name",
   signature = signature(object = "segvis"),
   definition = function(object)object@name
-)           
+)
 
 ##' @rdname regions-methods
 ##' @aliases regions
@@ -42,7 +41,7 @@ setMethod("name",
 setMethod("regions",
   signature = signature(object = "segvis"),
   definition = function(object)object@regions
-)           
+)
 
 ##' @rdname file-methods
 ##' @aliases file
@@ -51,7 +50,7 @@ setMethod("regions",
 setMethod("file",
   signature = signature(object = "segvis"),
   definition = function(object)object@file
-)           
+)
 
 ##' @rdname maxBandwidth-methods
 ##' @aliases maxBandwidth
@@ -60,7 +59,7 @@ setMethod("file",
 setMethod("maxBandwidth",
   signature = signature(object = "segvis"),
   definition  = function(object)object@maxBandwidth
-)           
+)
 
 ##' @rdname fragLen-methods
 ##' @aliases fragLen
@@ -69,7 +68,7 @@ setMethod("maxBandwidth",
 setMethod("fragLen",
   signature = signature(object = "segvis"),
   definition = function(object)object@fragLen
-)           
+)
 
 ##' @rdname chr-methods
 ##' @aliases chr
@@ -78,7 +77,7 @@ setMethod("fragLen",
 setMethod("chr",
   signature = signature(object = "segvis"),
   definition = function(object)object@chr
-)          
+)
 
 ##' @rdname isPET-methods
 ##' @aliases isPET
@@ -87,7 +86,7 @@ setMethod("chr",
 setMethod("isPET",
   signature = signature(object = "segvis"),
   definition = function(object)object@isPET
-)          
+)
 
 ##' @rdname readsF-methods
 ##' @docType methods
@@ -96,7 +95,7 @@ setMethod("isPET",
 setMethod("readsF",
   signature = signature(object = "segvis"),
   definition = function(object)readsF(object@reads)
-)           
+)
 
 
 ##' @rdname readsR-methods
@@ -115,7 +114,7 @@ setMethod("readsR",
 setMethod("profiles",
   signature = signature(object = "segvis"),
   definition = function(object)object@profiles
-)  
+)
 
 ## Set methods
 
@@ -129,7 +128,7 @@ setReplaceMethod("name",
     object@name <- value
     return(object)
 })
-   
+
 
 ##' @rdname regions-methods
 ##' @aliases regions<-
@@ -138,9 +137,9 @@ setReplaceMethod("name",
 setReplaceMethod("regions",
   signature = signature(object = "segvis",value = "GRanges"),
   definition = function(object,value){
-    
+
     stopifnot(class(value) == "GRanges")
-    
+
     unique_chr <- unique(as.character(seqnames(value)))
     if(length(chr(object)) > length(unique_chr)){
       warning("There are more chromosomes in chr(object) than in the regions. User's supplied additional chromosomes are being removed")
@@ -154,7 +153,7 @@ setReplaceMethod("regions",
       }
       value_dt <- .data.table.GRanges(value)
       setkey(value_dt,seqnames)
-      value <- .GRanges.data.table(value_dt[chr(object)])             
+      value <- .GRanges.data.table(value_dt[chr(object)])
     }
     object@regions <- value
     object@.haveRegions <- TRUE
@@ -173,7 +172,7 @@ setReplaceMethod("file",
 
     object@file <- value
     return(object)
-})    
+})
 
 
 
@@ -184,13 +183,13 @@ setReplaceMethod("file",
 setReplaceMethod("maxBandwidth",
   signature = signature(object = "segvis", value = "numeric"),
   definition = function(object,value){
-    
+
     stopifnot(value >= 1)
     stopifnot(value %% 2 == 1)
-    
+
     object@maxBandwidth <- value
     return(object)
-})    
+})
 
 ##' @rdname fragLen-methods
 ##' @aliases fragLen<-
@@ -203,7 +202,7 @@ setReplaceMethod("fragLen",
     stopifnot(value == floor(value))
     object@fragLen <- value
     return(object)
-})    
+})
 
 ##' @rdname chr-methods
 ##' @aliases chr<-
@@ -227,7 +226,7 @@ setReplaceMethod("isPET",
     stopifnot(is.logical(value))
     object@isPET <- value
     return(object)
-})    
+})
 
 # @rdname methods-segvis-show
 # @name show
@@ -244,7 +243,7 @@ setMethod("show",
     len <- length(seqlengths(regions(object)))
     if( len > 0){
       cat("Using regions for",len,"chromosomes\n")
-      show(regions(object))      
+      show(regions(object))
     }else{
       cat("**Not regions loaded**\n")
     }
@@ -262,7 +261,7 @@ setReplaceMethod("readsF",
     readsF(object@reads) = value
     return(object)
   }
-)                 
+)
 
 
 ##' @rdname readsR-methods
@@ -275,7 +274,7 @@ setReplaceMethod("readsR",
     readsR(object@reads) <- value
     return(object)
   }
-)                 
+)
 
 ##' @rdname loadReads-methods
 ##' @aliases loadReads
@@ -293,12 +292,12 @@ setMethod("loadReads",
       message("Creating index file ",bai)
       indexBam(file(object))
     }
-    
-    side <- (maxBandwidth(object)-1)/2      
-    regions_to_load <- regions(object)    
+
+    side <- (maxBandwidth(object)-1)/2
+    regions_to_load <- regions(object)
     start(regions_to_load) <- start(regions_to_load) - side - fragLen(object)
-    end(regions_to_load) <- end(regions_to_load) + side + fragLen(object)          
-    
+    end(regions_to_load) <- end(regions_to_load) + side + fragLen(object)
+
     if(isPET(object)){
       message("Setting PET flag")
       ## when the reads are paired end tags, it gets the qname to match the
@@ -307,7 +306,7 @@ setMethod("loadReads",
       param <- ScanBamParam(which = regions_to_load,flag = pet_flag,what = "qname")
     }else{
       param <- ScanBamParam(which = regions_to_load)
-    }    
+    }
     greads <- readGAlignments(file(object), param = param,use.names = FALSE)
     if(length(greads) == 0){
       warning("Can't read ",file(object), " considering regions, going to try without them")
@@ -315,7 +314,7 @@ setMethod("loadReads",
       greads <- readGAlignments(file(object), param = param,use.names = FALSE)
       overlap <- findOverlaps(as(greads,"GRanges"),regions_to_load)
       greads <- greads[queryHits(overlap)]
-      rm(overlap)      
+      rm(overlap)
     }
     if(isPET(object)){
       ## convert the qname into a numeric value for computation efficiency
@@ -326,7 +325,7 @@ setMethod("loadReads",
     }else{
       greads <- .data.table.GRanges(as(greads, "GRanges"))
     }
-    setkey(greads,seqnames)    
+    setkey(greads,seqnames)
     message("Bam file loaded")
 
     ## validates the chromosomes, that must coincide between
@@ -345,9 +344,9 @@ setMethod("loadReads",
       missing_chr <- names(which(!chr_in))
       for(ch in missing_chr){
         warning("There are no reads for ",ch," in " ,file(object))
-      }        
+      }
     }
-    
+
     options(datatable.nomatch =0)
     greads <- greads[chr(object)]
 
@@ -379,8 +378,8 @@ setMethod("matchReads",
 
       ## separates the regions by chromosome, extend the regions by (maxBw - 1)/2 to each
       ## side
-      
-      side <- (maxBandwidth(object)-1)/2      
+
+      side <- (maxBandwidth(object)-1)/2
       chr <- names(seqlengths(regions(object)))
       match_regions <- regions(object)
       start(match_regions) <- start(match_regions) - side - fragLen(object)
@@ -389,12 +388,12 @@ setMethod("matchReads",
         chr, "*",mc,sort=FALSE)
       names(match_regions) <- chr
 
-      ## find overlaps between reads and regions   
+      ## find overlaps between reads and regions
       overlapsF <- mcmapply(.find.overlaps,readsF(object),
         match_regions,SIMPLIFY=FALSE,mc.cores =mc,mc.silent =TRUE,mc.preschedule=TRUE)
       overlapsR <- mcmapply(.find.overlaps,readsR(object),
         match_regions,SIMPLIFY=FALSE,mc.cores =mc,mc.silent =TRUE,mc.preschedule=TRUE)
-              
+
       ## matching reads
       message("Matching reads for forward strand")
       readsF(object) <- mcmapply(.match.reads,readsF(object),overlapsF,
@@ -404,7 +403,7 @@ setMethod("matchReads",
         SIMPLIFY= FALSE,mc.cores = mc ,mc.silent =TRUE,mc.preschedule=TRUE)
 
       object@.readsMatched <- TRUE
-     return(object)      
+     return(object)
     }else{
       warning("Check that both reads and regions are loaded")
     }
@@ -425,24 +424,24 @@ setMethod("getCoverage",
       nregions <- mclapply(match_regions,nrow,mc.cores = mc,mc.silent =TRUE)
 
       # coverage calculation
-      message("Calculating coverage")      
+      message("Calculating coverage")
       curves <- mapply(calculate_chrom_coverage,chr,nregions,
-        MoreArgs = list(object,mc),SIMPLIFY=FALSE)      
+        MoreArgs = list(object,mc),SIMPLIFY=FALSE)
       names(curves) <- chr
       object@profiles <- curves
       object@.coverageCalculated <- TRUE
       message("Coverage done")
-      return(object)                
+      return(object)
     }else{
       warning("The reads haven't been matched yet")
     }
-})    
+})
 
 ##' @rdname findSummit-methods
 ##' @aliases findSummit
 ##' @docType methods
 ##' @exportMethod findSummit
-setMethod("findSummit",          
+setMethod("findSummit",
   signature = signature(object = "segvis",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc=8){
 
@@ -452,9 +451,9 @@ setMethod("findSummit",
     message("Finding summits for each chromosome")
     chr <- names(seqlengths(regions(object)))
     match_regions <- separate.by.chrom(.data.table.GRanges(regions(object)),
-        chr, "*",mc,sort=FALSE)    
+        chr, "*",mc,sort=FALSE)
     names(match_regions) <- chr
-    
+
     ## find summits for each chromosome
     summits_chr <- lapply(chr,function(chrom,regions,curves){
       message("Finding summit for regions of ",chrom)
@@ -464,9 +463,9 @@ setMethod("findSummit",
       curve <- curves[[chrom]]
       summits <- mcmapply(.find_summit,curve,regionStart,regionEnd,
         SIMPLIFY=FALSE,mc.cores = mc,mc.silent = TRUE,mc.preschedule=TRUE)
-      return(unlist(summits))         
+      return(unlist(summits))
   },match_regions,profile_curves)
-  return(unlist(summits_chr))    
+  return(unlist(summits_chr))
 })
 
 ##' @rdname countReads-methods
@@ -483,7 +482,7 @@ setMethod("countReads",
     if(isPET(object)){
       counts <- ceiling(counts/2)
     }
-    return(counts)  
+    return(counts)
 })
 
 ##' @rdname joinProfiles-methods
@@ -501,17 +500,17 @@ setMethod("joinProfiles",
   ## init regions data
   chr <- names(seqlengths(regions(object)))
   match_regions <- separate.by.chrom(.data.table.GRanges(regions(object)),
-    chr, "*",mc,sort=FALSE)    
+    chr, "*",mc,sort=FALSE)
   names(match_regions) <- chr
 
   ## join regions a profiles into data.table's
   joined_info <- mapply(.join_info,chr,match_regions,profile_curves,
     MoreArgs <- list(mc),SIMPLIFY=FALSE)
   joined_info <- do.call(rbind,joined_info)
-  
+
   message("All profiles joint")
   return(joined_info)
-})    
+})
 
 ##' @rdname Segvis_block-methods
 ##' @aliases Segvis_block
@@ -520,10 +519,10 @@ setMethod("joinProfiles",
 setMethod("Segvis_block",
   signature = signature(object = "segvis",bw = "numeric",mc = "numeric"),
   definition = function(object,bw,mc){
-    cover_table <- joinProfiles(object,bw,mc)    
+    cover_table <- joinProfiles(object,bw,mc)
     nm <- name(object)
     gr <- regions(object)
     segvis_block <- new("segvis_block",name = nm,regions = gr,
       cover_table = cover_table,bandwidth = bw,normConst = 1)
     return(segvis_block)
-})             
+})
