@@ -4,3 +4,5 @@ vignettes/*
 poster/*
 inst/extdata/*
 Segvis.Rprog
+.Rproj.user
+Segvis.Rproj
