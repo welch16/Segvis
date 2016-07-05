@@ -45,7 +45,7 @@ NULL
   chr = as.character(seqnames(region))
   cover = cover[region]
   coord = seq(start(region),end(region),by = 1)
-  counts = as(cover,"data.frame")$value
+  counts = 1 + as(cover,"data.frame")$value
   if(normalize){
     counts = counts * base / nread
   }

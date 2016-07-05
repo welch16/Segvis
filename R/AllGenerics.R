@@ -279,13 +279,6 @@ setGeneric("DT_region",
            function(object,peak_id,...)
              standardGeneric("DT_region"))
 
-
-# definition = function(object,FUN = mean,
-#                       nameFiles = basename(files(object)),
-#                       type = "aggr",
-#                       base = 1e6,
-#                       mc.cores = getOption("mc.cores",2L)){
-
 ##' DT_profile method
 ##'
 ##' DT_profile return a \code{data.table} object with the summarized functional
@@ -349,6 +342,43 @@ setGeneric("DT_profile",
 setGeneric("plot_profile",
            function(object,...)
              standardGeneric("plot_profile"))
+
+##' plot_heatmap method
+##'
+##' plot_heatmap plots a heatmap that summarizes the signal profiles of all files
+##' in the \code{SegvizData} object as a function of the distance to the
+##' center of the regions.
+##'
+##' @param object a \code{SegvizData} object.
+##' @param which.cluster an integer indicating which signal is going to be used to
+##' cluster the profiles. By default uses the first file loaded.
+##' @param dist_method the distance measure to be used. This must be one of
+##' "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".
+##' @param clust_method the agglomeration method to be used. This should be
+##' one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA),
+##' "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
+##' @param nameFiles a character vector with the shortened names that are going
+##' to be used in the plot.
+##' @param type a character value indicating which strand to use. By default
+##' uses the aggregate coverage between both strands.
+##' @param base a numeric value indicating the number of aligned reads to which
+##' the signal is going to be normalized. The default value is \code{1e6}.
+##' \code{DT_profile} always normalizes the signal.
+##' @param mc.cores a numeric value indicating the number of multi-cores to be
+##' used.
+##'
+##' @return The \code{plot_heatmap} plots a heatmap that summarizes the signal
+##' profiles of all files in the \code{SegvizData} object.
+##' @rdname plot_heatmap-methods
+##'
+##'@seealso \code{\link{SegvizData-class}}
+##' ## load SegvizData object
+##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+##' plot_heatmap(segviz)
+setGeneric("plot_heatmap",
+           function(object,...)
+             standardGeneric("plot_heatmap"))
+
 
 
 ##' plot_region method

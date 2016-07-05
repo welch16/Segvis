@@ -1,4 +1,7 @@
-
+##' @importFrom viridis viridis
+##' @importFrom cba order.optimal
+##' @import scales
+NULL
 
 ##' @rdname files-methods
 ##' @aliases files
@@ -238,14 +241,14 @@ setMethod("plot_profile",
             if(tolower(type ) %in% c("aggr","fwd","bwd")){
               out = ggplot(DT,aes_string(x="coord",y= "tags",
                                          linetype = "name"))+
-                geom_line()+xlab("Genomic Coordinates")+
+                geom_line()+xlab("Distance to anchor")+
                 ylab("Normalized Signal")
             }else if(tolower(type) == "both"){
               pal = pal[-1]
               out = ggplot(DT,aes_string(x="coord",y= "tags",
                                          linetype = "name",
                                          colour = "type"))+
-                geom_line()+xlab("Genomic Coordinates")+
+                geom_line()+xlab("Distance to anchor")+
                 ylab("Normalized Signal")+
                 scale_color_manual(values = pal)
             }else{
@@ -253,13 +256,133 @@ setMethod("plot_profile",
               out = ggplot(DT,aes_string(x="coord",y= "tags",
                                          linetype = "name",
                                          colour = "type"))+
-                geom_line()+xlab("Genomic Coordinates")+
+                geom_line()+xlab("Distance to anchor")+
                 ylab("Normalized Signal")+
                 scale_color_manual(values = pal)
             }
             out
 
           })
+
+##' @rdname plot_heatmap-methods
+##' @aliases plot_heatmap
+##' @docType methods
+##' @exportMethod plot_heatmap
+setMethod("plot_heatmap",
+          signature = signature(object = "SegvizData"),
+          definition = function(object,which.cluster = 1,
+                                dist_method = "euclidean",
+                                clust_method = "complete",
+                                nameFiles = basename(files(object)),
+                                type = "aggr",
+                                base = 1e6,
+                                mc.cores = getOption("mc.cores",2L),
+                                ...){
+
+            stopifnot(is.character(dist_method),
+                      tolower(dist_method) %in% c("euclidean","maximum",
+                                                 "manhattan","canberra",
+                                                 "binary","minkowski"))
+            if(tolower(dist_method) == "minkowski"){
+              stopifnot("p" %in% names(list(...)))
+            }
+
+            stopifnot(is.character(clust_method),
+                      tolower(clust_method) %in% c("complete","ward.d",
+                                                   "ward.d2","single",
+                                                   "average","mcquitty",
+                                                   "median","centroid"))
+
+            if(!is.integer(which.cluster))which.cluster = as.integer(which.cluster)
+
+            stopifnot(which.cluster >= 1 , which.cluster <= length(files(object)))
+            stopifnot(is.character(type),
+                      tolower(type) %in% c("aggr","fwd","bwd"))
+            stopifnot(length(unique(width(object))) == 1)
+
+            if(is.numeric(nameFiles))nameFiles = as.character(nameFiles)
+
+            aggr_dt = NULL
+            fwd_dt = NULL
+            bwd_dt = NULL
+
+            width = unique(width(object))
+            ll = (width - 1) / 2
+
+            if(tolower(type) == "aggr"){
+              aggr_dt = mapply(.dt_profile,covers(object),
+                               nreads(object),nameFiles,
+                               MoreArgs = list(regions = object,
+                                               st = "aggr",
+                                               base = base,
+                                               len = ll,
+                                               mc.cores = mc.cores),
+                               SIMPLIFY = FALSE)
+            }
+
+            if(tolower(type) == "fwd"){
+              fwd_dt = mapply(.dt_profile,fwd_covers(object),
+                              nreads(object),nameFiles,
+                              MoreArgs = list(regions = object,
+                                              st = "fwd",
+                                              base = base,
+                                              len = ll,
+                                              mc.cores = mc.cores),
+                              SIMPLIFY = FALSE)
+
+            }
+            if(tolower(type) == "bwd"){
+
+              bwd_dt = mapply(.dt_profile,bwd_covers(object),
+                              nreads(object),nameFiles,
+                              MoreArgs = list(regions = object,
+                                              st = "bwd",
+                                              base = base,
+                                              len = ll,
+                                              mc.cores = mc.cores),
+                              SIMPLIFY = FALSE)
+
+            }
+
+            dt_list = c(fwd_dt,bwd_dt,aggr_dt)
+
+            to_clust = dt_list[[which.cluster]][,.(coord,tags,region)]
+            to_clust = dcast.data.table(data = to_clust,
+                                        formula = region ~ coord,
+                                        value.var = "tags",
+                                        fun.aggregate = mean)
+            if(tolower(dist_method ) == "minkowski"){
+              dmat = dist(as.matrix(to_clust[,-1,with = FALSE]),
+                          method = "minkowski",p = list(...)$p)
+            }else{
+              dmat = dist(as.matrix(to_clust[,-1,with = FALSE]),
+                        method = dist_method)
+            }
+            clust = hclust(dmat,method = clust_method)
+
+            ord = cba::order.optimal(dmat,clust$merge)
+
+            lev = unique(dt_list[[which.cluster]][,(region)])[ord$order]
+
+            DT = rbindlist(dt_list)
+            DT = DT[,region := factor(region,levels = lev)]
+
+            p = ggplot(DT,aes_string(x = "coord",y = "region",fill = "tags"))+
+              geom_raster()+
+              scale_fill_gradientn(name = "Normalized Signal",
+                    colors = viridis(50),trans = 'log10',
+                    labels = trans_format('log10',math_format(10^.x)))+
+              facet_grid( . ~ name)+
+              geom_vline(xintercept = 0,linetype = 2,colour = "lightgrey")+
+              theme(legend.position = "top",
+                    axis.text.y = element_blank(),
+                    axis.ticks.y = element_blank(),
+                    legend.key.width = unit(2,"lines"))+
+              xlab("Distance to anchor")+ylab("")
+            p
+          })
+
+
 
 ##' @rdname plot_region-methods
 ##' @aliases plot_region
