@@ -12,18 +12,22 @@ vignette: >
 ---
 
 ```{r style, echo = FALSE, results = 'asis'}
-BiocStyle::markdown(css.files = c('custom.css'))
+
+  BiocStyle::markdown(css.files = c('custom.css'))
+
 ```
 
 ```{r load_real,include=FALSE,eval=TRUE,echo = FALSE}
-library(Segvis)
-library(ggplot2)
-library(Rsamtools)
-library(data.table)
-library(RColorBrewer)
-Segviz = "Segviz"
-fh = 3
-fw = 6
+
+  library(Segvis)
+  library(ggplot2)
+  library(Rsamtools)
+  library(data.table)
+  library(RColorBrewer)
+  Segviz = "Segviz"
+  fh = 3
+  fw = 6
+  
 ```
 
 # Overview
@@ -171,7 +175,7 @@ Similarly, as with the `r Rpackage("plot_region")` and `r Rpackage("DT_region")`
 
 `r Rpackage(Segviz)` can plot heatmaps with the normalized signal profiles by using the plot_heatmap method:
 
-```{r heatmap,include=TRUE,echo=TRUE,eval=TRUE,fig.height=fh*2,fig.width=fw*1.5}
+```{r heatmap,include=TRUE,echo=TRUE,eval=TRUE,fig.height=fh*1.5,fig.width=fw*1.5}
   
   plot_heatmap(segviz,nameFiles = c("Ctcf_rep1","Ctcf_rep2","H3k27ac",
                                      "H3k4me1","H3k4me3"))
