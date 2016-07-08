@@ -1,5 +1,6 @@
 ##' @importFrom viridis viridis
 ##' @importFrom cba order.optimal
+##' @import ggplot2
 ##' @import scales
 NULL
 
@@ -394,6 +395,7 @@ setMethod("plot_region",
                             nameFiles = basename(files(object)),
                             type = "aggr",normalize = TRUE,
                             base = 1e6){
+
         DT = DT_region(object,peak_id,nameFiles = nameFiles,
                       type = type,normalize = normalize,
                       base = base)
