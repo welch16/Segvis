@@ -1,6 +1,11 @@
 
 ##' @importFrom Rsamtools scanBamFlag ScanBamParam countBam
 ##' @importFrom GenomicAlignments readGAlignments
+##' @importFrom GenomicRanges GRanges resize seqnames start end coverage
+##' @importFrom IRanges IRanges
+##' @importFrom RColorBrewer brewer.pal
+##' @importFrom parallel mclapply mcmapply
+##' @import data.table
 NULL
 
 .readFileCover <- function(file,is_pet,frag_len,st = "*")
@@ -34,9 +39,6 @@ NULL
     par = ScanBamParam()
   }
   nr = countBam(file,param = par)$records
-#   if(is_pet){
-#     nr = nr/2
-#   }
   return(nr)
 }
 
@@ -59,6 +61,8 @@ NULL
 
 .dt_profile <- function(cover,nread,name , regions,st,base = 1,
                         len,mc.cores = getOption("mc.cores",2L)){
+
+  coord = NULL
 
   prof_list = mclapply(regions,function(reg,len){
     prof = .dt_cover(cover,nread,name,base,reg,st,TRUE,TRUE)
@@ -114,27 +118,27 @@ readBedFile <- function(file)
   return(gr)
 }
 
-.data.table.GRanges <- function(x)
-{
-  dt <- data.table(seqnames = as.character( seqnames(x)),
-    start = start(x),end = end(x),
-    strand = as.character(strand(x)))
-  return(dt)
-}
-
-.GRanges.data.table <- function(x)
-{
-  stopifnot(c("seqnames","start","end","strand") %in% names(x))
-  return(GRanges(seqnames = x[,(seqnames)],
-    ranges = .IRanges.data.table(x),
-    strand = x[,(strand)]))
-}
-
-.IRanges.data.table <- function(x)
-{
-  stopifnot(c("seqnames","start","end","strand") %in% names(x))
-  return(IRanges(start = x[,(start)],end = x[,(end)]))
-}
+# .data.table.GRanges <- function(x)
+# {
+#   dt <- data.table(seqnames = as.character( seqnames(x)),
+#     start = start(x),end = end(x),
+#     strand = as.character(strand(x)))
+#   return(dt)
+# }
+#
+# .GRanges.data.table <- function(x)
+# {
+#   stopifnot(c("seqnames","start","end","strand") %in% names(x))
+#   return(GRanges(seqnames = x[,(seqnames)],
+#     ranges = .IRanges.data.table(x),
+#     strand = x[,(strand)]))
+# }
+#
+# .IRanges.data.table <- function(x)
+# {
+#   stopifnot(c("seqnames","start","end","strand") %in% names(x))
+#   return(IRanges(start = x[,(start)],end = x[,(end)]))
+# }
 #
 # localMinima <- function(x)
 # {

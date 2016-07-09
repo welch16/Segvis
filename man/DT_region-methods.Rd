@@ -3,19 +3,27 @@
 \docType{methods}
 \name{DT_region}
 \alias{DT_region}
+\alias{DT_region,SegvizData,GRanges-method}
 \alias{DT_region,SegvizData,numeric-method}
 \title{DT_region method}
 \usage{
-DT_region(object, peak_id, ...)
+DT_region(object, region, ...)
 
-\S4method{DT_region}{SegvizData,numeric}(object, peak_id,
+\S4method{DT_region}{SegvizData,GRanges}(object, region,
+  nameFiles = basename(files(object)), type = "aggr", normalize = TRUE,
+  base = 1e+06)
+
+\S4method{DT_region}{SegvizData,numeric}(object, region,
   nameFiles = basename(files(object)), type = "aggr", normalize = TRUE,
   base = 1e+06)
 }
 \arguments{
 \item{object}{a \code{SegvizData} object.}
 
-\item{peak_id}{a numeric value indicating which region to plot.}
+\item{region}{a numeric value indicating which region to plot or a
+\code{GRanges} object indicating a whole region to plot.}
+
+\item{...}{Any other additional parameters that \code{DT_region} may need.}
 
 \item{nameFiles}{a character vector with the shortened names that are going
 to be used in the plot.}
@@ -39,10 +47,12 @@ the coverage of the aligned read files across the
 \code{peak_id}th element of the \code{SegvizData} object.
 }
 \seealso{
-\code{\link{SegvizData-class}},\code{\link{plot_region-methods}}
+\code{\link{SegvizData-class}}
 
 ## load SegvizData object
 load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-DT_region(segviz, peak_id = 1)
+DT_region(segviz, region = 1)
+DT_region(segviz,
+  region = GRanges(seqnames = "chr2",ranges = IRanges(start = 56,width = 1e3)))
 }
 

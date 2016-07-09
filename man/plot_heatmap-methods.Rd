@@ -16,6 +16,8 @@ plot_heatmap(object, ...)
 \arguments{
 \item{object}{a \code{SegvizData} object.}
 
+\item{...}{Any other additional parameters that \code{plot_heatmap} may need.}
+
 \item{which.cluster}{an integer indicating which signal is going to be used to
 cluster the profiles. By default uses the first file loaded.}
 

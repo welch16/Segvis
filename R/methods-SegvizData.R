@@ -1,7 +1,11 @@
 ##' @importFrom viridis viridis
 ##' @importFrom cba order.optimal
+##' @importFrom IRanges overlapsAny
+##' @importFrom S4Vectors DataFrame
 ##' @import ggplot2
 ##' @import scales
+##' @import GenomeInfoDb
+##' @import stats
 NULL
 
 ##' @rdname files-methods
@@ -101,24 +105,21 @@ setMethod("overlap_matrix",
 ##' @docType methods
 ##' @exportMethod DT_region
 setMethod("DT_region",
-          signature = signature(object = "SegvizData",peak_id = "numeric"),
-          definition = function(object,peak_id,
+          signature = signature(object = "SegvizData",region = "GRanges"),
+          definition = function(object,region,
                                 nameFiles = basename(files(object)),
                                 type = "aggr",normalize = TRUE,
                                 base = 1e6){
-            if(is.numeric(peak_id) & !is.integer(peak_id)){
-              peak_id = as.integer(peak_id)
-            }
+
+            stopifnot(class(region) %in% c("GRanges","SegvizData"))
 
             stopifnot(is.character(type),
                       tolower(type) %in% c("aggr","fwd","bwd","both","all"))
-            stopifnot(is.integer(peak_id),length(peak_id) == 1,
-                      is.logical(normalize))
-            stopifnot(1 <= peak_id , peak_id <= length(object))
+            stopifnot(is.logical(normalize))
 
             if(is.numeric(nameFiles))nameFiles = as.character(nameFiles)
 
-            reg = object[peak_id]
+            reg = region
 
             aggr_dt = NULL
             fwd_dt = NULL
@@ -155,6 +156,37 @@ setMethod("DT_region",
 
             DT = rbindlist(c(fwd_dt,bwd_dt,aggr_dt))
             DT
+
+          })
+
+##' @rdname DT_region-methods
+##' @aliases DT_region
+##' @docType methods
+##' @exportMethod DT_region
+setMethod("DT_region",
+          signature = signature(object = "SegvizData",region = "numeric"),
+          definition = function(object,region,
+                                nameFiles = basename(files(object)),
+                                type = "aggr",normalize = TRUE,
+                                base = 1e6){
+
+            if(is.numeric(region) & !is.integer(region)){
+              region = as.integer(region)
+            }
+
+            stopifnot(is.character(type),
+                      tolower(type) %in% c("aggr","fwd","bwd","both","all"))
+            stopifnot(is.integer(region),length(region) == 1,
+                      is.logical(normalize))
+            stopifnot(1 <= region , region <= length(object))
+
+            if(is.numeric(nameFiles))nameFiles = as.character(nameFiles)
+
+            reg = object[region]
+
+            DT = DT_region(object,reg,nameFiles,type,normalize,base)
+
+            DT
           })
 
 ##' @rdname DT_profile-methods
@@ -168,6 +200,10 @@ setMethod("DT_profile",
                                 type = "aggr",
                                 base = 1e6,
                                 mc.cores = getOption("mc.cores",2L),...){
+
+            tags = NULL
+            coord = NULL
+            name = NULL
 
             stopifnot(is.character(type),
                       tolower(type) %in% c("aggr","fwd","bwd","both","all"))
@@ -218,7 +254,7 @@ setMethod("DT_profile",
             }
 
             DT = rbindlist(c(fwd_dt,bwd_dt,aggr_dt))
-            DT = DT[,FUN(tags,...),by = .(coord,name,type)]
+            DT = DT[,FUN(tags,...),by = list(coord,name,type)]
             setnames(DT,names(DT),c("coord","name","type","tags"))
             DT
            })
@@ -280,6 +316,10 @@ setMethod("plot_heatmap",
                                 mc.cores = getOption("mc.cores",2L),
                                 ...){
 
+            coord = NULL
+            tags = NULL
+            region = NULL
+
             stopifnot(is.character(dist_method),
                       tolower(dist_method) %in% c("euclidean","maximum",
                                                  "manhattan","canberra",
@@ -306,6 +346,7 @@ setMethod("plot_heatmap",
             aggr_dt = NULL
             fwd_dt = NULL
             bwd_dt = NULL
+            .x = NULL
 
             width = unique(width(object))
             ll = (width - 1) / 2
@@ -347,7 +388,7 @@ setMethod("plot_heatmap",
 
             dt_list = c(fwd_dt,bwd_dt,aggr_dt)
 
-            to_clust = dt_list[[which.cluster]][,.(coord,tags,region)]
+            to_clust = dt_list[[which.cluster]][,list(coord,tags,region)]
             to_clust = dcast.data.table(data = to_clust,
                                         formula = region ~ coord,
                                         value.var = "tags",
@@ -383,6 +424,46 @@ setMethod("plot_heatmap",
             p
           })
 
+##' @rdname plot_region-methods
+##' @aliases plot_region
+##' @docType methods
+##' @exportMethod plot_region
+setMethod("plot_region",
+          signature = signature(object = "SegvizData",region = "GRanges"),
+          definition = function(object,region,
+                                nameFiles = basename(files(object)),
+                                type = "aggr",normalize = TRUE,
+                                base = 1e6){
+
+            DT = DT_region(object,region,nameFiles = nameFiles,
+                           type = type,normalize = normalize,
+                           base = base)
+            pal = c("black",brewer.pal(9,"Set1"))
+
+            if(tolower(type ) %in% c("aggr","fwd","bwd")){
+              out = ggplot(DT,aes_string(x="coord",y= "tags",
+                                         linetype = "name"))+
+                geom_line()+xlab("Genomic Coordinates")+
+                ylab(ifelse(normalize,"Normalized Signal","Counts"))
+            }else if(tolower(type) == "both"){
+              pal = pal[-1]
+              out = ggplot(DT,aes_string(x="coord",y= "tags",
+                                         linetype = "name",
+                                         colour = "type"))+
+                geom_line()+xlab("Genomic Coordinates")+
+                ylab(ifelse(normalize,"Normalized Signal","Counts"))+
+                scale_color_manual(values = pal)
+            }else{
+              out = ggplot(DT,aes_string(x="coord",y= "tags",
+                                         linetype = "name",
+                                         colour = "type"))+
+                geom_line()+xlab("Genomic Coordinates")+
+                ylab(ifelse(normalize,"Normalized Signal","Counts"))+
+                scale_color_manual(values = pal)
+            }
+            out
+
+          })
 
 
 ##' @rdname plot_region-methods
@@ -390,40 +471,14 @@ setMethod("plot_heatmap",
 ##' @docType methods
 ##' @exportMethod plot_region
 setMethod("plot_region",
-      signature = signature(object = "SegvizData",peak_id = "numeric"),
-      definition = function(object,peak_id,
+      signature = signature(object = "SegvizData",region = "numeric"),
+      definition = function(object,region,
                             nameFiles = basename(files(object)),
                             type = "aggr",normalize = TRUE,
                             base = 1e6){
 
-        DT = DT_region(object,peak_id,nameFiles = nameFiles,
-                      type = type,normalize = normalize,
-                      base = base)
-        pal = c("black",brewer.pal(9,"Set1"))
-
-        if(tolower(type ) %in% c("aggr","fwd","bwd")){
-          out = ggplot(DT,aes_string(x="coord",y= "tags",
-                                     linetype = "name"))+
-            geom_line()+xlab("Genomic Coordinates")+
-            ylab(ifelse(normalize,"Normalized Signal","Counts"))
-        }else if(tolower(type) == "both"){
-          pal = pal[-1]
-          out = ggplot(DT,aes_string(x="coord",y= "tags",
-                                     linetype = "name",
-                                     colour = "type"))+
-            geom_line()+xlab("Genomic Coordinates")+
-            ylab(ifelse(normalize,"Normalized Signal","Counts"))+
-            scale_color_manual(values = pal)
-        }else{
-          out = ggplot(DT,aes_string(x="coord",y= "tags",
-                                     linetype = "name",
-                                     colour = "type"))+
-            geom_line()+xlab("Genomic Coordinates")+
-            ylab(ifelse(normalize,"Normalized Signal","Counts"))+
-            scale_color_manual(values = pal)
-        }
-        out
-
+        plot_region(object,region = object[region],nameFiles,type,
+                    normalize,base)
       })
 
 

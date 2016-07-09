@@ -16,6 +16,8 @@ overlap_matrix(object, bedfiles, ...)
 
 \item{bedfiles}{a character vector with the files in bed fortmat.}
 
+\item{...}{Any other additional parameters that \code{overlap_matrix} may need.}
+
 \item{colnames}{a character vector with the names of the bed files. The
 default value for this is \code{basename(bedfiles)}.}
 }

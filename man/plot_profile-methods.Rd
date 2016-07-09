@@ -15,6 +15,8 @@ plot_profile(object, ...)
 \arguments{
 \item{object}{a \code{SegvizData} object.}
 
+\item{...}{Any other additional parameters that \code{plot_profile} may need.}
+
 \item{FUN}{a function to summarize the profiles by coordinate. The default
 value is the \code{mean}.}
 
@@ -42,7 +44,7 @@ coverage, file and distance from the anchor coordinate it applies FUN to
 the tags vector for all regions.
 }
 \seealso{
-\code{\link{SegvizData-class}},\code{\link{DT_profile-methods}}
+\code{\link{SegvizData-class}}
 ## load SegvizData object
 load(system.file("extdata","example","segviz.RData",package = "Segvis"))
 plot_profile(segviz)

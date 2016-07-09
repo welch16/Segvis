@@ -14,6 +14,8 @@ find_summits(object, ...)
 \arguments{
 \item{object}{a \code{SegvizData} object.}
 
+\item{...}{Other parameters that may be used by \code{find_summit}.}
+
 \item{which.file}{a numeric value indicating which file is going to be
 used to calculate the summits. By default it takes the first file.}
 

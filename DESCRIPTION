@@ -2,7 +2,7 @@ Package: Segvis
 Type: Package
 Title: Segviz: A package for visualization of high throughput sequencing data
     along genomic segments
-Version: 0.99.2
+Version: 0.00.2
 Date: 2016-06-29
 Author: Rene Welch <welch@stat.wisc.edu>
 Maintainer: Rene Welch <welch@stat.wisc.edu>
@@ -12,16 +12,17 @@ Description: Calculates the coverage of a set of genomic regions
 URL: https:github.com/welch16/Segvis
 License: GPL (>=2)
 Depends:
-    R (>= 3.2.1),
+    R (>= 3.3),
     GenomicAlignments (>= 1.0.1),
     GenomicRanges (>= 1.20.5),
     data.table (>= 1.9.2)
 Imports:
     methods,
+    GenomeInfoDb,
+    stats,
     Rsamtools (>= 1.16.1),
     ggplot2 (>= 1.0),
     S4Vectors (>= 0.6.2),
-    GenomeInfoDb (>= 1.4.1),
     IRanges (>= 2.2.5),
     scales,
     viridis,
@@ -30,10 +31,10 @@ Imports:
     parallel
 Suggests:
     knitr (>= 1.10),
-    rbamtools (>= 2.10),
     BiocStyle,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
-biocViews: RNAseq, DNAseq, ChIPseq, ChIPexo, ChIPnexus, Sequencing,
+biocViews: RNASeq, DNASeq, ChIPSeq, Sequencing, Transcription,
    Visualization, Coverage, Alignment, DataImport
 RoxygenNote: 5.0.1

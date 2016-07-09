@@ -3,19 +3,28 @@
 \docType{methods}
 \name{plot_region}
 \alias{plot_region}
+\alias{plot_region,SegvizData,GRanges-method}
 \alias{plot_region,SegvizData,numeric-method}
 \title{plot_region method}
 \usage{
-plot_region(object, peak_id, ...)
+plot_region(object, region, ...)
 
-\S4method{plot_region}{SegvizData,numeric}(object, peak_id,
+\S4method{plot_region}{SegvizData,GRanges}(object, region,
+  nameFiles = basename(files(object)), type = "aggr", normalize = TRUE,
+  base = 1e+06)
+
+\S4method{plot_region}{SegvizData,numeric}(object, region,
   nameFiles = basename(files(object)), type = "aggr", normalize = TRUE,
   base = 1e+06)
 }
 \arguments{
 \item{object}{a \code{SegvizData} object.}
 
-\item{peak_id}{a numeric value indicating which region to plot.}
+\item{region}{a numeric value indicating which region to plot in the
+\code{SegvizData} object or a \code{GRanges} object with a genomic region
+that is not recorded in the \code{SegvizData} object}
+
+\item{...}{Any other additional parameters that \code{plot_region} may need.}
 
 \item{nameFiles}{a character vector with the shortened names that are going
 to be used in the plot.}
@@ -42,6 +51,6 @@ plot_region plots the coverage of the aligned read files across the
 
 ## load SegvizData object
 load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-plot_region(segviz, peak_id = 1)
+plot_region(segviz, region = 1)
 }
 

@@ -118,12 +118,14 @@ Finally the number of aligned reads in each bam file is pre-processed and contai
 
 ## How to plot one a region from the **SegvizData** object:
 
-After creating a **SegvizData** object, one of the most simple capabilities to explore the data is to plot specific regions. For example, to plot a specific peak in the object is done by accesing its position in the **GRanges** object:
+After creating a **SegvizData** object, one of the most simple capabilities to explore the data is to plot specific regions. For example, to plot a specific peak in the object is done by accesing its position in the **GRanges** object or just using a whole **GRanges** object:
 
 ```{r plot1,include=TRUE,echo=TRUE,eval=TRUE,fig.height=fh,fig.width=fw}
   
   plot_region(segviz,1,nameFiles = c("Ctcf_rep1","Ctcf_rep2","H3k27ac",
                                      "H3k4me1","H3k4me3"))
+  plot_region(segviz,resize(segviz[1],width = 2e3,fix = "center"),
+              nameFiles = c("Ctcf_rep1","Ctcf_rep2","H3k27ac","H3k4me1","H3k4me3"))
 
 ```
 
