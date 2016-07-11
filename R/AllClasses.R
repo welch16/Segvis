@@ -67,7 +67,7 @@ setValidity("SegvizData",
 ##'
 ##' @rdname SegvizData
 ##' @export
-SegvizData <- function(regions,files,is_pet = rep(FALSE,length(files)),
+SegvizData = function(regions,files,is_pet = rep(FALSE,length(files)),
                        frag_len = 1,mc.cores = getOption("mc.cores" , 2L))
 {
   stopifnot(is.character(files),all(file.exists(files)),

@@ -8,7 +8,7 @@
 ##' @import data.table
 NULL
 
-.readFileCover <- function(file,is_pet,frag_len,st = "*")
+.readFileCover = function(file,is_pet,frag_len,st = "*")
 {
   stopifnot(st %in% c("+","-","*"))
   if(is_pet){
@@ -30,7 +30,7 @@ NULL
   return(cover)
 }
 
-.countReads <- function(file,is_pet)
+.countReads = function(file,is_pet)
 {
   if(is_pet){
     pet_flag = scanBamFlag(isPaired = TRUE)
@@ -42,7 +42,7 @@ NULL
   return(nr)
 }
 
-.dt_cover <- function(cover,nread,name,base = 1,region,st,normalize,
+.dt_cover = function(cover,nread,name,base = 1,region,st,normalize,
                       addRegion = FALSE){
   chr = as.character(seqnames(region))
   cover = cover[region]
@@ -59,7 +59,7 @@ NULL
   return(dt)
 }
 
-.dt_profile <- function(cover,nread,name , regions,st,base = 1,
+.dt_profile = function(cover,nread,name , regions,st,base = 1,
                         len,mc.cores = getOption("mc.cores",2L)){
 
   coord = NULL
@@ -73,7 +73,7 @@ NULL
   prof
 }
 
-.dt2gr <- function(x){
+.dt2gr = function(x){
   if(any(!names(x)[1:3] %in% c("seqnames","start","end"))){
     x = x[,1:3,with = FALSE]
     setnames(x,names(x),c("seqnames","start","end"))
@@ -84,9 +84,9 @@ NULL
                end = end ))]
 }
 
-.rle_summit <- function(x)which.max(as.vector(x))
+.rle_summit = function(x)which.max(as.vector(x))
 
-.subset_region_cover <- function(cover,reg)cover[reg]
+.subset_region_cover = function(cover,reg)cover[reg]
 
 ##' readBedFile
 ##'
@@ -111,7 +111,7 @@ NULL
 ##' readBedFile(reg[1])
 ##'
 ##'
-readBedFile <- function(file)
+readBedFile = function(file)
 {
   dt = fread(file,showProgress = FALSE)
   gr = .dt2gr(dt)
