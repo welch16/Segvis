@@ -46,7 +46,7 @@ setValidity("SegvizData",
 ##' @param frag_len a numeric vector representing the average fragment length
 ##' to which the aligned reads in their respective bam file are going to be
 ##' extended. For PE reads, this parameter is not considered.
-##' @param mc.cores A numeric value with the number of cores to use,
+##' @param mc.cores a numeric value with the number of cores to use,
 ##' i.e. at most how many child processes will be run simultaneously.
 ##'
 ##' @return  \code{SegvizData} returns a \code{SegvizData} object which contains

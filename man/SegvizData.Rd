@@ -22,7 +22,7 @@ the aligned reads in the respective bam file are paired.}
 to which the aligned reads in their respective bam file are going to be
 extended. For PE reads, this parameter is not considered.}
 
-\item{mc.cores}{A numeric value with the number of cores to use,
+\item{mc.cores}{a numeric value with the number of cores to use,
 i.e. at most how many child processes will be run simultaneously.}
 }
 \value{
