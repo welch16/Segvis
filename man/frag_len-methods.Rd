@@ -4,6 +4,7 @@
 \name{frag_len}
 \alias{frag_len}
 \alias{frag_len,SegvizData-method}
+\alias{frag_len}
 \title{frag_len method}
 \usage{
 frag_len(object)
@@ -23,14 +24,6 @@ not used.
 frag_len returns a numeric vector with the fragment length used to extend
 the 5' ends of the aligned reads.
 }
-\examples{
-
-## load SegvizData object
-load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-frag_len(segviz)
-
-}
 \seealso{
 \code{\link{SegvizData-class}}
 }
-

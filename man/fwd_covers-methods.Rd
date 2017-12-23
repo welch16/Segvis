@@ -4,6 +4,7 @@
 \name{fwd_covers}
 \alias{fwd_covers}
 \alias{fwd_covers,SegvizData-method}
+\alias{fwd_covers}
 \title{fwd_covers method}
 \usage{
 fwd_covers(object)
@@ -23,14 +24,6 @@ fwd_covers returns a list with the \code{coverage} of each file in the
 \code{SegvizData} object, calculated exclusively with the forward strand
 reads.
 }
-\examples{
-
-## load SegvizData object
-load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-fwd_covers(segviz)
-
-}
 \seealso{
 \code{\link{SegvizData-class}}
 }
-

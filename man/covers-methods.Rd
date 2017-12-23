@@ -4,6 +4,7 @@
 \name{covers}
 \alias{covers}
 \alias{covers,SegvizData-method}
+\alias{covers}
 \title{covers method}
 \usage{
 covers(object)
@@ -21,14 +22,6 @@ all the aligned reads files considered.
 covers returns a list with the \code{coverage} of each file in the
 \code{SegvizData} object.
 }
-\examples{
-
-## load SegvizData object
-load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-covers(segviz)
-
-}
 \seealso{
 \code{\link{SegvizData-class}}
 }
-

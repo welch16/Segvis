@@ -4,6 +4,7 @@
 \name{plot_heatmap}
 \alias{plot_heatmap}
 \alias{plot_heatmap,SegvizData-method}
+\alias{plot_heatmap}
 \title{plot_heatmap method}
 \usage{
 plot_heatmap(object, ...)
@@ -52,8 +53,4 @@ center of the regions.
 }
 \seealso{
 \code{\link{SegvizData-class}}
-## load SegvizData object
-load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-plot_heatmap(segviz)
 }
-

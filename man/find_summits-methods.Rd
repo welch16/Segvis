@@ -4,6 +4,7 @@
 \name{find_summits}
 \alias{find_summits}
 \alias{find_summits,SegvizData-method}
+\alias{find_summits}
 \title{find_summits method}
 \usage{
 find_summits(object, ...)
@@ -31,14 +32,6 @@ of the files in object.
 find_summits returns a numeric vector with the same length of the
 \code{GRanges} with the summits according to one of the files.
 }
-\examples{
-
-## load SegvizData object
-load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-segviz$summit = find_summits(segviz,which.file = 1 ,mc.cores = 2)
-
-}
 \seealso{
 \code{\link{SegvizData-class}}
 }
-

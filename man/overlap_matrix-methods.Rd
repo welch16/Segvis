@@ -4,6 +4,7 @@
 \name{overlap_matrix}
 \alias{overlap_matrix}
 \alias{overlap_matrix,SegvizData,character-method}
+\alias{overlap_matrix}
 \title{overlap_matrix method}
 \usage{
 overlap_matrix(object, bedfiles, ...)
@@ -30,16 +31,6 @@ bedfiles.
 overlap_matrix returns a matrix of zeros and ones indicating if the regions
 in the \code{GRanges} object overlap a region in the respective bedfile
 }
-\examples{
-
-## load SegvizData object
-load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-bedfiles = list.files(system.file("extdata","example",package = "Segvis"),
-  pattern = "narrow",full.names = TRUE)[-1]
-  overlap_matrix(segviz,bedfiles,c("dnase1","dnase2"))
-
-}
 \seealso{
 \code{\link{SegvizData-class}}
 }
-

@@ -104,13 +104,13 @@ NULL
 ##'
 ##' @references \url{https://genome.ucsc.edu/FAQ/FAQformat.html#format1}
 ##'
-##' @examples
-##'
-##' dr = system.file("extdata","example",package = "Segvis",mustWork = TRUE)
-##' reg = list.files(dr,pattern = "narrow",full.names =TRUE)
-##' readBedFile(reg[1])
-##'
-##'
+## @examples
+##
+## dr = system.file("extdata","example",package = "Segvis",mustWork = TRUE)
+## reg = list.files(dr,pattern = "narrow",full.names =TRUE)
+## readBedFile(reg[1])
+##
+##
 readBedFile = function(file)
 {
   dt = fread(file,showProgress = FALSE)

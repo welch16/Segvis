@@ -4,7 +4,9 @@
 \name{plot_region}
 \alias{plot_region}
 \alias{plot_region,SegvizData,GRanges-method}
+\alias{plot_region}
 \alias{plot_region,SegvizData,numeric-method}
+\alias{plot_region}
 \title{plot_region method}
 \usage{
 plot_region(object, region, ...)
@@ -48,9 +50,4 @@ plot_region plots the coverage of the aligned read files across the
 }
 \seealso{
 \code{\link{SegvizData-class}}
-
-## load SegvizData object
-load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-plot_region(segviz, region = 1)
 }
-

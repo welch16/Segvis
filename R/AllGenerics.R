@@ -15,12 +15,12 @@
 ##' @seealso \code{\link{SegvizData-class}}
 ##'
 ##' @rdname files-methods
-##' @examples
-##'
-##' ## load SegvizData object
-##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-##' files(segviz)
-##'
+## @examples
+##
+## ## load SegvizData object
+## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+## files(segviz)
+##
 setGeneric("files",
       function(object)
       standardGeneric("files")
@@ -41,12 +41,12 @@ setGeneric("files",
 ##' @seealso \code{\link{SegvizData-class}}
 ##'
 ##' @rdname is_pet-methods
-##' @examples
-##'
-##' ## load SegvizData object
-##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-##' is_pet(segviz)
-##'
+## @examples
+##
+## ## load SegvizData object
+## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+## is_pet(segviz)
+##
 setGeneric("is_pet",
       function(object)
       standardGeneric("is_pet")
@@ -69,12 +69,12 @@ setGeneric("is_pet",
 ##' @seealso \code{\link{SegvizData-class}}
 ##'
 ##' @rdname frag_len-methods
-##' @examples
-##'
-##' ## load SegvizData object
-##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-##' frag_len(segviz)
-##'
+## @examples
+##
+## ## load SegvizData object
+## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+## frag_len(segviz)
+##
 setGeneric("frag_len",
         function(object)
         standardGeneric("frag_len")
@@ -95,12 +95,12 @@ setGeneric("frag_len",
 ##' @seealso \code{\link{SegvizData-class}}
 ##'
 ##' @rdname covers-methods
-##' @examples
-##'
-##' ## load SegvizData object
-##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-##' covers(segviz)
-##'
+## @examples
+##
+## ## load SegvizData object
+## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+## covers(segviz)
+##
 setGeneric("covers",
       function(object)
       standardGeneric("covers")
@@ -123,12 +123,12 @@ setGeneric("covers",
 ##' @seealso \code{\link{SegvizData-class}}
 ##'
 ##' @rdname fwd_covers-methods
-##' @examples
-##'
-##' ## load SegvizData object
-##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-##' fwd_covers(segviz)
-##'
+## @examples
+##
+## ## load SegvizData object
+## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+## fwd_covers(segviz)
+##
 setGeneric("fwd_covers",
       function(object)
       standardGeneric("fwd_covers")
@@ -151,12 +151,12 @@ setGeneric("fwd_covers",
 ##' @seealso \code{\link{SegvizData-class}}
 ##'
 ##' @rdname bwd_covers-methods
-##' @examples
-##'
-##' ## load SegvizData object
-##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-##' bwd_covers(segviz)
-##'
+## @examples
+##
+## ## load SegvizData object
+## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+## bwd_covers(segviz)
+##
 setGeneric("bwd_covers",
         function(object)
         standardGeneric("bwd_covers")
@@ -177,12 +177,12 @@ setGeneric("bwd_covers",
 ##' @seealso \code{\link{SegvizData-class}}
 ##'
 ##' @rdname nreads-methods
-##' @examples
-##'
-##' ## load SegvizData object
-##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-##' nreads(segviz)
-##'
+## @examples
+##
+## ## load SegvizData object
+## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+## nreads(segviz)
+##
 setGeneric("nreads",
       function(object)
       standardGeneric("nreads")
@@ -209,12 +209,12 @@ setGeneric("nreads",
 ##' @docType methods
 ##'
 ##' @seealso \code{\link{SegvizData-class}}
-##' @examples
-##'
-##' ## load SegvizData object
-##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-##' segviz$summit = find_summits(segviz,which.file = 1 ,mc.cores = 2)
-##'
+## @examples
+##
+## ## load SegvizData object
+## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+## segviz$summit = find_summits(segviz,which.file = 1 ,mc.cores = 2)
+##
 setGeneric("find_summits",
       function(object,...)
       standardGeneric("find_summits"))
@@ -239,14 +239,14 @@ setGeneric("find_summits",
 ##' @docType methods
 ##'
 ##' @seealso \code{\link{SegvizData-class}}
-##' @examples
-##'
-##' ## load SegvizData object
-##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-##' bedfiles = list.files(system.file("extdata","example",package = "Segvis"),
-##'   pattern = "narrow",full.names = TRUE)[-1]
-##'   overlap_matrix(segviz,bedfiles,c("dnase1","dnase2"))
-##'
+## @examples
+##
+## ## load SegvizData object
+## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+## bedfiles = list.files(system.file("extdata","example",package = "Segvis"),
+##   pattern = "narrow",full.names = TRUE)[-1]
+##   overlap_matrix(segviz,bedfiles,c("dnase1","dnase2"))
+##
 setGeneric("overlap_matrix",
       function(object,bedfiles,...)
       standardGeneric("overlap_matrix"))
@@ -276,11 +276,11 @@ setGeneric("overlap_matrix",
 ##'
 ##'@seealso \code{\link{SegvizData-class}}
 ##'
-##' ## load SegvizData object
-##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-##' DT_region(segviz, region = 1)
-##' DT_region(segviz,
-##'   region = GRanges(seqnames = "chr2",ranges = IRanges(start = 56,width = 1e3)))
+## ## load SegvizData object
+## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+## DT_region(segviz, region = 1)
+## DT_region(segviz,
+##   region = GRanges(seqnames = "chr2",ranges = IRanges(start = 56,width = 1e3)))
 setGeneric("DT_region",
            function(object,region,...)
              standardGeneric("DT_region"))
@@ -311,9 +311,9 @@ setGeneric("DT_region",
 ##' @rdname DT_profile-methods
 ##'
 ##'@seealso \code{\link{SegvizData-class}}
-##' ## load SegvizData object
-##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-##' DT_profile(segviz)
+## ## load SegvizData object
+## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+## DT_profile(segviz)
 setGeneric("DT_profile",
            function(object,...)
              standardGeneric("DT_profile"))
@@ -344,9 +344,9 @@ setGeneric("DT_profile",
 ##' @rdname plot_profile-methods
 ##'
 ##'@seealso \code{\link{SegvizData-class}}
-##' ## load SegvizData object
-##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-##' plot_profile(segviz)
+## ## load SegvizData object
+## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+## plot_profile(segviz)
 setGeneric("plot_profile",
            function(object,...)
              standardGeneric("plot_profile"))
@@ -381,9 +381,9 @@ setGeneric("plot_profile",
 ##' @rdname plot_heatmap-methods
 ##'
 ##'@seealso \code{\link{SegvizData-class}}
-##' ## load SegvizData object
-##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-##' plot_heatmap(segviz)
+## ## load SegvizData object
+## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+## plot_heatmap(segviz)
 setGeneric("plot_heatmap",
            function(object,...)
              standardGeneric("plot_heatmap"))
@@ -414,50 +414,10 @@ setGeneric("plot_heatmap",
 ##'
 ##'@seealso \code{\link{SegvizData-class}}
 ##'
-##' ## load SegvizData object
-##' load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-##' plot_region(segviz, region = 1)
+## ## load SegvizData object
+## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+## plot_region(segviz, region = 1)
 setGeneric("plot_region",
         function(object,region,...)
         standardGeneric("plot_region"))
-
-############## possibly methods to be removed
-
-# # generic methods for various classes
-#
-# ##' name methods
-# ##'
-# ##' name returns a string with the name of the segvis object
-# ##'
-# ##' @param object A \code{segvis} object
-# ##'
-# ##' @return A string with the name of the object
-# ##'
-# ##' @export
-# ##' @docType methods
-# ##' @seealso \code{\link{segvis-class}}
-# ##' @rdname name-methods
-# ##' @examples
-# ##' \dontrun{
-# ##'
-# ##' name(segvis)
-# ##' name(segvis) <- "my_regions"
-# ##'
-# ##' }
-# setGeneric("name",
-#   function(object)
-#   standardGeneric("name")
-# )
-#
-# ##' name<- assigns a new a name to the segvis object
-# ##'
-# ##' @param value A character with the name of the object
-# ##'
-# ##' @return A segvis object
-# ##' @rdname name-methods
-# setGeneric("name<-",
-#   function(object,value)
-#   standardGeneric("name<-")
-# )
-
 

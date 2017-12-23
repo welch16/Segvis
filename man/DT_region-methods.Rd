@@ -4,7 +4,9 @@
 \name{DT_region}
 \alias{DT_region}
 \alias{DT_region,SegvizData,GRanges-method}
+\alias{DT_region}
 \alias{DT_region,SegvizData,numeric-method}
+\alias{DT_region}
 \title{DT_region method}
 \usage{
 DT_region(object, region, ...)
@@ -48,11 +50,4 @@ the coverage of the aligned read files across the
 }
 \seealso{
 \code{\link{SegvizData-class}}
-
-## load SegvizData object
-load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-DT_region(segviz, region = 1)
-DT_region(segviz,
-  region = GRanges(seqnames = "chr2",ranges = IRanges(start = 56,width = 1e3)))
 }
-

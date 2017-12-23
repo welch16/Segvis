@@ -4,6 +4,7 @@
 \name{nreads}
 \alias{nreads}
 \alias{nreads,SegvizData-method}
+\alias{nreads}
 \title{nreads method}
 \usage{
 nreads(object)
@@ -21,14 +22,6 @@ of each experiment.
 nreads returns a numeric vector with the number of the depth of all the
 experiments considered.
 }
-\examples{
-
-## load SegvizData object
-load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-nreads(segviz)
-
-}
 \seealso{
 \code{\link{SegvizData-class}}
 }
-

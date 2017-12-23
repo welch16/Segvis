@@ -4,6 +4,7 @@
 \name{DT_profile}
 \alias{DT_profile}
 \alias{DT_profile,SegvizData-method}
+\alias{DT_profile}
 \title{DT_profile method}
 \usage{
 DT_profile(object, ...)
@@ -45,8 +46,4 @@ vector for all regions.
 }
 \seealso{
 \code{\link{SegvizData-class}}
-## load SegvizData object
-load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-DT_profile(segviz)
 }
-

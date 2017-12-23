@@ -4,6 +4,7 @@
 \name{is_pet}
 \alias{is_pet}
 \alias{is_pet,SegvizData-method}
+\alias{is_pet}
 \title{is_pet method}
 \usage{
 is_pet(object)
@@ -21,14 +22,6 @@ aligned reads files are paired ended.
 is_pet returns a logical vector indicating if the aligned reads are paired
 end
 }
-\examples{
-
-## load SegvizData object
-load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-is_pet(segviz)
-
-}
 \seealso{
 \code{\link{SegvizData-class}}
 }
-

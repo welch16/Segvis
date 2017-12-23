@@ -4,6 +4,7 @@
 \name{plot_profile}
 \alias{plot_profile}
 \alias{plot_profile,SegvizData-method}
+\alias{plot_profile}
 \title{plot_profile method}
 \usage{
 plot_profile(object, ...)
@@ -45,8 +46,4 @@ the tags vector for all regions.
 }
 \seealso{
 \code{\link{SegvizData-class}}
-## load SegvizData object
-load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-plot_profile(segviz)
 }
-

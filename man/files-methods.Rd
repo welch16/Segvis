@@ -4,6 +4,7 @@
 \name{files}
 \alias{files}
 \alias{files,SegvizData-method}
+\alias{files}
 \title{files method}
 \usage{
 files(object)
@@ -21,14 +22,6 @@ used in the \code{SegvizData} object.
 files returns a character vectors with the files used in the SegvizData
 object.
 }
-\examples{
-
-## load SegvizData object
-load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-files(segviz)
-
-}
 \seealso{
 \code{\link{SegvizData-class}}
 }
-

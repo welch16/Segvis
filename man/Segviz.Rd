@@ -17,4 +17,3 @@ strands.
 \details{
 Segvis provides different tools to summarize and visualize data:
 }
-

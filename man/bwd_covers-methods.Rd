@@ -4,6 +4,7 @@
 \name{bwd_covers}
 \alias{bwd_covers}
 \alias{bwd_covers,SegvizData-method}
+\alias{bwd_covers}
 \title{bwd_covers method}
 \usage{
 bwd_covers(object)
@@ -23,14 +24,6 @@ bwd_covers returns a list with the \code{coverage} of each file in the
 \code{SegvizData} object, calculated exclusively with the backward strand
 reads.
 }
-\examples{
-
-## load SegvizData object
-load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-bwd_covers(segviz)
-
-}
 \seealso{
 \code{\link{SegvizData-class}}
 }
-

@@ -16,15 +16,6 @@ A \code{GRanges} object.
 Reads an increased bed file and adds the output into a \code{GRanges}
 object.
 }
-\examples{
-
-dr = system.file("extdata","example",package = "Segvis",mustWork = TRUE)
-reg = list.files(dr,pattern = "narrow",full.names =TRUE)
-readBedFile(reg[1])
-
-
-}
 \references{
 \url{https://genome.ucsc.edu/FAQ/FAQformat.html#format1}
 }
-

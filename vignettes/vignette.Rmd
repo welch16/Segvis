@@ -185,10 +185,11 @@ Similarly, as with the `r Rpackage("plot_region")` and `r Rpackage("DT_region")`
 ```
 By default, the `r Rpackage("plot_heatmap")` method clusters the normalized signal across the windows by using the profiles from the first files added to the **SegvizData**, an eucliean distance and the complete agglomeration technique. However, by the use of the `r "which.cluster"`, `r "dist_method"` and `r "clust_method"` parameters is possible to explore different clustering strategies when analizing the data.
 
+<!---
+
 # A case of study:
 
 
-<!---
 Then to convert it into a \Rclass{GRanges} object we can use:
 
 <<gr_peaks,include=TRUE,echo=TRUE,eval=TRUE>>=
