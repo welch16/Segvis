@@ -1,25 +1,25 @@
-## Generic methods for SegvizData class
+## Generic methods for SegvisData class
 
 ##' files method
 ##'
-##' files returns a character vectors with the files used in the SegvizData
+##' files returns a character vectors with the files used in the SegvisData
 ##' object.
 ##'
-##' @param object a \code{SegvizData} object.
+##' @param object a \code{SegvisData} object.
 ##' @return The \code{files} method returns a character vector with the files
-##' used in the \code{SegvizData} object.
+##' used in the \code{SegvisData} object.
 ##'
 ##' @export
 ##' @docType methods
 ##'
-##' @seealso \code{\link{SegvizData-class}}
+##' @seealso \code{\link{SegvisData-class}}
 ##'
 ##' @rdname files-methods
 ## @examples
 ##
-## ## load SegvizData object
-## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-## files(segviz)
+## ## load SegvisData object
+## load(system.file("extdata","example","Segvis.RData",package = "Segvis"))
+## files(Segvis)
 ##
 setGeneric("files",
       function(object)
@@ -31,21 +31,21 @@ setGeneric("files",
 ##' is_pet returns a logical vector indicating if the aligned reads are paired
 ##' end
 ##'
-##' @param object a \code{SegvizData} object.
+##' @param object a \code{SegvisData} object.
 ##' @return The \code{is_pet} method returns a logical vector indicating which
 ##' aligned reads files are paired ended.
 ##'
 ##' @export
 ##' @docType methods
 ##'
-##' @seealso \code{\link{SegvizData-class}}
+##' @seealso \code{\link{SegvisData-class}}
 ##'
 ##' @rdname is_pet-methods
 ## @examples
 ##
-## ## load SegvizData object
-## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-## is_pet(segviz)
+## ## load SegvisData object
+## load(system.file("extdata","example","Segvis.RData",package = "Segvis"))
+## is_pet(Segvis)
 ##
 setGeneric("is_pet",
       function(object)
@@ -57,7 +57,7 @@ setGeneric("is_pet",
 ##' frag_len returns a numeric vector with the fragment length used to extend
 ##' the 5' ends of the aligned reads.
 ##'
-##' @param object a \code{SegvizData} object.
+##' @param object a \code{SegvisData} object.
 ##' @return The \code{frag_len} method returns a numeric vector with the fragment
 ##' length used to extend the 5' ends of the the aligned reads. If the reads
 ##' were paired ended, then a value of \code{NA} is assigned, but the parameter is
@@ -66,14 +66,14 @@ setGeneric("is_pet",
 ##' @export
 ##' @docType methods
 ##'
-##' @seealso \code{\link{SegvizData-class}}
+##' @seealso \code{\link{SegvisData-class}}
 ##'
 ##' @rdname frag_len-methods
 ## @examples
 ##
-## ## load SegvizData object
-## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-## frag_len(segviz)
+## ## load SegvisData object
+## load(system.file("extdata","example","Segvis.RData",package = "Segvis"))
+## frag_len(Segvis)
 ##
 setGeneric("frag_len",
         function(object)
@@ -83,23 +83,23 @@ setGeneric("frag_len",
 ##' covers method
 ##'
 ##' covers returns a list with the \code{coverage} of each file in the
-##' \code{SegvizData} object.
+##' \code{SegvisData} object.
 ##'
-##' @param object a \code{SegvizData} object.
+##' @param object a \code{SegvisData} object.
 ##' @return The \code{covers} method returns a list of aggregated coverage for
 ##' all the aligned reads files considered.
 ##'
 ##' @export
 ##' @docType methods
 ##'
-##' @seealso \code{\link{SegvizData-class}}
+##' @seealso \code{\link{SegvisData-class}}
 ##'
 ##' @rdname covers-methods
 ## @examples
 ##
-## ## load SegvizData object
-## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-## covers(segviz)
+## ## load SegvisData object
+## load(system.file("extdata","example","Segvis.RData",package = "Segvis"))
+## covers(Segvis)
 ##
 setGeneric("covers",
       function(object)
@@ -109,10 +109,10 @@ setGeneric("covers",
 ##' fwd_covers method
 ##'
 ##' fwd_covers returns a list with the \code{coverage} of each file in the
-##' \code{SegvizData} object, calculated exclusively with the forward strand
+##' \code{SegvisData} object, calculated exclusively with the forward strand
 ##' reads.
 ##'
-##' @param object a \code{SegvizData} object.
+##' @param object a \code{SegvisData} object.
 ##' @return The \code{fwd_covers} method returns a list of aggregated coverage
 ##' for all the aligned reads files considered, by using the reads in the forward
 ##' strand exclusively.
@@ -120,14 +120,14 @@ setGeneric("covers",
 ##' @export
 ##' @docType methods
 ##'
-##' @seealso \code{\link{SegvizData-class}}
+##' @seealso \code{\link{SegvisData-class}}
 ##'
 ##' @rdname fwd_covers-methods
 ## @examples
 ##
-## ## load SegvizData object
-## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-## fwd_covers(segviz)
+## ## load SegvisData object
+## load(system.file("extdata","example","Segvis.RData",package = "Segvis"))
+## fwd_covers(Segvis)
 ##
 setGeneric("fwd_covers",
       function(object)
@@ -137,10 +137,10 @@ setGeneric("fwd_covers",
 ##' bwd_covers method
 ##'
 ##' bwd_covers returns a list with the \code{coverage} of each file in the
-##' \code{SegvizData} object, calculated exclusively with the backward strand
+##' \code{SegvisData} object, calculated exclusively with the backward strand
 ##' reads.
 ##'
-##' @param object a \code{SegvizData} object.
+##' @param object a \code{SegvisData} object.
 ##' @return The \code{bwd_covers} method returns a list of aggregated coverage
 ##' for all the aligned reads files considered, by using the reads in the reverse
 ##' strand exclusively.
@@ -148,14 +148,14 @@ setGeneric("fwd_covers",
 ##' @export
 ##' @docType methods
 ##'
-##' @seealso \code{\link{SegvizData-class}}
+##' @seealso \code{\link{SegvisData-class}}
 ##'
 ##' @rdname bwd_covers-methods
 ## @examples
 ##
-## ## load SegvizData object
-## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-## bwd_covers(segviz)
+## ## load SegvisData object
+## load(system.file("extdata","example","Segvis.RData",package = "Segvis"))
+## bwd_covers(Segvis)
 ##
 setGeneric("bwd_covers",
         function(object)
@@ -167,21 +167,21 @@ setGeneric("bwd_covers",
 ##' nreads returns a numeric vector with the number of the depth of all the
 ##' experiments considered.
 ##'
-##' @param object a \code{SegvizData} object.
+##' @param object a \code{SegvisData} object.
 ##' @return The \code{nreads} method returns a numeric vector with the depth
 ##' of each experiment.
 ##'
 ##' @export
 ##' @docType methods
 ##'
-##' @seealso \code{\link{SegvizData-class}}
+##' @seealso \code{\link{SegvisData-class}}
 ##'
 ##' @rdname nreads-methods
 ## @examples
 ##
-## ## load SegvizData object
-## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-## nreads(segviz)
+## ## load SegvisData object
+## load(system.file("extdata","example","Segvis.RData",package = "Segvis"))
+## nreads(Segvis)
 ##
 setGeneric("nreads",
       function(object)
@@ -193,7 +193,7 @@ setGeneric("nreads",
 ##' find_summits returns a numeric vector with the same length of the
 ##' \code{GRanges} with the summits according to one of the files.
 ##'
-##' @param object a \code{SegvizData} object.
+##' @param object a \code{SegvisData} object.
 ##' @param which.file a numeric value indicating which file is going to be
 ##' used to calculate the summits. By default it takes the first file.
 ##' @param mc.cores a numeric value with the number of cores to use,
@@ -208,12 +208,12 @@ setGeneric("nreads",
 ##' @rdname find_summits-methods
 ##' @docType methods
 ##'
-##' @seealso \code{\link{SegvizData-class}}
+##' @seealso \code{\link{SegvisData-class}}
 ## @examples
 ##
-## ## load SegvizData object
-## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-## segviz$summit = find_summits(segviz,which.file = 1 ,mc.cores = 2)
+## ## load SegvisData object
+## load(system.file("extdata","example","Segvis.RData",package = "Segvis"))
+## Segvis$summit = find_summits(Segvis,which.file = 1 ,mc.cores = 2)
 ##
 setGeneric("find_summits",
       function(object,...)
@@ -224,7 +224,7 @@ setGeneric("find_summits",
 ##' overlap_matrix returns a matrix of zeros and ones indicating if the regions
 ##' in the \code{GRanges} object overlap a region in the respective bedfile
 ##'
-##' @param object a \code{SegvizData} object.
+##' @param object a \code{SegvisData} object.
 ##' @param bedfiles a character vector with the files in bed fortmat.
 ##' @param colnames a character vector with the names of the bed files. The
 ##' default value for this is \code{basename(bedfiles)}.
@@ -238,14 +238,14 @@ setGeneric("find_summits",
 ##' @rdname overlap_matrix-methods
 ##' @docType methods
 ##'
-##' @seealso \code{\link{SegvizData-class}}
+##' @seealso \code{\link{SegvisData-class}}
 ## @examples
 ##
-## ## load SegvizData object
-## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
+## ## load SegvisData object
+## load(system.file("extdata","example","Segvis.RData",package = "Segvis"))
 ## bedfiles = list.files(system.file("extdata","example",package = "Segvis"),
 ##   pattern = "narrow",full.names = TRUE)[-1]
-##   overlap_matrix(segviz,bedfiles,c("dnase1","dnase2"))
+##   overlap_matrix(Segvis,bedfiles,c("dnase1","dnase2"))
 ##
 setGeneric("overlap_matrix",
       function(object,bedfiles,...)
@@ -255,9 +255,9 @@ setGeneric("overlap_matrix",
 ##'
 ##' DT_region returns a \code{data.table} with the info. necessary to plot
 ##' the coverage of the aligned read files across the
-##' \code{peak_id}th element of the \code{SegvizData} object.
+##' \code{peak_id}th element of the \code{SegvisData} object.
 ##'
-##' @param object a \code{SegvizData} object.
+##' @param object a \code{SegvisData} object.
 ##' @param region a numeric value indicating which region to plot or a
 ##' \code{GRanges} object indicating a whole region to plot.
 ##' @param nameFiles a character vector with the shortened names that are going
@@ -274,12 +274,12 @@ setGeneric("overlap_matrix",
 ##' the info. necessary to be plotted.
 ##' @rdname DT_region-methods
 ##'
-##'@seealso \code{\link{SegvizData-class}}
+##'@seealso \code{\link{SegvisData-class}}
 ##'
-## ## load SegvizData object
-## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-## DT_region(segviz, region = 1)
-## DT_region(segviz,
+## ## load SegvisData object
+## load(system.file("extdata","example","Segvis.RData",package = "Segvis"))
+## DT_region(Segvis, region = 1)
+## DT_region(Segvis,
 ##   region = GRanges(seqnames = "chr2",ranges = IRanges(start = 56,width = 1e3)))
 setGeneric("DT_region",
            function(object,region,...)
@@ -292,7 +292,7 @@ setGeneric("DT_region",
 ##' file and distance from the anchor coordinate it applies FUN to the tags
 ##' vector for all regions.
 ##'
-##' @param object a \code{SegvizData} object.
+##' @param object a \code{SegvisData} object.
 ##' @param FUN a function to summarize the profiles by coordinate. The default
 ##' value is the \code{mean}.
 ##' @param nameFiles a character vector with the shortened names that are going
@@ -310,10 +310,10 @@ setGeneric("DT_region",
 ##' the info. necessary to be plotted.
 ##' @rdname DT_profile-methods
 ##'
-##'@seealso \code{\link{SegvizData-class}}
-## ## load SegvizData object
-## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-## DT_profile(segviz)
+##'@seealso \code{\link{SegvisData-class}}
+## ## load SegvisData object
+## load(system.file("extdata","example","Segvis.RData",package = "Segvis"))
+## DT_profile(Segvis)
 setGeneric("DT_profile",
            function(object,...)
              standardGeneric("DT_profile"))
@@ -325,7 +325,7 @@ setGeneric("DT_profile",
 ##' coverage, file and distance from the anchor coordinate it applies FUN to
 ##' the tags vector for all regions.
 ##'
-##' @param object a \code{SegvizData} object.
+##' @param object a \code{SegvisData} object.
 ##' @param FUN a function to summarize the profiles by coordinate. The default
 ##' value is the \code{mean}.
 ##' @param nameFiles a character vector with the shortened names that are going
@@ -343,10 +343,10 @@ setGeneric("DT_profile",
 ##' the summarized functional profiles.
 ##' @rdname plot_profile-methods
 ##'
-##'@seealso \code{\link{SegvizData-class}}
-## ## load SegvizData object
-## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-## plot_profile(segviz)
+##'@seealso \code{\link{SegvisData-class}}
+## ## load SegvisData object
+## load(system.file("extdata","example","Segvis.RData",package = "Segvis"))
+## plot_profile(Segvis)
 setGeneric("plot_profile",
            function(object,...)
              standardGeneric("plot_profile"))
@@ -354,10 +354,10 @@ setGeneric("plot_profile",
 ##' plot_heatmap method
 ##'
 ##' plot_heatmap plots a heatmap that summarizes the signal profiles of all files
-##' in the \code{SegvizData} object as a function of the distance to the
+##' in the \code{SegvisData} object as a function of the distance to the
 ##' center of the regions.
 ##'
-##' @param object a \code{SegvizData} object.
+##' @param object a \code{SegvisData} object.
 ##' @param which.cluster an integer indicating which signal is going to be used to
 ##' cluster the profiles. By default uses the first file loaded.
 ##' @param dist_method the distance measure to be used. This must be one of
@@ -377,13 +377,13 @@ setGeneric("plot_profile",
 ##' @param ... Any other additional parameters that \code{plot_heatmap} may need.
 ##'
 ##' @return The \code{plot_heatmap} plots a heatmap that summarizes the signal
-##' profiles of all files in the \code{SegvizData} object.
+##' profiles of all files in the \code{SegvisData} object.
 ##' @rdname plot_heatmap-methods
 ##'
-##'@seealso \code{\link{SegvizData-class}}
-## ## load SegvizData object
-## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-## plot_heatmap(segviz)
+##'@seealso \code{\link{SegvisData-class}}
+## ## load SegvisData object
+## load(system.file("extdata","example","Segvis.RData",package = "Segvis"))
+## plot_heatmap(Segvis)
 setGeneric("plot_heatmap",
            function(object,...)
              standardGeneric("plot_heatmap"))
@@ -393,12 +393,12 @@ setGeneric("plot_heatmap",
 ##' plot_region method
 ##'
 ##' plot_region plots the coverage of the aligned read files across the
-##' \code{peak_id}th element of the \code{SegvizData} object.
+##' \code{peak_id}th element of the \code{SegvisData} object.
 ##'
-##' @param object a \code{SegvizData} object.
+##' @param object a \code{SegvisData} object.
 ##' @param region a numeric value indicating which region to plot in the
-##' \code{SegvizData} object or a \code{GRanges} object with a genomic region
-##' that is not recorded in the \code{SegvizData} object
+##' \code{SegvisData} object or a \code{GRanges} object with a genomic region
+##' that is not recorded in the \code{SegvisData} object
 ##' @param nameFiles a character vector with the shortened names that are going
 ##' to be used in the plot.
 ##' @param type a character value indicating which strand to use. By default
@@ -412,11 +412,11 @@ setGeneric("plot_heatmap",
 ##' the desired plot.
 ##' @rdname plot_region-methods
 ##'
-##'@seealso \code{\link{SegvizData-class}}
+##'@seealso \code{\link{SegvisData-class}}
 ##'
-## ## load SegvizData object
-## load(system.file("extdata","example","segviz.RData",package = "Segvis"))
-## plot_region(segviz, region = 1)
+## ## load SegvisData object
+## load(system.file("extdata","example","Segvis.RData",package = "Segvis"))
+## plot_region(Segvis, region = 1)
 setGeneric("plot_region",
         function(object,region,...)
         standardGeneric("plot_region"))

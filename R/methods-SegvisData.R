@@ -13,7 +13,7 @@ NULL
 ##' @docType methods
 ##' @exportMethod files
 setMethod("files",
-      signature = signature(object = "SegvizData"),
+      signature = signature(object = "SegvisData"),
       definition = function(object)object@files)
 
 ##' @rdname is_pet-methods
@@ -21,7 +21,7 @@ setMethod("files",
 ##' @docType methods
 ##' @exportMethod is_pet
 setMethod("is_pet",
-      signature = signature(object = "SegvizData"),
+      signature = signature(object = "SegvisData"),
       definition = function(object)object@is_pet)
 
 ##' @rdname frag_len-methods
@@ -29,7 +29,7 @@ setMethod("is_pet",
 ##' @docType methods
 ##' @exportMethod frag_len
 setMethod("frag_len",
-      signature = signature(object = "SegvizData"),
+      signature = signature(object = "SegvisData"),
       definition = function(object)object@frag_len)
 
 ##' @rdname covers-methods
@@ -37,7 +37,7 @@ setMethod("frag_len",
 ##' @docType methods
 ##' @exportMethod covers
 setMethod("covers",
-      signature = signature(object = "SegvizData"),
+      signature = signature(object = "SegvisData"),
       definition = function(object)object@covers)
 
 ##' @rdname fwd_covers-methods
@@ -45,7 +45,7 @@ setMethod("covers",
 ##' @docType methods
 ##' @exportMethod fwd_covers
 setMethod("fwd_covers",
-      signature = signature(object = "SegvizData"),
+      signature = signature(object = "SegvisData"),
       definition = function(object)object@fwd_covers)
 
 ##' @rdname bwd_covers-methods
@@ -53,7 +53,7 @@ setMethod("fwd_covers",
 ##' @docType methods
 ##' @exportMethod bwd_covers
 setMethod("bwd_covers",
-      signature = signature(object = "SegvizData"),
+      signature = signature(object = "SegvisData"),
       definition = function(object)object@bwd_covers)
 
 ##' @rdname nreads-methods
@@ -61,7 +61,7 @@ setMethod("bwd_covers",
 ##' @docType methods
 ##' @exportMethod nreads
 setMethod("nreads",
-      signature = signature(object = "SegvizData"),
+      signature = signature(object = "SegvisData"),
       definition = function(object)object@nreads)
 
 ##' @rdname find_summits-methods
@@ -69,14 +69,20 @@ setMethod("nreads",
 ##' @docType methods
 ##' @exportMethod find_summits
 setMethod("find_summits",
-      signature = signature(object = "SegvizData"),
+      signature = signature(object = "SegvisData"),
       definition = function(object,which.file = 1,
           mc.cores = getOption("mc.cores",2L)){
         stopifnot(is.numeric(which.file),which.file >= 1,
                   which.file <= length(files(object)))
         cover = covers(object)[[which.file]]
         subs = cover[object]
-        sm = mclapply(subs, .rle_summit,mc.cores = mc.cores)
+        if(Sys.info()[["sysname"]] == "Windows"){
+          parallel_param = SnowParam(workes = mc.cores , type = "SOCK")
+        }else{
+          parallel_param = MulticoreParam(workers = mc.cores)
+        }
+        
+        sm = bplapply(subs, .rle_summit, BPPARAM = parallel_param)
         names(sm) = NULL
         start(object) + do.call(c,sm)
       })
@@ -86,7 +92,7 @@ setMethod("find_summits",
 ##' @docType methods
 ##' @exportMethod overlap_matrix
 setMethod("overlap_matrix",
-      signature = signature(object = "SegvizData",bedfiles = "character"),
+      signature = signature(object = "SegvisData",bedfiles = "character"),
       definition = function(object,bedfiles,
                             colnames = basename(bedfiles)){
         stopifnot(is.character(bedfiles),all(file.exists(bedfiles)))
@@ -105,13 +111,13 @@ setMethod("overlap_matrix",
 ##' @docType methods
 ##' @exportMethod DT_region
 setMethod("DT_region",
-          signature = signature(object = "SegvizData",region = "GRanges"),
+          signature = signature(object = "SegvisData",region = "GRanges"),
           definition = function(object,region,
                                 nameFiles = basename(files(object)),
                                 type = "aggr",normalize = TRUE,
                                 base = 1e6){
 
-            stopifnot(class(region) %in% c("GRanges","SegvizData"))
+            stopifnot(class(region) %in% c("GRanges","SegvisData"))
 
             stopifnot(is.character(type),
                       tolower(type) %in% c("aggr","fwd","bwd","both","all"))
@@ -164,7 +170,7 @@ setMethod("DT_region",
 ##' @docType methods
 ##' @exportMethod DT_region
 setMethod("DT_region",
-          signature = signature(object = "SegvizData",region = "numeric"),
+          signature = signature(object = "SegvisData",region = "numeric"),
           definition = function(object,region,
                                 nameFiles = basename(files(object)),
                                 type = "aggr",normalize = TRUE,
@@ -194,7 +200,7 @@ setMethod("DT_region",
 ##' @docType methods
 ##' @exportMethod DT_profile
 setMethod("DT_profile",
-          signature = signature(object = "SegvizData"),
+          signature = signature(object = "SegvisData"),
           definition = function(object,FUN = mean,
                                 nameFiles = basename(files(object)),
                                 type = "aggr",
@@ -264,7 +270,7 @@ setMethod("DT_profile",
 ##' @docType methods
 ##' @exportMethod plot_profile
 setMethod("plot_profile",
-          signature = signature(object = "SegvizData"),
+          signature = signature(object = "SegvisData"),
           definition = function(object,FUN = mean,
                                 nameFiles = basename(files(object)),
                                 type = "aggr",
@@ -306,7 +312,7 @@ setMethod("plot_profile",
 ##' @docType methods
 ##' @exportMethod plot_heatmap
 setMethod("plot_heatmap",
-          signature = signature(object = "SegvizData"),
+          signature = signature(object = "SegvisData"),
           definition = function(object,which.cluster = 1,
                                 dist_method = "euclidean",
                                 clust_method = "complete",
@@ -368,8 +374,7 @@ setMethod("plot_heatmap",
                               MoreArgs = list(regions = object,
                                               st = "fwd",
                                               base = base,
-                                              len = ll,
-                                              mc.cores = mc.cores),
+                                              len = ll),
                               SIMPLIFY = FALSE)
 
             }
@@ -380,8 +385,7 @@ setMethod("plot_heatmap",
                               MoreArgs = list(regions = object,
                                               st = "bwd",
                                               base = base,
-                                              len = ll,
-                                              mc.cores = mc.cores),
+                                              len = ll),
                               SIMPLIFY = FALSE)
 
             }
@@ -429,7 +433,7 @@ setMethod("plot_heatmap",
 ##' @docType methods
 ##' @exportMethod plot_region
 setMethod("plot_region",
-          signature = signature(object = "SegvizData",region = "GRanges"),
+          signature = signature(object = "SegvisData",region = "GRanges"),
           definition = function(object,region,
                                 nameFiles = basename(files(object)),
                                 type = "aggr",normalize = TRUE,
@@ -471,7 +475,7 @@ setMethod("plot_region",
 ##' @docType methods
 ##' @exportMethod plot_region
 setMethod("plot_region",
-      signature = signature(object = "SegvizData",region = "numeric"),
+      signature = signature(object = "SegvisData",region = "numeric"),
       definition = function(object,region,
                             nameFiles = basename(files(object)),
                             type = "aggr",normalize = TRUE,
