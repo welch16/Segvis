@@ -95,7 +95,7 @@ SegvisData = function(regions,files,is_pet = rep(FALSE,length(files)),
                         BPPARAM = parallel_param,
                         SIMPLIFY = FALSE)
   
-  bwd_covers = BPmapply(.readFileCover,
+  bwd_covers = bpmapply(.readFileCover,
                         files,
                         is_pet,
                         frag_len,
