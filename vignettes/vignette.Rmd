@@ -12,8 +12,8 @@ vignette: >
 
 ```{r load_real,include=FALSE,eval=TRUE,echo = FALSE}
 
-#  library(Segvis)
-  devtools::load_all()
+  library(Segvis)
+#  devtools::load_all()
   library(ggplot2)
   library(Rsamtools)
   library(data.table)

@@ -1,4 +1,5 @@
 ##' @importFrom methods setClass setGeneric setMethod setRefClass
+##' @import BiocParallel
 NULL
 
 # .ma <- function(x,n) filter(x,rep(1/n,n),sides = 2)
