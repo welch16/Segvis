@@ -19,9 +19,6 @@ Segvis provides different tools to summarize and visualize data:
 
 Some late changes:
 
-- We are about to submit to bioconductor, therefore we changed the
-  version from 2.0 oto 0.99.0
-
 - We added examples to all help pages, and we added a whole pacakge
   documentation
 
