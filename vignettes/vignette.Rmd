@@ -1,8 +1,7 @@
 ---
 title: "Segvis: A pacakge for the visualization of high throughput sequencing data along genomic segments."
 author: |
-  | Rene Welch and Sunduz Keles
-  | Department of Statistics, University of Wisconsin-Madison
+  Rene Welch and Sunduz Keles, Department of Statistics, University of Wisconsin-Madison
 output: 
   BiocStyle::html_document
 vignette: >
@@ -11,34 +10,34 @@ vignette: >
   %\VignetteEncoding{UTF-8}  
 ---
 
-```{r style, echo = FALSE, results = 'asis'}
-
-  BiocStyle::markdown(css.files = c('custom.css'))
-
-```
-
 ```{r load_real,include=FALSE,eval=TRUE,echo = FALSE}
 
-  library(Segvis)
+#  library(Segvis)
+  devtools::load_all()
   library(ggplot2)
   library(Rsamtools)
   library(data.table)
   library(RColorBrewer)
-  Segviz = "Segviz"
-  fh = 3
-  fw = 6
+  library(BiocParallel)
+  Segvis = "Segvis"
+  
+  theme_set(theme_minimal())
+
+  knitr::opts_chunk$set(comment=NA, fig.width=6, fig.height=3,
+                 include = TRUE,echo = FALSE,eval = TRUE)
+  
   
 ```
 
 # Overview
 
-This vignette provides an introduction to the visualization of sequencing data by using the `r Rpackage(Segviz)` package. The minimum input to the package includes:
+This vignette provides an introduction to the visualization of sequencing data by using the `r Rpackage(Segvis)` package. The minimum input to the package includes:
 
   1. Coordinates for regions of interest.
   2. One or more bam files of aligned read data (e.g. from ChIP-seq
   experiments).
 
-`r Rpackage(Segviz)` provides different tools to summarize and visualize
+`r Rpackage(Segvis)` provides different tools to summarize and visualize
 these data, including but not limited to the following tasks:
 
   - Extract read data of specified input regions.
@@ -47,118 +46,117 @@ these data, including but not limited to the following tasks:
   - Subset this regions according to user defined annotations.
   - Plot the heatmap of signal curves accross regions separated by annotation.
 
-# How to use `r Rpackage(Segviz)`:
+# How to use `r Rpackage(Segvis)`:
 
 The package can be loaded with the command:
 
 ```{r load,eval = FALSE}
-  library(Segviz)
+  library(Segvis)
 ```
 
-Different visualization of the data is done by the use of the **SegvizData** class. This class extends the `r Biocpkg("GenomicRanges")` class to additionally contain **RleList**s with the experiment's coverage.
+Different visualization of the data is done by the use of the **SegvisData** class. This class extends the `r Biocpkg("GenomicRanges")` class to additionally contain **RleList**s with the experiment's coverage.
 
-## Building a **SevisData** object
+## Building a **SegvisData** object
 
 The minimum input for the package includes:
 
   1. Coordinates for regions of interest.
   2. One or more bam files of aligned read data (e.g. from ChIP-seq experiments).
 
-The coordinates may be obtained by several means: Visual exploration in the genome browser, calling peaks from a ChIP-seq experiment, etc. To use `r Rpackage(Segviz)` it is necessary to load the regions of interest and the aligned reads (of one or several experiments) into a `r Rpackage("SegvizData")` object.
+The coordinates may be obtained by several means: Visual exploration in the genome browser, calling peaks from a ChIP-seq experiment, etc. To use `r Rpackage(Segvis)` it is necessary to load the regions of interest and the aligned reads (of one or several experiments) into a `r Rpackage("SegvisData")` object.
 
-For example, if the peaks are saved in a **narrowPeak** file format (A description of several common file formats is given in [https://genome.ucsc.edu/FAQ/FAQformat.html](https://genome.ucsc.edu/FAQ/FAQformat.html), then we can create the `r Rpackage("SegvizData")` object as follows:
+For example, if the peaks are saved in a **narrowPeak** file format (A description of several common file formats is given in [https://genome.ucsc.edu/FAQ/FAQformat.html](https://genome.ucsc.edu/FAQ/FAQformat.html), then we can create the `r Rpackage("SegvisData")` object as follows:
 
-```{r peaks_file,include=TRUE,echo=TRUE,eval=TRUE}
-
+```{r peaks_file,echo=TRUE}
   dr = system.file("extdata","example",package = "Segvis")
   files = list.files(dr,pattern = "bam",full.names =TRUE)
-  files = files[grep("bai",files,invert = TRUE)]
+  files = files[grep("bai",files,invert = TRUE)] ## ignore bam-index files
 
   peaks_file = file.path(dr,"encode_K562_Ctcf_peaks_first3chr.narrowPeak")
   ctcf = readBedFile(peaks_file)
   ctcf = reduce(ctcf) ## some peaks are listed more than one time
   frag_len = 200
 
-  segviz = SegvizData(regions = ctcf,files,frag_len = frag_len)
-  segviz
+  segvis = SegvisData(regions = ctcf,files,frag_len = frag_len)
+  segvis
 
 ```
 
 A complete description of the meaning of each column in the peaks file is given in [https://genome.ucsc.edu/FAQ/FAQformat.html#format12](https://genome.ucsc.edu/FAQ/FAQformat.html#format12). 
 
-## Elements in a **SegvizData** object:
+## Elements in a **SegvisData** object:
 
-By using the `r Rpackage("SegvizData")` method, coverages are generated for each file of aligned reads, these profiles are accesible by using the `r Rpackage("covers")` method:
+By using the `r Rpackage("SegvisData")` method, coverages are generated for each file of aligned reads, these profiles are accesible by using the `r Rpackage("covers")` method:
 
-```{r cover,include=TRUE,echo=TRUE,eval=TRUE}
+```{r cover,echo = TRUE}
   
-  length(covers(segviz))
-  covers(segviz)[[1]]
+  length(covers(segvis))
+  covers(segvis)[[1]]
   
 ```
 
-Additionally for the case of DNA, coverage are generated by using only the reads that were aligned to certain strand.
+Additionally for the case of DNA, coverage are generated by using only the reads that were aligned to certain strand. We are using `fwd_covers` and `bwd_covers` for the forward and reverse strand profiles, respectively.
 
-```{r cover2,include=TRUE,echo=TRUE,eval=TRUE}
+```{r fwd_covers,echo=TRUE}
 
-  fwd_covers(segviz)[[1]]
-  bwd_covers(segviz)[[1]]
+  fwd_covers(segvis)[[1]]
 
 ```  
   
-Finally the number of aligned reads in each bam file is pre-processed and contained in the `r Rpackage("SegvizData")` object, it is accesible by:
+Finally the number of aligned reads in each bam file is pre-processed and contained in the `r Rpackage("SegvisData")` object, it is accesible by:
 
-```{r nr,include=TRUE,echo=TRUE,eval=TRUE}
+```{r nreads,echo=TRUE}
   
-  nreads(segviz)
+  nreads(segvis)
   
 ```
   
-# Visualization methods with `r Rpackage(Segviz)`:
-
-## How to plot one a region from the **SegvizData** object:
-
-After creating a **SegvizData** object, one of the most simple capabilities to explore the data is to plot specific regions. For example, to plot a specific peak in the object is done by accesing its position in the **GRanges** object or just using a whole **GRanges** object:
-
-```{r plot1,include=TRUE,echo=TRUE,eval=TRUE,fig.height=fh,fig.width=fw}
+This method shows that as expected the number of reads differ per experiment.
   
-  plot_region(segviz,1,nameFiles = c("Ctcf_rep1","Ctcf_rep2","H3k27ac",
+# Visualization methods with `r Rpackage(Segvis)`:
+
+## How to plot one a region from the **SegvisData** object:
+
+After creating a **SegvisData** object, one of the most simple capabilities to explore the data is to plot specific regions. For example, to plot a specific peak in the object is done by accesing its position in the **GRanges** object or just using a whole **GRanges** object:
+
+```{r plot_regions,echo=TRUE}
+  
+  plot_region(segvis,1,nameFiles = c("Ctcf_rep1","Ctcf_rep2","H3k27ac",
                                      "H3k4me1","H3k4me3"))
-  plot_region(segviz,resize(segviz[1],width = 2e3,fix = "center"),
+  plot_region(segvis,resize(segvis[1],width = 2e3,fix = "center"),
               nameFiles = c("Ctcf_rep1","Ctcf_rep2","H3k27ac","H3k4me1","H3k4me3"))
 
 ```
 
 Similarly to give more control to the user when plotting regions, we included the **DT_region** method which returns a `r "data.table"` with the information used in the plot:
 
-```{r dt1,include=TRUE,echo=TRUE,eval=TRUE}
+```{r dt_profile,echo=TRUE}
 
-    DT_region(segviz,1,nameFiles = c("Ctcf_rep1","Ctcf_rep2","H3k27ac",
+    DT_region(segvis,1,nameFiles = c("Ctcf_rep1","Ctcf_rep2","H3k27ac",
                                      "H3k4me1","H3k4me3"))
   
 ```
   
-## How to plot the average profiles across all region in the **SegvizData** object:
+## How to plot the average profiles across all region in the **SegvisData** object:
 
 To plot the average (o any other summary statistics) across a set of regions, the region need to have the same width. Therefore, a common method to normalize the width of the regions is to center them across the peaks summit:
 
 ```{r center_summit,include=TRUE,echo=TRUE,eval=TRUE}
   
-  bw = 500
-  segviz$summit = find_summits(segviz,1)
-  start(segviz) = segviz$summit - bw
-  end(segviz) = segviz$summit + bw
-  segviz
+  segvis$summit = find_summits(segvis,1)
+  start(segvis) = segvis$summit - 200
+  end(segvis) = segvis$summit + 200
+  segvis
   
 ```
 
 By construction the width is the same for all the intervals. Therefore to plot the average (median) profile is only necessary to do as follows:
 
-```{r plot2,include=TRUE,echo=TRUE,eval=TRUE,fig.height=fh,fig.width=fw}
+```{r plot_summit,echo=TRUE}
   
-  plot_profile(segviz,nameFiles = c("Ctcf_rep1","Ctcf_rep2","H3k27ac",
+  plot_profile(segvis,nameFiles = c("Ctcf_rep1","Ctcf_rep2","H3k27ac",
                                      "H3k4me1","H3k4me3"))
-  plot_profile(segviz,FUN = median,
+  plot_profile(segvis,FUN = median,
                nameFiles = c("Ctcf_rep1","Ctcf_rep2","H3k27ac",
                                      "H3k4me1","H3k4me3"))
   
@@ -166,24 +164,24 @@ By construction the width is the same for all the intervals. Therefore to plot t
 
 Similarly, as with the `r Rpackage("plot_region")` and `r Rpackage("DT_region")` functions. It is also possible to obtain only the ` r Rpackage("data.table")` without making the whole plot:
 
-```{r dt2,include=TRUE,echo=TRUE,eval=TRUE}
+```{r dt_prof,echo=TRUE}
   
-  DT_profile(segviz,nameFiles = c("Ctcf_rep1","Ctcf_rep2","H3k27ac",
+  DT_profile(segvis,nameFiles = c("Ctcf_rep1","Ctcf_rep2","H3k27ac",
                                      "H3k4me1","H3k4me3"))
 
 ```
   
-## How to plot a heatmap with the profiles across all region in the **SegvizData** object:
+## How to plot a heatmap with the profiles across all region in the **SegvisData** object:
 
-`r Rpackage(Segviz)` can plot heatmaps with the normalized signal profiles by using the plot_heatmap method:
+`r Rpackage(Segvis)` can plot heatmaps with the normalized signal profiles by using the plot_heatmap method:
 
-```{r heatmap,include=TRUE,echo=TRUE,eval=TRUE,fig.height=fh*1.5,fig.width=fw*1.5}
+```{r heatmap,include=TRUE,echo=TRUE,eval=TRUE,fig.height=4.5,fig.width=9}
   
-  plot_heatmap(segviz,nameFiles = c("Ctcf_rep1","Ctcf_rep2","H3k27ac",
+  plot_heatmap(segvis,nameFiles = c("Ctcf_rep1","Ctcf_rep2","H3k27ac",
                                      "H3k4me1","H3k4me3"))
   
 ```
-By default, the `r Rpackage("plot_heatmap")` method clusters the normalized signal across the windows by using the profiles from the first files added to the **SegvizData**, an eucliean distance and the complete agglomeration technique. However, by the use of the `r "which.cluster"`, `r "dist_method"` and `r "clust_method"` parameters is possible to explore different clustering strategies when analizing the data.
+By default, the `r Rpackage("plot_heatmap")` method clusters the normalized signal across the windows by using the profiles from the first files added to the **SegvisData**, an eucliean distance and the complete agglomeration technique. However, by the use of the `r "which.cluster"`, `r "dist_method"` and `r "clust_method"` parameters is possible to explore different clustering strategies when analizing the data.
 
 <!---
 
