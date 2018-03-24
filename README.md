@@ -17,12 +17,4 @@ Segvis provides different tools to summarize and visualize data:
 - Plot the heatmap of signal curves accross regions separated by
   annotation
 
-Some late changes:
 
-- We added examples to all help pages, and we added a whole pacakge
-  documentation
-
-- The function `Segvis` (the segvis object constructor) was renamed as
-  `buildSegvis`
-
-  
