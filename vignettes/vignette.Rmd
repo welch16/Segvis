@@ -14,6 +14,7 @@ vignette: >
 
   library(Segvis)
 #  devtools::load_all()
+  library(BiocStyle)
   library(ggplot2)
   library(Rsamtools)
   library(data.table)

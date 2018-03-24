@@ -277,6 +277,8 @@ setMethod("plot_profile",
                                 base = 1e6,
                                 mc.cores = getOption("mc.cores",2L),
                                 ...){
+            
+            theme_set(theme_minimal())
 
             DT = DT_profile(object,FUN,nameFiles,type,base,mc.cores)
             pal = c("black",brewer.pal(9,"Set1"))
@@ -325,6 +327,7 @@ setMethod("plot_heatmap",
             coord = NULL
             tags = NULL
             region = NULL
+            theme_set(theme_minimal())
 
             stopifnot(is.character(dist_method),
                       tolower(dist_method) %in% c("euclidean","maximum",
@@ -438,6 +441,8 @@ setMethod("plot_region",
                                 nameFiles = basename(files(object)),
                                 type = "aggr",normalize = TRUE,
                                 base = 1e6){
+            
+            theme_set(theme_minimal())
 
             DT = DT_region(object,region,nameFiles = nameFiles,
                            type = type,normalize = normalize,
@@ -480,7 +485,7 @@ setMethod("plot_region",
                             nameFiles = basename(files(object)),
                             type = "aggr",normalize = TRUE,
                             base = 1e6){
-
+        
         plot_region(object,region = object[region],nameFiles,type,
                     normalize,base)
       })
