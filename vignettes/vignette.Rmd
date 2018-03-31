@@ -1,5 +1,5 @@
 ---
-title: "Segvis: A pacakge for the visualization of high throughput sequencing data along genomic segments."
+title: "Segvis: A package for the visualization of high throughput sequencing data along genomic segments."
 author: |
   Rene Welch and Sunduz Keles, Department of Statistics, University of Wisconsin-Madison
 output: 
