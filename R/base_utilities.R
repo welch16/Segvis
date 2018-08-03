@@ -44,6 +44,7 @@ NULL
 
 .dt_cover = function(cover,nread,name,base = 1,region,st,normalize,
                       addRegion = FALSE){
+  
   chr = as.character(seqnames(region))
   cover = cover[region]
   coord = seq(start(region),end(region),by = 1)
@@ -63,12 +64,15 @@ NULL
                         len,mc.cores = getOption("mc.cores",2L)){
 
   coord = NULL
+  regions = as(regions,"GRangesList")
 
   prof_list = mclapply(regions,function(reg,len){
     prof = .dt_cover(cover,nread,name,base,reg,st,TRUE,TRUE)
     prof[,coord := seq(-len,len,by = 1)]
     prof
     },len,mc.cores = mc.cores)
+  
+  
   prof = rbindlist(prof_list)
   prof
 }
